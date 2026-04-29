@@ -1,0 +1,83 @@
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: ['./index.html', './src/**/*.{js,jsx}'],
+  theme: {
+    extend: {
+      colors: {
+        primary: {
+          DEFAULT: '#0F172A',
+          50:  '#F8FAFC',
+          100: '#F1F5F9',
+          200: '#E2E8F0',
+          300: '#CBD5E1',
+          400: '#94A3B8',
+          500: '#0F172A',
+          600: '#0A1020',
+          700: '#060B18',
+          800: '#030610',
+          900: '#010308',
+        },
+        accent: {
+          DEFAULT: '#6366F1',
+          50:  '#EEEEFF',
+          100: '#E0E7FF',
+          200: '#C7D2FE',
+          300: '#A5B4FC',
+          400: '#818CF8',
+          500: '#6366F1',
+          600: '#4F46E5',
+          700: '#4338CA',
+          800: '#3730A3',
+          900: '#312E81',
+        },
+        warn: '#B45309',
+        neutral: {
+          DEFAULT: '#F1F5F9',
+          50:  '#F8FAFC',
+          100: '#F1F5F9',
+          200: '#E2E8F0',
+          300: '#CBD5E1',
+          400: '#94A3B8',
+        },
+        bg:       '#F8FAFC',
+        surface:  '#FFFFFF',
+        surface2: '#F1F5F9',
+        border:   '#E2E8F0',
+        text:     '#0F172A',
+        muted:    '#64748B',
+        success:  '#059669',
+        danger:   '#DC2626',
+      },
+      fontFamily: {
+        display: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Helvetica', 'sans-serif'],
+        sans:    ['Inter', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'sans-serif'],
+      },
+      letterSpacing: {
+        tightest: '-0.04em',
+        tighter:  '-0.025em',
+      },
+      boxShadow: {
+        'soft': '0 1px 2px rgba(15,23,42,0.04), 0 4px 12px rgba(15,23,42,0.04)',
+        'card': '0 1px 3px rgba(15,23,42,0.06), 0 8px 24px rgba(15,23,42,0.06)',
+        'lift': '0 4px 8px rgba(15,23,42,0.08), 0 16px 40px rgba(15,23,42,0.08)',
+      },
+      animation: {
+        'fade-in':  'fadeIn 0.5s ease-out',
+        'slide-up': 'slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1)',
+        'scale-in': 'scaleIn 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
+      },
+      keyframes: {
+        fadeIn:  { '0%': { opacity: '0' }, '100%': { opacity: '1' } },
+        slideUp: {
+          '0%':   { transform: 'translateY(24px)', opacity: '0' },
+          '100%': { transform: 'translateY(0)',     opacity: '1' },
+        },
+        scaleIn: {
+          '0%':   { transform: 'scale(0.96)', opacity: '0' },
+          '100%': { transform: 'scale(1)',    opacity: '1' },
+        },
+      },
+    },
+  },
+  plugins: [],
+}

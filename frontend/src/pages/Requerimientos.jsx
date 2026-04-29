@@ -1,0 +1,131 @@
+import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { Plus, FileText, Calendar, User } from 'lucide-react'
+import api from '../utils/api'
+
+const STATUS_LABEL = { nuevo:'Nuevo', evaluacion:'En evaluación', aprobado:'Aprobado', rechazado:'Rechazado', convertido:'Convertido' }
+const STATUS_CHIP  = { nuevo:'chip-accent', evaluacion:'chip-warn', aprobado:'chip-success', rechazado:'chip-danger', convertido:'chip-primary' }
+
+const FILTROS = [
+  { label:'Todos', value:'' },
+  { label:'Nuevos', value:'nuevo' },
+  { label:'En evaluación', value:'evaluacion' },
+  { label:'Aprobados', value:'aprobado' },
+  { label:'Convertidos', value:'convertido' },
+]
+
+export default function Requerimientos() {
+  const nav = useNavigate()
+  const [reqs, setReqs] = useState([])
+  const [filtro, setFiltro] = useState('')
+  const [loading, setLoading] = useState(true)
+
+  const load = () => {
+    api.get('/api/requerimientos').then(r => { setReqs(r.data); setLoading(false) })
+  }
+  useEffect(() => { load() }, [])
+
+  const cambiarStatus = async (id, status) => {
+    await api.patch(`/api/requerimientos/${id}`, { status })
+    load()
+  }
+
+  const filtrados = filtro ? reqs.filter(r => r.status === filtro) : reqs
+
+  return (
+    <div className="max-w-5xl mx-auto animate-fade-in">
+      <header className="mb-10">
+        <div className="hero-eyebrow">Comercial</div>
+        <div className="flex items-end justify-between flex-wrap gap-4">
+          <div>
+            <h1 className="hero-title text-5xl md:text-6xl mb-3">Requerimientos.</h1>
+            <p className="hero-sub">Handovers de ventas a desarrollo.</p>
+          </div>
+          <button onClick={() => nav('/requerimientos/nuevo')} className="btn-accent">
+            <Plus size={14} /> Nuevo handover
+          </button>
+        </div>
+      </header>
+
+      {/* Filtros */}
+      <div className="flex gap-2 mb-8 flex-wrap">
+        {FILTROS.map(f => {
+          const count = f.value ? reqs.filter(r => r.status === f.value).length : reqs.length
+          return (
+            <button key={f.value} onClick={() => setFiltro(f.value)}
+              className={`px-4 py-2 rounded-full text-[13px] font-medium transition-all ${
+                filtro === f.value
+                  ? 'bg-primary text-neutral-50 shadow-soft'
+                  : 'bg-white text-muted hover:bg-neutral-200/70 border border-border'
+              }`}>
+              {f.label} <span className="ml-1 opacity-60">({count})</span>
+            </button>
+          )
+        })}
+      </div>
+
+      {loading ? (
+        <div className="space-y-3">
+          {[1,2,3].map(i => <div key={i} className="card h-28 animate-pulse bg-neutral-100" />)}
+        </div>
+      ) : filtrados.length === 0 ? (
+        <div className="card py-20 text-center">
+          <FileText size={40} className="mx-auto mb-3 text-muted/30" />
+          <p className="text-muted">No hay requerimientos todavía.</p>
+          <button onClick={() => nav('/requerimientos/nuevo')} className="btn-accent mt-6">
+            <Plus size={14} /> Cargar primer handover
+          </button>
+        </div>
+      ) : (
+        <div className="space-y-3">
+          {filtrados.map(r => (
+            <div key={r.id} className="card p-5 card-hover">
+              <div className="flex items-start justify-between gap-4 flex-wrap">
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-3 mb-2">
+                    <span className={STATUS_CHIP[r.status]}>{STATUS_LABEL[r.status]}</span>
+                    {r.sector && <span className="chip-muted">{r.sector}</span>}
+                  </div>
+                  <div className="font-bold text-[16px] tracking-tight">{r.nombre_cliente}</div>
+                  {r.nombre_proceso && (
+                    <div className="text-[13px] text-muted mt-1">Proceso: {r.nombre_proceso}</div>
+                  )}
+                  <div className="flex items-center gap-4 mt-3 text-[12px] text-muted flex-wrap">
+                    {r.responsable_comercial && (
+                      <span className="flex items-center gap-1"><User size={11} /> {r.responsable_comercial}</span>
+                    )}
+                    {r.fecha_entrega && (
+                      <span className="flex items-center gap-1">
+                        <Calendar size={11} /> {new Date(r.fecha_entrega).toLocaleDateString('es-AR')}
+                      </span>
+                    )}
+                    {r.volumen_proceso && <span>Vol: {r.volumen_proceso}</span>}
+                    {r.tiempo_por_proceso && <span>Tiempo: {r.tiempo_por_proceso}</span>}
+                  </div>
+                </div>
+                <div className="flex gap-2 flex-wrap">
+                  {r.status === 'nuevo' && (
+                    <button onClick={() => cambiarStatus(r.id, 'evaluacion')} className="btn-secondary">
+                      Iniciar evaluación
+                    </button>
+                  )}
+                  {r.status === 'evaluacion' && (
+                    <>
+                      <button onClick={() => cambiarStatus(r.id, 'aprobado')} className="btn-success">Aprobar</button>
+                      <button onClick={() => cambiarStatus(r.id, 'rechazado')} className="btn-danger">Rechazar</button>
+                    </>
+                  )}
+                  {r.status === 'aprobado' && (
+                    <button onClick={() => cambiarStatus(r.id, 'convertido')} className="btn-accent">
+                      → Convertir en proyecto
+                    </button>
+                  )}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  )
+}
