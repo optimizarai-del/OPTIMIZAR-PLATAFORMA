@@ -1,6 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ['./index.html', './src/**/*.{js,jsx}'],
+  darkMode: 'class',
   theme: {
     extend: {
       colors: {
@@ -60,6 +61,8 @@ export default {
         'soft': '0 1px 2px rgba(15,23,42,0.04), 0 4px 12px rgba(15,23,42,0.04)',
         'card': '0 1px 3px rgba(15,23,42,0.06), 0 8px 24px rgba(15,23,42,0.06)',
         'lift': '0 4px 8px rgba(15,23,42,0.08), 0 16px 40px rgba(15,23,42,0.08)',
+        'soft-dark': '0 1px 2px rgba(0,0,0,0.2), 0 4px 12px rgba(0,0,0,0.15)',
+        'card-dark': '0 1px 3px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.25)',
       },
       animation: {
         'fade-in':  'fadeIn 0.5s ease-out',
