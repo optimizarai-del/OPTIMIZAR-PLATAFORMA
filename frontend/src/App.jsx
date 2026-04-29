@@ -11,6 +11,7 @@ import Tareas from './pages/Tareas'
 import Requerimientos from './pages/Requerimientos'
 import NuevoRequerimiento from './pages/NuevoRequerimiento'
 import Equipo from './pages/Equipo'
+import Notificaciones from './pages/Notificaciones'
 
 export default function App() {
   return (
@@ -38,6 +39,9 @@ export default function App() {
             } />
             <Route path="/equipo" element={
               <ProtectedRoute requireManager><Layout><Equipo /></Layout></ProtectedRoute>
+            } />
+            <Route path="/notificaciones" element={
+              <ProtectedRoute requireManager><Layout><Notificaciones /></Layout></ProtectedRoute>
             } />
 
             <Route path="*" element={<Navigate to="/" replace />} />

@@ -1,7 +1,7 @@
 from pydantic import BaseModel, EmailStr
 from typing import Optional, List
 from datetime import datetime, date
-from app.models import UserRole, ProyectoStatus, TareaStatus, TareaPrioridad, TipoRegistro, RequerimientoStatus
+from app.models import UserRole, ProyectoStatus, TareaStatus, TareaPrioridad, TipoRegistro, RequerimientoStatus, NotificacionTipo
 
 
 # ── Auth ──────────────────────────────────────────────────────────────────────
@@ -231,6 +231,23 @@ class RequerimientoOut(BaseModel):
     fecha_entrega: Optional[date]
     status: RequerimientoStatus
     proyecto_id: Optional[int]
+    created_at: datetime
+
+    class Config:
+        from_attributes = True
+
+
+# ── Notificaciones ───────────────────────────────────────────────────────────
+
+class NotificacionOut(BaseModel):
+    id: int
+    tipo: NotificacionTipo
+    destinatario_id: Optional[int]
+    destinatario_email: str
+    tarea_id: Optional[int]
+    asunto: str
+    enviado: bool
+    error: Optional[str]
     created_at: datetime
 
     class Config:

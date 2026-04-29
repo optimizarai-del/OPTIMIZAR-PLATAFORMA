@@ -135,6 +135,32 @@ class RegistroTiempo(Base):
     user = relationship("User", back_populates="registros")
 
 
+class NotificacionTipo(str, Enum):
+    tarea_asignada      = "tarea_asignada"
+    cambio_estado       = "cambio_estado"
+    reasignacion        = "reasignacion"
+    detalles_actualizados = "detalles_actualizados"
+    tarea_completada    = "tarea_completada"
+
+
+class Notificacion(Base):
+    __tablename__ = "notificaciones"
+
+    id = Column(Integer, primary_key=True)
+    tipo = Column(SQLEnum(NotificacionTipo), nullable=False)
+    destinatario_id = Column(Integer, ForeignKey("users.id"), nullable=True)
+    destinatario_email = Column(String, nullable=False)
+    tarea_id = Column(Integer, ForeignKey("tareas.id"), nullable=True)
+    asunto = Column(String, nullable=False)
+    cuerpo_html = Column(Text, nullable=True)
+    enviado = Column(Boolean, default=False)
+    error = Column(Text, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+    destinatario = relationship("User", foreign_keys=[destinatario_id])
+    tarea = relationship("Tarea", foreign_keys=[tarea_id])
+
+
 class Requerimiento(Base):
     __tablename__ = "requerimientos"
 

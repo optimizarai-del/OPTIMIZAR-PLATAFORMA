@@ -1,8 +1,8 @@
 import { NavLink } from 'react-router-dom'
 import {
   LayoutGrid, CheckSquare, FileText, Users,
-  Zap, Sun, Moon, Briefcase, Code2, Clock,
-  BarChart3, ClipboardList, UserCheck
+  Zap, Sun, Moon, Briefcase, Code2,
+  ClipboardList, UserCheck, Bell
 } from 'lucide-react'
 import { useAuth } from '../../context/AuthContext'
 import { useTheme } from '../../context/ThemeContext'
@@ -66,6 +66,10 @@ export default function Sidebar() {
           <NavLink to="/equipo" className={link}>
             <Users size={15} strokeWidth={1.8} />
             Equipo
+          </NavLink>
+          <NavLink to="/notificaciones" className={link}>
+            <Bell size={15} strokeWidth={1.8} />
+            Notificaciones
           </NavLink>
         </>
       )}
