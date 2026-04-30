@@ -1,7 +1,7 @@
 import { useEffect, useState, useCallback } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { ArrowLeft, Plus, Check, Clock, ChevronRight, Trash2, Play, Square, Timer,
-         Github, RefreshCw, CheckCircle, GitCommit, Zap, Link, Unlink } from 'lucide-react'
+         Github, RefreshCw, CheckCircle, GitCommit, Zap, Link, Unlink, Sparkles, FileText, Upload } from 'lucide-react'
 import api from '../utils/api'
 import { useAuth } from '../context/AuthContext'
 
@@ -12,7 +12,7 @@ const PRIO_CHIP      = { baja:'chip-muted', media:'chip-primary', alta:'chip-war
 const PRIO_LABEL     = { baja:'Baja', media:'Media', alta:'Alta', urgente:'Urgente' }
 const PROJ_STATUS    = { planificacion:'Planificación', en_progreso:'En progreso', pausado:'Pausado', completado:'Completado' }
 
-const TABS = ['Resumen','Tareas','Plan de Acción','GitHub']
+const TABS = ['Resumen','Tareas','Plan de Acción','GitHub','Importar con IA']
 
 export default function ProyectoDetail() {
   const { id } = useParams()
@@ -123,9 +123,16 @@ export default function ProyectoDetail() {
           <div>
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-xl font-bold tracking-tight">Tareas del proyecto</h2>
-              <button onClick={() => setModalTarea(true)} className="btn-accent">
-                <Plus size={14} /> Nueva tarea
-              </button>
+              <div className="flex gap-2">
+                <AIGenerateButton
+                  endpoint={`/api/proyectos/${id}/ai/generar-tareas`}
+                  label="Generar con IA"
+                  onDone={loadAll}
+                />
+                <button onClick={() => setModalTarea(true)} className="btn-accent">
+                  <Plus size={14} /> Nueva tarea
+                </button>
+              </div>
             </div>
             {tareas.length === 0 ? (
               <div className="card py-16 text-center">
@@ -146,9 +153,16 @@ export default function ProyectoDetail() {
           <div>
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-xl font-bold tracking-tight">Plan de Acción</h2>
-              <button onClick={() => setModalPunto(true)} className="btn-accent">
-                <Plus size={14} /> Agregar punto
-              </button>
+              <div className="flex gap-2">
+                <AIGenerateButton
+                  endpoint={`/api/proyectos/${id}/ai/generar-plan`}
+                  label="Generar con IA"
+                  onDone={loadAll}
+                />
+                <button onClick={() => setModalPunto(true)} className="btn-accent">
+                  <Plus size={14} /> Agregar punto
+                </button>
+              </div>
             </div>
             {plan.length === 0 ? (
               <div className="card py-16 text-center">
@@ -191,6 +205,10 @@ export default function ProyectoDetail() {
 
         {tab === 'GitHub' && (
           <GitHubPanel proyecto={proyecto} onRefresh={loadAll} />
+        )}
+
+        {tab === 'Importar con IA' && (
+          <ImportarPanel proyectoId={parseInt(id)} onDone={loadAll} />
         )}
       </div>
 
@@ -528,6 +546,205 @@ function ModalNuevaTarea({ proyectoId, onClose, onSaved }) {
   )
 }
 
+function AIGenerateButton({ endpoint, label, onDone }) {
+  const [loading, setLoading] = useState(false)
+  const [result, setResult]   = useState(null)
+  const [error, setError]     = useState(null)
+
+  const run = async () => {
+    setLoading(true); setError(null); setResult(null)
+    try {
+      const r = await api.post(endpoint)
+      setResult(r.data)
+      onDone?.()
+      setTimeout(() => setResult(null), 8000)
+    } catch (e) {
+      setError(e.response?.data?.detail || 'Error de IA')
+      setTimeout(() => setError(null), 6000)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  return (
+    <div className="relative">
+      <button onClick={run} disabled={loading}
+        className="btn-secondary disabled:opacity-50 border border-accent/30 text-accent hover:bg-accent/10">
+        {loading
+          ? <><RefreshCw size={13} className="animate-spin" /> Generando...</>
+          : <><Sparkles size={13} /> {label}</>
+        }
+      </button>
+      {result && (
+        <div className="absolute right-0 top-12 z-10 w-80 p-4 card shadow-lift bg-accent/5 dark:bg-accent/10 border border-accent/30">
+          <div className="flex items-center gap-2 mb-2">
+            <CheckCircle size={14} className="text-success" />
+            <span className="font-semibold text-[13px]">
+              {result.plan_creados > 0 && `${result.plan_creados} puntos · `}
+              {result.tareas_creadas > 0 && `${result.tareas_creadas} tareas · `}
+              creadas
+            </span>
+          </div>
+          <p className="text-[12px] text-muted">{result.summary}</p>
+        </div>
+      )}
+      {error && (
+        <div className="absolute right-0 top-12 z-10 w-80 p-3 card bg-danger/5 border border-danger/30">
+          <p className="text-[12px] text-danger">{error}</p>
+        </div>
+      )}
+    </div>
+  )
+}
+
+
+function ImportarPanel({ proyectoId, onDone }) {
+  const [contenido, setContenido] = useState('')
+  const [loading, setLoading]     = useState(false)
+  const [result, setResult]       = useState(null)
+  const [error, setError]         = useState(null)
+
+  const handleFile = async (file) => {
+    if (!file) return
+    const text = await file.text()
+    setContenido(text)
+  }
+
+  const importar = async () => {
+    if (contenido.trim().length < 30) {
+      setError('El contenido es muy corto. Mínimo 30 caracteres.')
+      return
+    }
+    setLoading(true); setError(null); setResult(null)
+    try {
+      const r = await api.post(`/api/proyectos/${proyectoId}/ai/desde-documento`, { contenido })
+      setResult(r.data)
+      onDone?.()
+    } catch (e) {
+      setError(e.response?.data?.detail || 'Error al procesar el documento')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  return (
+    <div className="max-w-3xl space-y-6">
+
+      {/* Header */}
+      <div className="card p-6 bg-accent/5 dark:bg-accent/10 border-accent/30">
+        <div className="flex items-start gap-4">
+          <div className="w-10 h-10 rounded-xl bg-accent/15 flex items-center justify-center flex-shrink-0">
+            <Sparkles size={18} className="text-accent" />
+          </div>
+          <div>
+            <h3 className="font-semibold text-[15px] mb-1">Importar con IA desde documento</h3>
+            <p className="text-[12px] text-muted leading-relaxed">
+              Pegá el contenido de un brief, propuesta, relevamiento o requerimiento, o subí un archivo
+              <code className="bg-neutral-100 dark:bg-slate-700 px-1 rounded mx-1">.txt</code>/
+              <code className="bg-neutral-100 dark:bg-slate-700 px-1 rounded">.md</code>.
+              La IA lo va a dividir automáticamente en plan de acción + tareas concretas.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Upload + textarea */}
+      <div className="card p-6">
+        <label className="label flex items-center gap-2 mb-3">
+          <FileText size={13} /> Contenido del documento
+        </label>
+        <textarea
+          rows={14}
+          className="textarea font-mono text-[12px]"
+          placeholder="Pegá aquí el texto del brief, propuesta o relevamiento del proyecto..."
+          value={contenido}
+          onChange={e => setContenido(e.target.value)}
+        />
+        <div className="flex items-center justify-between mt-3">
+          <label className="btn-ghost text-[12px] cursor-pointer">
+            <Upload size={13} />
+            Subir archivo .txt / .md
+            <input type="file" accept=".txt,.md,.markdown,text/*"
+                   className="hidden"
+                   onChange={e => handleFile(e.target.files?.[0])} />
+          </label>
+          <span className="text-[11px] text-muted">{contenido.length} caracteres</span>
+        </div>
+        <button onClick={importar} disabled={loading || contenido.trim().length < 30}
+          className="btn-accent w-full mt-4 disabled:opacity-50">
+          {loading
+            ? <><RefreshCw size={13} className="animate-spin" /> Analizando documento con IA...</>
+            : <><Sparkles size={14} /> Procesar y crear plan + tareas</>
+          }
+        </button>
+        {error && (
+          <div className="mt-3 p-3 bg-danger/5 rounded-xl border border-danger/20 text-[12px] text-danger">{error}</div>
+        )}
+      </div>
+
+      {/* Resultado */}
+      {result && (
+        <div className="card p-6">
+          <div className="flex items-center gap-2 mb-4">
+            <CheckCircle size={16} className="text-success" />
+            <h3 className="font-semibold text-[15px]">Importación completa</h3>
+          </div>
+
+          <div className="grid grid-cols-2 gap-4 mb-5">
+            <div className="p-4 bg-success/5 rounded-xl border border-success/20">
+              <div className="text-[11px] uppercase tracking-wider text-muted mb-1">Plan creados</div>
+              <div className="text-3xl font-bold text-success">{result.plan_creados}</div>
+            </div>
+            <div className="p-4 bg-accent/5 rounded-xl border border-accent/20">
+              <div className="text-[11px] uppercase tracking-wider text-muted mb-1">Tareas creadas</div>
+              <div className="text-3xl font-bold text-accent">{result.tareas_creadas}</div>
+            </div>
+          </div>
+
+          <div className="p-4 bg-neutral-100 dark:bg-slate-700/40 rounded-xl mb-4">
+            <div className="text-[11px] uppercase tracking-wider text-muted mb-2">Resumen IA</div>
+            <p className="text-[13px] text-primary dark:text-slate-200">{result.summary}</p>
+          </div>
+
+          {result.plan?.length > 0 && (
+            <details className="mb-3">
+              <summary className="cursor-pointer text-[12px] font-medium text-muted hover:text-primary dark:hover:text-slate-100">
+                Ver puntos del plan creados ({result.plan.length})
+              </summary>
+              <ul className="mt-2 space-y-1 pl-4">
+                {result.plan.map((p, i) => (
+                  <li key={i} className="text-[13px] list-disc">
+                    <span className="font-medium">{p.titulo}</span>
+                    {p.descripcion && <span className="text-muted"> — {p.descripcion}</span>}
+                  </li>
+                ))}
+              </ul>
+            </details>
+          )}
+
+          {result.tareas?.length > 0 && (
+            <details>
+              <summary className="cursor-pointer text-[12px] font-medium text-muted hover:text-primary dark:hover:text-slate-100">
+                Ver tareas creadas ({result.tareas.length})
+              </summary>
+              <ul className="mt-2 space-y-1 pl-4">
+                {result.tareas.map((t, i) => (
+                  <li key={i} className="text-[13px] list-disc">
+                    <span className="font-medium">{t.titulo}</span>
+                    {t.prioridad && <span className="text-muted"> · {t.prioridad}</span>}
+                    {t.minutos_estimados && <span className="text-muted"> · {t.minutos_estimados}min</span>}
+                  </li>
+                ))}
+              </ul>
+            </details>
+          )}
+        </div>
+      )}
+    </div>
+  )
+}
+
+
 function GitHubPanel({ proyecto, onRefresh }) {
   const [repo, setRepo]           = useState(proyecto.github_repo || '')
   const [commits, setCommits]     = useState([])
@@ -597,7 +814,7 @@ function GitHubPanel({ proyecto, onRefresh }) {
         <div className="flex gap-3">
           <input
             className="input flex-1"
-            placeholder="owner/repository  (ej: tu-usuario/mi-proyecto)"
+            placeholder="owner/repo  o  https://github.com/owner/repo"
             value={repo}
             onChange={e => setRepo(e.target.value)}
             onKeyDown={e => e.key === 'Enter' && saveRepo()}
@@ -615,8 +832,8 @@ function GitHubPanel({ proyecto, onRefresh }) {
           )}
         </div>
         <p className="text-[11px] text-muted mt-2">
-          Ingresá el repositorio en formato <code className="bg-neutral-100 dark:bg-slate-700 px-1 rounded">owner/repo</code>.
-          Para repositorios privados configurá <code className="bg-neutral-100 dark:bg-slate-700 px-1 rounded">GITHUB_TOKEN</code> en backend/.env.
+          Acepta <code className="bg-neutral-100 dark:bg-slate-700 px-1 rounded">owner/repo</code> o la URL completa de GitHub.
+          Para repos privados configurá <code className="bg-neutral-100 dark:bg-slate-700 px-1 rounded">GITHUB_TOKEN</code> en backend/.env.
         </p>
         {error && (
           <div className="mt-3 p-3 bg-danger/5 rounded-xl border border-danger/20 text-[12px] text-danger">{error}</div>

@@ -6,7 +6,8 @@ from app.database import get_db
 from app.models import Proyecto, PuntoAccion, Tarea, TareaStatus, User, UserRole
 from app.schemas import (ProyectoCreate, ProyectoUpdate, ProyectoOut,
                           PuntoAccionCreate, PuntoAccionUpdate, PuntoAccionOut,
-                          GitHubRepoSet, GitHubSyncResult)
+                          GitHubRepoSet, GitHubSyncResult,
+                          AIDocumentRequest, AIGenerationResult)
 from app.security import get_db_user
 import app.github_service as gh
 import app.ai_service as ai
@@ -139,7 +140,10 @@ def set_github_repo(pid: int, data: GitHubRepoSet, db: Session = Depends(get_db)
     p = db.query(Proyecto).filter_by(id=pid).first()
     if not p:
         raise HTTPException(404, "Proyecto no encontrado")
-    repo = data.repo.strip().strip("/")
+    repo = gh.normalize_repo(data.repo)
+    # Después de normalizar tiene que verse como "owner/repo"
+    if repo and ("/" not in repo or repo.count("/") != 1):
+        raise HTTPException(400, f"Formato inválido. Esperado 'owner/repo' o URL de GitHub. Recibido: '{data.repo}'.")
     if repo and not gh.validate_repo(repo):
         raise HTTPException(400, f"Repositorio '{repo}' no encontrado o sin acceso. Verificá que sea público o que GITHUB_TOKEN tenga permisos.")
     p.github_repo = repo or None
@@ -207,3 +211,140 @@ def get_commits(pid: int, db: Session = Depends(get_db), _=Depends(get_db_user))
         return gh.fetch_recent_commits(p.github_repo)
     except RuntimeError as e:
         raise HTTPException(502, str(e))
+
+
+# ── AI: generación con IA ─────────────────────────────────────────────────────
+
+@router.post("/{pid}/ai/generar-plan", response_model=AIGenerationResult)
+def ai_generar_plan(pid: int, db: Session = Depends(get_db), _=Depends(get_db_user)):
+    """Genera el plan de acción del proyecto con IA y lo persiste."""
+    p = db.query(Proyecto).filter_by(id=pid).first()
+    if not p:
+        raise HTTPException(404, "Proyecto no encontrado")
+
+    tareas = db.query(Tarea).filter_by(proyecto_id=pid).all()
+    tareas_data = [{"titulo": t.titulo, "descripcion": t.descripcion} for t in tareas]
+
+    res = ai.generate_plan(p.nombre, p.cliente, p.descripcion, tareas_data)
+    plan_items = res.get("plan", [])
+
+    if not plan_items:
+        return AIGenerationResult(plan_creados=0, summary=res.get("summary", "La IA no generó puntos."))
+
+    base_orden = db.query(PuntoAccion).filter_by(proyecto_id=pid).count()
+    creados = []
+    for i, item in enumerate(plan_items):
+        punto = PuntoAccion(
+            proyecto_id=pid,
+            titulo=item.get("titulo", "")[:200],
+            descripcion=item.get("descripcion"),
+            orden=base_orden + i,
+            completado=False,
+        )
+        db.add(punto)
+        creados.append(item)
+    db.commit()
+
+    return AIGenerationResult(
+        plan_creados=len(creados),
+        summary=res.get("summary", ""),
+        plan=creados,
+    )
+
+
+@router.post("/{pid}/ai/generar-tareas", response_model=AIGenerationResult)
+def ai_generar_tareas(pid: int, db: Session = Depends(get_db), _=Depends(get_db_user)):
+    """Genera tareas granulares con IA usando el plan + descripción del proyecto."""
+    p = db.query(Proyecto).filter_by(id=pid).first()
+    if not p:
+        raise HTTPException(404, "Proyecto no encontrado")
+
+    plan = db.query(PuntoAccion).filter_by(proyecto_id=pid).order_by(PuntoAccion.orden).all()
+    tareas_existentes = db.query(Tarea).filter_by(proyecto_id=pid).all()
+
+    plan_data = [{"titulo": pt.titulo, "descripcion": pt.descripcion} for pt in plan]
+    tareas_data = [{"titulo": t.titulo} for t in tareas_existentes]
+
+    res = ai.generate_tasks(p.nombre, p.cliente, p.descripcion, plan_data, tareas_data)
+    tareas_nuevas = res.get("tareas", [])
+
+    if not tareas_nuevas:
+        return AIGenerationResult(tareas_creadas=0, summary=res.get("summary", "La IA no generó tareas."))
+
+    creadas = []
+    for item in tareas_nuevas:
+        tarea = Tarea(
+            proyecto_id=pid,
+            titulo=item.get("titulo", "")[:200],
+            descripcion=item.get("descripcion"),
+            prioridad=item.get("prioridad", "media"),
+            minutos_estimados=item.get("minutos_estimados"),
+        )
+        db.add(tarea)
+        creadas.append(item)
+    db.commit()
+
+    return AIGenerationResult(
+        tareas_creadas=len(creadas),
+        summary=res.get("summary", ""),
+        tareas=creadas,
+    )
+
+
+@router.post("/{pid}/ai/desde-documento", response_model=AIGenerationResult)
+def ai_desde_documento(pid: int, data: AIDocumentRequest,
+                       db: Session = Depends(get_db), _=Depends(get_db_user)):
+    """
+    Recibe el contenido de un documento (texto plano / markdown), lo divide con IA en
+    plan de acción + tareas, y persiste todo en el proyecto.
+    """
+    p = db.query(Proyecto).filter_by(id=pid).first()
+    if not p:
+        raise HTTPException(404, "Proyecto no encontrado")
+    if not data.contenido or len(data.contenido.strip()) < 30:
+        raise HTTPException(400, "El contenido del documento es muy corto. Mínimo 30 caracteres.")
+
+    res = ai.analyze_document(data.contenido, p.nombre, p.cliente)
+
+    plan_items = res.get("plan", [])
+    tareas_items = res.get("tareas", [])
+
+    base_orden = db.query(PuntoAccion).filter_by(proyecto_id=pid).count()
+
+    plan_creados = []
+    for i, item in enumerate(plan_items):
+        if not item.get("titulo"):
+            continue
+        punto = PuntoAccion(
+            proyecto_id=pid,
+            titulo=item["titulo"][:200],
+            descripcion=item.get("descripcion"),
+            orden=base_orden + i,
+            completado=False,
+        )
+        db.add(punto)
+        plan_creados.append(item)
+
+    tareas_creadas = []
+    for item in tareas_items:
+        if not item.get("titulo"):
+            continue
+        tarea = Tarea(
+            proyecto_id=pid,
+            titulo=item["titulo"][:200],
+            descripcion=item.get("descripcion"),
+            prioridad=item.get("prioridad", "media"),
+            minutos_estimados=item.get("minutos_estimados"),
+        )
+        db.add(tarea)
+        tareas_creadas.append(item)
+
+    db.commit()
+
+    return AIGenerationResult(
+        plan_creados=len(plan_creados),
+        tareas_creadas=len(tareas_creadas),
+        summary=res.get("summary", ""),
+        plan=plan_creados,
+        tareas=tareas_creadas,
+    )

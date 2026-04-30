@@ -100,6 +100,20 @@ class GitHubSyncResult(BaseModel):
     summary: str
 
 
+# ── AI: generación de plan / tareas / desde documento ─────────────────────────
+
+class AIDocumentRequest(BaseModel):
+    contenido: str  # texto plano (markdown, texto pegado, etc.)
+
+
+class AIGenerationResult(BaseModel):
+    plan_creados: int = 0
+    tareas_creadas: int = 0
+    summary: str
+    plan: List[dict] = []
+    tareas: List[dict] = []
+
+
 # ── PuntoAccion ───────────────────────────────────────────────────────────────
 
 class PuntoAccionCreate(BaseModel):

@@ -1,33 +1,62 @@
 import os
 import json
 import httpx
-from typing import List, Dict
+from typing import List, Dict, Optional
 
 ANTHROPIC_URL = "https://api.anthropic.com/v1/messages"
+MODEL = "claude-haiku-4-5-20251001"
 
 
-def analyze_commits(
-    commits: List[Dict],
-    tareas: List[Dict],
-    plan: List[Dict],
-) -> Dict:
+def _call_claude(prompt: str, max_tokens: int = 2048) -> Dict:
     """
-    Calls Claude to infer which tasks/plan-points should be updated based on commit messages.
-
-    Returns:
-        {
-            "task_updates": [{"id": int, "status": str, "reason": str}],
-            "plan_updates": [{"id": int, "completado": bool, "reason": str}],
-            "summary": str
-        }
+    Llama a Claude. Devuelve {"ok": bool, "data": dict | None, "error": str | None}.
+    Espera que Claude responda con JSON puro.
     """
-    ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY", "")
-    if not ANTHROPIC_API_KEY:
-        return {
-            "task_updates": [],
-            "plan_updates": [],
-            "summary": "ANTHROPIC_API_KEY no configurada. Configurala en backend/.env para activar el análisis con IA.",
-        }
+    api_key = os.getenv("ANTHROPIC_API_KEY", "")
+    if not api_key:
+        return {"ok": False, "data": None, "error": "ANTHROPIC_API_KEY no configurada en backend/.env"}
+
+    try:
+        resp = httpx.post(
+            ANTHROPIC_URL,
+            headers={
+                "x-api-key": api_key,
+                "anthropic-version": "2023-06-01",
+                "content-type": "application/json",
+            },
+            json={
+                "model": MODEL,
+                "max_tokens": max_tokens,
+                "messages": [{"role": "user", "content": prompt}],
+            },
+            timeout=60,
+        )
+        resp.raise_for_status()
+        raw = resp.json()["content"][0]["text"].strip()
+        # Strip markdown code fences if present
+        if raw.startswith("```"):
+            raw = raw.split("```", 2)[1]
+            if raw.startswith("json"):
+                raw = raw[4:]
+            raw = raw.strip()
+        return {"ok": True, "data": json.loads(raw), "error": None}
+    except json.JSONDecodeError as e:
+        return {"ok": False, "data": None, "error": f"Error al parsear respuesta IA: {e}"}
+    except httpx.HTTPStatusError as e:
+        return {"ok": False, "data": None, "error": f"API Anthropic {e.response.status_code}: {e.response.text[:200]}"}
+    except Exception as e:
+        return {"ok": False, "data": None, "error": f"Error IA: {e}"}
+
+
+# ── 1. Análisis de commits (existente) ────────────────────────────────────────
+
+def analyze_commits(commits: List[Dict], tareas: List[Dict], plan: List[Dict]) -> Dict:
+    """
+    Devuelve {"task_updates": [...], "plan_updates": [...], "summary": str}
+    """
+    if not os.getenv("ANTHROPIC_API_KEY", ""):
+        return {"task_updates": [], "plan_updates": [],
+                "summary": "ANTHROPIC_API_KEY no configurada. Configurala en backend/.env para activar el análisis con IA."}
 
     tareas_txt = "\n".join(
         f"- ID {t['id']}: [{t['status']}] {t['titulo']}"
@@ -45,7 +74,7 @@ def analyze_commits(
         for c in commits
     ) or "Sin commits"
 
-    prompt = f"""Sos un asistente de gestión de proyectos. Analizá los commits de GitHub y determiná qué tareas y puntos del plan de acción se deben actualizar automáticamente.
+    prompt = f"""Sos un asistente de gestión de proyectos. Analizá los commits de GitHub y determiná qué tareas y puntos del plan de acción se deben actualizar.
 
 TAREAS ACTUALES:
 {tareas_txt}
@@ -58,7 +87,7 @@ COMMITS RECIENTES:
 
 Reglas:
 - Si un commit implica que se completó una tarea, actualizá su estado a "completada"
-- Si un commit inicia trabajo en una tarea pendiente, actualizá a "en_progreso"
+- Si un commit inicia trabajo en una tarea pendiente, pasala a "en_progreso"
 - Si un commit indica que un punto del plan fue alcanzado, marcalo como completado (true)
 - Solo actualizá cuando haya evidencia clara en los mensajes de commit
 - No retrocedas el estado de tareas ya completadas
@@ -66,41 +95,152 @@ Reglas:
 
 Respondé ÚNICAMENTE con JSON válido, sin texto adicional ni markdown:
 {{
-  "task_updates": [
-    {{"id": <int>, "status": "<pendiente|en_progreso|revision|completada|bloqueada>", "reason": "<razón breve en español>"}}
-  ],
-  "plan_updates": [
-    {{"id": <int>, "completado": <true|false>, "reason": "<razón breve en español>"}}
-  ],
-  "summary": "<resumen en español de los cambios detectados, máximo 2 oraciones>"
+  "task_updates": [{{"id": <int>, "status": "<pendiente|en_progreso|revision|completada|bloqueada>", "reason": "<razón breve>"}}],
+  "plan_updates": [{{"id": <int>, "completado": <true|false>, "reason": "<razón breve>"}}],
+  "summary": "<resumen en español, máx 2 oraciones>"
 }}"""
 
-    try:
-        resp = httpx.post(
-            ANTHROPIC_URL,
-            headers={
-                "x-api-key": ANTHROPIC_API_KEY,
-                "anthropic-version": "2023-06-01",
-                "content-type": "application/json",
-            },
-            json={
-                "model": "claude-haiku-4-5-20251001",
-                "max_tokens": 1024,
-                "messages": [{"role": "user", "content": prompt}],
-            },
-            timeout=30,
-        )
-        resp.raise_for_status()
-        raw = resp.json()["content"][0]["text"].strip()
-        # Strip markdown code fences if present
-        if raw.startswith("```"):
-            raw = raw.split("```")[1]
-            if raw.startswith("json"):
-                raw = raw[4:]
-        return json.loads(raw)
-    except json.JSONDecodeError as e:
-        return {"task_updates": [], "plan_updates": [], "summary": f"Error al parsear respuesta IA: {e}"}
-    except httpx.HTTPStatusError as e:
-        return {"task_updates": [], "plan_updates": [], "summary": f"Error API Anthropic {e.response.status_code}: {e.response.text[:200]}"}
-    except Exception as e:
-        return {"task_updates": [], "plan_updates": [], "summary": f"Error IA: {e}"}
+    res = _call_claude(prompt, max_tokens=1500)
+    if not res["ok"]:
+        return {"task_updates": [], "plan_updates": [], "summary": res["error"]}
+    return res["data"]
+
+
+# ── 2. Generar plan de acción ─────────────────────────────────────────────────
+
+def generate_plan(nombre: str, cliente: str, descripcion: Optional[str],
+                  tareas_existentes: List[Dict]) -> Dict:
+    """
+    Genera puntos del plan de acción a partir del contexto del proyecto.
+    Devuelve {"plan": [{"titulo": str, "descripcion": str}], "summary": str}.
+    """
+    tareas_txt = "\n".join(
+        f"- {t['titulo']}" + (f": {t['descripcion']}" if t.get("descripcion") else "")
+        for t in tareas_existentes
+    ) or "(sin tareas todavía)"
+
+    prompt = f"""Sos un asistente de gestión de proyectos para una consultora de IA y automatización.
+Generá un PLAN DE ACCIÓN realista y bien estructurado para este proyecto.
+
+PROYECTO: {nombre}
+CLIENTE: {cliente}
+DESCRIPCIÓN: {descripcion or "(sin descripción)"}
+
+TAREAS YA CREADAS (referencia, no las repitas):
+{tareas_txt}
+
+El plan de acción debe tener entre 5 y 8 hitos/entregables, ordenados cronológicamente,
+desde el relevamiento hasta la entrega final. Cada punto representa una etapa o entregable
+mayor del proyecto, NO una tarea granular. Usá lenguaje claro en español rioplatense.
+
+Respondé ÚNICAMENTE con JSON válido:
+{{
+  "plan": [
+    {{"titulo": "<hito en 5-10 palabras>", "descripcion": "<qué incluye este hito, 1 oración>"}}
+  ],
+  "summary": "<resumen breve del enfoque elegido, 1-2 oraciones>"
+}}"""
+
+    res = _call_claude(prompt, max_tokens=2000)
+    if not res["ok"]:
+        return {"plan": [], "summary": res["error"]}
+    return res["data"]
+
+
+# ── 3. Generar tareas a partir del plan ───────────────────────────────────────
+
+def generate_tasks(nombre: str, cliente: str, descripcion: Optional[str],
+                   plan: List[Dict], tareas_existentes: List[Dict]) -> Dict:
+    """
+    Genera tareas granulares desde el plan + descripción del proyecto.
+    Devuelve {"tareas": [{"titulo": str, "descripcion": str, "prioridad": str, "minutos_estimados": int}], "summary": str}.
+    """
+    plan_txt = "\n".join(f"- {p['titulo']}" + (f": {p.get('descripcion','')}" if p.get('descripcion') else "")
+                         for p in plan) or "(sin plan definido)"
+
+    existentes_txt = "\n".join(f"- {t['titulo']}" for t in tareas_existentes) or "(sin tareas previas)"
+
+    prompt = f"""Sos un asistente de gestión de proyectos para una consultora de IA y automatización.
+Generá las TAREAS GRANULARES necesarias para ejecutar este proyecto.
+
+PROYECTO: {nombre}
+CLIENTE: {cliente}
+DESCRIPCIÓN: {descripcion or "(sin descripción)"}
+
+PLAN DE ACCIÓN:
+{plan_txt}
+
+TAREAS YA EXISTENTES (no las repitas, generá las que falten):
+{existentes_txt}
+
+Generá entre 6 y 12 tareas concretas, cada una con título corto, descripción de 1 oración,
+prioridad (baja|media|alta|urgente) y estimación realista en minutos.
+Las tareas deben ser unidades de trabajo de 30 min a 8 horas.
+
+Respondé ÚNICAMENTE con JSON válido:
+{{
+  "tareas": [
+    {{
+      "titulo": "<acción concreta, max 60 chars>",
+      "descripcion": "<qué hay que hacer, 1 oración>",
+      "prioridad": "baja|media|alta|urgente",
+      "minutos_estimados": <int>
+    }}
+  ],
+  "summary": "<resumen breve del enfoque, 1 oración>"
+}}"""
+
+    res = _call_claude(prompt, max_tokens=3000)
+    if not res["ok"]:
+        return {"tareas": [], "summary": res["error"]}
+    return res["data"]
+
+
+# ── 4. Analizar documento y dividir en plan + tareas ──────────────────────────
+
+def analyze_document(contenido: str, nombre: str, cliente: str) -> Dict:
+    """
+    Recibe el contenido textual de un documento (relevamiento, propuesta, brief)
+    y lo divide automáticamente en plan de acción + tareas.
+    """
+    # Truncar el documento para que entre en el contexto sin gastar demasiado
+    contenido_corto = contenido.strip()[:12000]
+
+    prompt = f"""Sos un asistente de gestión de proyectos para una consultora de IA y automatización.
+El usuario subió un documento (relevamiento, propuesta, brief, etc.) sobre el proyecto.
+Analizá el contenido y dividilo en (a) plan de acción de alto nivel y (b) tareas granulares ejecutables.
+
+PROYECTO: {nombre}
+CLIENTE: {cliente}
+
+CONTENIDO DEL DOCUMENTO:
+\"\"\"
+{contenido_corto}
+\"\"\"
+
+Reglas:
+- El plan de acción son hitos/entregables (5 a 8 puntos), ordenados cronológicamente.
+- Las tareas son unidades de trabajo concretas (6 a 14 ítems), de 30 min a 8 horas cada una.
+- Usá lenguaje claro en español rioplatense.
+- Si el documento es ambiguo, completá con criterio profesional.
+
+Respondé ÚNICAMENTE con JSON válido:
+{{
+  "plan": [
+    {{"titulo": "<hito>", "descripcion": "<detalle 1 oración>"}}
+  ],
+  "tareas": [
+    {{
+      "titulo": "<acción concreta>",
+      "descripcion": "<qué hay que hacer>",
+      "prioridad": "baja|media|alta|urgente",
+      "minutos_estimados": <int>
+    }}
+  ],
+  "summary": "<resumen del proyecto extraído del documento, 2-3 oraciones>"
+}}"""
+
+    res = _call_claude(prompt, max_tokens=4000)
+    if not res["ok"]:
+        return {"plan": [], "tareas": [], "summary": res["error"]}
+    return res["data"]

@@ -1,6 +1,35 @@
 import os
+import re
 import httpx
 from typing import List, Dict
+
+
+def normalize_repo(raw: str) -> str:
+    """
+    Acepta cualquiera de estos formatos y devuelve 'owner/repo':
+      - owner/repo
+      - https://github.com/owner/repo
+      - https://github.com/owner/repo.git
+      - http://github.com/owner/repo/
+      - github.com/owner/repo
+      - git@github.com:owner/repo.git
+    """
+    if not raw:
+        return ""
+    s = raw.strip()
+    # SSH form: git@github.com:owner/repo.git
+    m = re.match(r"^git@github\.com:([^/]+/[^/]+?)(?:\.git)?/?$", s)
+    if m:
+        return m.group(1)
+    # Strip protocol and host
+    s = re.sub(r"^https?://", "", s, flags=re.IGNORECASE)
+    s = re.sub(r"^github\.com/", "", s, flags=re.IGNORECASE)
+    # Strip trailing .git and slashes
+    s = s.rstrip("/")
+    if s.endswith(".git"):
+        s = s[:-4]
+    return s
+
 
 def _headers() -> dict:
     token = os.getenv("GITHUB_TOKEN", "")
