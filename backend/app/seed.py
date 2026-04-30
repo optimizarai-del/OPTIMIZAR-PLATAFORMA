@@ -1,4 +1,7 @@
 """python -m app.seed"""
+from dotenv import load_dotenv
+load_dotenv(override=True)  # cargar DATABASE_URL del .env antes de importar database
+
 from datetime import date, datetime, timedelta
 from app.database import SessionLocal, engine
 from app.models import (Base, User, UserRole, Proyecto, ProyectoStatus,
