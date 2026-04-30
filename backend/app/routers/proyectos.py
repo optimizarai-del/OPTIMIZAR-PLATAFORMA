@@ -1,11 +1,15 @@
+from datetime import datetime
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from typing import List
 from app.database import get_db
 from app.models import Proyecto, PuntoAccion, Tarea, TareaStatus, User, UserRole
 from app.schemas import (ProyectoCreate, ProyectoUpdate, ProyectoOut,
-                          PuntoAccionCreate, PuntoAccionUpdate, PuntoAccionOut)
+                          PuntoAccionCreate, PuntoAccionUpdate, PuntoAccionOut,
+                          GitHubRepoSet, GitHubSyncResult)
 from app.security import get_db_user
+import app.github_service as gh
+import app.ai_service as ai
 
 router = APIRouter(prefix="/api/proyectos", tags=["proyectos"])
 
@@ -125,3 +129,81 @@ def eliminar_punto(pid: int, punto_id: int, db: Session = Depends(get_db),
     db.delete(punto)
     db.commit()
     return {"ok": True}
+
+
+# ── GitHub Integration ────────────────────────────────────────────────────────
+
+@router.put("/{pid}/github/repo", response_model=ProyectoOut)
+def set_github_repo(pid: int, data: GitHubRepoSet, db: Session = Depends(get_db),
+                    _=Depends(get_db_user)):
+    p = db.query(Proyecto).filter_by(id=pid).first()
+    if not p:
+        raise HTTPException(404, "Proyecto no encontrado")
+    repo = data.repo.strip().strip("/")
+    if repo and not gh.validate_repo(repo):
+        raise HTTPException(400, f"Repositorio '{repo}' no encontrado o sin acceso. Verificá que sea público o que GITHUB_TOKEN tenga permisos.")
+    p.github_repo = repo or None
+    p.github_last_sync = None
+    p.github_last_commit_sha = None
+    db.commit()
+    db.refresh(p)
+    return _enrich(p)
+
+
+@router.post("/{pid}/github/sync", response_model=GitHubSyncResult)
+def sync_github(pid: int, db: Session = Depends(get_db), _=Depends(get_db_user)):
+    p = db.query(Proyecto).filter_by(id=pid).first()
+    if not p:
+        raise HTTPException(404, "Proyecto no encontrado")
+    if not p.github_repo:
+        raise HTTPException(400, "El proyecto no tiene un repositorio GitHub configurado.")
+
+    try:
+        commits = gh.fetch_recent_commits(p.github_repo)
+    except RuntimeError as e:
+        raise HTTPException(502, str(e))
+
+    tareas = db.query(Tarea).filter_by(proyecto_id=pid).all()
+    plan = db.query(PuntoAccion).filter_by(proyecto_id=pid).order_by(PuntoAccion.orden).all()
+
+    tareas_data = [{"id": t.id, "titulo": t.titulo, "descripcion": t.descripcion, "status": t.status.value} for t in tareas]
+    plan_data   = [{"id": pt.id, "titulo": pt.titulo, "completado": pt.completado} for pt in plan]
+
+    result = ai.analyze_commits(commits, tareas_data, plan_data)
+
+    task_updates_applied = []
+    for upd in result.get("task_updates", []):
+        tarea = db.query(Tarea).filter_by(id=upd["id"], proyecto_id=pid).first()
+        if tarea and tarea.status.value != upd["status"]:
+            tarea.status = upd["status"]
+            task_updates_applied.append(upd)
+
+    plan_updates_applied = []
+    for upd in result.get("plan_updates", []):
+        punto = db.query(PuntoAccion).filter_by(id=upd["id"], proyecto_id=pid).first()
+        if punto and punto.completado != upd["completado"]:
+            punto.completado = upd["completado"]
+            plan_updates_applied.append(upd)
+
+    latest_sha = commits[0]["sha"] if commits else p.github_last_commit_sha
+    p.github_last_sync = datetime.utcnow()
+    p.github_last_commit_sha = latest_sha
+    db.commit()
+
+    return GitHubSyncResult(
+        commits_analizados=len(commits),
+        task_updates=task_updates_applied,
+        plan_updates=plan_updates_applied,
+        summary=result.get("summary", ""),
+    )
+
+
+@router.get("/{pid}/github/commits")
+def get_commits(pid: int, db: Session = Depends(get_db), _=Depends(get_db_user)):
+    p = db.query(Proyecto).filter_by(id=pid).first()
+    if not p or not p.github_repo:
+        raise HTTPException(400, "Sin repositorio configurado.")
+    try:
+        return gh.fetch_recent_commits(p.github_repo)
+    except RuntimeError as e:
+        raise HTTPException(502, str(e))

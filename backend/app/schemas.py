@@ -63,6 +63,7 @@ class ProyectoUpdate(BaseModel):
     status: Optional[ProyectoStatus] = None
     fecha_inicio: Optional[date] = None
     fecha_fin: Optional[date] = None
+    github_repo: Optional[str] = None
 
 
 class ProyectoOut(BaseModel):
@@ -79,10 +80,24 @@ class ProyectoOut(BaseModel):
     tareas_completadas: int = 0
     total_puntos: int = 0
     puntos_completados: int = 0
+    github_repo: Optional[str] = None
+    github_last_sync: Optional[datetime] = None
+    github_last_commit_sha: Optional[str] = None
     created_at: datetime
 
     class Config:
         from_attributes = True
+
+
+class GitHubRepoSet(BaseModel):
+    repo: str  # "owner/repo"
+
+
+class GitHubSyncResult(BaseModel):
+    commits_analizados: int
+    task_updates: List[dict]
+    plan_updates: List[dict]
+    summary: str
 
 
 # ── PuntoAccion ───────────────────────────────────────────────────────────────

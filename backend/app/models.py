@@ -77,6 +77,10 @@ class Proyecto(Base):
     created_by = Column(Integer, ForeignKey("users.id"), nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow)
 
+    github_repo = Column(String, nullable=True)
+    github_last_sync = Column(DateTime, nullable=True)
+    github_last_commit_sha = Column(String, nullable=True)
+
     tareas = relationship("Tarea", back_populates="proyecto", cascade="all, delete-orphan")
     puntos_accion = relationship("PuntoAccion", back_populates="proyecto",
                                  cascade="all, delete-orphan", order_by="PuntoAccion.orden")

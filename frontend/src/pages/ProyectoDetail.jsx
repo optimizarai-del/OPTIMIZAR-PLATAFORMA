@@ -1,6 +1,7 @@
 import { useEffect, useState, useCallback } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { ArrowLeft, Plus, Check, Clock, ChevronRight, Trash2, Play, Square, Timer } from 'lucide-react'
+import { ArrowLeft, Plus, Check, Clock, ChevronRight, Trash2, Play, Square, Timer,
+         Github, RefreshCw, CheckCircle, GitCommit, Zap, Link, Unlink } from 'lucide-react'
 import api from '../utils/api'
 import { useAuth } from '../context/AuthContext'
 
@@ -11,7 +12,7 @@ const PRIO_CHIP      = { baja:'chip-muted', media:'chip-primary', alta:'chip-war
 const PRIO_LABEL     = { baja:'Baja', media:'Media', alta:'Alta', urgente:'Urgente' }
 const PROJ_STATUS    = { planificacion:'Planificación', en_progreso:'En progreso', pausado:'Pausado', completado:'Completado' }
 
-const TABS = ['Resumen','Tareas','Plan de Acción']
+const TABS = ['Resumen','Tareas','Plan de Acción','GitHub']
 
 export default function ProyectoDetail() {
   const { id } = useParams()
@@ -186,6 +187,10 @@ export default function ProyectoDetail() {
               </div>
             )}
           </div>
+        )}
+
+        {tab === 'GitHub' && (
+          <GitHubPanel proyecto={proyecto} onRefresh={loadAll} />
         )}
       </div>
 
@@ -519,6 +524,224 @@ function ModalNuevaTarea({ proyectoId, onClose, onSaved }) {
           </div>
         </form>
       </div>
+    </div>
+  )
+}
+
+function GitHubPanel({ proyecto, onRefresh }) {
+  const [repo, setRepo]           = useState(proyecto.github_repo || '')
+  const [commits, setCommits]     = useState([])
+  const [syncing, setSyncing]     = useState(false)
+  const [saving, setSaving]       = useState(false)
+  const [loadingCommits, setLoadingCommits] = useState(false)
+  const [result, setResult]       = useState(null)
+  const [error, setError]         = useState(null)
+
+  const loadCommits = async () => {
+    if (!proyecto.github_repo) return
+    setLoadingCommits(true)
+    try {
+      const r = await api.get(`/api/proyectos/${proyecto.id}/github/commits`)
+      setCommits(r.data)
+    } catch (e) {
+      setError(e.response?.data?.detail || 'Error al cargar commits')
+    } finally {
+      setLoadingCommits(false)
+    }
+  }
+
+  useEffect(() => { loadCommits() }, [proyecto.github_repo])
+
+  const saveRepo = async () => {
+    setSaving(true)
+    setError(null)
+    try {
+      await api.put(`/api/proyectos/${proyecto.id}/github/repo`, { repo: repo.trim() })
+      onRefresh()
+      if (repo.trim()) setTimeout(loadCommits, 300)
+    } catch (e) {
+      setError(e.response?.data?.detail || 'Error al guardar repositorio')
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  const sync = async () => {
+    setSyncing(true)
+    setError(null)
+    setResult(null)
+    try {
+      const r = await api.post(`/api/proyectos/${proyecto.id}/github/sync`)
+      setResult(r.data)
+      onRefresh()
+    } catch (e) {
+      setError(e.response?.data?.detail || 'Error al sincronizar')
+    } finally {
+      setSyncing(false)
+    }
+  }
+
+  const lastSync = proyecto.github_last_sync
+    ? new Date(proyecto.github_last_sync).toLocaleString('es-AR', {day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'})
+    : null
+
+  return (
+    <div className="max-w-3xl space-y-6">
+
+      {/* Repo config */}
+      <div className="card p-6">
+        <div className="flex items-center gap-2 mb-4">
+          <Github size={16} className="text-primary dark:text-slate-200" />
+          <h3 className="font-semibold text-[15px]">Repositorio GitHub</h3>
+        </div>
+        <div className="flex gap-3">
+          <input
+            className="input flex-1"
+            placeholder="owner/repository  (ej: tu-usuario/mi-proyecto)"
+            value={repo}
+            onChange={e => setRepo(e.target.value)}
+            onKeyDown={e => e.key === 'Enter' && saveRepo()}
+          />
+          <button onClick={saveRepo} disabled={saving}
+            className="btn-accent disabled:opacity-50 flex-shrink-0">
+            {saving ? <RefreshCw size={13} className="animate-spin" /> : <Link size={13} />}
+            {saving ? 'Verificando...' : 'Vincular'}
+          </button>
+          {proyecto.github_repo && (
+            <button onClick={() => { setRepo(''); saveRepo() }}
+              className="btn-ghost text-danger flex-shrink-0">
+              <Unlink size={13} />
+            </button>
+          )}
+        </div>
+        <p className="text-[11px] text-muted mt-2">
+          Ingresá el repositorio en formato <code className="bg-neutral-100 dark:bg-slate-700 px-1 rounded">owner/repo</code>.
+          Para repositorios privados configurá <code className="bg-neutral-100 dark:bg-slate-700 px-1 rounded">GITHUB_TOKEN</code> en backend/.env.
+        </p>
+        {error && (
+          <div className="mt-3 p-3 bg-danger/5 rounded-xl border border-danger/20 text-[12px] text-danger">{error}</div>
+        )}
+      </div>
+
+      {/* Sync panel — only shown when repo is linked */}
+      {proyecto.github_repo && (
+        <>
+          {/* Sync action */}
+          <div className="card p-6">
+            <div className="flex items-center justify-between flex-wrap gap-4">
+              <div>
+                <div className="flex items-center gap-2 mb-1">
+                  <Zap size={14} className="text-accent" />
+                  <h3 className="font-semibold text-[15px]">Análisis con IA</h3>
+                </div>
+                <p className="text-[12px] text-muted">
+                  Claude analiza los commits y actualiza automáticamente las tareas y el plan de acción.
+                </p>
+                {lastSync && (
+                  <p className="text-[11px] text-muted/60 mt-1">
+                    Última sincronización: {lastSync}
+                    {proyecto.github_last_commit_sha && ` · commit ${proyecto.github_last_commit_sha}`}
+                  </p>
+                )}
+              </div>
+              <button onClick={sync} disabled={syncing}
+                className="btn-accent disabled:opacity-50">
+                {syncing
+                  ? <><RefreshCw size={13} className="animate-spin" /> Analizando...</>
+                  : <><Zap size={13} /> Sincronizar con IA</>
+                }
+              </button>
+            </div>
+
+            {/* Result */}
+            {result && (
+              <div className="mt-5 space-y-3">
+                <div className="p-4 bg-accent/5 dark:bg-accent/10 rounded-xl border border-accent/20">
+                  <div className="text-[11px] uppercase tracking-wider text-accent font-semibold mb-2">
+                    Resultado del análisis · {result.commits_analizados} commits revisados
+                  </div>
+                  <p className="text-[13px] text-primary dark:text-slate-200">{result.summary}</p>
+                </div>
+
+                {result.task_updates.length > 0 && (
+                  <div>
+                    <div className="text-[11px] uppercase tracking-wider text-muted mb-2">Tareas actualizadas</div>
+                    <div className="space-y-2">
+                      {result.task_updates.map((u, i) => (
+                        <div key={i} className="flex items-start gap-3 p-3 bg-success/5 rounded-xl border border-success/20">
+                          <CheckCircle size={14} className="text-success mt-0.5 flex-shrink-0" />
+                          <div>
+                            <span className="text-[13px] font-medium">Tarea #{u.id}</span>
+                            <span className="text-[12px] text-muted ml-2">→ {u.status}</span>
+                            {u.reason && <p className="text-[11px] text-muted mt-0.5">{u.reason}</p>}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {result.plan_updates.length > 0 && (
+                  <div>
+                    <div className="text-[11px] uppercase tracking-wider text-muted mb-2">Plan de acción actualizado</div>
+                    <div className="space-y-2">
+                      {result.plan_updates.map((u, i) => (
+                        <div key={i} className="flex items-start gap-3 p-3 bg-success/5 rounded-xl border border-success/20">
+                          <CheckCircle size={14} className="text-success mt-0.5 flex-shrink-0" />
+                          <div>
+                            <span className="text-[13px] font-medium">Punto #{u.id}</span>
+                            <span className="text-[12px] text-muted ml-2">→ {u.completado ? 'completado' : 'pendiente'}</span>
+                            {u.reason && <p className="text-[11px] text-muted mt-0.5">{u.reason}</p>}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {result.task_updates.length === 0 && result.plan_updates.length === 0 && (
+                  <p className="text-[12px] text-muted">No se detectaron cambios para aplicar.</p>
+                )}
+              </div>
+            )}
+          </div>
+
+          {/* Recent commits */}
+          <div className="card p-6">
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-2">
+                <GitCommit size={14} className="text-muted" />
+                <h3 className="font-semibold text-[15px]">Commits recientes</h3>
+              </div>
+              <button onClick={loadCommits} className="btn-ghost text-[12px]">
+                <RefreshCw size={12} /> Actualizar
+              </button>
+            </div>
+
+            {loadingCommits ? (
+              <div className="space-y-2">
+                {[1,2,3].map(i => <div key={i} className="h-12 rounded-xl animate-pulse bg-neutral-100 dark:bg-slate-800" />)}
+              </div>
+            ) : commits.length === 0 ? (
+              <p className="text-[13px] text-muted text-center py-8">Sin commits disponibles.</p>
+            ) : (
+              <div className="space-y-1">
+                {commits.map((c, i) => (
+                  <div key={i} className="flex items-start gap-3 py-2.5 border-b border-border/50 dark:border-slate-700/50 last:border-0">
+                    <code className="text-[11px] text-accent bg-accent/10 px-1.5 py-0.5 rounded font-mono flex-shrink-0 mt-0.5">
+                      {c.sha}
+                    </code>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-[13px] text-primary dark:text-slate-200 truncate">{c.message}</p>
+                      <p className="text-[11px] text-muted">{c.author} · {c.date}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </>
+      )}
     </div>
   )
 }
