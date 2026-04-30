@@ -3,7 +3,6 @@ import json
 import httpx
 from typing import List, Dict
 
-ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY", "")
 ANTHROPIC_URL = "https://api.anthropic.com/v1/messages"
 
 
@@ -22,6 +21,7 @@ def analyze_commits(
             "summary": str
         }
     """
+    ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY", "")
     if not ANTHROPIC_API_KEY:
         return {
             "task_updates": [],

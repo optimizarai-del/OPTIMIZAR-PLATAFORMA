@@ -2,16 +2,14 @@ import os
 import httpx
 from typing import List, Dict
 
-GITHUB_TOKEN = os.getenv("GITHUB_TOKEN", "")
-
-
 def _headers() -> dict:
+    token = os.getenv("GITHUB_TOKEN", "")
     h = {
         "Accept": "application/vnd.github+json",
         "X-GitHub-Api-Version": "2022-11-28",
     }
-    if GITHUB_TOKEN:
-        h["Authorization"] = f"Bearer {GITHUB_TOKEN}"
+    if token:
+        h["Authorization"] = f"Bearer {token}"
     return h
 
 

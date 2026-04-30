@@ -16,6 +16,11 @@ backend/.env
 frontend/dist/
 frontend/.vite/
 
+# Logs
+backend/uvicorn.log
+frontend/vite.log
+frontend/vite-err.log
+
 # OS
 .DS_Store
 Thumbs.db
