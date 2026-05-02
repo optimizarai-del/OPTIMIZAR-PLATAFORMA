@@ -1,11 +1,14 @@
+import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import {
   LayoutGrid, CheckSquare, FileText, Users,
   Zap, Sun, Moon, Briefcase, Code2,
-  ClipboardList, UserCheck, Bell
+  ClipboardList, UserCheck, Bell, Keyboard
 } from 'lucide-react'
 import { useAuth } from '../../context/AuthContext'
 import { useTheme } from '../../context/ThemeContext'
+import { useShortcut } from '../../utils/useShortcut'
+import KeyboardShortcutsModal from '../KeyboardShortcutsModal'
 
 const link = ({ isActive }) =>
   `flex items-center gap-3 px-3 py-2 rounded-xl text-[13px] font-medium tracking-tight transition-all duration-200 ${
@@ -17,6 +20,10 @@ const link = ({ isActive }) =>
 export default function Sidebar() {
   const { isAdmin, isManager } = useAuth()
   const { dark, toggle } = useTheme()
+  const [shortcutsOpen, setShortcutsOpen] = useState(false)
+
+  // Atajo: ? abre el modal de ayuda
+  useShortcut(['shift+/', '?'], () => setShortcutsOpen(true))
 
   return (
     <aside className="w-60 shrink-0 border-r border-neutral-200 dark:border-slate-700/60
@@ -75,7 +82,22 @@ export default function Sidebar() {
       )}
 
       {/* ── FOOTER ──────────────────────────────────────── */}
-      <div className="mt-auto pt-6 px-1 space-y-3">
+      <div className="mt-auto pt-6 px-1 space-y-2">
+        {/* Atajos de teclado */}
+        <button
+          onClick={() => setShortcutsOpen(true)}
+          className="w-full flex items-center justify-between gap-3 px-3 py-2 rounded-xl
+                     text-[12px] font-medium tracking-tight transition-all duration-200
+                     text-muted dark:text-slate-400
+                     hover:bg-neutral-200/60 dark:hover:bg-slate-700/60
+                     hover:text-primary dark:hover:text-slate-100">
+          <span className="flex items-center gap-2">
+            <Keyboard size={13} />
+            Atajos
+          </span>
+          <kbd className="px-1.5 py-0.5 text-[10px] font-mono rounded bg-neutral-200/70 dark:bg-slate-700/60 text-muted">?</kbd>
+        </button>
+
         {/* Toggle tema */}
         <button
           onClick={toggle}
@@ -111,6 +133,8 @@ export default function Sidebar() {
           </div>
         </div>
       </div>
+
+      {shortcutsOpen && <KeyboardShortcutsModal onClose={() => setShortcutsOpen(false)} />}
     </aside>
   )
 }

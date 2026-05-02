@@ -2,6 +2,9 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Plus, FileText, Calendar, User } from 'lucide-react'
 import api from '../utils/api'
+import { toast } from '../utils/toast'
+import { SkeletonRow } from '../components/Skeleton'
+import EmptyState from '../components/EmptyState'
 
 const STATUS_LABEL = { nuevo:'Nuevo', evaluacion:'En evaluación', aprobado:'Aprobado', rechazado:'Rechazado', convertido:'Convertido' }
 const STATUS_CHIP  = { nuevo:'chip-accent', evaluacion:'chip-warn', aprobado:'chip-success', rechazado:'chip-danger', convertido:'chip-primary' }
@@ -26,8 +29,13 @@ export default function Requerimientos() {
   useEffect(() => { load() }, [])
 
   const cambiarStatus = async (id, status) => {
-    await api.patch(`/api/requerimientos/${id}`, { status })
-    load()
+    try {
+      await api.patch(`/api/requerimientos/${id}`, { status })
+      toast.success(`Estado: ${STATUS_LABEL[status]}`)
+      load()
+    } catch {
+      toast.error('No se pudo cambiar el estado')
+    }
   }
 
   const filtrados = filtro ? reqs.filter(r => r.status === filtro) : reqs
@@ -66,16 +74,18 @@ export default function Requerimientos() {
 
       {loading ? (
         <div className="space-y-3">
-          {[1,2,3].map(i => <div key={i} className="card h-28 animate-pulse bg-neutral-100" />)}
+          {[1,2,3].map(i => <SkeletonRow key={i} />)}
         </div>
       ) : filtrados.length === 0 ? (
-        <div className="card py-20 text-center">
-          <FileText size={40} className="mx-auto mb-3 text-muted/30" />
-          <p className="text-muted">No hay requerimientos todavía.</p>
-          <button onClick={() => nav('/requerimientos/nuevo')} className="btn-accent mt-6">
-            <Plus size={14} /> Cargar primer handover
-          </button>
-        </div>
+        <EmptyState
+          icon={FileText}
+          title={filtro ? `Sin requerimientos en estado "${STATUS_LABEL[filtro]}"` : 'No hay requerimientos todavía'}
+          description={filtro
+            ? 'Probá con otro filtro o cargá un handover nuevo.'
+            : 'Cargá tu primer handover desde Comercial → Nuevo Handover.'}
+          action={() => nav('/requerimientos/nuevo')}
+          actionLabel="+ Cargar primer handover"
+        />
       ) : (
         <div className="space-y-3">
           {filtrados.map(r => (

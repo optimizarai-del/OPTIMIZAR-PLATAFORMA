@@ -1,9 +1,13 @@
 import { useEffect, useState, useCallback } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { ArrowLeft, Plus, Check, Clock, ChevronRight, Trash2, Play, Square, Timer,
-         Github, RefreshCw, CheckCircle, GitCommit, Zap, Link, Unlink, Sparkles, FileText, Upload } from 'lucide-react'
+         Github, RefreshCw, CheckCircle, GitCommit, Zap, Link, Unlink, Sparkles, FileText, Upload,
+         CheckSquare, ListTodo } from 'lucide-react'
 import api from '../utils/api'
 import { useAuth } from '../context/AuthContext'
+import { toast } from '../utils/toast'
+import { useShortcut } from '../utils/useShortcut'
+import EmptyState from '../components/EmptyState'
 
 const STATUS_OPTIONS = ['pendiente','en_progreso','revision','completada','bloqueada']
 const STATUS_LABEL   = { pendiente:'Pendiente', en_progreso:'En progreso', revision:'Revisión', completada:'Completada', bloqueada:'Bloqueada' }
@@ -43,9 +47,17 @@ export default function ProyectoDetail() {
   useEffect(() => { loadAll() }, [loadAll])
 
   const togglePunto = async (punto) => {
-    await api.patch(`/api/proyectos/${id}/plan/${punto.id}`, { completado: !punto.completado })
-    loadAll()
+    try {
+      await api.patch(`/api/proyectos/${id}/plan/${punto.id}`, { completado: !punto.completado })
+      loadAll()
+    } catch (err) {
+      toast.error('No se pudo actualizar el punto')
+    }
   }
+
+  // Atajos: T → nueva tarea, P → nuevo punto, G → tab GitHub
+  useShortcut('t', () => { setTab('Tareas'); setModalTarea(true) }, { enabled: !modalTarea && !modalPunto && !openTarea })
+  useShortcut('p', () => { setTab('Plan de Acción'); setModalPunto(true) }, { enabled: !modalTarea && !modalPunto && !openTarea })
 
   if (loading) return (
     <div className="min-h-screen grid place-items-center">
@@ -300,27 +312,39 @@ function TareaDrawer({ tarea: initial, onClose, onSaved }) {
     }
   }, [timer])
 
-  const startTimer = () => { setTimer(Date.now()); setSeconds(0) }
+  const startTimer = () => { setTimer(Date.now()); setSeconds(0); toast.info('Timer iniciado') }
   const stopTimer  = async () => {
     if (!timer) return
     const minutos = Math.max(1, Math.round(seconds / 60))
     setTimer(null)
     setSeconds(0)
-    await api.post('/api/tiempo', {
-      tarea_id: tarea.id, minutos, tipo: 'timer',
-      fecha: new Date().toISOString().split('T')[0],
-      descripcion: 'Sesión de trabajo (timer)',
-    })
-    loadRegistros()
-    reloadTarea()
-    onSaved()
+    try {
+      await api.post('/api/tiempo', {
+        tarea_id: tarea.id, minutos, tipo: 'timer',
+        fecha: new Date().toISOString().split('T')[0],
+        descripcion: 'Sesión de trabajo (timer)',
+      })
+      toast.success(`+${minutos} min registrados`)
+      loadRegistros()
+      reloadTarea()
+      onSaved()
+    } catch {
+      toast.error('No se pudo guardar el tiempo')
+    }
   }
 
   const cambiarStatus = async status => {
-    await api.patch(`/api/tareas/${tarea.id}`, { status })
-    reloadTarea()
-    onSaved()
+    try {
+      await api.patch(`/api/tareas/${tarea.id}`, { status })
+      toast.success(`Estado: ${STATUS_LABEL[status]}`)
+      reloadTarea()
+      onSaved()
+    } catch {
+      toast.error('No se pudo cambiar el estado')
+    }
   }
+
+  useShortcut('Escape', onClose)
 
   const fmt = s => `${String(Math.floor(s/3600)).padStart(2,'0')}:${String(Math.floor((s%3600)/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`
   const totalHoras = (registros.reduce((a,r) => a + r.minutos, 0) / 60).toFixed(1)
@@ -424,13 +448,18 @@ function ModalRegistroManual({ tareaId, onClose, onSaved }) {
   const [saving, setSaving] = useState(false)
   const set = k => e => setForm(f => ({ ...f, [k]: e.target.value }))
 
+  useShortcut('Escape', onClose)
+
   const handle = async e => {
     e.preventDefault()
     setSaving(true)
     try {
       await api.post('/api/tiempo', { ...form, minutos: parseInt(form.minutos), tarea_id: tareaId, tipo: 'manual' })
+      toast.success(`+${form.minutos} min registrados`)
       onSaved()
       onClose()
+    } catch {
+      toast.error('No se pudo registrar el tiempo')
     } finally {
       setSaving(false)
     }
@@ -480,6 +509,8 @@ function ModalNuevaTarea({ proyectoId, onClose, onSaved }) {
   const [saving, setSaving] = useState(false)
   const set = k => e => setForm(f => ({ ...f, [k]: e.target.value }))
 
+  useShortcut('Escape', onClose)
+
   const handle = async e => {
     e.preventDefault()
     setSaving(true)
@@ -490,8 +521,11 @@ function ModalNuevaTarea({ proyectoId, onClose, onSaved }) {
         fecha_fin_estimada: form.fecha_fin_estimada || null,
         minutos_estimados: form.minutos_estimados ? parseInt(form.minutos_estimados) : null,
       })
+      toast.success('Tarea creada')
       onSaved()
       onClose()
+    } catch (err) {
+      toast.error(err.response?.data?.detail || 'No se pudo crear la tarea')
     } finally {
       setSaving(false)
     }
@@ -553,13 +587,22 @@ function AIGenerateButton({ endpoint, label, onDone }) {
 
   const run = async () => {
     setLoading(true); setError(null); setResult(null)
+    const t = toast.loading('La IA está pensando...')
     try {
       const r = await api.post(endpoint)
       setResult(r.data)
+      const summary = r.data.plan_creados
+        ? `${r.data.plan_creados} puntos creados`
+        : `${r.data.tareas_creadas} tareas creadas`
+      toast.dismiss(t)
+      toast.success(summary)
       onDone?.()
       setTimeout(() => setResult(null), 8000)
     } catch (e) {
-      setError(e.response?.data?.detail || 'Error de IA')
+      const msg = e.response?.data?.detail || 'Error de IA'
+      setError(msg)
+      toast.dismiss(t)
+      toast.error(msg)
       setTimeout(() => setError(null), 6000)
     } finally {
       setLoading(false)
@@ -613,15 +656,22 @@ function ImportarPanel({ proyectoId, onDone }) {
   const importar = async () => {
     if (contenido.trim().length < 30) {
       setError('El contenido es muy corto. Mínimo 30 caracteres.')
+      toast.error('El contenido es muy corto')
       return
     }
     setLoading(true); setError(null); setResult(null)
+    const t = toast.loading('Analizando documento con IA...')
     try {
       const r = await api.post(`/api/proyectos/${proyectoId}/ai/desde-documento`, { contenido })
       setResult(r.data)
+      toast.dismiss(t)
+      toast.success(`${r.data.plan_creados} puntos + ${r.data.tareas_creadas} tareas creados`)
       onDone?.()
     } catch (e) {
-      setError(e.response?.data?.detail || 'Error al procesar el documento')
+      const msg = e.response?.data?.detail || 'Error al procesar el documento'
+      setError(msg)
+      toast.dismiss(t)
+      toast.error(msg)
     } finally {
       setLoading(false)
     }
@@ -774,10 +824,13 @@ function GitHubPanel({ proyecto, onRefresh }) {
     setError(null)
     try {
       await api.put(`/api/proyectos/${proyecto.id}/github/repo`, { repo: repo.trim() })
+      toast.success(repo.trim() ? 'Repositorio vinculado' : 'Repositorio desvinculado')
       onRefresh()
       if (repo.trim()) setTimeout(loadCommits, 300)
     } catch (e) {
-      setError(e.response?.data?.detail || 'Error al guardar repositorio')
+      const msg = e.response?.data?.detail || 'Error al guardar repositorio'
+      setError(msg)
+      toast.error(msg)
     } finally {
       setSaving(false)
     }
@@ -787,12 +840,23 @@ function GitHubPanel({ proyecto, onRefresh }) {
     setSyncing(true)
     setError(null)
     setResult(null)
+    const t = toast.loading('Sincronizando commits con IA...')
     try {
       const r = await api.post(`/api/proyectos/${proyecto.id}/github/sync`)
       setResult(r.data)
+      const changes = r.data.task_updates.length + r.data.plan_updates.length
+      toast.dismiss(t)
+      if (changes > 0) {
+        toast.success(`${changes} cambios aplicados desde ${r.data.commits_analizados} commits`)
+      } else {
+        toast.info(`${r.data.commits_analizados} commits analizados, sin cambios`)
+      }
       onRefresh()
     } catch (e) {
-      setError(e.response?.data?.detail || 'Error al sincronizar')
+      const msg = e.response?.data?.detail || 'Error al sincronizar'
+      setError(msg)
+      toast.dismiss(t)
+      toast.error(msg)
     } finally {
       setSyncing(false)
     }
@@ -968,13 +1032,18 @@ function ModalNuevoPunto({ proyectoId, onClose, onSaved, orden }) {
   const [saving, setSaving] = useState(false)
   const set = k => e => setForm(f => ({ ...f, [k]: e.target.value }))
 
+  useShortcut('Escape', onClose)
+
   const handle = async e => {
     e.preventDefault()
     setSaving(true)
     try {
       await api.post(`/api/proyectos/${proyectoId}/plan`, { ...form, orden })
+      toast.success('Punto agregado al plan')
       onSaved()
       onClose()
+    } catch (err) {
+      toast.error('No se pudo agregar el punto')
     } finally {
       setSaving(false)
     }

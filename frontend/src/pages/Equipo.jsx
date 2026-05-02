@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react'
 import { Trash2 } from 'lucide-react'
 import api from '../utils/api'
 import { useAuth } from '../context/AuthContext'
+import { toast } from '../utils/toast'
+import { SkeletonRow } from '../components/Skeleton'
 
 const ROLE_LABEL = { admin:'Admin', manager:'Manager', developer:'Developer', viewer:'Viewer' }
 const ROLE_CHIP  = { admin:'chip-danger', manager:'chip-warn', developer:'chip-accent', viewer:'chip-muted' }
@@ -15,14 +17,24 @@ export default function Equipo() {
   useEffect(() => { load() }, [])
 
   const cambiarRol = async (uid, role) => {
-    await api.patch(`/api/users/${uid}`, { role })
-    load()
+    try {
+      await api.patch(`/api/users/${uid}`, { role })
+      toast.success(`Rol actualizado a ${ROLE_LABEL[role]}`)
+      load()
+    } catch {
+      toast.error('No se pudo cambiar el rol')
+    }
   }
 
   const eliminar = async uid => {
     if (!confirm('¿Eliminar usuario?')) return
-    await api.delete(`/api/users/${uid}`)
-    load()
+    try {
+      await api.delete(`/api/users/${uid}`)
+      toast.success('Usuario eliminado')
+      load()
+    } catch {
+      toast.error('No se pudo eliminar el usuario')
+    }
   }
 
   return (
@@ -35,8 +47,8 @@ export default function Equipo() {
 
       <div className="card overflow-hidden">
         {loading ? (
-          <div className="p-8 space-y-4">
-            {[1,2,3].map(i => <div key={i} className="h-12 bg-neutral-100 rounded-2xl animate-pulse" />)}
+          <div className="p-4 space-y-2">
+            {[1,2,3,4,5].map(i => <SkeletonRow key={i} />)}
           </div>
         ) : (
           <table className="w-full">
@@ -102,7 +114,7 @@ export default function Equipo() {
         </div>
         <button onClick={() => {
           navigator.clipboard.writeText(window.location.origin + '/register')
-          alert('Link copiado al portapapeles')
+          toast.success('Link copiado al portapapeles')
         }} className="btn-secondary">
           Copiar link de registro
         </button>

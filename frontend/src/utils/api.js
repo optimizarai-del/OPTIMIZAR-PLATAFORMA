@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { toast } from './toast'
 
 const api = axios.create({ baseURL: import.meta.env.VITE_API_URL || 'http://localhost:8765' })
 
@@ -23,8 +24,16 @@ api.interceptors.request.use(config => {
 
 api.interceptors.response.use(r => r, err => {
   if (err.response?.status === 401) {
-    localStorage.removeItem('opt_token')
-    window.location.href = '/login'
+    // Solo redirige si NO estamos en /login (evita loop al fallar el propio login)
+    if (!window.location.pathname.startsWith('/login')) {
+      localStorage.removeItem('opt_token')
+      window.location.href = '/login'
+    }
+  } else if (err.response?.status >= 500) {
+    toast.error('Error del servidor. Probá de nuevo.')
+  } else if (!err.response) {
+    // Error de red (sin internet, backend caido)
+    toast.error('Sin conexión con el servidor.')
   }
   return Promise.reject(err)
 })

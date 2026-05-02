@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import { Mail, MailX, RefreshCw, CheckCircle, XCircle, Zap, Settings } from 'lucide-react'
 import api from '../utils/api'
+import { SkeletonRow } from '../components/Skeleton'
+import EmptyState from '../components/EmptyState'
 
 const TIPO_LABEL = {
   tarea_asignada:        'Tarea asignada',
@@ -133,18 +135,14 @@ export default function Notificaciones() {
       {/* Lista */}
       {loading ? (
         <div className="space-y-3">
-          {[1,2,3,4].map(i => <div key={i} className="card h-20 animate-pulse bg-neutral-100 dark:bg-slate-800" />)}
+          {[1,2,3,4].map(i => <SkeletonRow key={i} />)}
         </div>
       ) : notifs.length === 0 ? (
-        <div className="card py-20 text-center">
-          <Mail size={40} className="mx-auto mb-3 text-muted/30" />
-          <p className="text-muted">
-            {soloErr ? 'No hay notificaciones con error.' : 'No se registraron notificaciones todavía.'}
-          </p>
-          <p className="text-[12px] text-muted/60 mt-2">
-            Las notificaciones se generan automáticamente al asignar o modificar tareas.
-          </p>
-        </div>
+        <EmptyState
+          icon={Mail}
+          title={soloErr ? 'Sin errores de envío' : 'Sin notificaciones todavía'}
+          description="Las notificaciones se generan automáticamente al asignar tareas, cambiar estados o modificar detalles."
+        />
       ) : (
         <div className="space-y-2">
           {notifs.map(n => (

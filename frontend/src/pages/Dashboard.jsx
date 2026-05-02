@@ -3,6 +3,10 @@ import { useNavigate } from 'react-router-dom'
 import { Plus, Folder, Calendar, CheckCircle, Clock } from 'lucide-react'
 import api from '../utils/api'
 import { useAuth } from '../context/AuthContext'
+import { toast } from '../utils/toast'
+import { useShortcut } from '../utils/useShortcut'
+import { SkeletonGrid } from '../components/Skeleton'
+import EmptyState from '../components/EmptyState'
 
 const STATUS_LABEL = {
   planificacion: 'Planificación',
@@ -37,6 +41,9 @@ export default function Dashboard() {
     api.get('/api/proyectos').then(r => { setProyectos(r.data); setLoading(false) })
   }
   useEffect(() => { load() }, [])
+
+  // Atajo: N para nuevo proyecto (solo manager+)
+  useShortcut('n', () => isManager && setOpenModal(true), { enabled: !openModal })
 
   const filtrados = filtro ? proyectos.filter(p => p.status === filtro) : proyectos
 
@@ -76,21 +83,17 @@ export default function Dashboard() {
       </div>
 
       {loading ? (
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {[1,2,3].map(i => <div key={i} className="card h-52 animate-pulse bg-neutral-100" />)}
-        </div>
+        <SkeletonGrid count={6} type="card" />
       ) : filtrados.length === 0 ? (
-        <div className="card text-center py-24">
-          <Folder size={48} className="mx-auto mb-4 text-muted/30" />
-          <p className="text-muted text-lg">
-            {filtro ? 'No hay proyectos con este estado.' : 'Todavía no hay proyectos.'}
-          </p>
-          {isManager && !filtro && (
-            <button onClick={() => setOpenModal(true)} className="btn-accent mt-6">
-              <Plus size={14} /> Crear primer proyecto
-            </button>
-          )}
-        </div>
+        <EmptyState
+          icon={Folder}
+          title={filtro ? 'Sin proyectos en este estado' : 'Todavía no hay proyectos'}
+          description={filtro
+            ? 'Probá cambiar el filtro o crear un proyecto nuevo.'
+            : 'Arrancá creando tu primer proyecto. Tip: presioná "N" para crear rápido.'}
+          action={isManager && !filtro ? () => setOpenModal(true) : null}
+          actionLabel="+ Crear primer proyecto"
+        />
       ) : (
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {filtrados.map(p => (
@@ -168,6 +171,8 @@ function ModalNuevoProyecto({ onClose, onSaved }) {
 
   const COLORES = ['#6366F1','#10B981','#F59E0B','#EF4444','#8B5CF6','#06B6D4','#EC4899','#0EA5E9']
 
+  useShortcut('Escape', onClose)
+
   const handle = async e => {
     e.preventDefault()
     setSaving(true)
@@ -177,8 +182,11 @@ function ModalNuevoProyecto({ onClose, onSaved }) {
         fecha_inicio: form.fecha_inicio || null,
         fecha_fin: form.fecha_fin || null,
       })
+      toast.success(`Proyecto "${form.nombre}" creado`)
       onSaved()
       onClose()
+    } catch (err) {
+      toast.error(err.response?.data?.detail || 'No se pudo crear el proyecto')
     } finally {
       setSaving(false)
     }

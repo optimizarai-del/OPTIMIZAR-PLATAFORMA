@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import Logo from '../components/Logo'
+import { toast } from '../utils/toast'
 
 export default function Login() {
   const { login } = useAuth()
@@ -16,6 +17,7 @@ export default function Login() {
     setLoading(true)
     try {
       await login(form.email, form.password)
+      toast.success('¡Bienvenido!')
       nav('/')
     } catch {
       setError('Credenciales inválidas. Verificá email y contraseña.')

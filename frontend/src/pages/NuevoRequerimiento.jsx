@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { ArrowLeft, Save } from 'lucide-react'
 import api from '../utils/api'
+import { toast } from '../utils/toast'
 
 const HERRAMIENTAS_OPT = [
   'Excel / Google Sheets',
@@ -57,9 +58,12 @@ export default function NuevoRequerimiento() {
         ...form,
         fecha_entrega: form.fecha_entrega || null,
       })
+      toast.success(`Handover de ${form.nombre_cliente} registrado`)
       nav('/requerimientos')
-    } catch {
-      setError('Error al guardar. Verificá los datos.')
+    } catch (err) {
+      const msg = err.response?.data?.detail || 'Error al guardar. Verificá los datos.'
+      setError(msg)
+      toast.error(msg)
     } finally {
       setSaving(false)
     }

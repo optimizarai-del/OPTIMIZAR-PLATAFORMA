@@ -1,6 +1,9 @@
 import { useEffect, useState } from 'react'
-import { Plus, Check, Clock, Filter } from 'lucide-react'
+import { Plus, Check, Clock, Filter, CheckSquare } from 'lucide-react'
 import api from '../utils/api'
+import { toast } from '../utils/toast'
+import { SkeletonRow, SkeletonStats } from '../components/Skeleton'
+import EmptyState from '../components/EmptyState'
 
 const STATUS_LABEL = { pendiente:'Pendiente', en_progreso:'En progreso', revision:'Revisión', completada:'Completada', bloqueada:'Bloqueada' }
 const STATUS_CHIP  = { pendiente:'chip-muted', en_progreso:'chip-accent', revision:'chip-warn', completada:'chip-success', bloqueada:'chip-danger' }
@@ -35,8 +38,13 @@ export default function Tareas() {
   useEffect(() => { load() }, [])
 
   const cambiarStatus = async (id, status) => {
-    await api.patch(`/api/tareas/${id}`, { status })
-    load()
+    try {
+      await api.patch(`/api/tareas/${id}`, { status })
+      toast.success(status === 'completada' ? '✓ Tarea completada' : `Estado: ${STATUS_LABEL[status]}`)
+      load()
+    } catch {
+      toast.error('No se pudo cambiar el estado')
+    }
   }
 
   const filtradas = tareas.filter(t => {
@@ -103,12 +111,18 @@ export default function Tareas() {
 
       {loading ? (
         <div className="space-y-3">
-          {[1,2,3,4].map(i => <div key={i} className="card h-16 animate-pulse bg-neutral-100" />)}
+          {[1,2,3,4,5].map(i => <SkeletonRow key={i} />)}
         </div>
       ) : filtradas.length === 0 ? (
-        <div className="card py-16 text-center">
-          <p className="text-muted">No hay tareas con estos filtros.</p>
-        </div>
+        <EmptyState
+          icon={CheckSquare}
+          title="No hay tareas con estos filtros"
+          description={tareas.length === 0
+            ? 'Las tareas se crean desde el detalle de cada proyecto, o usando "Generar con IA".'
+            : 'Probá quitar algún filtro para ver más resultados.'}
+          action={tareas.length > 0 ? () => { setFiltroStatus(''); setFiltroProyecto('') } : null}
+          actionLabel="Limpiar filtros"
+        />
       ) : (
         <div className="space-y-2">
           {filtradas.map(t => {
