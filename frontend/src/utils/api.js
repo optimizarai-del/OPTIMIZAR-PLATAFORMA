@@ -8,14 +8,15 @@ api.interceptors.request.use(config => {
   const token = localStorage.getItem('opt_token')
   if (token) config.headers.Authorization = `Bearer ${token}`
 
-  // Normalizar trailing slash en endpoints de coleccion para evitar el 307
-  // de FastAPI. Como back y front estan en subdominios distintos (cross-origin),
-  // Chrome dropea Authorization en redirects → la 2da request falla con 401.
-  // Solo aplico al PATH (sin querystring), y no toco URLs que ya tienen extension
-  // (.json, .pdf, etc) ni paths que ya terminan en slash.
-  if (config.url && config.url.startsWith('/api/')) {
+  // Normalizar trailing slash SOLO en endpoints de coleccion root tipo
+  // /api/proyectos, /api/tareas, etc. — esos son los unicos que FastAPI
+  // declara con `route="/"` y necesitan el slash final.
+  // No tocar /api/proyectos/4, /api/proyectos/4/plan, /api/notificaciones/stats
+  // porque esos son endpoints que NO tienen slash al final en FastAPI y
+  // agregarlo da 404.
+  if (config.url) {
     const [path, qs] = config.url.split('?')
-    if (!path.endsWith('/') && !/\.[a-z0-9]+$/i.test(path)) {
+    if (/^\/api\/[a-z_-]+$/i.test(path)) {
       config.url = path + '/' + (qs ? '?' + qs : '')
     }
   }
