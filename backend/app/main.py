@@ -12,7 +12,14 @@ from app.routers import auth, users, proyectos, tareas, tiempo, requerimientos, 
 
 Base.metadata.create_all(bind=engine)
 
-app = FastAPI(title="Optimizar — Automatización · Eficiencia · Resultados", version="1.0.0")
+# redirect_slashes=False evita los 307 cuando se llama a /api/proyectos en lugar de /api/proyectos/.
+# Esos redirects rompen llamadas cross-origin desde el frontend porque Chrome
+# dropea el header Authorization en redirects entre subdominios distintos.
+app = FastAPI(
+    title="Optimizar — Automatización · Eficiencia · Resultados",
+    version="1.0.0",
+    redirect_slashes=False,
+)
 
 origins = os.getenv("CORS_ORIGINS", "http://localhost:5173").split(",")
 app.add_middleware(
