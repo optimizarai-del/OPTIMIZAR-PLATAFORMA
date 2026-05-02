@@ -18,5 +18,8 @@ COPY . .
 
 EXPOSE 8000
 
-# Usar 0.0.0.0 para que sea accesible desde fuera del container
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+# --proxy-headers + --forwarded-allow-ips=* hacen que uvicorn respete los
+# headers X-Forwarded-Proto / X-Forwarded-Host del reverse proxy de EasyPanel
+# (Traefik). Sin esto, los redirects 307 de FastAPI (ej: /api/proyectos -> /api/proyectos/)
+# salen con esquema http en el Location header y el browser los bloquea por mixed-content.
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--proxy-headers", "--forwarded-allow-ips=*"]
