@@ -165,6 +165,61 @@ class Notificacion(Base):
     tarea = relationship("Tarea", foreign_keys=[tarea_id])
 
 
+class EtapaOportunidad(str, Enum):
+    lead          = "lead"
+    contactado    = "contactado"
+    propuesta     = "propuesta"
+    negociacion   = "negociacion"
+    ganado        = "ganado"
+    perdido       = "perdido"
+
+
+class FuenteOportunidad(str, Enum):
+    manual    = "manual"
+    web       = "web"
+    referido  = "referido"
+    api       = "api"          # creada/actualizada vía endpoint externo
+    otro      = "otro"
+
+
+class Oportunidad(Base):
+    """Oportunidad de venta del pipeline CRM. La info de contacto va embebida
+    (no hay entidad Contacto separada, por decisión de alcance)."""
+    __tablename__ = "oportunidades"
+
+    id = Column(Integer, primary_key=True)
+
+    # ── Contacto embebido ──
+    empresa = Column(String, nullable=False)
+    contacto_nombre = Column(String, nullable=True)
+    contacto_email = Column(String, nullable=True, index=True)
+    contacto_telefono = Column(String, nullable=True)
+
+    # ── Pipeline ──
+    titulo = Column(String, nullable=False)
+    descripcion = Column(Text, nullable=True)
+    etapa = Column(SQLEnum(EtapaOportunidad), default=EtapaOportunidad.lead, index=True)
+    valor_estimado = Column(Float, default=0.0)        # monto potencial
+    probabilidad = Column(Integer, default=0)          # 0-100 %
+    orden = Column(Integer, default=0)                 # orden dentro de la columna
+    fuente = Column(SQLEnum(FuenteOportunidad), default=FuenteOportunidad.manual)
+
+    # ── Clave de idempotencia para el endpoint externo (upsert) ──
+    external_id = Column(String, nullable=True, unique=True, index=True)
+
+    responsable = Column(String, nullable=True)
+    proxima_accion = Column(String, nullable=True)
+    fecha_cierre_estimada = Column(Date, nullable=True)
+
+    # ── Conversión a proyecto (cuando se gana) ──
+    proyecto_id = Column(Integer, ForeignKey("proyectos.id"), nullable=True)
+
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+    proyecto = relationship("Proyecto", foreign_keys=[proyecto_id])
+
+
 class Requerimiento(Base):
     __tablename__ = "requerimientos"
 

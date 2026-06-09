@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom'
 import {
   LayoutGrid, CheckSquare, FileText, Users,
   Zap, Sun, Moon, Briefcase, Code2,
-  ClipboardList, UserCheck, Bell, Keyboard
+  ClipboardList, UserCheck, Bell, Keyboard, Kanban
 } from 'lucide-react'
 import { useAuth } from '../../context/AuthContext'
 import { useTheme } from '../../context/ThemeContext'
@@ -35,6 +35,11 @@ export default function Sidebar() {
         <Briefcase size={9} className="text-accent" />
         Comercial
       </div>
+
+      <NavLink to="/crm" className={link}>
+        <Kanban size={15} strokeWidth={1.8} />
+        CRM · Pipeline
+      </NavLink>
 
       <NavLink to="/requerimientos" className={link}>
         <FileText size={15} strokeWidth={1.8} />

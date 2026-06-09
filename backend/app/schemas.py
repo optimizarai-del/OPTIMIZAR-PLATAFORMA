@@ -1,7 +1,9 @@
 from pydantic import BaseModel, EmailStr
 from typing import Optional, List
 from datetime import datetime, date
-from app.models import UserRole, ProyectoStatus, TareaStatus, TareaPrioridad, TipoRegistro, RequerimientoStatus, NotificacionTipo
+from app.models import (UserRole, ProyectoStatus, TareaStatus, TareaPrioridad,
+                        TipoRegistro, RequerimientoStatus, NotificacionTipo,
+                        EtapaOportunidad, FuenteOportunidad)
 
 
 # ── Auth ──────────────────────────────────────────────────────────────────────
@@ -281,6 +283,93 @@ class NotificacionOut(BaseModel):
 
     class Config:
         from_attributes = True
+
+
+# ── CRM: Oportunidad ──────────────────────────────────────────────────────────
+
+class OportunidadCreate(BaseModel):
+    empresa: str
+    titulo: str
+    contacto_nombre: Optional[str] = None
+    contacto_email: Optional[str] = None
+    contacto_telefono: Optional[str] = None
+    descripcion: Optional[str] = None
+    etapa: EtapaOportunidad = EtapaOportunidad.lead
+    valor_estimado: float = 0.0
+    probabilidad: int = 0
+    fuente: FuenteOportunidad = FuenteOportunidad.manual
+    responsable: Optional[str] = None
+    proxima_accion: Optional[str] = None
+    fecha_cierre_estimada: Optional[date] = None
+
+
+class OportunidadUpdate(BaseModel):
+    empresa: Optional[str] = None
+    titulo: Optional[str] = None
+    contacto_nombre: Optional[str] = None
+    contacto_email: Optional[str] = None
+    contacto_telefono: Optional[str] = None
+    descripcion: Optional[str] = None
+    etapa: Optional[EtapaOportunidad] = None
+    valor_estimado: Optional[float] = None
+    probabilidad: Optional[int] = None
+    orden: Optional[int] = None
+    responsable: Optional[str] = None
+    proxima_accion: Optional[str] = None
+    fecha_cierre_estimada: Optional[date] = None
+    proyecto_id: Optional[int] = None
+
+
+class OportunidadOut(BaseModel):
+    id: int
+    empresa: str
+    contacto_nombre: Optional[str]
+    contacto_email: Optional[str]
+    contacto_telefono: Optional[str]
+    titulo: str
+    descripcion: Optional[str]
+    etapa: EtapaOportunidad
+    valor_estimado: float
+    probabilidad: int
+    orden: int
+    fuente: FuenteOportunidad
+    external_id: Optional[str]
+    responsable: Optional[str]
+    proxima_accion: Optional[str]
+    fecha_cierre_estimada: Optional[date]
+    proyecto_id: Optional[int]
+    created_at: datetime
+    updated_at: Optional[datetime]
+
+    class Config:
+        from_attributes = True
+
+
+class OportunidadExternal(BaseModel):
+    """Payload del endpoint externo (API Key). `external_id` permite upsert
+    idempotente: si ya existe una oportunidad con ese id, se actualiza."""
+    external_id: str
+    empresa: str
+    titulo: Optional[str] = None
+    contacto_nombre: Optional[str] = None
+    contacto_email: Optional[str] = None
+    contacto_telefono: Optional[str] = None
+    descripcion: Optional[str] = None
+    etapa: Optional[EtapaOportunidad] = None
+    valor_estimado: Optional[float] = None
+    probabilidad: Optional[int] = None
+    responsable: Optional[str] = None
+    proxima_accion: Optional[str] = None
+    fecha_cierre_estimada: Optional[date] = None
+
+
+class CRMStats(BaseModel):
+    total_oportunidades: int
+    valor_pipeline: float          # suma de valor_estimado de oportunidades abiertas
+    valor_ganado: float
+    ganadas: int
+    perdidas: int
+    por_etapa: dict                # { etapa: {count, valor} }
 
 
 # ── Dashboard ─────────────────────────────────────────────────────────────────
