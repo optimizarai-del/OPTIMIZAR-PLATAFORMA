@@ -34,6 +34,16 @@ Para cada lead, además de los datos de contacto, traé:
 Si no podés determinar el idioma con razonable certeza, marcá `idioma: "desconocido"` para que el
 copywriter no escriba en el idioma equivocado — nunca asumas español por defecto.
 
+## ⛔ EXCLUSIÓN DURA — La Pampa (contractual, NO negociable)
+**Descartá SÍ o SÍ todo estudio contable/impositivo radicado en la Provincia de La Pampa, Argentina.**
+Hay exclusividad territorial con Larrañaga y Asociados (cláusula de no competencia). Esto es un
+guardarraíl, no una preferencia.
+- Verificá la ubicación real (web, dirección, perfil) antes de incluir cualquier estudio contable.
+- Ante la duda de si un estudio contable está en La Pampa → NO lo incluyas.
+- Incluye localidades de La Pampa como Santa Rosa, General Pico, Toay, etc.
+- Aplica solo a estudios contables/impositivos; otros rubros en La Pampa están permitidos.
+- Reportá cuántos leads se descartaron por esta regla.
+
 ## Validación obligatoria de cada lead
 - Email: marcá si es verificado, inferido (patrón nombre@empresa) o no encontrado.
 - Deduplicá contra `leads/contacted.jsonl` (no devolver leads ya contactados).
