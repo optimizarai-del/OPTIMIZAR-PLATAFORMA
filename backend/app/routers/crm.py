@@ -287,6 +287,19 @@ def set_estado_chat(mid: int, estado: str, db: Session = Depends(get_db),
     return msg
 
 
+@router.get("/external/chat", response_model=List[ChatMensajeOut], tags=["crm-external"])
+def listar_chat_externo(limit: int = 50, db: Session = Depends(get_db),
+                        _=Depends(verify_api_key)):
+    """Lo consume el 'puente' (Claude Code en loop, sobre el plan) para leer el chat sin login JWT.
+    Devuelve los últimos `limit` mensajes en orden cronológico. El puente detecta los mensajes
+    humanos que aún no tienen respuesta del agente y los contesta vía POST /external/chat."""
+    msgs = (db.query(ChatMensaje)
+              .order_by(ChatMensaje.created_at.desc())
+              .limit(limit)
+              .all())
+    return list(reversed(msgs))
+
+
 @router.post("/external/chat", response_model=ChatMensajeOut, tags=["crm-external"])
 def postear_agente(data: ChatMensajeCreate, db: Session = Depends(get_db),
                    _=Depends(verify_api_key)):
