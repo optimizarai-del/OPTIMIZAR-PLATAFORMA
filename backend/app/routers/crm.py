@@ -17,6 +17,10 @@ router = APIRouter(prefix="/api/crm", tags=["crm"])
 ETAPAS_ABIERTAS = [EtapaOportunidad.lead, EtapaOportunidad.contactado,
                    EtapaOportunidad.propuesta, EtapaOportunidad.negociacion]
 
+# Campos que nunca se actualizan desde el payload (anti mass-assignment).
+CAMPOS_PROHIBIDOS = {"id", "created_by", "created_at", "updated_at", "user_id",
+                     "external_id", "fuente"}
+
 
 # ── CRUD (autenticado con JWT) ────────────────────────────────────────────────
 
@@ -53,6 +57,8 @@ def editar(oid: int, data: OportunidadUpdate, db: Session = Depends(get_db),
     if not op:
         raise HTTPException(404, "Oportunidad no encontrada")
     for k, v in data.model_dump(exclude_unset=True).items():
+        if k in CAMPOS_PROHIBIDOS:
+            continue
         setattr(op, k, v)
     db.commit()
     db.refresh(op)
@@ -143,6 +149,8 @@ def upsert_externo(data: OportunidadExternal, db: Session = Depends(get_db),
 
     if op:                                   # UPDATE
         for k, v in payload.items():
+            if k in CAMPOS_PROHIBIDOS:       # external_id ya coincide; no se reescribe
+                continue
             setattr(op, k, v)
     else:                                    # CREATE
         etapa = payload.pop("etapa", None) or EtapaOportunidad.lead

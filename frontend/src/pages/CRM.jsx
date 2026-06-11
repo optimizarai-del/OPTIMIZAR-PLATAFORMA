@@ -37,8 +37,10 @@ export default function CRM() {
       api.get('/api/crm/oportunidades'),
       api.get('/api/crm/stats'),
     ]).then(([o, s]) => {
-      setOps(o.data); setStats(s.data); setLoading(false)
-    }).catch(() => setLoading(false))
+      setOps(o.data); setStats(s.data)
+    }).catch(() => {
+      toast.error('No se pudo cargar el CRM.')
+    }).finally(() => setLoading(false))
   }, [])
 
   useEffect(() => { load() }, [load])
@@ -62,7 +64,9 @@ export default function CRM() {
       await api.patch(`/api/crm/oportunidades/${op.id}`, { etapa })
       const lbl = ETAPAS.find(e => e.key === etapa)?.label
       toast.success(`${op.empresa} → ${lbl}`)
-      api.get('/api/crm/stats').then(s => setStats(s.data))
+      api.get('/api/crm/stats')
+        .then(s => setStats(s.data))
+        .catch(() => toast.error('No se pudieron actualizar las métricas del CRM.'))
     } catch {
       setOps(list => list.map(o => o.id === op.id ? { ...o, etapa: prev } : o))
       toast.error('No se pudo mover')

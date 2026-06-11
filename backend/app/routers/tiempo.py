@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from typing import List, Optional
 from app.database import get_db
-from app.models import RegistroTiempo, Tarea, User
+from app.models import RegistroTiempo, Tarea, User, UserRole
 from app.schemas import RegistroTiempoCreate, RegistroTiempoOut
 from app.security import get_db_user
 
@@ -18,8 +18,12 @@ def _enrich(r: RegistroTiempo) -> dict:
 
 @router.get("/", response_model=List[RegistroTiempoOut])
 def listar(tarea_id: Optional[int] = None, db: Session = Depends(get_db),
-           _=Depends(get_db_user)):
+           current_user: User = Depends(get_db_user)):
     q = db.query(RegistroTiempo)
+    # Cada usuario ve solo sus registros; admin/manager ven todos
+    # (mismo patrón de roles que el delete de proyectos/oportunidades).
+    if current_user.role not in [UserRole.admin, UserRole.manager]:
+        q = q.filter(RegistroTiempo.user_id == current_user.id)
     if tarea_id:
         q = q.filter(RegistroTiempo.tarea_id == tarea_id)
     return [_enrich(r) for r in q.order_by(RegistroTiempo.fecha.desc()).all()]

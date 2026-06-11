@@ -14,6 +14,10 @@ import app.ai_service as ai
 
 router = APIRouter(prefix="/api/proyectos", tags=["proyectos"])
 
+# Campos que nunca se actualizan desde el payload (anti mass-assignment).
+CAMPOS_PROHIBIDOS = {"id", "created_by", "created_at", "updated_at", "user_id",
+                     "github_last_sync", "github_last_commit_sha"}
+
 
 def _enrich(p: Proyecto) -> dict:
     total_tareas = len(p.tareas)
@@ -69,6 +73,8 @@ def editar(pid: int, data: ProyectoUpdate, db: Session = Depends(get_db),
     if not p:
         raise HTTPException(404, "Proyecto no encontrado")
     for k, v in data.model_dump(exclude_unset=True).items():
+        if k in CAMPOS_PROHIBIDOS:
+            continue
         setattr(p, k, v)
     db.commit()
     db.refresh(p)

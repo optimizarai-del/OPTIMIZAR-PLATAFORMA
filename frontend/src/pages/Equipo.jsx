@@ -13,7 +13,10 @@ export default function Equipo() {
   const [usuarios, setUsuarios] = useState([])
   const [loading, setLoading] = useState(true)
 
-  const load = () => api.get('/api/users').then(r => { setUsuarios(r.data); setLoading(false) })
+  const load = () => api.get('/api/users')
+    .then(r => setUsuarios(r.data))
+    .catch(() => toast.error('No se pudo cargar el equipo.'))
+    .finally(() => setLoading(false))
   useEffect(() => { load() }, [])
 
   const cambiarRol = async (uid, role) => {

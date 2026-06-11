@@ -11,6 +11,7 @@ backend/*.db-wal
 
 # Environment
 backend/.env
+backend/.secret_key
 
 # Build
 frontend/dist/

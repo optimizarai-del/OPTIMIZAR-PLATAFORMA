@@ -10,8 +10,9 @@ router = APIRouter(prefix="/api/requerimientos", tags=["requerimientos"])
 
 
 @router.get("/", response_model=List[RequerimientoOut])
-def listar(status: Optional[str] = None, db: Session = Depends(get_db),
+def listar(status: Optional[RequerimientoStatus] = None, db: Session = Depends(get_db),
            _=Depends(get_db_user)):
+    # status tipado con el enum: FastAPI valida y responde 422 si llega un valor inválido
     q = db.query(Requerimiento)
     if status:
         q = q.filter(Requerimiento.status == status)
