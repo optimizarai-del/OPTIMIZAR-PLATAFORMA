@@ -26,8 +26,9 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
     allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    # Authorization: JWT del frontend · Content-Type: JSON · X-API-Key: endpoint externo del CRM
+    allow_headers=["Authorization", "Content-Type", "X-API-Key"],
 )
 
 for r in [auth, users, proyectos, tareas, tiempo, requerimientos, dashboard, notificaciones]:

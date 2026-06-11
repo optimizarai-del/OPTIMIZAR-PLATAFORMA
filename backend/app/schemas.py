@@ -1,4 +1,4 @@
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, EmailStr, Field
 from typing import Optional, List
 from datetime import datetime, date
 from app.models import UserRole, ProyectoStatus, TareaStatus, TareaPrioridad, TipoRegistro, RequerimientoStatus, NotificacionTipo
@@ -103,7 +103,9 @@ class GitHubSyncResult(BaseModel):
 # ── AI: generación de plan / tareas / desde documento ─────────────────────────
 
 class AIDocumentRequest(BaseModel):
-    contenido: str  # texto plano (markdown, texto pegado, etc.)
+    # texto plano (markdown, texto pegado, etc.) — tope de 200k chars para no
+    # reventar memoria ni el contexto del modelo de IA.
+    contenido: str = Field(max_length=200_000)
 
 
 class AIGenerationResult(BaseModel):
@@ -152,7 +154,7 @@ class TareaCreate(BaseModel):
     prioridad: TareaPrioridad = TareaPrioridad.media
     fecha_inicio: Optional[date] = None
     fecha_fin_estimada: Optional[date] = None
-    minutos_estimados: Optional[int] = None
+    minutos_estimados: Optional[int] = Field(default=None, ge=0)
 
 
 class TareaUpdate(BaseModel):
@@ -164,7 +166,7 @@ class TareaUpdate(BaseModel):
     fecha_inicio: Optional[date] = None
     fecha_fin_estimada: Optional[date] = None
     fecha_fin_real: Optional[date] = None
-    minutos_estimados: Optional[int] = None
+    minutos_estimados: Optional[int] = Field(default=None, ge=0)
 
 
 class TareaOut(BaseModel):

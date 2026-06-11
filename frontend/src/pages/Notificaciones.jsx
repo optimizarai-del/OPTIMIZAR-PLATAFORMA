@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Mail, MailX, RefreshCw, CheckCircle, XCircle, Zap, Settings } from 'lucide-react'
 import api from '../utils/api'
+import { toast } from '../utils/toast'
 import { SkeletonRow } from '../components/Skeleton'
 import EmptyState from '../components/EmptyState'
 
@@ -40,6 +41,8 @@ export default function Notificaciones() {
     ]).then(([n, s]) => {
       setNotifs(n.data)
       setStats(s.data)
+    }).catch(() => {
+      toast.error('No se pudieron cargar las notificaciones.')
     }).finally(() => setLoading(false))
   }
 

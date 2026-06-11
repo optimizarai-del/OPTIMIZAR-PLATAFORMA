@@ -1,4 +1,9 @@
-from datetime import datetime, date
+from datetime import datetime, date, timezone
+
+
+def _utcnow():
+    """Reemplazo de datetime.utcnow (deprecado): UTC aware, apto para defaults de SQLAlchemy."""
+    return datetime.now(timezone.utc)
 from enum import Enum
 from sqlalchemy import (Column, Integer, String, DateTime, Date, Boolean,
                         Float, Text, ForeignKey, Enum as SQLEnum, JSON)
@@ -57,7 +62,7 @@ class User(Base):
     password_hash = Column(String, nullable=False)
     role = Column(SQLEnum(UserRole), default=UserRole.developer)
     is_active = Column(Boolean, default=True)
-    created_at = Column(DateTime, default=datetime.utcnow)
+    created_at = Column(DateTime, default=_utcnow)
 
     tareas_asignadas = relationship("Tarea", back_populates="asignado", foreign_keys="Tarea.asignado_a")
     registros = relationship("RegistroTiempo", back_populates="user")
@@ -75,7 +80,7 @@ class Proyecto(Base):
     fecha_inicio = Column(Date, nullable=True)
     fecha_fin = Column(Date, nullable=True)
     created_by = Column(Integer, ForeignKey("users.id"), nullable=True)
-    created_at = Column(DateTime, default=datetime.utcnow)
+    created_at = Column(DateTime, default=_utcnow)
 
     github_repo = Column(String, nullable=True)
     github_last_sync = Column(DateTime, nullable=True)
@@ -96,7 +101,7 @@ class PuntoAccion(Base):
     descripcion = Column(Text, nullable=True)
     orden = Column(Integer, default=0)
     completado = Column(Boolean, default=False)
-    created_at = Column(DateTime, default=datetime.utcnow)
+    created_at = Column(DateTime, default=_utcnow)
 
     proyecto = relationship("Proyecto", back_populates="puntos_accion")
 
@@ -115,7 +120,7 @@ class Tarea(Base):
     fecha_fin_estimada = Column(Date, nullable=True)
     fecha_fin_real = Column(Date, nullable=True)
     minutos_estimados = Column(Integer, nullable=True)
-    created_at = Column(DateTime, default=datetime.utcnow)
+    created_at = Column(DateTime, default=_utcnow)
 
     proyecto = relationship("Proyecto", back_populates="tareas")
     asignado = relationship("User", back_populates="tareas_asignadas", foreign_keys=[asignado_a])
@@ -133,7 +138,7 @@ class RegistroTiempo(Base):
     resultado = Column(Text, nullable=True)
     tipo = Column(SQLEnum(TipoRegistro), default=TipoRegistro.manual)
     fecha = Column(Date, default=date.today)
-    created_at = Column(DateTime, default=datetime.utcnow)
+    created_at = Column(DateTime, default=_utcnow)
 
     tarea = relationship("Tarea", back_populates="registros")
     user = relationship("User", back_populates="registros")
@@ -159,7 +164,7 @@ class Notificacion(Base):
     cuerpo_html = Column(Text, nullable=True)
     enviado = Column(Boolean, default=False)
     error = Column(Text, nullable=True)
-    created_at = Column(DateTime, default=datetime.utcnow)
+    created_at = Column(DateTime, default=_utcnow)
 
     destinatario = relationship("User", foreign_keys=[destinatario_id])
     tarea = relationship("Tarea", foreign_keys=[tarea_id])
@@ -186,6 +191,6 @@ class Requerimiento(Base):
     fecha_entrega = Column(Date, nullable=True)
     status = Column(SQLEnum(RequerimientoStatus), default=RequerimientoStatus.nuevo)
     proyecto_id = Column(Integer, ForeignKey("proyectos.id"), nullable=True)
-    created_at = Column(DateTime, default=datetime.utcnow)
+    created_at = Column(DateTime, default=_utcnow)
 
     proyecto = relationship("Proyecto", back_populates="requerimiento")

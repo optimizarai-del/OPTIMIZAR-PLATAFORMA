@@ -40,8 +40,9 @@ export default function ProyectoDetail() {
       setProyecto(p.data)
       setTareas(t.data)
       setPlan(pl.data)
-      setLoading(false)
-    })
+    }).catch(() => {
+      toast.error('No se pudo cargar el proyecto.')
+    }).finally(() => setLoading(false))
   }, [id])
 
   useEffect(() => { loadAll() }, [loadAll])
@@ -300,8 +301,12 @@ function TareaDrawer({ tarea: initial, onClose, onSaved }) {
   const [seconds, setSeconds] = useState(0)
   const [modalTiempo, setModalTiempo] = useState(false)
 
-  const loadRegistros = () => api.get(`/api/tiempo?tarea_id=${tarea.id}`).then(r => setRegistros(r.data))
-  const reloadTarea = () => api.get(`/api/tareas/${tarea.id}`).then(r => setTarea(r.data))
+  const loadRegistros = () => api.get(`/api/tiempo?tarea_id=${tarea.id}`)
+    .then(r => setRegistros(r.data))
+    .catch(() => toast.error('No se pudieron cargar los registros de tiempo.'))
+  const reloadTarea = () => api.get(`/api/tareas/${tarea.id}`)
+    .then(r => setTarea(r.data))
+    .catch(() => toast.error('No se pudo actualizar la tarea.'))
 
   useEffect(() => { loadRegistros() }, [tarea.id])
 

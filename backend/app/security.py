@@ -1,12 +1,51 @@
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from jose import jwt, JWTError
 from passlib.context import CryptContext
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.orm import Session
+import logging
 import os
+import secrets
+from pathlib import Path
 
-SECRET_KEY = os.getenv("SECRET_KEY", "optimizar-secret-key-change-in-production-2026")
+logger = logging.getLogger("optimizar.security")
+
+
+def _load_secret_key() -> str:
+    """Resuelve la SECRET_KEY para firmar JWT.
+    1) Si existe la env var SECRET_KEY, se usa esa.
+    2) Si no, se usa/genera una clave aleatoria persistida en backend/.secret_key
+       (ignorada por git), para que los tokens sobrevivan reinicios.
+    Nunca usa un default hardcodeado."""
+    env_key = os.getenv("SECRET_KEY")
+    if env_key:
+        return env_key
+
+    key_file = Path(__file__).resolve().parents[1] / ".secret_key"
+    try:
+        if key_file.exists():
+            key = key_file.read_text(encoding="utf-8").strip()
+            if key:
+                logger.warning(
+                    "SECRET_KEY no configurada en el entorno; usando clave persistida en %s. "
+                    "Configurá SECRET_KEY en el .env para producción.", key_file)
+                return key
+        key = secrets.token_urlsafe(64)
+        key_file.write_text(key, encoding="utf-8")
+        logger.warning(
+            "SECRET_KEY no configurada en el entorno; se generó una clave aleatoria y se "
+            "persistió en %s. Configurá SECRET_KEY en el .env para producción.", key_file)
+        return key
+    except OSError as e:
+        # No se pudo persistir: clave efímera (los JWT se invalidan al reiniciar).
+        logger.warning(
+            "SECRET_KEY no configurada y no se pudo persistir %s (%s). "
+            "Usando clave efímera: los tokens se invalidarán al reiniciar.", key_file, e)
+        return secrets.token_urlsafe(64)
+
+
+SECRET_KEY = _load_secret_key()
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES", 10080))
 
@@ -23,7 +62,7 @@ def verify_pw(plain: str, hashed: str) -> bool:
 
 
 def create_token(data: dict) -> str:
-    expire = datetime.utcnow() + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+    expire = datetime.now(timezone.utc) + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
     return jwt.encode({**data, "exp": expire}, SECRET_KEY, algorithm=ALGORITHM)
 
 

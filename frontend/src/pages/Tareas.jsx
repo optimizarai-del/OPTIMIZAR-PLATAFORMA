@@ -32,8 +32,9 @@ export default function Tareas() {
     ]).then(([t, p]) => {
       setTareas(t.data)
       setProyectos(p.data)
-      setLoading(false)
-    })
+    }).catch(() => {
+      toast.error('No se pudieron cargar las tareas.')
+    }).finally(() => setLoading(false))
   }
   useEffect(() => { load() }, [])
 

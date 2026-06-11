@@ -38,7 +38,10 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(true)
 
   const load = () => {
-    api.get('/api/proyectos').then(r => { setProyectos(r.data); setLoading(false) })
+    api.get('/api/proyectos')
+      .then(r => setProyectos(r.data))
+      .catch(() => toast.error('No se pudieron cargar los proyectos.'))
+      .finally(() => setLoading(false))
   }
   useEffect(() => { load() }, [])
 

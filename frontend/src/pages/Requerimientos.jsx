@@ -24,7 +24,10 @@ export default function Requerimientos() {
   const [loading, setLoading] = useState(true)
 
   const load = () => {
-    api.get('/api/requerimientos').then(r => { setReqs(r.data); setLoading(false) })
+    api.get('/api/requerimientos')
+      .then(r => setReqs(r.data))
+      .catch(() => toast.error('No se pudieron cargar los requerimientos.'))
+      .finally(() => setLoading(false))
   }
   useEffect(() => { load() }, [])
 
