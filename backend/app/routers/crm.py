@@ -169,6 +169,27 @@ def upsert_externo(data: OportunidadExternal, db: Session = Depends(get_db),
     return op
 
 
+# ── Disparo manual del outreach en código (envío / escucha) ───────────────────
+# Útil para testear sin esperar al scheduler. Protegidos con JWT (uso interno).
+
+@router.post("/outreach/enviar")
+def disparar_envio(db: Session = Depends(get_db), current_user: User = Depends(get_db_user)):
+    if current_user.role not in [UserRole.admin, UserRole.manager]:
+        raise HTTPException(403, "Sin permisos")
+    from app.outreach_service import enviar_pendientes
+    enviados = enviar_pendientes(db)
+    return {"enviados": enviados}
+
+
+@router.post("/outreach/revisar-inbox")
+def disparar_inbox(db: Session = Depends(get_db), current_user: User = Depends(get_db_user)):
+    if current_user.role not in [UserRole.admin, UserRole.manager]:
+        raise HTTPException(403, "Sin permisos")
+    from app.outreach_service import revisar_inbox
+    registradas = revisar_inbox(db)
+    return {"registradas": registradas}
+
+
 @router.get("/external/outbox", response_model=List[OportunidadOut], tags=["crm-external"])
 def outbox(db: Session = Depends(get_db), _=Depends(verify_api_key)):
     """Leads con email YA escrito y pendientes de envío. Lo consume n8n para disparar

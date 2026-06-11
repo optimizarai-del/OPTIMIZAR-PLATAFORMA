@@ -1,7 +1,14 @@
-# n8n — Workflows del Equipo de Venta y Prospección
+# n8n — Workflows del Equipo de Venta y Prospección (FALLBACK)
+
+> ⚠️ **El envío y la escucha ahora se hacen EN CÓDIGO** dentro del backend
+> (`backend/app/outreach_service.py` + `scheduler.py`), reutilizando el SMTP que ya está
+> configurado y sin dependencias externas. Estos workflows de n8n quedan como **alternativa
+> no-código / fallback** por si algún día se quiere mover fuera del backend. Para la operación
+> normal **no hace falta importar nada de acá** — solo configurar las variables `OUTREACH_*`
+> e `IMAP_*` en el `.env` y poner `OUTREACH_ENABLED=true`.
 
 n8n es **el transporte**: no busca ni escribe (eso lo hacen los agentes de Claude Code).
-Solo **dispara** los correos ya escritos y, más adelante, **escucha** las respuestas.
+Solo **dispara** los correos ya escritos y **escucha** las respuestas.
 
 ## Workflow 1 — Envío (`workflow-1-envio.json`)
 Lee del CRM los leads con email ya escrito y los manda por SMTP de Hostinger, uno por vez

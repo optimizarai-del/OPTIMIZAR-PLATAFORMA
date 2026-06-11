@@ -38,6 +38,13 @@ for r in [auth, users, proyectos, tareas, tiempo, requerimientos, dashboard, not
     app.include_router(r.router)
 
 
+@app.on_event("startup")
+def _arrancar_outreach():
+    # Programa envío + escucha del outreach (solo si OUTREACH_ENABLED=true).
+    from app.scheduler import start_scheduler
+    start_scheduler()
+
+
 @app.get("/health")
 def health():
     return {"status": "ok", "brand": "Optimizar"}
