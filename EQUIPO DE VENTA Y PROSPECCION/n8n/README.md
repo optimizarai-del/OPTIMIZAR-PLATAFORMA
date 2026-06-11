@@ -38,7 +38,26 @@ Cada día 9hs → Obtener pendientes (GET outbox) → Separar leads → Loop 1x1
 - Respetá el warm-up: 10–15/día la semana 1; subí gradual hasta 20–30.
 - El nodo "Esperar" (90s) espacia los envíos para no disparar filtros de spam.
 
-## Workflow 2 — Escucha de respuestas (pendiente)
-Se arma después de validar el envío. Gmail/IMAP trigger sobre respuestas → clasifica →
-`POST /api/crm/external/oportunidades` con `outreach_status:"respondido"` + `respuesta_recibida`,
-y `inbox-responder` borradorea la contestación.
+## Workflow 2 — Escucha de respuestas (`workflow-2-escucha.json`)
+Escucha el inbox por IMAP de Hostinger; cuando llega una respuesta, extrae el email y el texto,
+y se lo registra al CRM (matchea el lead por email).
+
+```
+Inbox IMAP (nuevo mail) → Extraer email + texto → ¿Tiene email? → Registrar respuesta (POST)
+```
+El backend (`POST /api/crm/external/respuesta`) busca la oportunidad por `contacto_email`, marca
+`outreach_status="respondido"`, guarda el texto en `respuesta_recibida` y mueve la etapa a `contactado`.
+Después, el agente `inbox-responder` clasifica y borradorea la contestación.
+
+### Cómo importarlo
+1. n8n → **Import from File** → `workflow-2-escucha.json`.
+2. **Crear credencial IMAP** (Hostinger) y asignarla al nodo "Inbox IMAP":
+   - Host: `imap.hostinger.com` · Puerto: `993` · SSL: ON
+   - User: tu email completo · Password: la del buzón.
+3. Reemplazar `https://API_BASE` y `API_KEY_AQUI` en el nodo "Registrar respuesta" (igual que el WF1).
+4. **Activá** el workflow (toggle "Active") para que escuche en tiempo real.
+
+### Notas
+- El nodo "¿Tiene email?" descarta correos sin remitente válido (autoresponders raros, etc.).
+- Para no procesar correos viejos, en la credencial/nodo IMAP filtrá por no leídos (UNSEEN) — es el default.
+- El matcheo es por email del remitente. Si un lead responde desde otra dirección, no matchea (queda sin registrar).

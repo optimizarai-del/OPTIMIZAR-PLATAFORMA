@@ -9,7 +9,8 @@ from app.models import (Oportunidad, EtapaOportunidad, FuenteOportunidad,
 from app.schemas import (OportunidadCreate, OportunidadUpdate, OportunidadOut,
                          OportunidadExternal, CRMStats, ProyectoOut,
                          LeadJobCreate, LeadJobUpdate, LeadJobOut,
-                         ChatMensajeCreate, ChatMensajeOut, FunnelNotify)
+                         ChatMensajeCreate, ChatMensajeOut, FunnelNotify,
+                         RespuestaInbound)
 from app.security import get_db_user, verify_api_key
 
 router = APIRouter(prefix="/api/crm", tags=["crm"])
@@ -177,6 +178,26 @@ def outbox(db: Session = Depends(get_db), _=Depends(verify_api_key)):
                       Oportunidad.contacto_email.isnot(None))
               .order_by(Oportunidad.created_at)
               .all())
+
+
+@router.post("/external/respuesta", tags=["crm-external"])
+def registrar_respuesta(data: RespuestaInbound, db: Session = Depends(get_db),
+                        _=Depends(verify_api_key)):
+    """Registra la respuesta de un lead (la trae n8n desde el inbox). Matchea la
+    oportunidad por contacto_email (la más reciente), marca outreach_status='respondido',
+    guarda el texto y mueve la etapa a 'contactado' si todavía estaba en 'lead'."""
+    op = (db.query(Oportunidad)
+            .filter(Oportunidad.contacto_email == data.email)
+            .order_by(Oportunidad.created_at.desc())
+            .first())
+    if not op:
+        return {"matched": False}
+    op.respuesta_recibida = data.texto
+    op.outreach_status = "respondido"
+    if op.etapa == EtapaOportunidad.lead:
+        op.etapa = EtapaOportunidad.contactado
+    db.commit()
+    return {"matched": True, "id": op.id, "empresa": op.empresa}
 
 
 # ── Cola de búsqueda (Lead Jobs) ──────────────────────────────────────────────

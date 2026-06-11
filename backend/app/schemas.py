@@ -435,6 +435,13 @@ class FunnelNotify(BaseModel):
     prioridad: Optional[str] = "info"  # info/alerta
 
 
+class RespuestaInbound(BaseModel):
+    """Respuesta entrante de un lead (la trae n8n desde el inbox). Matchea por email."""
+    email: str
+    texto: str
+    asunto: Optional[str] = None
+
+
 class CRMStats(BaseModel):
     total_oportunidades: int
     valor_pipeline: float          # suma de valor_estimado de oportunidades abiertas

@@ -1,0 +1,67 @@
+{
+  "name": "OPTIMIZAR - Escucha Respuestas (Workflow 2)",
+  "nodes": [
+    {
+      "parameters": { "postProcessAction": "read", "options": {} },
+      "id": "b1",
+      "name": "Inbox IMAP",
+      "type": "n8n-nodes-base.emailReadImap",
+      "typeVersion": 2.1,
+      "position": [0, 0],
+      "credentials": { "imap": { "id": "REEMPLAZAR", "name": "Hostinger IMAP" } }
+    },
+    {
+      "parameters": {
+        "jsCode": "const j = $input.first().json;\nlet from = j.from || (j.headers && j.headers.from) || '';\nif (typeof from === 'object') from = (from.value && from.value[0] && from.value[0].address) || from.text || '';\nconst m = String(from).match(/[\\w.+-]+@[\\w.-]+\\.[\\w-]+/);\nconst email = m ? m[0] : '';\nconst texto = j.textPlain || j.text || j.textHtml || j.snippet || '';\nreturn [{ json: { email, texto: String(texto).slice(0, 4000), asunto: j.subject || '' } }];"
+      },
+      "id": "b2",
+      "name": "Extraer email + texto",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [240, 0]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": { "version": 2, "leftValue": "", "caseSensitive": false, "typeValidation": "strict" },
+          "conditions": [
+            { "leftValue": "={{ $json.email }}", "rightValue": "", "operator": { "type": "string", "operation": "notEmpty", "singleValue": true } }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "b3",
+      "name": "Tiene email?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [480, 0]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://API_BASE/api/crm/external/respuesta",
+        "sendHeaders": true,
+        "headerParameters": { "parameters": [ { "name": "X-API-Key", "value": "API_KEY_AQUI" } ] },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ email: $json.email, texto: $json.texto, asunto: $json.asunto }) }}",
+        "options": {}
+      },
+      "id": "b4",
+      "name": "Registrar respuesta",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [720, 0],
+      "retryOnFail": true,
+      "maxTries": 3
+    }
+  ],
+  "connections": {
+    "Inbox IMAP": { "main": [ [ { "node": "Extraer email + texto", "type": "main", "index": 0 } ] ] },
+    "Extraer email + texto": { "main": [ [ { "node": "Tiene email?", "type": "main", "index": 0 } ] ] },
+    "Tiene email?": { "main": [ [ { "node": "Registrar respuesta", "type": "main", "index": 0 } ], [] ] },
+    "Registrar respuesta": { "main": [ [] ] }
+  },
+  "settings": { "executionOrder": "v1" }
+}
