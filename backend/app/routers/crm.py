@@ -1,7 +1,10 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, BackgroundTasks
 from sqlalchemy.orm import Session
 from typing import List
 from datetime import datetime
+import os
+import logging
+import httpx
 from app.database import get_db
 from app.models import (Oportunidad, EtapaOportunidad, FuenteOportunidad,
                         Proyecto, ProyectoStatus, User, UserRole,
@@ -13,7 +16,37 @@ from app.schemas import (OportunidadCreate, OportunidadUpdate, OportunidadOut,
                          RespuestaInbound)
 from app.security import get_db_user, verify_api_key
 
+logger = logging.getLogger(__name__)
+
 router = APIRouter(prefix="/api/crm", tags=["crm"])
+
+
+def _fire_chat_responder(contenido: str) -> None:
+    """Dispara la routine 'chat-responder' en el plan (Claude Code online) para que el
+    orquestador responda este mensaje en el chat. Corre en background; si no está
+    configurado, no hace nada (el chat queda como buzón). Sin API de generación: el /fire
+    solo gatilla la ejecución, que corre sobre el plan."""
+    fire_url = os.getenv("CLAUDE_ROUTINE_FIRE_URL", "")
+    token    = os.getenv("CLAUDE_ROUTINE_TOKEN", "")
+    api_base = os.getenv("SELF_API_BASE", "")           # URL PÚBLICA del backend
+    api_key  = os.getenv("EXTERNAL_API_KEY", "")
+    if not (fire_url and token and api_base and api_key):
+        return
+    texto = f"API_BASE={api_base}\nAPI_KEY={api_key}\nMENSAJE: {contenido}"
+    try:
+        httpx.post(
+            fire_url,
+            headers={
+                "Authorization": f"Bearer {token}",
+                "anthropic-version": "2023-06-01",
+                "anthropic-beta": "experimental-cc-routine-2026-04-01",
+                "Content-Type": "application/json",
+            },
+            json={"text": texto},
+            timeout=20,
+        )
+    except Exception as e:
+        logger.warning(f"[chat] no se pudo disparar el chat-responder: {e}")
 
 ETAPAS_ABIERTAS = [EtapaOportunidad.lead, EtapaOportunidad.contactado,
                    EtapaOportunidad.propuesta, EtapaOportunidad.negociacion]
@@ -268,10 +301,12 @@ def listar_chat(db: Session = Depends(get_db), _=Depends(get_db_user)):
 
 
 @router.post("/chat", response_model=ChatMensajeOut)
-def postear_humano(data: ChatMensajeCreate, db: Session = Depends(get_db),
-                   _=Depends(get_db_user)):
+def postear_humano(data: ChatMensajeCreate, background_tasks: BackgroundTasks,
+                   db: Session = Depends(get_db), _=Depends(get_db_user)):
     msg = ChatMensaje(rol="humano", contenido=data.contenido)
     db.add(msg); db.commit(); db.refresh(msg)
+    # Dispara al orquestador (routine en el plan) para que responda este mensaje.
+    background_tasks.add_task(_fire_chat_responder, data.contenido)
     return msg
 
 
