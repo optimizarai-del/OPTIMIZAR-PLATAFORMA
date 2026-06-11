@@ -35,18 +35,32 @@ Nombre, empresa, rubro y un gancho de dolor por rubro.
 - [2026-06-10] Equipo de agentes creado (Fase 1). Proyecto movido a carpeta propia.
 - [2026-06-10] Fase 2 (backend) subida a la rama git `equipo-ventas`.
 - [2026-06-11] ICP + oferta definidos (Bloque A). Exclusión La Pampa cargada como guardarraíl.
+- [2026-06-11] Primera corrida de búsqueda en MODO BORRADOR. Segmento: estudios contables CABA/GBA/Córdoba/Rosario. 5 leads encontrados, 1 descartado por precaución La Pampa.
 
 ## Gotchas descubiertos
-- (vacío)
+- Lorenzo y Asociados (red nacional, sede en Bella Vista BA) lista una sucursal "Santa Rosa" — ante la duda se descartó; verificar si esa Santa Rosa es La Pampa antes de incluirlos.
+- Tres de cinco emails encontrados son buzones genéricos (estudio@, info@, contacto@). Para estudios más chicos los emails personales de socios aparecen en la web; para estudios con red/alianzas no siempre.
+- Disparador transversal más potente identificado: temporada DDJJ Ganancias/Bienes Personales período 2025, vencimiento extendido a julio 2026 (RG ARCA 5851/2026) — todos los estudios contables en pico de carga.
 
 ## Estado actual de la tarea
 - [x] Fase 1 — agentes listos
 - [x] Fase 2 — backend (en rama equipo-ventas)
 - [x] Bloque A — ICP + oferta definidos
+- [x] Primera corrida borrador completada (2026-06-11)
 - [ ] Migración de columnas en BD de prod (ALTER)
 - [ ] Fase 5 (n8n) — envío + escucha
 - [ ] Fase 4 — UI chat/seguimiento
 - [ ] Fase 3 — scheduled agent diario
 
 ## Última corrida
-- Aún no hubo corridas de búsqueda. ICP listo → próximo bloqueante es la fuente de leads (paso D, n8n).
+**Fecha:** 2026-06-11 | **Modo:** BORRADOR (sin envíos reales)
+**Segmento:** Estudios contables/impositivos — Córdoba Capital + Rosario (Santa Fe)
+**Cupo usado:** 5 leads (lote chico, primera corrida)
+**Leads encontrados:** 5
+**Leads descartados:** 1 (Lorenzo y Asociados — precaución La Pampa por sucursal Santa Rosa)
+**Emails escritos:** 5
+**Disparador:** Prórroga DDJJ Ganancias/Bienes Personales período 2025 hasta 27/07/2026 (RG ARCA 5851/2026)
+**Archivos:**
+- `funnel/leads/new/borrador-2026-06-11.jsonl` — 5 leads con emails
+- `funnel/reportes/2026-06-11.md` — reporte completo
+**Próximo bloqueante:** Backend/n8n para envío real. Validar emails antes de activar.
