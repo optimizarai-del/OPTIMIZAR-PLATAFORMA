@@ -1,11 +1,15 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from typing import List
+from datetime import datetime
 from app.database import get_db
 from app.models import (Oportunidad, EtapaOportunidad, FuenteOportunidad,
-                        Proyecto, ProyectoStatus, User, UserRole)
+                        Proyecto, ProyectoStatus, User, UserRole,
+                        LeadJob, ChatMensaje)
 from app.schemas import (OportunidadCreate, OportunidadUpdate, OportunidadOut,
-                         OportunidadExternal, CRMStats, ProyectoOut)
+                         OportunidadExternal, CRMStats, ProyectoOut,
+                         LeadJobCreate, LeadJobUpdate, LeadJobOut,
+                         ChatMensajeCreate, ChatMensajeOut, FunnelNotify)
 from app.security import get_db_user, verify_api_key
 
 router = APIRouter(prefix="/api/crm", tags=["crm"])
@@ -154,3 +158,98 @@ def upsert_externo(data: OportunidadExternal, db: Session = Depends(get_db),
     db.commit()
     db.refresh(op)
     return op
+
+
+# ── Cola de búsqueda (Lead Jobs) ──────────────────────────────────────────────
+# La plataforma encola pedidos (JWT); el Equipo de Venta y Prospección los
+# consume por polling (API Key) y devuelve los leads vía /external/oportunidades.
+
+@router.post("/lead-jobs", response_model=LeadJobOut)
+def crear_lead_job(data: LeadJobCreate, db: Session = Depends(get_db),
+                   _=Depends(get_db_user)):
+    job = LeadJob(icp=data.icp, cantidad=data.cantidad, fundamento=data.fundamento)
+    db.add(job); db.commit(); db.refresh(job)
+    return job
+
+
+@router.get("/lead-jobs", response_model=List[LeadJobOut])
+def listar_lead_jobs(db: Session = Depends(get_db), _=Depends(get_db_user)):
+    return db.query(LeadJob).order_by(LeadJob.created_at.desc()).all()
+
+
+@router.get("/lead-jobs/pending", response_model=List[LeadJobOut], tags=["crm-external"])
+def lead_jobs_pendientes(db: Session = Depends(get_db), _=Depends(verify_api_key)):
+    return (db.query(LeadJob).filter_by(status="pendiente")
+              .order_by(LeadJob.created_at).all())
+
+
+@router.patch("/lead-jobs/{jid}", response_model=LeadJobOut, tags=["crm-external"])
+def actualizar_lead_job(jid: int, data: LeadJobUpdate, db: Session = Depends(get_db),
+                        _=Depends(verify_api_key)):
+    job = db.query(LeadJob).filter_by(id=jid).first()
+    if not job:
+        raise HTTPException(404, "Lead job no encontrado")
+    if data.status is not None:
+        job.status = data.status
+        if data.status in ("completado", "error"):
+            job.processed_at = datetime.utcnow()
+    if data.resumen is not None:
+        job.resumen = data.resumen
+    db.commit(); db.refresh(job)
+    return job
+
+
+# ── Chat persistente (humano ↔ orquestador) ───────────────────────────────────
+
+@router.get("/chat", response_model=List[ChatMensajeOut])
+def listar_chat(db: Session = Depends(get_db), _=Depends(get_db_user)):
+    return db.query(ChatMensaje).order_by(ChatMensaje.created_at).all()
+
+
+@router.post("/chat", response_model=ChatMensajeOut)
+def postear_humano(data: ChatMensajeCreate, db: Session = Depends(get_db),
+                   _=Depends(get_db_user)):
+    msg = ChatMensaje(rol="humano", contenido=data.contenido)
+    db.add(msg); db.commit(); db.refresh(msg)
+    return msg
+
+
+@router.patch("/chat/{mid}/estado", response_model=ChatMensajeOut)
+def set_estado_chat(mid: int, estado: str, db: Session = Depends(get_db),
+                    _=Depends(get_db_user)):
+    """El humano aprueba/rechaza una acción propuesta por el agente."""
+    msg = db.query(ChatMensaje).filter_by(id=mid).first()
+    if not msg:
+        raise HTTPException(404, "Mensaje no encontrado")
+    msg.estado = estado                      # aprobado / rechazado
+    db.commit(); db.refresh(msg)
+    return msg
+
+
+@router.post("/external/chat", response_model=ChatMensajeOut, tags=["crm-external"])
+def postear_agente(data: ChatMensajeCreate, db: Session = Depends(get_db),
+                   _=Depends(verify_api_key)):
+    msg = ChatMensaje(
+        rol="agente",
+        contenido=data.contenido,
+        requiere_aprobacion=data.requiere_aprobacion,
+        estado="esperando" if data.requiere_aprobacion else "info",
+    )
+    db.add(msg); db.commit(); db.refresh(msg)
+    return msg
+
+
+# ── Aviso por mail a los dos correos del funnel ───────────────────────────────
+
+@router.post("/external/notify", tags=["crm-external"])
+def notificar_funnel(data: FunnelNotify, _=Depends(verify_api_key)):
+    from app.email_service import enviar_aviso_funnel
+    res = enviar_aviso_funnel(
+        asunto=data.asunto, titulo=data.titulo,
+        subtitulo=data.subtitulo or "", cuerpo_html=data.cuerpo,
+        prioridad=data.prioridad or "info",
+    )
+    return {
+        "enviados": [e for e, err in res.items() if err is None],
+        "fallidos": {e: err for e, err in res.items() if err is not None},
+    }

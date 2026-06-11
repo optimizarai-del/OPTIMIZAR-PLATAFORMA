@@ -338,6 +338,13 @@ class OportunidadOut(BaseModel):
     proxima_accion: Optional[str]
     fecha_cierre_estimada: Optional[date]
     proyecto_id: Optional[int]
+    # ── Outreach del Equipo de Venta y Prospección ──
+    idioma: Optional[str] = None
+    disparador: Optional[str] = None
+    mensaje_asunto: Optional[str] = None
+    mensaje_cuerpo: Optional[str] = None
+    outreach_status: Optional[str] = None
+    respuesta_recibida: Optional[str] = None
     created_at: datetime
     updated_at: Optional[datetime]
 
@@ -361,6 +368,69 @@ class OportunidadExternal(BaseModel):
     responsable: Optional[str] = None
     proxima_accion: Optional[str] = None
     fecha_cierre_estimada: Optional[date] = None
+    # ── Campos de outreach que carga el equipo ──
+    idioma: Optional[str] = None
+    disparador: Optional[str] = None
+    mensaje_asunto: Optional[str] = None
+    mensaje_cuerpo: Optional[str] = None
+    outreach_status: Optional[str] = None
+    respuesta_recibida: Optional[str] = None
+
+
+# ── Lead Jobs (cola de búsqueda) ──────────────────────────────────────────────
+
+class LeadJobCreate(BaseModel):
+    icp: dict
+    cantidad: int = 20
+    fundamento: Optional[str] = None
+
+
+class LeadJobUpdate(BaseModel):
+    status: Optional[str] = None
+    resumen: Optional[str] = None
+
+
+class LeadJobOut(BaseModel):
+    id: int
+    icp: dict
+    cantidad: int
+    status: str
+    fundamento: Optional[str]
+    resumen: Optional[str]
+    created_at: datetime
+    processed_at: Optional[datetime]
+
+    class Config:
+        from_attributes = True
+
+
+# ── Chat persistente equipo ↔ humano ──────────────────────────────────────────
+
+class ChatMensajeCreate(BaseModel):
+    contenido: str
+    requiere_aprobacion: bool = False
+
+
+class ChatMensajeOut(BaseModel):
+    id: int
+    rol: str
+    contenido: str
+    requiere_aprobacion: bool
+    estado: str
+    created_at: datetime
+
+    class Config:
+        from_attributes = True
+
+
+# ── Aviso por mail (lo dispara el agente vía API key) ─────────────────────────
+
+class FunnelNotify(BaseModel):
+    asunto: str
+    titulo: str
+    subtitulo: Optional[str] = ""
+    cuerpo: str                        # HTML simple o texto
+    prioridad: Optional[str] = "info"  # info/alerta
 
 
 class CRMStats(BaseModel):
