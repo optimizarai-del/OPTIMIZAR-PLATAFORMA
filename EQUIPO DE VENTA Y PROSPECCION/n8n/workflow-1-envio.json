@@ -1,0 +1,98 @@
+{
+  "name": "OPTIMIZAR - Envio Outreach (Workflow 1)",
+  "nodes": [
+    {
+      "parameters": { "rule": { "interval": [ { "field": "days", "triggerAtHour": 9 } ] } },
+      "id": "a1",
+      "name": "Cada dia 9hs",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [0, 0]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "https://API_BASE/api/crm/external/outbox",
+        "sendHeaders": true,
+        "headerParameters": { "parameters": [ { "name": "X-API-Key", "value": "API_KEY_AQUI" } ] },
+        "options": {}
+      },
+      "id": "a2",
+      "name": "Obtener pendientes",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [220, 0],
+      "retryOnFail": true
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\nif (items.length && items[0].json && items[0].json.contacto_email) return items;\nconst body = items.length ? items[0].json : {};\nconst arr = Array.isArray(body) ? body : (body.body || body.data || []);\nreturn arr.map(o => ({ json: o }));"
+      },
+      "id": "a3",
+      "name": "Separar leads",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [440, 0]
+    },
+    {
+      "parameters": { "batchSize": 1, "options": {} },
+      "id": "a4",
+      "name": "Loop 1x1",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [660, 0]
+    },
+    {
+      "parameters": {
+        "fromEmail": "OPTIMIZAR <info@TUDOMINIO.com>",
+        "toEmail": "={{ $json.contacto_email }}",
+        "subject": "={{ $json.mensaje_asunto }}",
+        "html": "={{ $json.mensaje_cuerpo }}",
+        "options": {}
+      },
+      "id": "a5",
+      "name": "Enviar email",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [880, 120],
+      "retryOnFail": true,
+      "credentials": { "smtp": { "id": "REEMPLAZAR", "name": "Hostinger SMTP" } }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://API_BASE/api/crm/external/oportunidades",
+        "sendHeaders": true,
+        "headerParameters": { "parameters": [ { "name": "X-API-Key", "value": "API_KEY_AQUI" } ] },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ external_id: $('Loop 1x1').item.json.external_id, empresa: $('Loop 1x1').item.json.empresa, outreach_status: 'enviado', etapa: 'contactado' }) }}",
+        "options": {}
+      },
+      "id": "a6",
+      "name": "Marcar enviado",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [1100, 120],
+      "retryOnFail": true
+    },
+    {
+      "parameters": { "amount": 90, "unit": "seconds" },
+      "id": "a7",
+      "name": "Esperar (warm-up)",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [1320, 120]
+    }
+  ],
+  "connections": {
+    "Cada dia 9hs": { "main": [ [ { "node": "Obtener pendientes", "type": "main", "index": 0 } ] ] },
+    "Obtener pendientes": { "main": [ [ { "node": "Separar leads", "type": "main", "index": 0 } ] ] },
+    "Separar leads": { "main": [ [ { "node": "Loop 1x1", "type": "main", "index": 0 } ] ] },
+    "Loop 1x1": { "main": [ [], [ { "node": "Enviar email", "type": "main", "index": 0 } ] ] },
+    "Enviar email": { "main": [ [ { "node": "Marcar enviado", "type": "main", "index": 0 } ] ] },
+    "Marcar enviado": { "main": [ [ { "node": "Esperar (warm-up)", "type": "main", "index": 0 } ] ] },
+    "Esperar (warm-up)": { "main": [ [ { "node": "Loop 1x1", "type": "main", "index": 0 } ] ] }
+  },
+  "settings": { "executionOrder": "v1" }
+}

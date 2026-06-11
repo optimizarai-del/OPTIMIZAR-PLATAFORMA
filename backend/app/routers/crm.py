@@ -160,6 +160,17 @@ def upsert_externo(data: OportunidadExternal, db: Session = Depends(get_db),
     return op
 
 
+@router.get("/external/outbox", response_model=List[OportunidadOut], tags=["crm-external"])
+def outbox(db: Session = Depends(get_db), _=Depends(verify_api_key)):
+    """Leads con email YA escrito y pendientes de envío. Lo consume n8n para disparar
+    los correos. Devuelve solo los que tienen contacto_email y outreach_status='escrito'."""
+    return (db.query(Oportunidad)
+              .filter(Oportunidad.outreach_status == "escrito",
+                      Oportunidad.contacto_email.isnot(None))
+              .order_by(Oportunidad.created_at)
+              .all())
+
+
 # ── Cola de búsqueda (Lead Jobs) ──────────────────────────────────────────────
 # La plataforma encola pedidos (JWT); el Equipo de Venta y Prospección los
 # consume por polling (API Key) y devuelve los leads vía /external/oportunidades.
