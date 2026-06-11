@@ -380,6 +380,32 @@ def _send_smtp(to_email: str, asunto: str, html: str) -> Optional[str]:
 
 # ── Entry point principal ────────────────────────────────────────────────────
 
+# ── Avisos del Equipo de Venta y Prospección ──────────────────────────────────
+
+# Destinatarios de los reportes/alertas del funnel (configurable por env).
+FUNNEL_NOTIFY_EMAILS = [
+    e.strip() for e in os.getenv(
+        "FUNNEL_NOTIFY_EMAILS",
+        "rodriguezfederico765@gmail.com,optimizar.ai@gmail.com",
+    ).split(",") if e.strip()
+]
+
+
+def enviar_aviso_funnel(asunto: str, titulo: str, subtitulo: str, cuerpo_html: str,
+                        prioridad: str = "info") -> dict:
+    """Envía un reporte/alerta del funnel a TODOS los correos configurados.
+    Retorna {email: None|error} por destinatario. No persiste en Notificacion
+    (esa tabla es task-centric); el chat de la plataforma es el registro del funnel."""
+    badge = _badge("ALERTA", "#DC2626") if prioridad == "alerta" else _badge("Reporte", "#6366F1")
+    cuerpo = f"<div style='margin-bottom:16px;'>{badge}</div>{cuerpo_html}"
+    html = _base_html(titulo=titulo, subtitulo=subtitulo or "", cuerpo=cuerpo,
+                      cta_url=APP_URL, cta_label="Ir a la plataforma")
+    resultados = {}
+    for email in FUNNEL_NOTIFY_EMAILS:
+        resultados[email] = _send_smtp(email, asunto, html)
+    return resultados
+
+
 def registrar_y_enviar(
     db: Session,
     tipo,

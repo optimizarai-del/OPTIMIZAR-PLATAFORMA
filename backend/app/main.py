@@ -8,9 +8,12 @@ load_dotenv(override=True)
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.database import Base, engine
-from app.routers import auth, users, proyectos, tareas, tiempo, requerimientos, dashboard, notificaciones
+from app.routers import auth, users, proyectos, tareas, tiempo, requerimientos, dashboard, notificaciones, crm
+from app.migrate import migrar_columnas_faltantes
 
 Base.metadata.create_all(bind=engine)
+# Agrega columnas nuevas a tablas ya existentes (idempotente; SQLite + Postgres/Supabase).
+migrar_columnas_faltantes(engine)
 
 # redirect_slashes=False evita los 307 cuando se llama a /api/proyectos en lugar de /api/proyectos/.
 # Esos redirects rompen llamadas cross-origin desde el frontend porque Chrome
@@ -31,8 +34,15 @@ app.add_middleware(
     allow_headers=["Authorization", "Content-Type", "X-API-Key"],
 )
 
-for r in [auth, users, proyectos, tareas, tiempo, requerimientos, dashboard, notificaciones]:
+for r in [auth, users, proyectos, tareas, tiempo, requerimientos, dashboard, notificaciones, crm]:
     app.include_router(r.router)
+
+
+@app.on_event("startup")
+def _arrancar_outreach():
+    # Programa envío + escucha del outreach (solo si OUTREACH_ENABLED=true).
+    from app.scheduler import start_scheduler
+    start_scheduler()
 
 
 @app.get("/health")

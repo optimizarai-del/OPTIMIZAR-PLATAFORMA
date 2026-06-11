@@ -170,6 +170,98 @@ class Notificacion(Base):
     tarea = relationship("Tarea", foreign_keys=[tarea_id])
 
 
+class EtapaOportunidad(str, Enum):
+    lead          = "lead"
+    contactado    = "contactado"
+    propuesta     = "propuesta"
+    negociacion   = "negociacion"
+    ganado        = "ganado"
+    perdido       = "perdido"
+
+
+class FuenteOportunidad(str, Enum):
+    manual    = "manual"
+    web       = "web"
+    referido  = "referido"
+    api       = "api"          # creada/actualizada vía endpoint externo
+    otro      = "otro"
+
+
+class Oportunidad(Base):
+    """Oportunidad de venta del pipeline CRM. La info de contacto va embebida
+    (no hay entidad Contacto separada, por decisión de alcance)."""
+    __tablename__ = "oportunidades"
+
+    id = Column(Integer, primary_key=True)
+
+    # ── Contacto embebido ──
+    empresa = Column(String, nullable=False)
+    contacto_nombre = Column(String, nullable=True)
+    contacto_email = Column(String, nullable=True, index=True)
+    contacto_telefono = Column(String, nullable=True)
+
+    # ── Pipeline ──
+    titulo = Column(String, nullable=False)
+    descripcion = Column(Text, nullable=True)
+    etapa = Column(SQLEnum(EtapaOportunidad), default=EtapaOportunidad.lead, index=True)
+    valor_estimado = Column(Float, default=0.0)        # monto potencial
+    probabilidad = Column(Integer, default=0)          # 0-100 %
+    orden = Column(Integer, default=0)                 # orden dentro de la columna
+    fuente = Column(SQLEnum(FuenteOportunidad), default=FuenteOportunidad.manual)
+
+    # ── Clave de idempotencia para el endpoint externo (upsert) ──
+    external_id = Column(String, nullable=True, unique=True, index=True)
+
+    responsable = Column(String, nullable=True)
+    proxima_accion = Column(String, nullable=True)
+    fecha_cierre_estimada = Column(Date, nullable=True)
+
+    # ── Outreach del Equipo de Venta y Prospección (columnas aditivas, nullable) ──
+    idioma = Column(String, nullable=True)             # idioma del lead (es, en, pt...)
+    disparador = Column(Text, nullable=True)           # razón concreta de contacto
+    mensaje_asunto = Column(String, nullable=True)     # asunto del email escrito
+    mensaje_cuerpo = Column(Text, nullable=True)       # cuerpo del email escrito
+    outreach_status = Column(String, default="sin_contactar")  # sin_contactar/escrito/enviado/respondido/rebote/baja
+    respuesta_recibida = Column(Text, nullable=True)   # texto de la respuesta del lead
+
+    # ── Conversión a proyecto (cuando se gana) ──
+    proyecto_id = Column(Integer, ForeignKey("proyectos.id"), nullable=True)
+
+    created_at = Column(DateTime, default=_utcnow)
+    updated_at = Column(DateTime, default=_utcnow, onupdate=_utcnow)
+
+    proyecto = relationship("Proyecto", foreign_keys=[proyecto_id])
+
+
+class LeadJob(Base):
+    """Pedido de búsqueda de leads encolado desde la plataforma. Lo consume el
+    Equipo de Venta y Prospección (Claude Code) por polling y devuelve los leads
+    vía el endpoint externo del CRM. Patrón de polling invertido — sin API de Anthropic."""
+    __tablename__ = "lead_jobs"
+
+    id = Column(Integer, primary_key=True)
+    icp = Column(JSON, default=dict)                   # rubro, tamaño, cargo, geografía, idiomas
+    cantidad = Column(Integer, default=20)             # cupo de leads para esta corrida
+    status = Column(String, default="pendiente", index=True)  # pendiente/procesando/completado/error
+    fundamento = Column(Text, nullable=True)           # por qué el COO eligió este segmento
+    resumen = Column(Text, nullable=True)              # resultado de la corrida
+    created_at = Column(DateTime, default=_utcnow)
+    processed_at = Column(DateTime, nullable=True)
+
+
+class ChatMensaje(Base):
+    """Chat persistente entre el humano y el orquestador del equipo. Siempre visible.
+    El agente escribe vía API key; el humano vía JWT. Las aprobaciones pausan acciones."""
+    __tablename__ = "chat_mensajes"
+
+    id = Column(Integer, primary_key=True)
+    rol = Column(String, nullable=False)               # agente/humano/sistema
+    contenido = Column(Text, nullable=False)
+    requiere_aprobacion = Column(Boolean, default=False)
+    estado = Column(String, default="info")            # info/esperando/aprobado/rechazado
+    created_at = Column(DateTime, default=_utcnow, index=True)
+
+
 class Requerimiento(Base):
     __tablename__ = "requerimientos"
 

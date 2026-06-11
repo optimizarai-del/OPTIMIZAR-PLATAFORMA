@@ -2,7 +2,7 @@ from datetime import datetime, timedelta, timezone
 from jose import jwt, JWTError
 from passlib.context import CryptContext
 from fastapi import Depends, HTTPException, status
-from fastapi.security import OAuth2PasswordBearer
+from fastapi.security import OAuth2PasswordBearer, APIKeyHeader
 from sqlalchemy.orm import Session
 import logging
 import os
@@ -49,8 +49,24 @@ SECRET_KEY = _load_secret_key()
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES", 10080))
 
+# Clave para el endpoint externo del CRM (integraciones: n8n, webhooks, scripts).
+EXTERNAL_API_KEY = os.getenv("EXTERNAL_API_KEY", "")
+
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 oauth2 = OAuth2PasswordBearer(tokenUrl="/auth/login")
+api_key_header = APIKeyHeader(name="X-API-Key", auto_error=False)
+
+
+def verify_api_key(key: str = Depends(api_key_header)):
+    """Protege el endpoint externo del CRM. Compara contra EXTERNAL_API_KEY del .env.
+    Si la clave no está configurada, el endpoint queda deshabilitado (503)."""
+    if not EXTERNAL_API_KEY:
+        raise HTTPException(status.HTTP_503_SERVICE_UNAVAILABLE,
+                            "Endpoint externo deshabilitado: EXTERNAL_API_KEY no configurada.")
+    if not key or key != EXTERNAL_API_KEY:
+        raise HTTPException(status.HTTP_401_UNAUTHORIZED, "API Key inválida o ausente.",
+                            headers={"WWW-Authenticate": "X-API-Key"})
+    return True
 
 
 def hash_pw(p: str) -> str:

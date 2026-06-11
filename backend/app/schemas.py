@@ -1,7 +1,9 @@
 from pydantic import BaseModel, EmailStr, Field
 from typing import Optional, List
 from datetime import datetime, date
-from app.models import UserRole, ProyectoStatus, TareaStatus, TareaPrioridad, TipoRegistro, RequerimientoStatus, NotificacionTipo
+from app.models import (UserRole, ProyectoStatus, TareaStatus, TareaPrioridad,
+                        TipoRegistro, RequerimientoStatus, NotificacionTipo,
+                        EtapaOportunidad, FuenteOportunidad)
 
 
 # ── Auth ──────────────────────────────────────────────────────────────────────
@@ -283,6 +285,170 @@ class NotificacionOut(BaseModel):
 
     class Config:
         from_attributes = True
+
+
+# ── CRM: Oportunidad ──────────────────────────────────────────────────────────
+
+class OportunidadCreate(BaseModel):
+    empresa: str
+    titulo: str
+    contacto_nombre: Optional[str] = None
+    contacto_email: Optional[str] = None
+    contacto_telefono: Optional[str] = None
+    descripcion: Optional[str] = None
+    etapa: EtapaOportunidad = EtapaOportunidad.lead
+    valor_estimado: float = 0.0
+    probabilidad: int = 0
+    fuente: FuenteOportunidad = FuenteOportunidad.manual
+    responsable: Optional[str] = None
+    proxima_accion: Optional[str] = None
+    fecha_cierre_estimada: Optional[date] = None
+
+
+class OportunidadUpdate(BaseModel):
+    empresa: Optional[str] = None
+    titulo: Optional[str] = None
+    contacto_nombre: Optional[str] = None
+    contacto_email: Optional[str] = None
+    contacto_telefono: Optional[str] = None
+    descripcion: Optional[str] = None
+    etapa: Optional[EtapaOportunidad] = None
+    valor_estimado: Optional[float] = None
+    probabilidad: Optional[int] = None
+    orden: Optional[int] = None
+    responsable: Optional[str] = None
+    proxima_accion: Optional[str] = None
+    fecha_cierre_estimada: Optional[date] = None
+    proyecto_id: Optional[int] = None
+
+
+class OportunidadOut(BaseModel):
+    id: int
+    empresa: str
+    contacto_nombre: Optional[str]
+    contacto_email: Optional[str]
+    contacto_telefono: Optional[str]
+    titulo: str
+    descripcion: Optional[str]
+    etapa: EtapaOportunidad
+    valor_estimado: float
+    probabilidad: int
+    orden: int
+    fuente: FuenteOportunidad
+    external_id: Optional[str]
+    responsable: Optional[str]
+    proxima_accion: Optional[str]
+    fecha_cierre_estimada: Optional[date]
+    proyecto_id: Optional[int]
+    # ── Outreach del Equipo de Venta y Prospección ──
+    idioma: Optional[str] = None
+    disparador: Optional[str] = None
+    mensaje_asunto: Optional[str] = None
+    mensaje_cuerpo: Optional[str] = None
+    outreach_status: Optional[str] = None
+    respuesta_recibida: Optional[str] = None
+    created_at: datetime
+    updated_at: Optional[datetime]
+
+    class Config:
+        from_attributes = True
+
+
+class OportunidadExternal(BaseModel):
+    """Payload del endpoint externo (API Key). `external_id` permite upsert
+    idempotente: si ya existe una oportunidad con ese id, se actualiza."""
+    external_id: str
+    empresa: str
+    titulo: Optional[str] = None
+    contacto_nombre: Optional[str] = None
+    contacto_email: Optional[str] = None
+    contacto_telefono: Optional[str] = None
+    descripcion: Optional[str] = None
+    etapa: Optional[EtapaOportunidad] = None
+    valor_estimado: Optional[float] = None
+    probabilidad: Optional[int] = None
+    responsable: Optional[str] = None
+    proxima_accion: Optional[str] = None
+    fecha_cierre_estimada: Optional[date] = None
+    # ── Campos de outreach que carga el equipo ──
+    idioma: Optional[str] = None
+    disparador: Optional[str] = None
+    mensaje_asunto: Optional[str] = None
+    mensaje_cuerpo: Optional[str] = None
+    outreach_status: Optional[str] = None
+    respuesta_recibida: Optional[str] = None
+
+
+# ── Lead Jobs (cola de búsqueda) ──────────────────────────────────────────────
+
+class LeadJobCreate(BaseModel):
+    icp: dict
+    cantidad: int = 20
+    fundamento: Optional[str] = None
+
+
+class LeadJobUpdate(BaseModel):
+    status: Optional[str] = None
+    resumen: Optional[str] = None
+
+
+class LeadJobOut(BaseModel):
+    id: int
+    icp: dict
+    cantidad: int
+    status: str
+    fundamento: Optional[str]
+    resumen: Optional[str]
+    created_at: datetime
+    processed_at: Optional[datetime]
+
+    class Config:
+        from_attributes = True
+
+
+# ── Chat persistente equipo ↔ humano ──────────────────────────────────────────
+
+class ChatMensajeCreate(BaseModel):
+    contenido: str
+    requiere_aprobacion: bool = False
+
+
+class ChatMensajeOut(BaseModel):
+    id: int
+    rol: str
+    contenido: str
+    requiere_aprobacion: bool
+    estado: str
+    created_at: datetime
+
+    class Config:
+        from_attributes = True
+
+
+# ── Aviso por mail (lo dispara el agente vía API key) ─────────────────────────
+
+class FunnelNotify(BaseModel):
+    asunto: str
+    titulo: str
+    subtitulo: Optional[str] = ""
+    cuerpo: str                        # HTML simple o texto
+    prioridad: Optional[str] = "info"  # info/alerta
+
+
+class RespuestaInbound(BaseModel):
+    """Respuesta entrante de un lead (la trae n8n desde el inbox). Matchea por email."""
+    email: str
+    texto: str
+    asunto: Optional[str] = None
+
+
+class CRMStats(BaseModel):
+    total_oportunidades: int
+    valor_pipeline: float          # suma de valor_estimado de oportunidades abiertas
+    valor_ganado: float
+    ganadas: int
+    perdidas: int
+    por_etapa: dict                # { etapa: {count, valor} }
 
 
 # ── Dashboard ─────────────────────────────────────────────────────────────────

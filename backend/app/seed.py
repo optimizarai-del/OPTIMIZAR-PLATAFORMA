@@ -6,7 +6,8 @@ from datetime import date, datetime, timedelta
 from app.database import SessionLocal, engine
 from app.models import (Base, User, UserRole, Proyecto, ProyectoStatus,
                         PuntoAccion, Tarea, TareaStatus, TareaPrioridad,
-                        RegistroTiempo, TipoRegistro, Requerimiento, RequerimientoStatus)
+                        RegistroTiempo, TipoRegistro, Requerimiento, RequerimientoStatus,
+                        Oportunidad, EtapaOportunidad, FuenteOportunidad)
 from app.security import hash_pw
 
 Base.metadata.create_all(bind=engine)
@@ -389,6 +390,37 @@ req5 = Requerimiento(
     status=RequerimientoStatus.evaluacion,
 )
 db.add_all([req1, req2, req3, req4, req5])
+
+# ── CRM: Oportunidades demo (pipeline de ventas) ──────────────────────────────
+oportunidades = [
+    Oportunidad(empresa="Clínica San Lucas", titulo="Automatización de turnos con IA",
+                contacto_nombre="Dra. Marta Quiroga", contacto_email="marta@sanlucas.com",
+                contacto_telefono="+54 351 555-1010", etapa=EtapaOportunidad.lead,
+                valor_estimado=8500, probabilidad=20, responsable="Federico Rodríguez",
+                proxima_accion="Llamada de descubrimiento", fuente=FuenteOportunidad.web, orden=0),
+    Oportunidad(empresa="Distribuidora Norte", titulo="Bot de pedidos por WhatsApp",
+                contacto_nombre="Sergio Paz", contacto_email="sergio@distnorte.com",
+                etapa=EtapaOportunidad.contactado, valor_estimado=6200, probabilidad=35,
+                responsable="Martín Ruiz", proxima_accion="Enviar propuesta", orden=0),
+    Oportunidad(empresa="Estudio Contable AGEP", titulo="Integración AFIP + dashboard",
+                contacto_nombre="Gianfranco Larrañaga", contacto_email="gian@agep.com",
+                etapa=EtapaOportunidad.propuesta, valor_estimado=15000, probabilidad=55,
+                responsable="Federico Rodríguez", proxima_accion="Reunión técnica", orden=0),
+    Oportunidad(empresa="Logística del Centro", titulo="Tracking de flota en tiempo real",
+                contacto_nombre="Paula Méndez", contacto_email="paula@logcentro.com",
+                etapa=EtapaOportunidad.negociacion, valor_estimado=22000, probabilidad=75,
+                responsable="Martín Ruiz", proxima_accion="Cerrar condiciones", orden=0),
+    Oportunidad(empresa="Inmobiliaria Ciudad", titulo="CRM de ventas + cobranzas",
+                contacto_nombre="Roberto Díaz", contacto_email="roberto@ciudad.com",
+                etapa=EtapaOportunidad.ganado, valor_estimado=18000, probabilidad=100,
+                responsable="Federico Rodríguez", orden=0),
+    Oportunidad(empresa="Ferretería El Torno", titulo="Control de stock automatizado",
+                contacto_nombre="Gustavo Peña", etapa=EtapaOportunidad.perdido,
+                valor_estimado=4000, probabilidad=0, responsable="Martín Ruiz",
+                proxima_accion="Reintentar en Q3", orden=0),
+]
+db.add_all(oportunidades)
+
 db.commit()
 db.close()
 
