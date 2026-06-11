@@ -12,6 +12,7 @@ import Tareas from './pages/Tareas'
 import Requerimientos from './pages/Requerimientos'
 import NuevoRequerimiento from './pages/NuevoRequerimiento'
 import CRM from './pages/CRM'
+import Prospeccion from './pages/Prospeccion'
 import Equipo from './pages/Equipo'
 import Notificaciones from './pages/Notificaciones'
 
@@ -41,6 +42,9 @@ export default function App() {
             } />
             <Route path="/crm" element={
               <ProtectedRoute><Layout fullWidth><CRM /></Layout></ProtectedRoute>
+            } />
+            <Route path="/prospeccion" element={
+              <ProtectedRoute requireManager><Layout fullWidth><Prospeccion /></Layout></ProtectedRoute>
             } />
             <Route path="/equipo" element={
               <ProtectedRoute requireManager><Layout><Equipo /></Layout></ProtectedRoute>

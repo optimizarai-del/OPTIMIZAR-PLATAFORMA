@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom'
 import {
   LayoutGrid, CheckSquare, FileText, Users,
   Zap, Sun, Moon, Briefcase, Code2,
-  ClipboardList, UserCheck, Bell, Keyboard, Kanban
+  ClipboardList, UserCheck, Bell, Keyboard, Kanban, Bot
 } from 'lucide-react'
 import { useAuth } from '../../context/AuthContext'
 import { useTheme } from '../../context/ThemeContext'
@@ -40,6 +40,13 @@ export default function Sidebar() {
         <Kanban size={15} strokeWidth={1.8} />
         CRM · Pipeline
       </NavLink>
+
+      {isManager && (
+        <NavLink to="/prospeccion" className={link}>
+          <Bot size={15} strokeWidth={1.8} />
+          Prospección IA
+        </NavLink>
+      )}
 
       <NavLink to="/requerimientos" className={link}>
         <FileText size={15} strokeWidth={1.8} />
