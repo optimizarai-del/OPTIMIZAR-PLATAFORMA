@@ -36,6 +36,7 @@ Nombre, empresa, rubro y un gancho de dolor por rubro.
 - [2026-06-10] Fase 2 (backend) subida a la rama git `equipo-ventas`.
 - [2026-06-11] ICP + oferta definidos (Bloque A). Exclusión La Pampa cargada como guardarraíl.
 - [2026-06-11] Primera corrida de búsqueda en MODO BORRADOR. Segmento: estudios contables CABA/GBA/Córdoba/Rosario. 5 leads encontrados, 1 descartado por precaución La Pampa.
+- [2026-06-12] Plataforma deployada en producción. Chat en vivo del orquestador funcionando sobre el plan (el backend dispara la routine `chat-responder` al recibir un mensaje). Envío real todavía apagado.
 
 ## Gotchas descubiertos
 - Lorenzo y Asociados (red nacional, sede en Bella Vista BA) lista una sucursal "Santa Rosa" — ante la duda se descartó; verificar si esa Santa Rosa es La Pampa antes de incluirlos.
@@ -45,16 +46,13 @@ Nombre, empresa, rubro y un gancho de dolor por rubro.
 - [2026-06-12] Martínez Cataldi y Asociados (CABA, Coghlan): tampoco publica socios. Email funcional pero sin nombre para personalizar. Reservar para corrida futura.
 - [2026-06-12] En estudios con equipo grande (del Amo, 7+ profesionales), el ángulo "multiplicador" funciona mejor que el de "ahorro de horas de un solo contador".
 
-## Estado actual de la tarea
-- [x] Fase 1 — agentes listos
-- [x] Fase 2 — backend (en rama equipo-ventas)
-- [x] Bloque A — ICP + oferta definidos
-- [x] Primera corrida borrador completada (2026-06-11)
-- [x] Segunda corrida borrador completada (2026-06-12) — CABA/GBA, 5 leads
-- [ ] Migración de columnas en BD de prod (ALTER)
-- [ ] Fase 5 (n8n) — envío + escucha
-- [ ] Fase 4 — UI chat/seguimiento
-- [ ] Fase 3 — scheduled agent diario
+## Estado del sistema (infra — lo mantiene el equipo de desarrollo, NO lo cambian las corridas)
+- Plataforma OPTIMIZAR **deployada en producción** (EasyPanel): CRM + Prospección IA operativos.
+- Backend: endpoints externos OK, **migración aplicada**, **chat en vivo sobre el plan funcionando**.
+- **Prospección diaria automática: ACTIVA en MODO BORRADOR** (busca y escribe; NO envía nada).
+- **Envío real de correos: APAGADO** (`OUTREACH_ENABLED=false`). Encender tras validar emails + warm-up.
+- Corridas borrador completadas: 11/06 (Córdoba/Rosario) y 12/06 (CABA/GBA) → ~9 leads con email en borrador.
+- Pendiente real: validar calidad de los emails y, cuando se apruebe, encender el envío (flip a push-vivo).
 
 ## Última corrida
 **Fecha:** 2026-06-12 | **Modo:** BORRADOR (sin envíos reales)
