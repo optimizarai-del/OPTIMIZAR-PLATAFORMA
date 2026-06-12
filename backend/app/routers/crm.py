@@ -21,20 +21,25 @@ logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/api/crm", tags=["crm"])
 
 
-def _fire_chat_responder(contenido: str) -> None:
+def _fire_chat_responder(contenido: str) -> dict:
     """Dispara la routine 'chat-responder' en el plan (Claude Code online) para que el
     orquestador responda este mensaje en el chat. Corre en background; si no está
     configurado, no hace nada (el chat queda como buzón). Sin API de generación: el /fire
-    solo gatilla la ejecución, que corre sobre el plan."""
+    solo gatilla la ejecución, que corre sobre el plan. Devuelve un dict de diagnóstico."""
     fire_url = os.getenv("CLAUDE_ROUTINE_FIRE_URL", "")
     token    = os.getenv("CLAUDE_ROUTINE_TOKEN", "")
     api_base = os.getenv("SELF_API_BASE", "")           # URL PÚBLICA del backend
     api_key  = os.getenv("EXTERNAL_API_KEY", "")
-    if not (fire_url and token and api_base and api_key):
-        return
+    faltan = [n for n, v in [("CLAUDE_ROUTINE_FIRE_URL", fire_url),
+                             ("CLAUDE_ROUTINE_TOKEN", token),
+                             ("SELF_API_BASE", api_base),
+                             ("EXTERNAL_API_KEY", api_key)] if not v]
+    if faltan:
+        logger.warning(f"[chat] fire no configurado, faltan env: {faltan}")
+        return {"ok": False, "motivo": "config_incompleta", "faltan": faltan}
     texto = f"API_BASE={api_base}\nAPI_KEY={api_key}\nMENSAJE: {contenido}"
     try:
-        httpx.post(
+        r = httpx.post(
             fire_url,
             headers={
                 "Authorization": f"Bearer {token}",
@@ -45,8 +50,12 @@ def _fire_chat_responder(contenido: str) -> None:
             json={"text": texto},
             timeout=20,
         )
+        logger.info(f"[chat] fire -> HTTP {r.status_code}")
+        return {"ok": r.status_code < 300, "status": r.status_code,
+                "body": r.text[:300], "fire_url_tail": fire_url[-40:]}
     except Exception as e:
-        logger.warning(f"[chat] no se pudo disparar el chat-responder: {e}")
+        logger.warning(f"[chat] fire excepción: {e}")
+        return {"ok": False, "motivo": "excepcion", "error": str(e)}
 
 ETAPAS_ABIERTAS = [EtapaOportunidad.lead, EtapaOportunidad.contactado,
                    EtapaOportunidad.propuesta, EtapaOportunidad.negociacion]
@@ -221,6 +230,15 @@ def disparar_inbox(db: Session = Depends(get_db), current_user: User = Depends(g
     from app.outreach_service import revisar_inbox
     registradas = revisar_inbox(db)
     return {"registradas": registradas}
+
+
+@router.post("/outreach/test-fire")
+def test_fire_chat(current_user: User = Depends(get_db_user)):
+    """Diagnóstico: dispara la routine chat-responder y devuelve QUÉ respondió el /fire.
+    Sirve para verificar las env CLAUDE_ROUTINE_*/SELF_API_BASE sin mirar logs."""
+    if current_user.role not in [UserRole.admin, UserRole.manager]:
+        raise HTTPException(403, "Sin permisos")
+    return _fire_chat_responder("PRUEBA DIAGNOSTICO: confirmá en una línea que el disparo automático anda.")
 
 
 @router.get("/external/outbox", response_model=List[OportunidadOut], tags=["crm-external"])
