@@ -232,6 +232,24 @@ def disparar_inbox(db: Session = Depends(get_db), current_user: User = Depends(g
     return {"registradas": registradas}
 
 
+@router.get("/outreach/config-check")
+def config_check(current_user: User = Depends(get_db_user)):
+    """Chequea las env del disparo de chat SIN exponer secretos: si están seteadas, su largo,
+    si son 100% ASCII (un '—' u otro char raro pegado las rompe), y la cola de las URLs."""
+    if current_user.role not in [UserRole.admin, UserRole.manager]:
+        raise HTTPException(403, "Sin permisos")
+    def info(name, mostrar_cola=False):
+        v = os.getenv(name, "")
+        return {"set": bool(v), "len": len(v), "ascii_ok": v.isascii(),
+                "cola": (v[-32:] if mostrar_cola and v else None)}
+    return {
+        "CLAUDE_ROUTINE_FIRE_URL": info("CLAUDE_ROUTINE_FIRE_URL", mostrar_cola=True),
+        "CLAUDE_ROUTINE_TOKEN": info("CLAUDE_ROUTINE_TOKEN"),
+        "SELF_API_BASE": info("SELF_API_BASE", mostrar_cola=True),
+        "EXTERNAL_API_KEY": info("EXTERNAL_API_KEY"),
+    }
+
+
 @router.post("/outreach/test-fire")
 def test_fire_chat(current_user: User = Depends(get_db_user)):
     """Diagnóstico: dispara la routine chat-responder y devuelve QUÉ respondió el /fire.
