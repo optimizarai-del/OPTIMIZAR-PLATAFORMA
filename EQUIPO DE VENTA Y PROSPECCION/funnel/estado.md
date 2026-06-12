@@ -41,26 +41,38 @@ Nombre, empresa, rubro y un gancho de dolor por rubro.
 - Lorenzo y Asociados (red nacional, sede en Bella Vista BA) lista una sucursal "Santa Rosa" — ante la duda se descartó; verificar si esa Santa Rosa es La Pampa antes de incluirlos.
 - Tres de cinco emails encontrados son buzones genéricos (estudio@, info@, contacto@). Para estudios más chicos los emails personales de socios aparecen en la web; para estudios con red/alianzas no siempre.
 - Disparador transversal más potente identificado: temporada DDJJ Ganancias/Bienes Personales período 2025, vencimiento extendido a julio 2026 (RG ARCA 5851/2026) — todos los estudios contables en pico de carga.
+- [2026-06-12] Estudio Varese (Martínez, GBA, desde 1960): no publica nombres de socios. Candidato para corrida futura con investigación adicional (LinkedIn/CPCE).
+- [2026-06-12] Martínez Cataldi y Asociados (CABA, Coghlan): tampoco publica socios. Email funcional pero sin nombre para personalizar. Reservar para corrida futura.
+- [2026-06-12] En estudios con equipo grande (del Amo, 7+ profesionales), el ángulo "multiplicador" funciona mejor que el de "ahorro de horas de un solo contador".
 
 ## Estado actual de la tarea
 - [x] Fase 1 — agentes listos
 - [x] Fase 2 — backend (en rama equipo-ventas)
 - [x] Bloque A — ICP + oferta definidos
 - [x] Primera corrida borrador completada (2026-06-11)
+- [x] Segunda corrida borrador completada (2026-06-12) — CABA/GBA, 5 leads
 - [ ] Migración de columnas en BD de prod (ALTER)
 - [ ] Fase 5 (n8n) — envío + escucha
 - [ ] Fase 4 — UI chat/seguimiento
 - [ ] Fase 3 — scheduled agent diario
 
 ## Última corrida
-**Fecha:** 2026-06-11 | **Modo:** BORRADOR (sin envíos reales)
-**Segmento:** Estudios contables/impositivos — Córdoba Capital + Rosario (Santa Fe)
-**Cupo usado:** 5 leads (lote chico, primera corrida)
+**Fecha:** 2026-06-12 | **Modo:** BORRADOR (sin envíos reales)
+**Segmento:** Estudios contables/impositivos — CABA + GBA (Buenos Aires)
+**Cupo usado:** 5 leads
 **Leads encontrados:** 5
-**Leads descartados:** 1 (Lorenzo y Asociados — precaución La Pampa por sucursal Santa Rosa)
+**Leads descartados:** 0 (ninguno en La Pampa; ningún duplicado)
 **Emails escritos:** 5
+**Emails personales verificados:** 2 (kevin@estudiosaied.com.ar, fdelamo@estudiodelamo.com)
+**Emails genéricos:** 3 (Lutenberg, Suárez, Piacentini — con nombre de contacto)
 **Disparador:** Prórroga DDJJ Ganancias/Bienes Personales período 2025 hasta 27/07/2026 (RG ARCA 5851/2026)
 **Archivos:**
-- `funnel/leads/new/borrador-2026-06-11.jsonl` — 5 leads con emails
-- `funnel/reportes/2026-06-11.md` — reporte completo
+- `funnel/leads/new/borrador-2026-06-12.jsonl` — 5 leads con emails
+- `funnel/reportes/2026-06-12.md` — reporte completo
 **Próximo bloqueante:** Backend/n8n para envío real. Validar emails antes de activar.
+
+## Corrida anterior (2026-06-11)
+**Segmento:** Estudios contables/impositivos — Córdoba Capital + Rosario (Santa Fe)
+**Cupo usado:** 5 leads (lote chico, primera corrida)
+**Leads encontrados:** 5 | **Descartados:** 1 (Lorenzo y Asociados — precaución La Pampa)
+**Archivos:** `borrador-2026-06-11.jsonl` / `reportes/2026-06-11.md`
