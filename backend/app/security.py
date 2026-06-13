@@ -63,7 +63,7 @@ def verify_api_key(key: str = Depends(api_key_header)):
     if not EXTERNAL_API_KEY:
         raise HTTPException(status.HTTP_503_SERVICE_UNAVAILABLE,
                             "Endpoint externo deshabilitado: EXTERNAL_API_KEY no configurada.")
-    if not key or key != EXTERNAL_API_KEY:
+    if not key or not secrets.compare_digest(key, EXTERNAL_API_KEY):
         raise HTTPException(status.HTTP_401_UNAUTHORIZED, "API Key inválida o ausente.",
                             headers={"WWW-Authenticate": "X-API-Key"})
     return True
@@ -121,3 +121,21 @@ def get_db_user(token: str = Depends(oauth2)):
         return user
     finally:
         db.close()
+
+
+def require_manager(token: str = Depends(oauth2)):
+    """Dependencia: exige rol admin o manager. Reusá esto en endpoints sensibles."""
+    from app.models import UserRole
+    user = get_db_user(token)
+    if user.role not in (UserRole.admin, UserRole.manager):
+        raise HTTPException(status.HTTP_403_FORBIDDEN, "Sin permisos")
+    return user
+
+
+def require_editor(token: str = Depends(oauth2)):
+    """Dependencia: permite escribir a todos menos `viewer` (read-only)."""
+    from app.models import UserRole
+    user = get_db_user(token)
+    if user.role == UserRole.viewer:
+        raise HTTPException(status.HTTP_403_FORBIDDEN, "Solo lectura")
+    return user

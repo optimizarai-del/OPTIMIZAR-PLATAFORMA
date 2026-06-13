@@ -9,15 +9,17 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    let alive = true
     const token = localStorage.getItem('opt_token')
     if (token) {
       api.get('/auth/me')
-        .then(r => setUser(r.data))
+        .then(r => { if (alive) setUser(r.data) })
         .catch(() => localStorage.removeItem('opt_token'))
-        .finally(() => setLoading(false))
+        .finally(() => { if (alive) setLoading(false) })
     } else {
       setLoading(false)
     }
+    return () => { alive = false }
   }, [])
 
   const login = async (email, password) => {

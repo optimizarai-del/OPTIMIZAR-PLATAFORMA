@@ -357,8 +357,8 @@ class OportunidadOut(BaseModel):
 class OportunidadExternal(BaseModel):
     """Payload del endpoint externo (API Key). `external_id` permite upsert
     idempotente: si ya existe una oportunidad con ese id, se actualiza."""
-    external_id: str
-    empresa: str
+    external_id: str = Field(min_length=1)
+    empresa: str = Field(min_length=1)
     titulo: Optional[str] = None
     contacto_nombre: Optional[str] = None
     contacto_email: Optional[str] = None

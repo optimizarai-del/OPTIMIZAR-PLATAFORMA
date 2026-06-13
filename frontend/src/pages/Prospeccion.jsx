@@ -23,22 +23,36 @@ export default function Prospeccion() {
   const [enviando, setEnviando] = useState(false)
   const [loading, setLoading] = useState(true)
   const scrollRef = useRef(null)
+  const aliveRef = useRef(true)
+  // Mientras hay una acción local en vuelo (enviar mensaje / aprobar) pausamos el
+  // merge del poll para que no pise el cambio optimista antes de que el backend persista.
+  const busyRef = useRef(false)
+
+  // Mergea por id: conserva los mensajes locales que el servidor todavía no devolvió.
+  const mergeMsgs = (prev, server) => {
+    const ids = new Set(server.map(m => m.id))
+    const localPendientes = prev.filter(m => !ids.has(m.id))
+    return [...server, ...localPendientes].sort((a, b) => a.id - b.id)
+  }
 
   const cargar = useCallback((silencioso = false) => {
     Promise.all([
       api.get('/api/crm/chat'),
       api.get('/api/crm/lead-jobs'),
     ]).then(([c, j]) => {
-      setMsgs(c.data); setJobs(j.data)
-    }).catch(() => {
-      if (!silencioso) toast.error('No se pudo cargar el chat del equipo.')
-    }).finally(() => setLoading(false))
+      if (!aliveRef.current) return
+      if (!busyRef.current) setMsgs(prev => mergeMsgs(prev, c.data))
+      setJobs(j.data)
+    }).catch((err) => {
+      if (!silencioso && !err?.handled) toast.error('No se pudo cargar el chat del equipo.')
+    }).finally(() => { if (aliveRef.current) setLoading(false) })
   }, [])
 
   useEffect(() => {
+    aliveRef.current = true
     cargar()
     const t = setInterval(() => cargar(true), POLL_MS)
-    return () => clearInterval(t)
+    return () => { aliveRef.current = false; clearInterval(t) }
   }, [cargar])
 
   // auto-scroll al último mensaje
@@ -51,24 +65,29 @@ export default function Prospeccion() {
     const contenido = texto.trim()
     if (!contenido) return
     setEnviando(true)
+    busyRef.current = true
     try {
       const { data } = await api.post('/api/crm/chat', { contenido })
       setMsgs(m => [...m, data])
       setTexto('')
-    } catch {
-      toast.error('No se pudo enviar el mensaje.')
+    } catch (err) {
+      if (!err?.handled) toast.error('No se pudo enviar el mensaje.')
     } finally {
       setEnviando(false)
+      busyRef.current = false
     }
   }
 
   const decidir = async (msg, estado) => {
+    busyRef.current = true
     try {
       const { data } = await api.patch(`/api/crm/chat/${msg.id}/estado?estado=${estado}`)
       setMsgs(m => m.map(x => x.id === msg.id ? data : x))
       toast.success(estado === 'aprobado' ? 'Acción aprobada' : 'Acción rechazada')
-    } catch {
-      toast.error('No se pudo registrar la decisión.')
+    } catch (err) {
+      if (!err?.handled) toast.error('No se pudo registrar la decisión.')
+    } finally {
+      busyRef.current = false
     }
   }
 
@@ -196,15 +215,19 @@ function BuscarLeads({ onCreado }) {
   const submit = async (e) => {
     e.preventDefault()
     if (!icp.rubro.trim()) { toast.error('Indicá al menos el rubro.'); return }
+    const n = parseInt(cantidad, 10)
+    if (!Number.isFinite(n) || n < 1 || n > 50) {
+      toast.error('La cantidad debe ser un número entre 1 y 50.'); return
+    }
     setEnviando(true)
     try {
       await api.post('/api/crm/lead-jobs', {
-        icp, cantidad: parseInt(cantidad) || 15, fundamento: fundamento || null,
+        icp, cantidad: n, fundamento: fundamento || null,
       })
       toast.success('Búsqueda encolada. El equipo la tomará en la próxima corrida.')
       setFundamento(''); onCreado()
-    } catch {
-      toast.error('No se pudo encolar la búsqueda.')
+    } catch (err) {
+      if (!err?.handled) toast.error('No se pudo encolar la búsqueda.')
     } finally {
       setEnviando(false)
     }

@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo, useCallback } from 'react'
+import { useEffect, useState, useMemo, useCallback, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
   Plus, Building2, TrendingUp, Trophy, Target, X,
@@ -32,18 +32,25 @@ export default function CRM() {
   const [overEtapa, setOverEtapa] = useState(null)
   const [modal, setModal] = useState(null)   // null | {} (nueva) | oportunidad (editar)
 
+  const aliveRef = useRef(true)
+
   const load = useCallback(() => {
     Promise.all([
       api.get('/api/crm/oportunidades'),
       api.get('/api/crm/stats'),
     ]).then(([o, s]) => {
+      if (!aliveRef.current) return
       setOps(o.data); setStats(s.data)
-    }).catch(() => {
-      toast.error('No se pudo cargar el CRM.')
-    }).finally(() => setLoading(false))
+    }).catch((err) => {
+      if (!err?.handled) toast.error('No se pudo cargar el CRM.')
+    }).finally(() => { if (aliveRef.current) setLoading(false) })
   }, [])
 
-  useEffect(() => { load() }, [load])
+  useEffect(() => {
+    aliveRef.current = true
+    load()
+    return () => { aliveRef.current = false }
+  }, [load])
 
   const porEtapa = useMemo(() => {
     const m = Object.fromEntries(ETAPAS.map(e => [e.key, []]))
@@ -65,8 +72,8 @@ export default function CRM() {
       const lbl = ETAPAS.find(e => e.key === etapa)?.label
       toast.success(`${op.empresa} → ${lbl}`)
       api.get('/api/crm/stats')
-        .then(s => setStats(s.data))
-        .catch(() => toast.error('No se pudieron actualizar las métricas del CRM.'))
+        .then(s => { if (aliveRef.current) setStats(s.data) })
+        .catch((err) => { if (!err?.handled) toast.error('No se pudieron actualizar las métricas del CRM.') })
     } catch {
       setOps(list => list.map(o => o.id === op.id ? { ...o, etapa: prev } : o))
       toast.error('No se pudo mover')
@@ -280,11 +287,16 @@ function OppModal({ op, onClose, onSaved }) {
     if (!form.empresa.trim() || !form.titulo.trim()) {
       toast.error('Empresa y título son obligatorios'); return
     }
+    const valor = parseFloat(form.valor_estimado)
+    const prob = parseInt(form.probabilidad, 10)
+    if (form.valor_estimado !== '' && !Number.isFinite(valor)) {
+      toast.error('El valor estimado debe ser numérico'); return
+    }
     setSaving(true)
     const payload = {
       ...form,
-      valor_estimado: parseFloat(form.valor_estimado) || 0,
-      probabilidad: parseInt(form.probabilidad) || 0,
+      valor_estimado: Number.isFinite(valor) ? valor : 0,
+      probabilidad: Number.isFinite(prob) ? prob : 0,
       fecha_cierre_estimada: form.fecha_cierre_estimada || null,
     }
     try {
@@ -292,8 +304,10 @@ function OppModal({ op, onClose, onSaved }) {
       else await api.post('/api/crm/oportunidades', payload)
       toast.success(editing ? 'Oportunidad actualizada' : 'Oportunidad creada')
       onSaved()
-    } catch {
-      toast.error('No se pudo guardar'); setSaving(false)
+    } catch (err) {
+      if (!err?.handled) toast.error('No se pudo guardar')
+    } finally {
+      setSaving(false)
     }
   }
 

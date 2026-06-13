@@ -32,9 +32,11 @@ api.interceptors.response.use(r => r, err => {
     }
   } else if (err.response?.status >= 500) {
     toast.error('Error del servidor. Probá de nuevo.')
+    err.handled = true            // ya notificado: los .catch locales no duplican el toast
   } else if (!err.response) {
     // Error de red (sin internet, backend caido)
     toast.error('Sin conexión con el servidor.')
+    err.handled = true
   }
   return Promise.reject(err)
 })

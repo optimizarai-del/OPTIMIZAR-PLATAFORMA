@@ -1,7 +1,9 @@
 from fastapi import APIRouter, Depends, HTTPException, BackgroundTasks
 from sqlalchemy.orm import Session
+from sqlalchemy.exc import IntegrityError
+from sqlalchemy import func
 from typing import List
-from datetime import datetime
+from datetime import datetime, timezone
 import os
 import logging
 import httpx
@@ -14,7 +16,7 @@ from app.schemas import (OportunidadCreate, OportunidadUpdate, OportunidadOut,
                          LeadJobCreate, LeadJobUpdate, LeadJobOut,
                          ChatMensajeCreate, ChatMensajeOut, FunnelNotify,
                          RespuestaInbound)
-from app.security import get_db_user, verify_api_key
+from app.security import get_db_user, verify_api_key, require_manager, require_editor
 
 logger = logging.getLogger(__name__)
 
@@ -56,7 +58,7 @@ def _fire_chat_responder(contenido: str) -> dict:
         )
         logger.info(f"[chat] fire -> HTTP {r.status_code}")
         return {"ok": r.status_code < 300, "status": r.status_code,
-                "body": r.text[:300], "fire_url_tail": fire_url[-40:]}
+                "body": r.text[:300], "fire_url_tail": fire_url[-10:]}
     except Exception as e:
         logger.warning(f"[chat] fire excepción: {e}")
         return {"ok": False, "motivo": "excepcion", "error": str(e)}
@@ -66,7 +68,10 @@ ETAPAS_ABIERTAS = [EtapaOportunidad.lead, EtapaOportunidad.contactado,
 
 # Campos que nunca se actualizan desde el payload (anti mass-assignment).
 CAMPOS_PROHIBIDOS = {"id", "created_by", "created_at", "updated_at", "user_id",
-                     "external_id", "fuente"}
+                     "external_id", "fuente", "proyecto_id"}
+
+# Estados válidos para una acción del chat (anti valores arbitrarios).
+ESTADOS_CHAT_VALIDOS = {"aprobado", "rechazado", "esperando", "info"}
 
 
 # ── CRUD (autenticado con JWT) ────────────────────────────────────────────────
@@ -79,7 +84,7 @@ def listar(db: Session = Depends(get_db), _=Depends(get_db_user)):
 
 
 @router.post("/oportunidades", response_model=OportunidadOut)
-def crear(data: OportunidadCreate, db: Session = Depends(get_db), _=Depends(get_db_user)):
+def crear(data: OportunidadCreate, db: Session = Depends(get_db), _=Depends(require_editor)):
     # nueva oportunidad va al fondo de su columna
     base = db.query(Oportunidad).filter_by(etapa=data.etapa).count()
     op = Oportunidad(**data.model_dump(), orden=base)
@@ -99,7 +104,7 @@ def detalle(oid: int, db: Session = Depends(get_db), _=Depends(get_db_user)):
 
 @router.patch("/oportunidades/{oid}", response_model=OportunidadOut)
 def editar(oid: int, data: OportunidadUpdate, db: Session = Depends(get_db),
-           _=Depends(get_db_user)):
+           _=Depends(require_editor)):
     op = db.query(Oportunidad).filter_by(id=oid).first()
     if not op:
         raise HTTPException(404, "Oportunidad no encontrada")
@@ -148,9 +153,12 @@ def convertir_a_proyecto(oid: int, db: Session = Depends(get_db),
     op.etapa = EtapaOportunidad.ganado
     db.commit()
     db.refresh(p)
-    # _enrich vive en proyectos.py; acá devolvemos los campos calculados en cero
+    # _enrich vive en proyectos.py; acá devolvemos los campos calculados en cero.
+    # Construimos el dict desde las columnas reales (no p.__dict__, que arrastra
+    # _sa_instance_state).
+    data = {c.name: getattr(p, c.name) for c in p.__table__.columns}
     return {
-        **p.__dict__,
+        **data,
         "progreso": 0.0, "total_tareas": 0, "tareas_completadas": 0,
         "total_puntos": 0, "puntos_completados": 0,
     }
@@ -191,26 +199,41 @@ def stats(db: Session = Depends(get_db), _=Depends(get_db_user)):
              tags=["crm-external"])
 def upsert_externo(data: OportunidadExternal, db: Session = Depends(get_db),
                    _=Depends(verify_api_key)):
-    op = db.query(Oportunidad).filter_by(external_id=data.external_id).first()
-    payload = data.model_dump(exclude_unset=True)
-
-    if op:                                   # UPDATE
-        for k, v in payload.items():
+    def _aplicar_update(op):
+        for k, v in data.model_dump(exclude_unset=True).items():
             if k in CAMPOS_PROHIBIDOS:       # external_id ya coincide; no se reescribe
                 continue
             setattr(op, k, v)
-    else:                                    # CREATE
-        etapa = payload.pop("etapa", None) or EtapaOportunidad.lead
-        base = db.query(Oportunidad).filter_by(etapa=etapa).count()
-        op = Oportunidad(
-            titulo=payload.pop("titulo", None) or payload["empresa"],
-            etapa=etapa,
-            fuente=FuenteOportunidad.api,
-            orden=base,
-            **payload,
-        )
-        db.add(op)
-    db.commit()
+
+    op = db.query(Oportunidad).filter_by(external_id=data.external_id).first()
+    if op:                                   # UPDATE
+        _aplicar_update(op)
+        db.commit()
+        db.refresh(op)
+        return op
+
+    # CREATE — protegido contra carrera: si otro request insertó el mismo external_id
+    # entre el SELECT y el INSERT, capturamos el IntegrityError y caemos al UPDATE.
+    payload = data.model_dump(exclude_unset=True)
+    etapa = payload.pop("etapa", None) or EtapaOportunidad.lead
+    base = db.query(Oportunidad).filter_by(etapa=etapa).count()
+    op = Oportunidad(
+        titulo=payload.pop("titulo", None) or payload["empresa"],
+        etapa=etapa,
+        fuente=FuenteOportunidad.api,
+        orden=base,
+        **payload,
+    )
+    db.add(op)
+    try:
+        db.commit()
+    except IntegrityError:
+        db.rollback()
+        op = db.query(Oportunidad).filter_by(external_id=data.external_id).first()
+        if not op:
+            raise HTTPException(409, "Conflicto al crear la oportunidad.")
+        _aplicar_update(op)
+        db.commit()
     db.refresh(op)
     return op
 
@@ -245,7 +268,7 @@ def config_check(current_user: User = Depends(get_db_user)):
     def info(name, mostrar_cola=False):
         v = os.getenv(name, "")
         return {"set": bool(v), "len": len(v), "ascii_ok": v.isascii(),
-                "cola": (v[-32:] if mostrar_cola and v else None)}
+                "cola": (v[-10:] if mostrar_cola and v else None)}
     return {
         "CLAUDE_ROUTINE_FIRE_URL": info("CLAUDE_ROUTINE_FIRE_URL", mostrar_cola=True),
         "CLAUDE_ROUTINE_TOKEN": info("CLAUDE_ROUTINE_TOKEN"),
@@ -281,7 +304,7 @@ def registrar_respuesta(data: RespuestaInbound, db: Session = Depends(get_db),
     oportunidad por contacto_email (la más reciente), marca outreach_status='respondido',
     guarda el texto y mueve la etapa a 'contactado' si todavía estaba en 'lead'."""
     op = (db.query(Oportunidad)
-            .filter(Oportunidad.contacto_email == data.email)
+            .filter(func.lower(Oportunidad.contacto_email) == (data.email or "").strip().lower())
             .order_by(Oportunidad.created_at.desc())
             .first())
     if not op:
@@ -300,7 +323,7 @@ def registrar_respuesta(data: RespuestaInbound, db: Session = Depends(get_db),
 
 @router.post("/lead-jobs", response_model=LeadJobOut)
 def crear_lead_job(data: LeadJobCreate, db: Session = Depends(get_db),
-                   _=Depends(get_db_user)):
+                   _=Depends(require_editor)):
     job = LeadJob(icp=data.icp, cantidad=data.cantidad, fundamento=data.fundamento)
     db.add(job); db.commit(); db.refresh(job)
     return job
@@ -326,7 +349,7 @@ def actualizar_lead_job(jid: int, data: LeadJobUpdate, db: Session = Depends(get
     if data.status is not None:
         job.status = data.status
         if data.status in ("completado", "error"):
-            job.processed_at = datetime.utcnow()
+            job.processed_at = datetime.now(timezone.utc)
     if data.resumen is not None:
         job.resumen = data.resumen
     db.commit(); db.refresh(job)
@@ -342,7 +365,7 @@ def listar_chat(db: Session = Depends(get_db), _=Depends(get_db_user)):
 
 @router.post("/chat", response_model=ChatMensajeOut)
 def postear_humano(data: ChatMensajeCreate, background_tasks: BackgroundTasks,
-                   db: Session = Depends(get_db), _=Depends(get_db_user)):
+                   db: Session = Depends(get_db), _=Depends(require_editor)):
     msg = ChatMensaje(rol="humano", contenido=data.contenido)
     db.add(msg); db.commit(); db.refresh(msg)
     # Dispara al orquestador (routine en el plan) para que responda este mensaje.
@@ -352,8 +375,10 @@ def postear_humano(data: ChatMensajeCreate, background_tasks: BackgroundTasks,
 
 @router.patch("/chat/{mid}/estado", response_model=ChatMensajeOut)
 def set_estado_chat(mid: int, estado: str, db: Session = Depends(get_db),
-                    _=Depends(get_db_user)):
+                    _=Depends(require_manager)):
     """El humano aprueba/rechaza una acción propuesta por el agente."""
+    if estado not in ESTADOS_CHAT_VALIDOS:
+        raise HTTPException(422, f"Estado inválido. Permitidos: {sorted(ESTADOS_CHAT_VALIDOS)}")
     msg = db.query(ChatMensaje).filter_by(id=mid).first()
     if not msg:
         raise HTTPException(404, "Mensaje no encontrado")

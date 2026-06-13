@@ -72,13 +72,24 @@ def enviar_pendientes(db: Session = None) -> int:
     db = db or SessionLocal()
     enviados = 0
     try:
-        pendientes = (db.query(Oportunidad)
-                        .filter(Oportunidad.outreach_status == "escrito",
-                                Oportunidad.contacto_email.isnot(None),
-                                Oportunidad.mensaje_cuerpo.isnot(None))
-                        .order_by(Oportunidad.created_at)
-                        .limit(OUTREACH_DAILY_CAP)
-                        .all())
+        # Selección + CLAIM atómico: tomamos las filas con lock de fila (skip_locked en
+        # Postgres; no-op en SQLite que serializa escrituras) y las marcamos 'enviando'
+        # con commit ANTES de enviar. Así una corrida manual y el cron no toman el mismo
+        # lote → no hay doble envío al mismo lead.
+        q = (db.query(Oportunidad)
+               .filter(Oportunidad.outreach_status == "escrito",
+                       Oportunidad.contacto_email.isnot(None),
+                       Oportunidad.mensaje_cuerpo.isnot(None))
+               .order_by(Oportunidad.created_at)
+               .limit(OUTREACH_DAILY_CAP))
+        try:
+            pendientes = q.with_for_update(skip_locked=True).all()
+        except Exception:
+            pendientes = q.all()          # motor sin FOR UPDATE: seguimos igual
+        for op in pendientes:
+            op.outreach_status = "enviando"
+        db.commit()                        # claim confirmado
+
         total = len(pendientes)
         for i, op in enumerate(pendientes):
             err = _enviar_uno(op.contacto_email, op.mensaje_asunto, op.mensaje_cuerpo)
@@ -90,8 +101,9 @@ def enviar_pendientes(db: Session = None) -> int:
                 enviados += 1
                 logger.info(f"[outreach] enviado a {op.contacto_email} ({op.empresa})")
             else:
+                op.outreach_status = "escrito"   # liberar para reintentar
+                db.commit()
                 logger.error(f"[outreach] fallo enviando a {op.contacto_email}: {err}")
-                # se deja en 'escrito' para reintentar en la próxima corrida
             # throttling de warm-up entre envíos (no después del último)
             if i < total - 1 and OUTREACH_THROTTLE_SEC > 0:
                 time.sleep(OUTREACH_THROTTLE_SEC)
@@ -112,7 +124,7 @@ def revisar_inbox(db: Session = None) -> int:
         logger.warning("[inbox] IMAP no configurado.")
         return 0
     try:
-        from imap_tools import MailBox, AND
+        from imap_tools import MailBox, AND, MailMessageFlags
     except ImportError:
         logger.error("[inbox] falta la dependencia imap-tools.")
         return 0
@@ -121,8 +133,10 @@ def revisar_inbox(db: Session = None) -> int:
     db = db or SessionLocal()
     registradas = 0
     try:
+        # mark_seen=False: NO marcamos leído en el fetch. Solo marcamos 'seen' tras
+        # commitear en la DB; si el commit falla, el mail queda no-leído y se reprocesa.
         with MailBox(IMAP_HOST, port=IMAP_PORT).login(SMTP_USER, SMTP_PASSWORD, "INBOX") as mailbox:
-            for msg in mailbox.fetch(AND(seen=False), mark_seen=True):
+            for msg in mailbox.fetch(AND(seen=False), mark_seen=False):
                 remitente = (msg.from_ or "").lower().strip()
                 texto = (msg.text or msg.html or "")[:4000]
                 if not remitente:
@@ -137,7 +151,17 @@ def revisar_inbox(db: Session = None) -> int:
                 op.outreach_status = "respondido"
                 if op.etapa == EtapaOportunidad.lead:
                     op.etapa = EtapaOportunidad.contactado
-                db.commit()
+                try:
+                    db.commit()
+                except Exception:
+                    db.rollback()
+                    logger.error(f"[inbox] commit falló para {remitente}; se reprocesará.")
+                    continue
+                # recién ahora marcamos el mail como leído en el servidor IMAP
+                try:
+                    mailbox.flag(msg.uid, MailMessageFlags.SEEN, True)
+                except Exception as e:
+                    logger.warning(f"[inbox] no se pudo marcar SEEN {remitente}: {e}")
                 registradas += 1
                 logger.info(f"[inbox] respuesta de {remitente} → {op.empresa}")
         if registradas:
