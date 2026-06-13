@@ -37,6 +37,7 @@ Nombre, empresa, rubro y un gancho de dolor por rubro.
 - [2026-06-11] ICP + oferta definidos (Bloque A). Exclusión La Pampa cargada como guardarraíl.
 - [2026-06-11] Primera corrida de búsqueda en MODO BORRADOR. Segmento: estudios contables CABA/GBA/Córdoba/Rosario. 5 leads encontrados, 1 descartado por precaución La Pampa.
 - [2026-06-12] Plataforma deployada en producción. Chat en vivo del orquestador funcionando sobre el plan (el backend dispara la routine `chat-responder` al recibir un mensaje). Envío real todavía apagado.
+- [2026-06-13] Corrida borrador expandida a Mendoza + Tucumán (NOA). 2 emails personales verificados (Torre-Pulisich, Farina). Descubierto: Xubio lista implementadores en Mendoza con contactos directos — fuente valiosa para próximas corridas.
 
 ## Gotchas descubiertos
 - Lorenzo y Asociados (red nacional, sede en Bella Vista BA) lista una sucursal "Santa Rosa" — ante la duda se descartó; verificar si esa Santa Rosa es La Pampa antes de incluirlos.
@@ -45,29 +46,39 @@ Nombre, empresa, rubro y un gancho de dolor por rubro.
 - [2026-06-12] Estudio Varese (Martínez, GBA, desde 1960): no publica nombres de socios. Candidato para corrida futura con investigación adicional (LinkedIn/CPCE).
 - [2026-06-12] Martínez Cataldi y Asociados (CABA, Coghlan): tampoco publica socios. Email funcional pero sin nombre para personalizar. Reservar para corrida futura.
 - [2026-06-12] En estudios con equipo grande (del Amo, 7+ profesionales), el ángulo "multiplicador" funciona mejor que el de "ahorro de horas de un solo contador".
+- [2026-06-13] Implementadores Xubio en Mendoza (Torre-Pulisich, Maipy): ya adoptaron tecnología contable — apertura natural a capa siguiente de automatización. Ángulo sugerido: "ya usás Xubio, OPTIMIZAR es lo que viene después".
+- [2026-06-13] Estudio Godoy y Asociados (Tucumán, 30 años): sin nombre de socio publicado. Investigar vía LinkedIn o CPCE de Tucumán antes de activar envío.
+- [2026-06-13] Estudios del NOA (Tucumán, Salta, Jujuy) reciben menos propuestas tech que CABA — posible diferenciador en próximas corridas.
 
 ## Estado del sistema (infra — lo mantiene el equipo de desarrollo, NO lo cambian las corridas)
 - Plataforma OPTIMIZAR **deployada en producción** (EasyPanel): CRM + Prospección IA operativos.
 - Backend: endpoints externos OK, **migración aplicada**, **chat en vivo sobre el plan funcionando**.
 - **Prospección diaria automática: ACTIVA en MODO BORRADOR** (busca y escribe; NO envía nada).
 - **Envío real de correos: APAGADO** (`OUTREACH_ENABLED=false`). Encender tras validar emails + warm-up.
-- Corridas borrador completadas: 11/06 (Córdoba/Rosario) y 12/06 (CABA/GBA) → ~9 leads con email en borrador.
+- Corridas borrador completadas: 11/06 (Córdoba/Rosario), 12/06 (CABA/GBA), 13/06 (Mendoza/Tucumán) → ~15 leads con email en borrador.
 - Pendiente real: validar calidad de los emails y, cuando se apruebe, encender el envío (flip a push-vivo).
 
 ## Última corrida
-**Fecha:** 2026-06-12 | **Modo:** BORRADOR (sin envíos reales)
-**Segmento:** Estudios contables/impositivos — CABA + GBA (Buenos Aires)
+**Fecha:** 2026-06-13 | **Modo:** BORRADOR (sin envíos reales)
+**Segmento:** Estudios contables/impositivos — Mendoza Capital + Gran Mendoza + Tucumán (NOA)
 **Cupo usado:** 5 leads
 **Leads encontrados:** 5
 **Leads descartados:** 0 (ninguno en La Pampa; ningún duplicado)
 **Emails escritos:** 5
-**Emails personales verificados:** 2 (kevin@estudiosaied.com.ar, fdelamo@estudiodelamo.com)
-**Emails genéricos:** 3 (Lutenberg, Suárez, Piacentini — con nombre de contacto)
+**Emails personales verificados:** 2 (jpulisich@torre-pulisich.com, marcosfarina@estudiocontablefarina.com)
+**Emails genéricos con nombre:** 2 (Lisanti/Maipy, Marcotullio — gmail)
+**Emails genéricos sin nombre:** 1 (Godoy y Asociados)
 **Disparador:** Prórroga DDJJ Ganancias/Bienes Personales período 2025 hasta 27/07/2026 (RG ARCA 5851/2026)
 **Archivos:**
-- `funnel/leads/new/borrador-2026-06-12.jsonl` — 5 leads con emails
-- `funnel/reportes/2026-06-12.md` — reporte completo
+- `funnel/leads/new/borrador-2026-06-13.jsonl` — 5 leads con emails
+- `funnel/reportes/2026-06-13.md` — reporte completo
 **Próximo bloqueante:** Backend/n8n para envío real. Validar emails antes de activar.
+
+## Corrida anterior (2026-06-12)
+**Segmento:** Estudios contables/impositivos — CABA + GBA (Buenos Aires)
+**Cupo usado:** 5 leads (lote de expansión metropolitana)
+**Leads encontrados:** 5 | **Descartados:** 0
+**Archivos:** `borrador-2026-06-12.jsonl` / `reportes/2026-06-12.md`
 
 ## Corrida anterior (2026-06-11)
 **Segmento:** Estudios contables/impositivos — Córdoba Capital + Rosario (Santa Fe)
