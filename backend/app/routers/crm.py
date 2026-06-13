@@ -26,10 +26,14 @@ def _fire_chat_responder(contenido: str) -> dict:
     orquestador responda este mensaje en el chat. Corre en background; si no está
     configurado, no hace nada (el chat queda como buzón). Sin API de generación: el /fire
     solo gatilla la ejecución, que corre sobre el plan. Devuelve un dict de diagnóstico."""
-    fire_url = os.getenv("CLAUDE_ROUTINE_FIRE_URL", "")
-    token    = os.getenv("CLAUDE_ROUTINE_TOKEN", "")
-    api_base = os.getenv("SELF_API_BASE", "")           # URL PÚBLICA del backend
-    api_key  = os.getenv("EXTERNAL_API_KEY", "")
+    # Normaliza guiones/comillas "inteligentes" que rompen el header (em/en dash → '-').
+    def _norm(s: str) -> str:
+        return (s.replace("—", "-").replace("–", "-").replace("−", "-")
+                 .replace("“", '"').replace("”", '"').strip())
+    fire_url = _norm(os.getenv("CLAUDE_ROUTINE_FIRE_URL", ""))
+    token    = _norm(os.getenv("CLAUDE_ROUTINE_TOKEN", ""))
+    api_base = _norm(os.getenv("SELF_API_BASE", ""))    # URL PÚBLICA del backend
+    api_key  = _norm(os.getenv("EXTERNAL_API_KEY", ""))
     faltan = [n for n, v in [("CLAUDE_ROUTINE_FIRE_URL", fire_url),
                              ("CLAUDE_ROUTINE_TOKEN", token),
                              ("SELF_API_BASE", api_base),
