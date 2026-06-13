@@ -44,6 +44,25 @@ guardarraíl, no una preferencia.
 - Aplica solo a estudios contables/impositivos; otros rubros en La Pampa están permitidos.
 - Reportá cuántos leads se descartaron por esta regla.
 
+## 📥 CARGA AL CRM (OBLIGATORIO — siempre, sin importar quién buscó)
+Cada vez que se encuentra un cliente/lead — da igual si fue el buscador diario, el orquestador
+respondiendo el chat, o cualquier invocación del arnés — **se carga al CRM y se deja en etapa `lead`**.
+Es idempotente (no duplica): el `external_id` = `lead_id`.
+
+```bash
+curl -s -X POST "$API_BASE/api/crm/external/oportunidades" \
+  -H "X-API-Key: $API_KEY" -H "Content-Type: application/json" \
+  -d '{"external_id":"<lead_id>","empresa":"<empresa>","titulo":"<empresa>",
+       "contacto_nombre":"<nombre>","contacto_email":"<email o null>","idioma":"<es..>",
+       "disparador":"<disparador>","descripcion":"<contexto>",
+       "mensaje_asunto":"<asunto o null>","mensaje_cuerpo":"<cuerpo o null>",
+       "outreach_status":"escrito si hay email escrito, si no sin_contactar","etapa":"lead"}'
+```
+- Confirmá HTTP 200 por cada lead.
+- Esto **NO envía ningún correo** — solo lo deja en el CRM como `lead`. El envío real lo gobierna
+  `OUTREACH_ENABLED` en el backend.
+- Si no hay email, igual cargá el lead (para tracking/research) con `outreach_status:"sin_contactar"`.
+
 ## Validación obligatoria de cada lead
 - Email: marcá si es verificado, inferido (patrón nombre@empresa) o no encontrado.
 - Deduplicá contra `leads/contacted.jsonl` (no devolver leads ya contactados).
