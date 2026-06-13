@@ -1,9 +1,11 @@
 # EQUIPO DE VENTA Y PROSPECCIÓN
 
 ## Qué es este proyecto
-Máquina de ventas autónoma hecha de subagentes de Claude Code. Un equipo digital que cada día
-busca leads con criterio, escribe emails personalizados en el idioma del lead, los envía, escucha
-las respuestas, y mejora con el tiempo. El humano solo da seguimiento a lo que responde.
+Máquina de ventas autónoma hecha de subagentes de Claude Code. Un equipo digital y **genérico** al
+que se le pide cualquier tipo de cliente (el rubro lo define el formulario "Buscar leads" o el chat;
+no está limitado a estudios contables). Cada día busca leads con criterio, los carga al CRM como
+`lead`, escribe emails personalizados en el idioma del lead, los envía, escucha las respuestas, y
+mejora con el tiempo. Trabaja solo, como un equipo de ventas real; el humano solo da seguimiento a lo que responde.
 
 ## Restricción arquitectónica (NO negociable)
 - Usar SIEMPRE el plan de Claude. NUNCA la API de Anthropic.

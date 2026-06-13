@@ -218,8 +218,9 @@ function BuscarLeads({ onCreado }) {
       </div>
       <form onSubmit={submit} className="space-y-3">
         <div>
-          <label className="label">Rubro *</label>
-          <input className="input" placeholder="Estudios contables, consultoras…" value={icp.rubro} onChange={set('rubro')} />
+          <label className="label">Rubro / tipo de cliente *</label>
+          <input className="input" placeholder="Gimnasios, clínicas, estudios contables, agencias…" value={icp.rubro} onChange={set('rubro')} />
+          <p className="text-[11px] text-muted mt-1">El equipo busca cualquier rubro que indiques acá.</p>
         </div>
         <div className="grid grid-cols-2 gap-2.5">
           <div>

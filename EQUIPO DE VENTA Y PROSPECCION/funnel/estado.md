@@ -12,9 +12,16 @@ manual repetitivo en empresas de servicios.
 - **Prueba social / ángulo:** caso Larrañaga y Asociados — sistema contable real en producción.
 - **Mensaje núcleo:** "te hacemos ganar más, ahorrar tiempo y optimizar los procesos que hoy te comen el día".
 
-## Configuración base (ICP)
-- Rubro objetivo: estudios contables/impositivos (nicho ancla, mejor prueba social), estudios jurídicos,
-  consultoras y PyMEs de servicios con procesos administrativos pesados.
+## El equipo es GENÉRICO — busca el rubro que se le pida
+Este equipo prospecta **cualquier tipo de cliente**, no solo contadores. El rubro lo define:
+1. una búsqueda encolada desde el formulario "Buscar leads" (`/api/crm/lead-jobs/pending`), o
+2. un pedido por el chat ("buscá 5 gimnasios de Rosario"), o
+3. si no hay ningún pedido, el **ICP por defecto / ancla** de abajo.
+Los pedidos explícitos del humano SIEMPRE mandan sobre el ICP por defecto.
+
+## ICP por defecto / ancla (se usa SOLO si nadie pidió otra cosa)
+- Rubro por defecto: estudios contables/impositivos (nicho ancla, mejor prueba social Larrañaga),
+  estudios jurídicos, consultoras y PyMEs de servicios con procesos administrativos pesados.
 - Tamaño de empresa: PyME ~5–50 empleados, ya facturando bien, con volumen de procesos manuales
   (ej. estudios con 100+ clientes).
 - Cargo objetivo: socio / dueño / director / socio administrador (en estudios, el socio a cargo de la operación).
@@ -22,7 +29,8 @@ manual repetitivo en empresas de servicios.
 - Idioma: español.
 - Cupo diario de envíos: 20–30/día objetivo. WARM-UP: arrancar 10–15/día la semana 1 y escalar gradual.
 
-## ⛔ EXCLUSIÓN DURA (contractual — NO negociable)
+## ⛔ EXCLUSIÓN DURA (contractual — NO negociable, SOLO contables)
+> Aplica únicamente cuando el rubro buscado es estudios contables/impositivos. Otros rubros en La Pampa están permitidos.
 - **NO prospectar estudios contables dentro de la Provincia de La Pampa.**
   Exclusividad territorial con Larrañaga y Asociados (cláusula de no competencia).
   El resto del país está libre. Esto es un guardarraíl, no una preferencia: si un lead es un
