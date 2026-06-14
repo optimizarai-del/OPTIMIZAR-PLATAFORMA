@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom'
 import {
   LayoutGrid, CheckSquare, FileText, Users,
   Zap, Sun, Moon, Briefcase, Code2,
-  ClipboardList, UserCheck, Bell, Keyboard, Kanban, Bot
+  ClipboardList, UserCheck, Bell, Keyboard, Kanban, Bot, Megaphone
 } from 'lucide-react'
 import { useAuth } from '../../context/AuthContext'
 import { useTheme } from '../../context/ThemeContext'
@@ -57,6 +57,20 @@ export default function Sidebar() {
         <ClipboardList size={15} strokeWidth={1.8} />
         Nuevo Handover
       </NavLink>
+
+      {/* ── MARKETING ───────────────────────────────────── */}
+      {isManager && (
+        <>
+          <div className="section-label flex items-center gap-1.5">
+            <Megaphone size={9} className="text-accent" />
+            Marketing
+          </div>
+          <NavLink to="/marketing" className={link}>
+            <Megaphone size={15} strokeWidth={1.8} />
+            Meta Ads
+          </NavLink>
+        </>
+      )}
 
       {/* ── DESARROLLO ──────────────────────────────────── */}
       <div className="section-label flex items-center gap-1.5">

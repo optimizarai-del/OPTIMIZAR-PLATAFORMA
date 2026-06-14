@@ -286,3 +286,74 @@ class Requerimiento(Base):
     created_at = Column(DateTime, default=_utcnow)
 
     proyecto = relationship("Proyecto", back_populates="requerimiento")
+
+
+# ── Marketing · Meta Ads ──────────────────────────────────────────────────────
+# Los datos los empuja el agente analista (Claude Code + MCP de Meta Ads) sobre el
+# plan, vía endpoints externos con API key. Patrón de polling invertido, sin API de Anthropic.
+
+class AdCampaign(Base):
+    """Campaña publicitaria sincronizada desde Meta Ads. Upsert idempotente por external_id."""
+    __tablename__ = "ad_campaigns"
+
+    id = Column(Integer, primary_key=True)
+    external_id = Column(String, unique=True, index=True, nullable=False)  # id de campaña en Meta
+    plataforma = Column(String, default="meta", index=True)
+    nombre = Column(String, nullable=False)
+    estado = Column(String, default="ACTIVE", index=True)   # ACTIVE/PAUSED/ARCHIVED
+    objetivo = Column(String, nullable=True)                # OUTCOME_LEADS, OUTCOME_SALES, etc.
+    cuenta_id = Column(String, nullable=True, index=True)   # act_<id> de Meta
+    cuenta_nombre = Column(String, nullable=True)
+    presupuesto_diario = Column(Float, nullable=True)       # en moneda de la cuenta
+    moneda = Column(String, default="ARS")
+    ultima_sync = Column(DateTime, default=_utcnow)
+    created_at = Column(DateTime, default=_utcnow)
+
+    metricas = relationship("AdMetric", back_populates="campaign",
+                            cascade="all, delete-orphan")
+    recomendaciones = relationship("AdRecommendation", back_populates="campaign",
+                                   cascade="all, delete-orphan")
+
+
+class AdMetric(Base):
+    """Métricas diarias de una campaña (una fila por campaña y fecha).
+    Upsert idempotente por (campaign_id, fecha)."""
+    __tablename__ = "ad_metrics"
+
+    id = Column(Integer, primary_key=True)
+    campaign_id = Column(Integer, ForeignKey("ad_campaigns.id"), index=True, nullable=False)
+    fecha = Column(Date, nullable=False, index=True)
+    impresiones = Column(Integer, default=0)
+    alcance = Column(Integer, default=0)
+    clicks = Column(Integer, default=0)
+    gasto = Column(Float, default=0.0)
+    ctr = Column(Float, default=0.0)            # %
+    cpc = Column(Float, default=0.0)
+    cpm = Column(Float, default=0.0)
+    frecuencia = Column(Float, default=0.0)
+    conversiones = Column(Float, default=0.0)
+    valor_conversiones = Column(Float, default=0.0)
+    costo_conversion = Column(Float, default=0.0)
+    roas = Column(Float, default=0.0)
+    created_at = Column(DateTime, default=_utcnow)
+
+    campaign = relationship("AdCampaign", back_populates="metricas")
+
+
+class AdRecommendation(Base):
+    """Recomendación del agente analista sobre una campaña. Upsert por external_id."""
+    __tablename__ = "ad_recommendations"
+
+    id = Column(Integer, primary_key=True)
+    external_id = Column(String, unique=True, index=True, nullable=False)  # clave idempotente del agente
+    campaign_id = Column(Integer, ForeignKey("ad_campaigns.id"), index=True, nullable=True)
+    tipo = Column(String, default="ajuste", index=True)   # escalar/pausar/presupuesto/creativo/audiencia/ajuste
+    severidad = Column(String, default="media")           # alta/media/baja
+    titulo = Column(String, nullable=False)
+    detalle = Column(Text, nullable=True)                 # análisis y fundamento
+    accion_sugerida = Column(Text, nullable=True)         # qué hacer concretamente
+    metricas_clave = Column(JSON, default=dict)           # snapshot que motivó la reco
+    estado = Column(String, default="nueva", index=True)  # nueva/aplicada/descartada
+    created_at = Column(DateTime, default=_utcnow, index=True)
+
+    campaign = relationship("AdCampaign", back_populates="recomendaciones")

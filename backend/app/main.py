@@ -8,7 +8,7 @@ load_dotenv(override=True)
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.database import Base, engine
-from app.routers import auth, users, proyectos, tareas, tiempo, requerimientos, dashboard, notificaciones, crm
+from app.routers import auth, users, proyectos, tareas, tiempo, requerimientos, dashboard, notificaciones, crm, ads
 from app.migrate import migrar_columnas_faltantes
 
 Base.metadata.create_all(bind=engine)
@@ -34,7 +34,7 @@ app.add_middleware(
     allow_headers=["Authorization", "Content-Type", "X-API-Key"],
 )
 
-for r in [auth, users, proyectos, tareas, tiempo, requerimientos, dashboard, notificaciones, crm]:
+for r in [auth, users, proyectos, tareas, tiempo, requerimientos, dashboard, notificaciones, crm, ads]:
     app.include_router(r.router)
 
 

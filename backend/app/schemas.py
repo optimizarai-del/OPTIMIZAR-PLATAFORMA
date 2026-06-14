@@ -464,4 +464,138 @@ class DashboardHUD(BaseModel):
     horas_semana: float
 
 
+# ── Marketing · Meta Ads ──────────────────────────────────────────────────────
+
+class AdMetricOut(BaseModel):
+    fecha: date
+    impresiones: int
+    alcance: int
+    clicks: int
+    gasto: float
+    ctr: float
+    cpc: float
+    cpm: float
+    frecuencia: float
+    conversiones: float
+    valor_conversiones: float
+    costo_conversion: float
+    roas: float
+
+    class Config:
+        from_attributes = True
+
+
+class AdCampaignOut(BaseModel):
+    id: int
+    external_id: str
+    plataforma: str
+    nombre: str
+    estado: str
+    objetivo: Optional[str] = None
+    cuenta_id: Optional[str] = None
+    cuenta_nombre: Optional[str] = None
+    presupuesto_diario: Optional[float] = None
+    moneda: str
+    ultima_sync: datetime
+    # agregados del rango consultado (los calcula el endpoint)
+    gasto_total: float = 0.0
+    impresiones_total: int = 0
+    clicks_total: int = 0
+    conversiones_total: float = 0.0
+    ctr_prom: float = 0.0
+    cpc_prom: float = 0.0
+    roas_prom: float = 0.0
+
+    class Config:
+        from_attributes = True
+
+
+class AdRecommendationOut(BaseModel):
+    id: int
+    external_id: str
+    campaign_id: Optional[int] = None
+    tipo: str
+    severidad: str
+    titulo: str
+    detalle: Optional[str] = None
+    accion_sugerida: Optional[str] = None
+    metricas_clave: dict = {}
+    estado: str
+    created_at: datetime
+    # nombre de la campaña (lo completa el endpoint para la UI)
+    campana_nombre: Optional[str] = None
+
+    class Config:
+        from_attributes = True
+
+
+class AdsOverview(BaseModel):
+    conectado: bool
+    ultima_sync: Optional[datetime] = None
+    rango_dias: int
+    campanas_total: int
+    campanas_activas: int
+    gasto_total: float
+    impresiones_total: int
+    clicks_total: int
+    conversiones_total: float
+    ctr_prom: float
+    cpc_prom: float
+    cpm_prom: float
+    roas_prom: float
+    recomendaciones_nuevas: int
+    serie_gasto: List[dict] = []        # [{fecha, gasto, conversiones}]
+
+
+# Entrada del agente analista (API key) — sincroniza campanas + métricas en lote.
+
+class AdMetricIn(BaseModel):
+    fecha: date
+    impresiones: int = 0
+    alcance: int = 0
+    clicks: int = 0
+    gasto: float = 0.0
+    ctr: float = 0.0
+    cpc: float = 0.0
+    cpm: float = 0.0
+    frecuencia: float = 0.0
+    conversiones: float = 0.0
+    valor_conversiones: float = 0.0
+    costo_conversion: float = 0.0
+    roas: float = 0.0
+
+
+class AdCampaignIn(BaseModel):
+    external_id: str = Field(min_length=1)
+    nombre: str = Field(min_length=1)
+    plataforma: str = "meta"
+    estado: str = "ACTIVE"
+    objetivo: Optional[str] = None
+    cuenta_id: Optional[str] = None
+    cuenta_nombre: Optional[str] = None
+    presupuesto_diario: Optional[float] = None
+    moneda: str = "ARS"
+    metricas: List[AdMetricIn] = []
+
+
+class AdSyncIn(BaseModel):
+    """Payload del agente: lote de campanas con sus métricas diarias."""
+    campanas: List[AdCampaignIn]
+
+
+class AdRecommendationIn(BaseModel):
+    external_id: str = Field(min_length=1)
+    campaign_external_id: Optional[str] = None   # para vincular a la campaña
+    tipo: str = "ajuste"
+    severidad: str = "media"
+    titulo: str = Field(min_length=1)
+    detalle: Optional[str] = None
+    accion_sugerida: Optional[str] = None
+    metricas_clave: dict = {}
+
+
+class AdRecommendationsIn(BaseModel):
+    recomendaciones: List[AdRecommendationIn]
+
+
 TokenResponse.model_rebuild()
