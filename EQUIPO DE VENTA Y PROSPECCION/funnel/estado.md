@@ -47,6 +47,9 @@ Nombre, empresa, rubro y un gancho de dolor por rubro.
 - [2026-06-12] Plataforma deployada en producción. Chat en vivo del orquestador funcionando sobre el plan (el backend dispara la routine `chat-responder` al recibir un mensaje). Envío real todavía apagado.
 - [2026-06-13] Corrida borrador expandida a Mendoza + Tucumán (NOA). 2 emails personales verificados (Torre-Pulisich, Farina). Descubierto: Xubio lista implementadores en Mendoza con contactos directos — fuente valiosa para próximas corridas.
 
+## Decisiones tomadas (continuación)
+- [2026-06-14] Corrida borrador expandida a Salta Capital + Mar del Plata. Salta: Estudio Diéguez (email inferido, ZoomInfo) + Simesen de Bielke (referente NOA >50 años, email de dominio propio). Mar del Plata: Posadas (email personal verificado), Apphatie (sin email), B&R/SMS (genérico, sin nombre). 3 emails escritos, 2 sin contactar.
+
 ## Gotchas descubiertos
 - Lorenzo y Asociados (red nacional, sede en Bella Vista BA) lista una sucursal "Santa Rosa" — ante la duda se descartó; verificar si esa Santa Rosa es La Pampa antes de incluirlos.
 - Tres de cinco emails encontrados son buzones genéricos (estudio@, info@, contacto@). Para estudios más chicos los emails personales de socios aparecen en la web; para estudios con red/alianzas no siempre.
@@ -57,30 +60,42 @@ Nombre, empresa, rubro y un gancho de dolor por rubro.
 - [2026-06-13] Implementadores Xubio en Mendoza (Torre-Pulisich, Maipy): ya adoptaron tecnología contable — apertura natural a capa siguiente de automatización. Ángulo sugerido: "ya usás Xubio, OPTIMIZAR es lo que viene después".
 - [2026-06-13] Estudio Godoy y Asociados (Tucumán, 30 años): sin nombre de socio publicado. Investigar vía LinkedIn o CPCE de Tucumán antes de activar envío.
 - [2026-06-13] Estudios del NOA (Tucumán, Salta, Jujuy) reciben menos propuestas tech que CABA — posible diferenciador en próximas corridas.
+- [2026-06-14] Estudio Diéguez (Salta, 11-50 prof.): web devuelve 403, email gdieguez@estudio-dieguez.com.ar inferido vía ZoomInfo. Validar antes del envío real.
+- [2026-06-14] Simesen de Bielke (Salta, >50 años): referente NOA en impuestos, ex-presidente CPCE, dictan Posgrado en UNSa. Muy consultados por pares → posible early adopter de tech y multiplicador. Email "administracion@" semi-genérico pero de dominio propio; dirigido a Valeria (2ª gen).
+- [2026-06-14] Estudio Apphatie (Mar del Plata, desde 1975, 3 generaciones): muy consolidado pero sin email publicado. CPCE Buenos Aires puede ser fuente para conseguir contacto.
+- [2026-06-14] B&R / SMS Latinoamérica (Mar del Plata): perfil corporativo con red regional — posiblemente los socios no son públicos. Investigar vía LinkedIn o SMS Argentina.
+- [2026-06-14] Para Salta en general: La Guía Salta lista 20+ estudios pero la mayoría sin web propia. CPCE de Salta puede tener directorio de matriculados con emails. Fuente valiosa para próximas corridas en el NOA.
 
 ## Estado del sistema (infra — lo mantiene el equipo de desarrollo, NO lo cambian las corridas)
 - Plataforma OPTIMIZAR **deployada en producción** (EasyPanel): CRM + Prospección IA operativos.
 - Backend: endpoints externos OK, **migración aplicada**, **chat en vivo sobre el plan funcionando**.
 - **Prospección diaria automática: ACTIVA en MODO BORRADOR** (busca y escribe; NO envía nada).
 - **Envío real de correos: APAGADO** (`OUTREACH_ENABLED=false`). Encender tras validar emails + warm-up.
-- Corridas borrador completadas: 11/06 (Córdoba/Rosario), 12/06 (CABA/GBA), 13/06 (Mendoza/Tucumán) → ~15 leads con email en borrador.
+- Corridas borrador completadas: 11/06 (Córdoba/Rosario), 12/06 (CABA/GBA), 13/06 (Mendoza/Tucumán), 14/06 (Salta/Mar del Plata) → 20 leads en borrador (3 emails personales verificados).
 - Pendiente real: validar calidad de los emails y, cuando se apruebe, encender el envío (flip a push-vivo).
 
 ## Última corrida
-**Fecha:** 2026-06-13 | **Modo:** BORRADOR (sin envíos reales)
-**Segmento:** Estudios contables/impositivos — Mendoza Capital + Gran Mendoza + Tucumán (NOA)
+**Fecha:** 2026-06-14 | **Modo:** BORRADOR (sin envíos reales)
+**Segmento:** Estudios contables/impositivos — Salta Capital + Mar del Plata (PBA interior)
 **Cupo usado:** 5 leads
 **Leads encontrados:** 5
 **Leads descartados:** 0 (ninguno en La Pampa; ningún duplicado)
-**Emails escritos:** 5
-**Emails personales verificados:** 2 (jpulisich@torre-pulisich.com, marcosfarina@estudiocontablefarina.com)
-**Emails genéricos con nombre:** 2 (Lisanti/Maipy, Marcotullio — gmail)
-**Emails genéricos sin nombre:** 1 (Godoy y Asociados)
+**Emails escritos:** 3
+**Emails con copia escrita:** 3 (Diéguez/inferred, Simesen-Bielke/genérico de dominio, Posadas/personal verificado)
+**Sin email o sin nombre:** 2 (Apphatie sin email; B&R sin nombre de socio)
 **Disparador:** Prórroga DDJJ Ganancias/Bienes Personales período 2025 hasta 27/07/2026 (RG ARCA 5851/2026)
 **Archivos:**
-- `funnel/leads/new/borrador-2026-06-13.jsonl` — 5 leads con emails
-- `funnel/reportes/2026-06-13.md` — reporte completo
+- `funnel/leads/new/borrador-2026-06-14.jsonl` — 5 leads
+- `funnel/reportes/2026-06-14.md` — reporte completo
+**Total acumulado borrador:** 20 leads (4 corridas)
 **Próximo bloqueante:** Backend/n8n para envío real. Validar emails antes de activar.
+
+## Corrida anterior (2026-06-13)
+**Fecha:** 2026-06-13 | **Modo:** BORRADOR (sin envíos reales)
+**Segmento:** Estudios contables/impositivos — Mendoza Capital + Gran Mendoza + Tucumán (NOA)
+**Cupo usado:** 5 leads
+**Leads encontrados:** 5 | **Descartados:** 0
+**Archivos:** `borrador-2026-06-13.jsonl` / `reportes/2026-06-13.md`
 
 ## Corrida anterior (2026-06-12)
 **Segmento:** Estudios contables/impositivos — CABA + GBA (Buenos Aires)
