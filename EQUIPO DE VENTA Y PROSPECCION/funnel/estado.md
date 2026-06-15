@@ -50,6 +50,15 @@ Nombre, empresa, rubro y un gancho de dolor por rubro.
 ## Decisiones tomadas (continuación)
 - [2026-06-14] Corrida borrador expandida a Salta Capital + Mar del Plata. Salta: Estudio Diéguez (email inferido, ZoomInfo) + Simesen de Bielke (referente NOA >50 años, email de dominio propio). Mar del Plata: Posadas (email personal verificado), Apphatie (sin email), B&R/SMS (genérico, sin nombre). 3 emails escritos, 2 sin contactar.
 
+## Gotchas descubiertos (continuación — 2026-06-15)
+- [2026-06-15] GL Estudio (Bahía Blanca): segundo email operativo estudiogl@bvconline.com.ar (BVConline, plataforma de verificación de negocios). Puede ser canal secundario si info@ no responde.
+- [2026-06-15] Estudio Vermeulen (Javier Vermeulen, Neuquén + CABA, 2005): email real no extraíble del sitio (contact page 404; formato enmascarado en WebFetch). Candidato para corrida futura vía LinkedIn o CPCE Neuquén.
+- [2026-06-15] RS Contadores Neuquén (Belgrano 1216): misma limitación de email enmascarado. Titular no publicado. Candidato corrida futura.
+- [2026-06-15] Vaca Muerta angle: Estudio Carnicero confirma nicho de estudios contables especializados en Oil & Gas en Neuquén. Fuente valiosa: Guía Vaca Muerta (guiavacamuerta.com/categorias/estudios-contables.htm). Explorar en corrida dedicada.
+- [2026-06-15] CPN Zelarayán (Neuquén): contadoras/contadores independientes sin equipo = CTA de máxima urgencia en temporada pico. Segmento a explorar más en Patagonia.
+- [2026-06-15] CPCE Bahía Blanca: publica directorio de matriculados — fuente para corridas futuras en la ciudad (quedan sin cubrir Estudio Villar, Estudio Correa y otros).
+- [2026-06-15] CRM stats endpoint (/api/crm/stats) respondió 401 durante la corrida. No bloquea operación pero limita la lectura de métricas de tasa de respuesta. Reportar al equipo de desarrollo.
+
 ## Gotchas descubiertos
 - Lorenzo y Asociados (red nacional, sede en Bella Vista BA) lista una sucursal "Santa Rosa" — ante la duda se descartó; verificar si esa Santa Rosa es La Pampa antes de incluirlos.
 - Tres de cinco emails encontrados son buzones genéricos (estudio@, info@, contacto@). Para estudios más chicos los emails personales de socios aparecen en la web; para estudios con red/alianzas no siempre.
@@ -71,10 +80,25 @@ Nombre, empresa, rubro y un gancho de dolor por rubro.
 - Backend: endpoints externos OK, **migración aplicada**, **chat en vivo sobre el plan funcionando**.
 - **Prospección diaria automática: ACTIVA en MODO BORRADOR** (busca y escribe; NO envía nada).
 - **Envío real de correos: APAGADO** (`OUTREACH_ENABLED=false`). Encender tras validar emails + warm-up.
-- Corridas borrador completadas: 11/06 (Córdoba/Rosario), 12/06 (CABA/GBA), 13/06 (Mendoza/Tucumán), 14/06 (Salta/Mar del Plata) → 20 leads en borrador (3 emails personales verificados).
+- Corridas borrador completadas: 11/06 (Córdoba/Rosario), 12/06 (CABA/GBA), 13/06 (Mendoza/Tucumán), 14/06 (Salta/Mar del Plata), 15/06 (Bahía Blanca/Neuquén) → 25 leads en borrador (3 emails personales verificados, 22 genéricos o inferidos).
 - Pendiente real: validar calidad de los emails y, cuando se apruebe, encender el envío (flip a push-vivo).
 
 ## Última corrida
+**Fecha:** 2026-06-15 | **Modo:** BORRADOR (sin envíos reales)
+**Segmento:** Estudios contables/impositivos — Bahía Blanca (PBA sur) + Neuquén Capital (Patagonia)
+**Cupo usado:** 5 leads
+**Leads encontrados:** 5
+**Leads descartados:** 1 (Lorenzo y Asociados red nacional — precaución La Pampa, mismo caso 11/06)
+**Emails escritos:** 5 (todos con email y copy)
+**Email status:** 5 genéricos (ningún email personal verificado esta corrida)
+**Disparador:** Prórroga DDJJ Ganancias/Bienes Personales período 2025 hasta 27/07/2026 (RG ARCA 5851/2026) + ángulo Oil & Gas / Vaca Muerta para Neuquén
+**Archivos:**
+- `funnel/leads/new/borrador-2026-06-15.jsonl` — 5 leads
+- `funnel/reportes/2026-06-15.md` — reporte completo
+**Total acumulado borrador:** 25 leads (5 corridas)
+**Próximo bloqueante:** Backend/n8n para envío real. Validar emails antes de activar.
+
+## Corrida anterior (2026-06-14)
 **Fecha:** 2026-06-14 | **Modo:** BORRADOR (sin envíos reales)
 **Segmento:** Estudios contables/impositivos — Salta Capital + Mar del Plata (PBA interior)
 **Cupo usado:** 5 leads
@@ -89,6 +113,9 @@ Nombre, empresa, rubro y un gancho de dolor por rubro.
 - `funnel/reportes/2026-06-14.md` — reporte completo
 **Total acumulado borrador:** 20 leads (4 corridas)
 **Próximo bloqueante:** Backend/n8n para envío real. Validar emails antes de activar.
+
+## Decisiones tomadas (continuación)
+- [2026-06-15] Corrida expandida a Bahía Blanca (hub agroindustrial PBA sur) + Neuquén Capital (Oil & Gas / Vaca Muerta). Nuevo ángulo Oil & Gas para Carnicero (Neuquén). 5 emails escritos, todos genéricos. CRM 5/5 × 200.
 
 ## Corrida anterior (2026-06-13)
 **Fecha:** 2026-06-13 | **Modo:** BORRADOR (sin envíos reales)
