@@ -58,6 +58,12 @@ Nombre, empresa, rubro y un gancho de dolor por rubro.
 - [2026-06-15] CPN Zelarayán (Neuquén): contadoras/contadores independientes sin equipo = CTA de máxima urgencia en temporada pico. Segmento a explorar más en Patagonia.
 - [2026-06-15] CPCE Bahía Blanca: publica directorio de matriculados — fuente para corridas futuras en la ciudad (quedan sin cubrir Estudio Villar, Estudio Correa y otros).
 - [2026-06-15] CRM stats endpoint (/api/crm/stats) respondió 401 durante la corrida. No bloquea operación pero limita la lectura de métricas de tasa de respuesta. Reportar al equipo de desarrollo.
+- [2026-06-16] Hay dos estudios "Bruera" en Argentina: Estudio Bruera Santa Fe (estudiobruera.com / Mitre 5555, SF) y Estudio Bruera Córdoba (estudiobruera.com.ar / Italia 2981, Córdoba). Son estudios diferentes. No confundir al hacer outreach.
+- [2026-06-16] SB Estudio Betique (SF): publica email personal slbetique@outlook.com Y sbetique@gmail.com + WhatsApp. Alta accesibilidad digital, ideal para test de primer lote cuando se active envío.
+- [2026-06-16] Estudio Dutto (SF): único estudio del programa que declara servicios "informático-tecnológico". Ángulo diferenciado vs. corridas previas. Director Martín Dutto: perfil académico UNL (adoptante temprano).
+- [2026-06-16] Estudio Capri (SF): email alternativo recepcion@estudiocapri.com y aangeloni@estudiocapri.com (San Justo). Usar si mcapri@ no responde.
+- [2026-06-16] Sitios caídos en Paraná esta corrida: escales.com.ar (503), durandoyasociados.com.ar (ECONNREFUSED), estudiodlc.com (ECONNREFUSED), diaz-barzola.com.ar (403). Socios DLC identificados: Deharbe, Castellani, López. Todos son candidatos para corrida futura.
+- [2026-06-16] paranaonline.com.ar lista estudios y contadores en Paraná con datos. Fuente valiosa para corridas futuras en Entre Ríos (Paraná, Concordia, Gualeguaychú, Colón).
 
 ## Gotchas descubiertos
 - Lorenzo y Asociados (red nacional, sede en Bella Vista BA) lista una sucursal "Santa Rosa" — ante la duda se descartó; verificar si esa Santa Rosa es La Pampa antes de incluirlos.
@@ -84,6 +90,21 @@ Nombre, empresa, rubro y un gancho de dolor por rubro.
 - Pendiente real: validar calidad de los emails y, cuando se apruebe, encender el envío (flip a push-vivo).
 
 ## Última corrida
+**Fecha:** 2026-06-16 | **Modo:** BORRADOR (sin envíos reales)
+**Segmento:** Estudios contables/impositivos — Santa Fe Capital + Paraná (Entre Ríos) — Corredor Litoral
+**Cupo usado:** 5 leads
+**Leads encontrados:** 5
+**Leads descartados:** 0 (ninguno en La Pampa; ningún duplicado)
+**Emails escritos:** 5 (todos con email y copy completo)
+**Email status:** 1 personal verificado (Betique: slbetique@outlook.com ⭐), 4 genéricos/de estudio
+**Disparador:** Prórroga DDJJ Ganancias/Bienes Personales período 2025 hasta 27/07/2026 (RG ARCA 5851/2026)
+**Archivos:**
+- `funnel/leads/new/borrador-2026-06-16.jsonl` — 5 leads
+- `funnel/reportes/2026-06-16.md` — reporte completo
+**Total acumulado borrador:** 30 leads (6 corridas)
+**Próximo bloqueante:** Validar calidad de emails y activar envío real (`OUTREACH_ENABLED=true` + warm-up). Prioridad: ~4 emails personales verificados del programa (Betique, Torre-Pulisich, Farina, Posadas).
+
+## Corrida anterior (2026-06-15)
 **Fecha:** 2026-06-15 | **Modo:** BORRADOR (sin envíos reales)
 **Segmento:** Estudios contables/impositivos — Bahía Blanca (PBA sur) + Neuquén Capital (Patagonia)
 **Cupo usado:** 5 leads
@@ -115,6 +136,7 @@ Nombre, empresa, rubro y un gancho de dolor por rubro.
 **Próximo bloqueante:** Backend/n8n para envío real. Validar emails antes de activar.
 
 ## Decisiones tomadas (continuación)
+- [2026-06-16] Corrida expandida al Corredor Litoral: Santa Fe Capital + Paraná (Entre Ríos). Primer lead de Paraná (Borré & Asociados). Nuevo ángulo tech-adjacent para Dutto (único estudio que declara servicios informáticos). 5 emails escritos, 1 email personal verificado (Betique). CRM 5/5 × 200.
 - [2026-06-15] Corrida expandida a Bahía Blanca (hub agroindustrial PBA sur) + Neuquén Capital (Oil & Gas / Vaca Muerta). Nuevo ángulo Oil & Gas para Carnicero (Neuquén). 5 emails escritos, todos genéricos. CRM 5/5 × 200.
 
 ## Corrida anterior (2026-06-13)
