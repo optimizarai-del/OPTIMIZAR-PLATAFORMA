@@ -50,6 +50,14 @@ Nombre, empresa, rubro y un gancho de dolor por rubro.
 ## Decisiones tomadas (continuación)
 - [2026-06-14] Corrida borrador expandida a Salta Capital + Mar del Plata. Salta: Estudio Diéguez (email inferido, ZoomInfo) + Simesen de Bielke (referente NOA >50 años, email de dominio propio). Mar del Plata: Posadas (email personal verificado), Apphatie (sin email), B&R/SMS (genérico, sin nombre). 3 emails escritos, 2 sin contactar.
 
+## Gotchas descubiertos (continuación — 2026-06-17)
+- [2026-06-17] Bisonni Estudio Contable (Rosario): único estudio del programa que ofrece Business Intelligence + tableros de control como servicio. También criptos y activos digitales. Email personal (daniel.bisonni@hotmail.com.ar). Candidato ⭐⭐ para primer envío real.
+- [2026-06-17] Estudio Pereiro Pereiro (Rosario): única especialización en recupero IVA exportadores del programa. Si convierte, abre segmento "estudios con clientes comex" para corridas futuras (Avellaneda 1435, gustavopereiro@hotmail.com).
+- [2026-06-17] Contadores Rosario (Pablo Morales): certificación ISO 9001:2015 — rara en el sector. Primera empresa certificada en calidad del portafolio. Señal de mentalidad de proceso estructurado.
+- [2026-06-17] Guastella & Asoc (Rosario, Córdoba 797 P.5): 30+ años, especializado en agro/industria/comex. Email Gmail genérico (estudiocontableguastella@gmail.com) pero SIN nombre de socio publicado. Reservar para corrida futura (investigar titular en CPCESF o LinkedIn).
+- [2026-06-17] Priotti & Asociados (Rosario, con oficinas en Uruguay): email protegido por JavaScript en el sitio web. No extraíble. Estudio con perfil contable+jurídico interesante. Reservar para corrida futura (intentar vía formulario web o CPCESF).
+- [2026-06-17] Rosario tiene capacidad para 10+ corridas adicionales — mercado muy poco trabajado (8 leads en total tras esta corrida, en una ciudad de 1.4M).
+
 ## Gotchas descubiertos (continuación — 2026-06-15)
 - [2026-06-15] GL Estudio (Bahía Blanca): segundo email operativo estudiogl@bvconline.com.ar (BVConline, plataforma de verificación de negocios). Puede ser canal secundario si info@ no responde.
 - [2026-06-15] Estudio Vermeulen (Javier Vermeulen, Neuquén + CABA, 2005): email real no extraíble del sitio (contact page 404; formato enmascarado en WebFetch). Candidato para corrida futura vía LinkedIn o CPCE Neuquén.
@@ -90,6 +98,21 @@ Nombre, empresa, rubro y un gancho de dolor por rubro.
 - Pendiente real: validar calidad de los emails y, cuando se apruebe, encender el envío (flip a push-vivo).
 
 ## Última corrida
+**Fecha:** 2026-06-17 | **Modo:** BORRADOR (sin envíos reales)
+**Segmento:** Estudios contables/impositivos — **Rosario expansión** (Gran Rosario)
+**Cupo usado:** 5 leads
+**Leads encontrados:** 5
+**Leads descartados:** 0 (ninguno en La Pampa; ningún duplicado)
+**Emails escritos:** 5 (todos con email y copy completo)
+**Email status:** 3 personales verificados (Bisonni: daniel.bisonni@hotmail.com.ar ⭐⭐, Herusa: cpnsamuel@outlook.com ⭐, Pereiro: gustavopereiro@hotmail.com ⭐), 2 genéricos de dominio
+**Disparador:** Prórroga DDJJ Ganancias/Bienes Personales período 2025 hasta 27/07/2026 (RG ARCA 5851/2026)
+**Archivos:**
+- `funnel/leads/new/borrador-2026-06-17.jsonl` — 5 leads
+- `funnel/reportes/2026-06-17.md` — reporte completo
+**Total acumulado borrador:** 35 leads (7 corridas)
+**Próximo bloqueante:** Validar calidad de emails y activar envío real (`OUTREACH_ENABLED=true` + warm-up). Prioridad: emails personales verificados — Bisonni ⭐⭐, Herusa, Pereiro (esta corrida), Betique (06-16), Torre-Pulisich (06-13), Farina (06-13), Posadas (06-14).
+
+## Corrida anterior (2026-06-16)
 **Fecha:** 2026-06-16 | **Modo:** BORRADOR (sin envíos reales)
 **Segmento:** Estudios contables/impositivos — Santa Fe Capital + Paraná (Entre Ríos) — Corredor Litoral
 **Cupo usado:** 5 leads
@@ -102,7 +125,6 @@ Nombre, empresa, rubro y un gancho de dolor por rubro.
 - `funnel/leads/new/borrador-2026-06-16.jsonl` — 5 leads
 - `funnel/reportes/2026-06-16.md` — reporte completo
 **Total acumulado borrador:** 30 leads (6 corridas)
-**Próximo bloqueante:** Validar calidad de emails y activar envío real (`OUTREACH_ENABLED=true` + warm-up). Prioridad: ~4 emails personales verificados del programa (Betique, Torre-Pulisich, Farina, Posadas).
 
 ## Corrida anterior (2026-06-15)
 **Fecha:** 2026-06-15 | **Modo:** BORRADOR (sin envíos reales)
@@ -136,6 +158,7 @@ Nombre, empresa, rubro y un gancho de dolor por rubro.
 **Próximo bloqueante:** Backend/n8n para envío real. Validar emails antes de activar.
 
 ## Decisiones tomadas (continuación)
+- [2026-06-17] Corrida de expansión profunda en Rosario (3ª ciudad del país, sub-prospectada). 3 emails personales verificados (Bisonni, Herusa, Pereiro) — mejor tasa de emails personales de todo el programa hasta ahora. Nuevos ángulos: BI/tableros (Bisonni), recupero IVA comex (Pereiro), ISO 9001 (Contadores Rosario). CRM 5/5 × 200.
 - [2026-06-16] Corrida expandida al Corredor Litoral: Santa Fe Capital + Paraná (Entre Ríos). Primer lead de Paraná (Borré & Asociados). Nuevo ángulo tech-adjacent para Dutto (único estudio que declara servicios informáticos). 5 emails escritos, 1 email personal verificado (Betique). CRM 5/5 × 200.
 - [2026-06-15] Corrida expandida a Bahía Blanca (hub agroindustrial PBA sur) + Neuquén Capital (Oil & Gas / Vaca Muerta). Nuevo ángulo Oil & Gas para Carnicero (Neuquén). 5 emails escritos, todos genéricos. CRM 5/5 × 200.
 
