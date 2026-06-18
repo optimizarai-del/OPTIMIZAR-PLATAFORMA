@@ -50,6 +50,16 @@ Nombre, empresa, rubro y un gancho de dolor por rubro.
 ## Decisiones tomadas (continuación)
 - [2026-06-14] Corrida borrador expandida a Salta Capital + Mar del Plata. Salta: Estudio Diéguez (email inferido, ZoomInfo) + Simesen de Bielke (referente NOA >50 años, email de dominio propio). Mar del Plata: Posadas (email personal verificado), Apphatie (sin email), B&R/SMS (genérico, sin nombre). 3 emails escritos, 2 sin contactar.
 
+## Gotchas descubiertos (continuación — 2026-06-18)
+- [2026-06-18] Pronea (Resistencia, Chaco): equipo interdisciplinario CPN + abogados, 20+ años en el NEA. Eduardo Muñoz Manni (CPN). Email propio (info@pronea.com.ar). Candidato ⭐ para primer envío en el NEA — sector con baja exposición a propuestas tech.
+- [2026-06-18] Estudio San Cristóbal (Resistencia, Chaco): familia San Cristóbal, 40+ años, segunda generación. Actuación en Chaco y todo el NEA. Daniel San Cristóbal (UNNE 1989) es el socio activo más reciente. Candidato ⭐ para primer envío en el NEA.
+- [2026-06-18] Resistencia (Chaco) tiene capacidad para 5+ corridas adicionales. Primer NEA prospectado — mercado poco saturado por propuestas tech. Posibles fuentes futuras: guia-chaco.miguiaargentina.com.ar, licuo.com.ar/resistencia, Páginas Amarillas Resistencia.
+- [2026-06-18] Corrientes Capital: múltiples búsquedas sin resultados de calidad (estudios sin sitio web accesible o confundidos con "Av. Corrientes" de CABA). Postergado a corrida futura. Fuente sugerida: CPCE Corrientes (buscar directorio matriculados).
+- [2026-06-18] SBS Estudio Jurídico y Contable (San Juan): nombre de socio no publicado en el sitio. Investigar vía cpcesj.org.ar (tiene sección "consulta de asesor") o LinkedIn antes del envío real. Email Gmail → deliverability más baja que dominios propios.
+- [2026-06-18] Lescuras & Asoc. (San Juan, 48+ años, 300+ clientes): contacto solo por WhatsApp/teléfono, sin email publicado. Candidato de alta calidad para corrida futura con investigación adicional (cpcesj.org.ar o LinkedIn).
+- [2026-06-18] cpnmapsa.com (Estudio Manrique-Palacio-Saball, San Juan): ECONNREFUSED. Candidato para corrida futura cuando el sitio esté accesible.
+- [2026-06-18] Decisiones tomadas: San Juan Capital + Resistencia/Chaco (NEA primera incursión). 5/5 × 200 al CRM.
+
 ## Gotchas descubiertos (continuación — 2026-06-17)
 - [2026-06-17] Bisonni Estudio Contable (Rosario): único estudio del programa que ofrece Business Intelligence + tableros de control como servicio. También criptos y activos digitales. Email personal (daniel.bisonni@hotmail.com.ar). Candidato ⭐⭐ para primer envío real.
 - [2026-06-17] Estudio Pereiro Pereiro (Rosario): única especialización en recupero IVA exportadores del programa. Si convierte, abre segmento "estudios con clientes comex" para corridas futuras (Avellaneda 1435, gustavopereiro@hotmail.com).
@@ -98,6 +108,21 @@ Nombre, empresa, rubro y un gancho de dolor por rubro.
 - Pendiente real: validar calidad de los emails y, cuando se apruebe, encender el envío (flip a push-vivo).
 
 ## Última corrida
+**Fecha:** 2026-06-18 | **Modo:** BORRADOR (sin envíos reales)
+**Segmento:** Estudios contables/impositivos — **San Juan Capital** (Cuyo) + **Resistencia, Chaco** (NEA — primera incursión)
+**Cupo usado:** 5 leads
+**Leads encontrados:** 5
+**Leads descartados:** 0 (ninguno en La Pampa; ningún duplicado)
+**Emails escritos:** 5 (todos con email y copy completo)
+**Email status:** 5 emails de dominio/estudio (0 personales esta corrida); Pronea ⭐ y San Cristóbal ⭐ como candidatos para primer envío en el NEA
+**Disparador:** Prórroga DDJJ Ganancias/Bienes Personales período 2025 hasta 27/07/2026 (RG ARCA 5851/2026)
+**Archivos:**
+- `funnel/leads/new/borrador-2026-06-18.jsonl` — 5 leads
+- `funnel/reportes/2026-06-18.md` — reporte completo
+**Total acumulado borrador:** 40 leads (8 corridas)
+**Próximo bloqueante:** Validar calidad de emails y activar envío real (`OUTREACH_ENABLED=true` + warm-up). Prioridad: emails personales verificados — Bisonni ⭐⭐, Herusa, Pereiro (06-17), Betique (06-16), Torre-Pulisich (06-13), Farina (06-13), Posadas (06-14). Nuevos candidatos NEA: Pronea (Eduardo Muñoz Manni) ⭐, San Cristóbal (Daniel) ⭐.
+
+## Corrida anterior (2026-06-17)
 **Fecha:** 2026-06-17 | **Modo:** BORRADOR (sin envíos reales)
 **Segmento:** Estudios contables/impositivos — **Rosario expansión** (Gran Rosario)
 **Cupo usado:** 5 leads
@@ -110,7 +135,6 @@ Nombre, empresa, rubro y un gancho de dolor por rubro.
 - `funnel/leads/new/borrador-2026-06-17.jsonl` — 5 leads
 - `funnel/reportes/2026-06-17.md` — reporte completo
 **Total acumulado borrador:** 35 leads (7 corridas)
-**Próximo bloqueante:** Validar calidad de emails y activar envío real (`OUTREACH_ENABLED=true` + warm-up). Prioridad: emails personales verificados — Bisonni ⭐⭐, Herusa, Pereiro (esta corrida), Betique (06-16), Torre-Pulisich (06-13), Farina (06-13), Posadas (06-14).
 
 ## Corrida anterior (2026-06-16)
 **Fecha:** 2026-06-16 | **Modo:** BORRADOR (sin envíos reales)
