@@ -50,6 +50,17 @@ Nombre, empresa, rubro y un gancho de dolor por rubro.
 ## Decisiones tomadas (continuación)
 - [2026-06-14] Corrida borrador expandida a Salta Capital + Mar del Plata. Salta: Estudio Diéguez (email inferido, ZoomInfo) + Simesen de Bielke (referente NOA >50 años, email de dominio propio). Mar del Plata: Posadas (email personal verificado), Apphatie (sin email), B&R/SMS (genérico, sin nombre). 3 emails escritos, 2 sin contactar.
 
+## Gotchas descubiertos (continuación — 2026-06-19)
+- [2026-06-19] Rojas Naser (Jujuy): CPN speaker sobre Libro de Sueldos Digital en CPCEs de Mendoza, Río Negro, San Luis, La Rioja, Entre Ríos y Jujuy. Usa software ISO 9001. Mentalidad tech consolidada → ángulo "capa siguiente de automatización" mucho más efectivo que el ángulo de dolor estándar. Candidato ⭐⭐ para primer envío real en Jujuy.
+- [2026-06-19] Estudio Lasquera (Jujuy): cofundadoras Gabriela Lasquera y Mirta Puente. Email cpnglasquera@estudiolasquera.com.ar verificado (dominio propio). Web en mantenimiento pero email activo. Primer Jujuy del programa.
+- [2026-06-19] Alvarenga & Asociados (Posadas, Misiones): primera incursión de OPTIMIZAR en Misiones. Email info@estudioalvarenga.com.ar verificado (dominio propio). Servicio dual laboral + impositivo → ángulo de doble carga.
+- [2026-06-19] Grosso Juárez y Asociados (Jujuy): 20+ años, dos socios (D. Grosso y B. Juárez). Sitio estgrossojuarez.com caído (ECONNREFUSED). Email dgrossso@arnet.com.ar inferido desde resultados de búsqueda. Validar antes del envío real vía CPCE Jujuy. Arnet como proveedor sugiere profesional establecido.
+- [2026-06-19] Jujuy tiene capacidad para 5+ corridas adicionales. Candidatos para próximas corridas: BMB Estudio Contable & Gestión (Belgrano 775), Estudio M&Co Soluciones Empresariales, Estudio Velazquez, Daniel Hugo Guantay (sin email), Estudio Amerise.
+- [2026-06-19] Posadas (Misiones) tiene 20+ estudios en directorio guia-misiones.miguiaargentina.com.ar. Para próximas corridas: Estudio Lindstrom-Ramirez y Asoc. (Jujuy 2126), Zimmermann Estudio Contable y Jurídico (San Lorenzo 1752), Britto Julio C e Hijo, Pretzel y Asociados (Av Lavalle 2634).
+- [2026-06-19] Corrientes Capital: segundo intento sin resultados de calidad. Facebook bloquea sin login; CPCE Corrientes no devuelve directorio privado via ACGRA; Páginas Amarillas renderiza vacío. Postergado hasta contar con fuente dedicada (CPCE Corrientes directorio matriculados).
+- [2026-06-19] Yellpo.com: dominio en liquidación (redirige a GoDaddy "for sale"). No usar como fuente en corridas futuras.
+- [2026-06-19] Decisiones tomadas: Jujuy Capital (primera incursión NOA) + Posadas Misiones (primera incursión NEA/Misiones). 5/5 × 200 al CRM.
+
 ## Gotchas descubiertos (continuación — 2026-06-18)
 - [2026-06-18] Pronea (Resistencia, Chaco): equipo interdisciplinario CPN + abogados, 20+ años en el NEA. Eduardo Muñoz Manni (CPN). Email propio (info@pronea.com.ar). Candidato ⭐ para primer envío en el NEA — sector con baja exposición a propuestas tech.
 - [2026-06-18] Estudio San Cristóbal (Resistencia, Chaco): familia San Cristóbal, 40+ años, segunda generación. Actuación en Chaco y todo el NEA. Daniel San Cristóbal (UNNE 1989) es el socio activo más reciente. Candidato ⭐ para primer envío en el NEA.
@@ -108,6 +119,21 @@ Nombre, empresa, rubro y un gancho de dolor por rubro.
 - Pendiente real: validar calidad de los emails y, cuando se apruebe, encender el envío (flip a push-vivo).
 
 ## Última corrida
+**Fecha:** 2026-06-19 | **Modo:** BORRADOR (sin envíos reales)
+**Segmento:** Estudios contables/impositivos — **San Salvador de Jujuy** (NOA — primera incursión en la provincia) + **Posadas, Misiones** (NEA — primera incursión en Misiones)
+**Cupo usado:** 5 leads
+**Leads encontrados:** 5
+**Leads descartados:** 0 (ninguno en La Pampa; ningún duplicado)
+**Emails escritos:** 5 (todos con email y copy completo)
+**Email status:** 3 verificados de dominio propio (Lasquera, Rojas Naser ⭐⭐, Alvarenga ⭐), 1 Gmail (Zampini), 1 inferido (Grosso Juárez — arnet.com.ar, validar antes de envío)
+**Disparador:** Prórroga DDJJ Ganancias/Bienes Personales período 2025 hasta 27/07/2026 (RG ARCA 5851/2026)
+**Archivos:**
+- `funnel/leads/new/borrador-2026-06-19.jsonl` — 5 leads
+- `funnel/reportes/2026-06-19.md` — reporte completo
+**Total acumulado borrador:** 45 leads (9 corridas)
+**Próximo bloqueante:** Validar calidad de emails y activar envío real (`OUTREACH_ENABLED=true` + warm-up). Prioridad: emails personales verificados — Bisonni ⭐⭐, Herusa, Pereiro (06-17), Betique (06-16), Torre-Pulisich (06-13), Farina (06-13), Posadas (06-14). Nuevos candidatos NOA: Rojas Naser ⭐⭐ (tech-adjacent Jujuy), Lasquera ⭐, Alvarenga ⭐ (primer Misiones). NEA previos: Pronea (Eduardo Muñoz Manni) ⭐, San Cristóbal (Daniel) ⭐.
+
+## Corrida anterior (2026-06-18)
 **Fecha:** 2026-06-18 | **Modo:** BORRADOR (sin envíos reales)
 **Segmento:** Estudios contables/impositivos — **San Juan Capital** (Cuyo) + **Resistencia, Chaco** (NEA — primera incursión)
 **Cupo usado:** 5 leads
@@ -120,7 +146,6 @@ Nombre, empresa, rubro y un gancho de dolor por rubro.
 - `funnel/leads/new/borrador-2026-06-18.jsonl` — 5 leads
 - `funnel/reportes/2026-06-18.md` — reporte completo
 **Total acumulado borrador:** 40 leads (8 corridas)
-**Próximo bloqueante:** Validar calidad de emails y activar envío real (`OUTREACH_ENABLED=true` + warm-up). Prioridad: emails personales verificados — Bisonni ⭐⭐, Herusa, Pereiro (06-17), Betique (06-16), Torre-Pulisich (06-13), Farina (06-13), Posadas (06-14). Nuevos candidatos NEA: Pronea (Eduardo Muñoz Manni) ⭐, San Cristóbal (Daniel) ⭐.
 
 ## Corrida anterior (2026-06-17)
 **Fecha:** 2026-06-17 | **Modo:** BORRADOR (sin envíos reales)
