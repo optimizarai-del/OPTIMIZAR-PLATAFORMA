@@ -50,6 +50,14 @@ Nombre, empresa, rubro y un gancho de dolor por rubro.
 ## Decisiones tomadas (continuación)
 - [2026-06-14] Corrida borrador expandida a Salta Capital + Mar del Plata. Salta: Estudio Diéguez (email inferido, ZoomInfo) + Simesen de Bielke (referente NOA >50 años, email de dominio propio). Mar del Plata: Posadas (email personal verificado), Apphatie (sin email), B&R/SMS (genérico, sin nombre). 3 emails escritos, 2 sin contactar.
 
+## Gotchas descubiertos (continuación — 2026-06-20)
+- [2026-06-20] Juan Pablo Melnik (Catamarca, CPN Matrículas 1117): Vocal Titular 1 CPCE Catamarca, docente FCE UNCa (carrera CPN), síndico judicial, speaker sobre "Digitalización del Estudio Contable" en CPCE Catamarca (taller reprogramado 2x por demanda). Tiene YouTube propio con contenido de estudio contable digital. Perfil de adoptador temprano idéntico a Rojas Naser ⭐⭐. CANDIDATO PRIORITARIO para encontrar email en corrida futura (vía cpcecat.org.ar comisiones, LinkedIn o YouTube). Ángulo sugerido: "ya enseñás digitalización — OPTIMIZAR es la capa de automatización que le sigue al software".
+- [2026-06-20] Marnetto & Brigido (La Rioja Capital, desde 1980): email info@estudiomarnetto.com.ar verificado (dominio propio). Primer estudio de La Rioja Capital en el programa. Servicios: impositivo, contable, legal, agropecuario, proyectos de inversión. Candidato ⭐ para primer envío en La Rioja.
+- [2026-06-20] La Rioja Capital tiene baja presencia web de estudios contables. La mayoría usa solo directorios físicos (Licuo, argentino.com.ar) sin sitio propio. Fuentes adicionales para corridas futuras: CPCE La Rioja, Estudio Quijano y Asociados, Estudio José Mario Brizuela (Carmelo Valdez 165), AP Group (San Martin 117 - 5º Piso, ECONNREFUSED hoy).
+- [2026-06-20] Catamarca Capital tiene capacidad para 5+ corridas adicionales. Candidatos identificados: Estudio Haddad y Asociados (Rojas 600 — Juan Pablo Haddad CPN, robado en 2019 y siguió operando), Estudio Vega Pedro-Maria (Vicario Segura 782), Estudio Cordoba Mauvecin (República 476), Rivera Michea & Asociados (email pendiente).
+- [2026-06-20] CPCE Catamarca (cpcecat.org.ar): sitio activo, publica comisiones con nombres de vocales. Fuente confiable para encontrar emails de profesionales en corridas futuras. Melnik es Vocal Titular 1 → su email probablemente publicado en página de autoridades.
+- [2026-06-20] Decisiones tomadas: La Rioja Capital (primera incursión) + Catamarca Capital (primera incursión). Completa el cinturón NOA (Mendoza ✓, Tucumán ✓, Salta ✓, Jujuy ✓, La Rioja ✓, Catamarca ✓). 5/5 × 200 al CRM. Hito: 50 leads en borrador (10 corridas).
+
 ## Gotchas descubiertos (continuación — 2026-06-19)
 - [2026-06-19] Rojas Naser (Jujuy): CPN speaker sobre Libro de Sueldos Digital en CPCEs de Mendoza, Río Negro, San Luis, La Rioja, Entre Ríos y Jujuy. Usa software ISO 9001. Mentalidad tech consolidada → ángulo "capa siguiente de automatización" mucho más efectivo que el ángulo de dolor estándar. Candidato ⭐⭐ para primer envío real en Jujuy.
 - [2026-06-19] Estudio Lasquera (Jujuy): cofundadoras Gabriela Lasquera y Mirta Puente. Email cpnglasquera@estudiolasquera.com.ar verificado (dominio propio). Web en mantenimiento pero email activo. Primer Jujuy del programa.
@@ -115,10 +123,26 @@ Nombre, empresa, rubro y un gancho de dolor por rubro.
 - Backend: endpoints externos OK, **migración aplicada**, **chat en vivo sobre el plan funcionando**.
 - **Prospección diaria automática: ACTIVA en MODO BORRADOR** (busca y escribe; NO envía nada).
 - **Envío real de correos: APAGADO** (`OUTREACH_ENABLED=false`). Encender tras validar emails + warm-up.
-- Corridas borrador completadas: 11/06 (Córdoba/Rosario), 12/06 (CABA/GBA), 13/06 (Mendoza/Tucumán), 14/06 (Salta/Mar del Plata), 15/06 (Bahía Blanca/Neuquén) → 25 leads en borrador (3 emails personales verificados, 22 genéricos o inferidos).
+- Corridas borrador completadas: 11/06 (Córdoba/Rosario), 12/06 (CABA/GBA), 13/06 (Mendoza/Tucumán), 14/06 (Salta/Mar del Plata), 15/06 (Bahía Blanca/Neuquén), 16/06 (Santa Fe/Paraná), 17/06 (Rosario expansión), 18/06 (San Juan/Resistencia Chaco), 19/06 (Jujuy/Posadas Misiones), 20/06 (La Rioja Capital/Catamarca Capital) → **50 leads en borrador (10 corridas)**. Cinturón NOA completo (Mendoza, Tucumán, Salta, Jujuy, La Rioja, Catamarca).
 - Pendiente real: validar calidad de los emails y, cuando se apruebe, encender el envío (flip a push-vivo).
 
 ## Última corrida
+**Fecha:** 2026-06-20 | **Modo:** BORRADOR (sin envíos reales)
+**Segmento:** Estudios contables/impositivos — **La Rioja Capital** (primera incursión) + **San Fernando del Valle de Catamarca** (primera incursión)
+**Cupo usado:** 5 leads
+**Leads encontrados:** 5
+**Leads descartados:** 0 (ninguno en La Pampa; ningún duplicado)
+**Emails escritos:** 2 (Marnetto: dominio propio ✅, M&S: Gmail)
+**Sin email:** 3 (Rivera Michea, Melnik ⭐⭐, Boggio)
+**Email status:** 1 verificado dominio propio (Marnetto ⭐), 1 Gmail (M&S), 3 not_found
+**Disparador:** Prórroga DDJJ Ganancias/Bienes Personales período 2025 hasta 27/07/2026 (RG ARCA 5851/2026)
+**Archivos:**
+- `funnel/leads/new/borrador-2026-06-20.jsonl` — 5 leads
+- `funnel/reportes/2026-06-20.md` — reporte completo
+**Total acumulado borrador:** 50 leads (10 corridas)
+**Próximo bloqueante:** Validar calidad de emails y activar envío real (`OUTREACH_ENABLED=true` + warm-up). Prioridad: emails personales verificados — Bisonni ⭐⭐, Herusa, Pereiro (06-17), Betique (06-16), Torre-Pulisich (06-13), Farina (06-13), Posadas (06-14). Nuevos candidatos NOA: Rojas Naser ⭐⭐ (tech-adjacent Jujuy), Lasquera ⭐, Alvarenga ⭐ (primer Misiones), Marnetto ⭐ (La Rioja). Candidato PRIORITARIO sin email: Melnik ⭐⭐ (Catamarca — docente digitalización CPCE, mismo perfil que Rojas Naser).
+
+## Corrida anterior (2026-06-19)
 **Fecha:** 2026-06-19 | **Modo:** BORRADOR (sin envíos reales)
 **Segmento:** Estudios contables/impositivos — **San Salvador de Jujuy** (NOA — primera incursión en la provincia) + **Posadas, Misiones** (NEA — primera incursión en Misiones)
 **Cupo usado:** 5 leads
@@ -131,7 +155,6 @@ Nombre, empresa, rubro y un gancho de dolor por rubro.
 - `funnel/leads/new/borrador-2026-06-19.jsonl` — 5 leads
 - `funnel/reportes/2026-06-19.md` — reporte completo
 **Total acumulado borrador:** 45 leads (9 corridas)
-**Próximo bloqueante:** Validar calidad de emails y activar envío real (`OUTREACH_ENABLED=true` + warm-up). Prioridad: emails personales verificados — Bisonni ⭐⭐, Herusa, Pereiro (06-17), Betique (06-16), Torre-Pulisich (06-13), Farina (06-13), Posadas (06-14). Nuevos candidatos NOA: Rojas Naser ⭐⭐ (tech-adjacent Jujuy), Lasquera ⭐, Alvarenga ⭐ (primer Misiones). NEA previos: Pronea (Eduardo Muñoz Manni) ⭐, San Cristóbal (Daniel) ⭐.
 
 ## Corrida anterior (2026-06-18)
 **Fecha:** 2026-06-18 | **Modo:** BORRADOR (sin envíos reales)
