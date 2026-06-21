@@ -123,10 +123,35 @@ Nombre, empresa, rubro y un gancho de dolor por rubro.
 - Backend: endpoints externos OK, **migración aplicada**, **chat en vivo sobre el plan funcionando**.
 - **Prospección diaria automática: ACTIVA en MODO BORRADOR** (busca y escribe; NO envía nada).
 - **Envío real de correos: APAGADO** (`OUTREACH_ENABLED=false`). Encender tras validar emails + warm-up.
-- Corridas borrador completadas: 11/06 (Córdoba/Rosario), 12/06 (CABA/GBA), 13/06 (Mendoza/Tucumán), 14/06 (Salta/Mar del Plata), 15/06 (Bahía Blanca/Neuquén), 16/06 (Santa Fe/Paraná), 17/06 (Rosario expansión), 18/06 (San Juan/Resistencia Chaco), 19/06 (Jujuy/Posadas Misiones), 20/06 (La Rioja Capital/Catamarca Capital) → **50 leads en borrador (10 corridas)**. Cinturón NOA completo (Mendoza, Tucumán, Salta, Jujuy, La Rioja, Catamarca).
+- Corridas borrador completadas: 11/06 (Córdoba/Rosario), 12/06 (CABA/GBA), 13/06 (Mendoza/Tucumán), 14/06 (Salta/Mar del Plata), 15/06 (Bahía Blanca/Neuquén), 16/06 (Santa Fe/Paraná), 17/06 (Rosario expansión), 18/06 (San Juan/Resistencia Chaco), 19/06 (Jujuy/Posadas Misiones), 20/06 (La Rioja Capital/Catamarca Capital), 21/06 (La Plata/San Luis Capital) → **55 leads en borrador (11 corridas)**. Cinturón NOA completo (Mendoza, Tucumán, Salta, Jujuy, La Rioja, Catamarca). Cuyo completo (Mendoza, San Juan, San Luis).
 - Pendiente real: validar calidad de los emails y, cuando se apruebe, encender el envío (flip a push-vivo).
 
 ## Última corrida
+**Fecha:** 2026-06-21 | **Modo:** BORRADOR (sin envíos reales)
+**Segmento:** Estudios contables/impositivos — **La Plata** (capital PBA — primera incursión) + **San Luis Capital** (primera incursión — completa cinturón Cuyo)
+**Cupo usado:** 5 leads
+**Leads encontrados:** 5
+**Leads descartados:** 0 (ninguno en La Pampa; ningún duplicado)
+**Emails escritos:** 4 (Castaños: dominio propio ✅, Libran: personal ⭐⭐, Enfoque: Gmail, Moreno Chediack: dominio propio ✅)
+**Sin email:** 1 (Bonino ⭐ — Vocal CPCE San Luis, candidata prioritaria)
+**Email status:** 2 verificados dominio propio (Castaños, Moreno Chediack), 1 personal verificado dominio propio (Libran ⭐⭐), 1 Gmail (Enfoque Contable), 1 not_found (Bonino)
+**Disparador:** Prórroga DDJJ Ganancias/Bienes Personales período 2025 hasta 27/07/2026 (RG ARCA 5851/2026)
+**Archivos:**
+- `funnel/leads/new/borrador-2026-06-21.jsonl` — 5 leads
+- `funnel/reportes/2026-06-21.md` — reporte completo
+**Total acumulado borrador:** 55 leads (11 corridas)
+**Próximo bloqueante:** Validar calidad de emails y activar envío real (`OUTREACH_ENABLED=true` + warm-up). Prioridad emails personales verificados: Libran ⭐⭐ (La Plata, dominio propio), Bisonni ⭐⭐, Herusa, Pereiro (06-17), Betique (06-16), Torre-Pulisich (06-13), Farina (06-13). Candidatos CPCE (sin email, corrida futura): Bonino ⭐ (San Luis), Melnik ⭐⭐ (Catamarca), Rojas Naser ⭐⭐ (Jujuy).
+
+## Gotchas descubiertos (continuación — 2026-06-21)
+- [2026-06-21] Estudio Contable Libran (La Plata): Cra. Liliana Patricia Libran, en ejercicio desde 1982, email personal en dominio propio (liliana@estudiolibran.com.ar). Mejor candidata de esta corrida ⭐⭐. Monotributistas, autónomos, PyMEs → base de clientes amplia.
+- [2026-06-21] Enfoque Contable (La Plata): único estudio del programa que vende CFO Fraccionado como servicio. Fundadores UNLP (Rodríguez + Bizet). Perfil tech-adjacent similar a Bisonni (BI) y Dutto (servicios informáticos). Ángulo recomendado: "la automatización es lo que viene después del CFO Fraccionado". Email Gmail.
+- [2026-06-21] Eleonora Bonino (San Luis): tercer candidato con perfil CPCE Vocal de todo el programa (Rojas Naser ⭐⭐ Jujuy, Melnik ⭐⭐ Catamarca). Patrón confirmado: Vocales de CPCE = adoptadores tempranos de alta probabilidad. Investigar email en corrida futura vía cpcesanluis.org.ar/Matriculados.
+- [2026-06-21] San Luis Capital: baja presencia web de estudios (similar a La Rioja). CPCE San Luis (cpcesanluis.org.ar) devolvió 503 durante la corrida. Para corridas futuras: Estudio San Blas (9 de Julio y San Martín), Estudio Bustos & Asociados, Villegas-Temoli (Anacleto Toesca 1889), Dra. Reinaldo (Rivadavia 1305).
+- [2026-06-21] La Plata tiene capacidad para 10+ corridas adicionales. Candidatos: Bordagaray y Asociados (20+ años), CSD y Asociados (40+ años, 403), Estudio García (25+ años, La Plata + CABA), Andrea Ducar Contadora, Estudio Paredes.
+- [2026-06-21] Cuyo completo: Mendoza ✓, San Juan ✓, San Luis ✓. Hito geográfico.
+- [2026-06-21] Decisiones tomadas: La Plata (primera incursión PBA capital provincial) + San Luis Capital (completa Cuyo). 5/5 × 200 al CRM. Total: 55 leads (11 corridas).
+
+## Corrida anterior (2026-06-20)
 **Fecha:** 2026-06-20 | **Modo:** BORRADOR (sin envíos reales)
 **Segmento:** Estudios contables/impositivos — **La Rioja Capital** (primera incursión) + **San Fernando del Valle de Catamarca** (primera incursión)
 **Cupo usado:** 5 leads
@@ -140,7 +165,6 @@ Nombre, empresa, rubro y un gancho de dolor por rubro.
 - `funnel/leads/new/borrador-2026-06-20.jsonl` — 5 leads
 - `funnel/reportes/2026-06-20.md` — reporte completo
 **Total acumulado borrador:** 50 leads (10 corridas)
-**Próximo bloqueante:** Validar calidad de emails y activar envío real (`OUTREACH_ENABLED=true` + warm-up). Prioridad: emails personales verificados — Bisonni ⭐⭐, Herusa, Pereiro (06-17), Betique (06-16), Torre-Pulisich (06-13), Farina (06-13), Posadas (06-14). Nuevos candidatos NOA: Rojas Naser ⭐⭐ (tech-adjacent Jujuy), Lasquera ⭐, Alvarenga ⭐ (primer Misiones), Marnetto ⭐ (La Rioja). Candidato PRIORITARIO sin email: Melnik ⭐⭐ (Catamarca — docente digitalización CPCE, mismo perfil que Rojas Naser).
 
 ## Corrida anterior (2026-06-19)
 **Fecha:** 2026-06-19 | **Modo:** BORRADOR (sin envíos reales)
