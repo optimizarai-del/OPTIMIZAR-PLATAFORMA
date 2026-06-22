@@ -123,10 +123,36 @@ Nombre, empresa, rubro y un gancho de dolor por rubro.
 - Backend: endpoints externos OK, **migración aplicada**, **chat en vivo sobre el plan funcionando**.
 - **Prospección diaria automática: ACTIVA en MODO BORRADOR** (busca y escribe; NO envía nada).
 - **Envío real de correos: APAGADO** (`OUTREACH_ENABLED=false`). Encender tras validar emails + warm-up.
-- Corridas borrador completadas: 11/06 (Córdoba/Rosario), 12/06 (CABA/GBA), 13/06 (Mendoza/Tucumán), 14/06 (Salta/Mar del Plata), 15/06 (Bahía Blanca/Neuquén), 16/06 (Santa Fe/Paraná), 17/06 (Rosario expansión), 18/06 (San Juan/Resistencia Chaco), 19/06 (Jujuy/Posadas Misiones), 20/06 (La Rioja Capital/Catamarca Capital), 21/06 (La Plata/San Luis Capital) → **55 leads en borrador (11 corridas)**. Cinturón NOA completo (Mendoza, Tucumán, Salta, Jujuy, La Rioja, Catamarca). Cuyo completo (Mendoza, San Juan, San Luis).
+- Corridas borrador completadas: 11/06 (Córdoba/Rosario), 12/06 (CABA/GBA), 13/06 (Mendoza/Tucumán), 14/06 (Salta/Mar del Plata), 15/06 (Bahía Blanca/Neuquén), 16/06 (Santa Fe/Paraná), 17/06 (Rosario expansión), 18/06 (San Juan/Resistencia Chaco), 19/06 (Jujuy/Posadas Misiones), 20/06 (La Rioja Capital/Catamarca Capital), 21/06 (La Plata/San Luis Capital), 22/06 (Córdoba 2° lote/Comodoro Rivadavia) → **60 leads en borrador (12 corridas)**. Cinturón NOA completo (Mendoza, Tucumán, Salta, Jujuy, La Rioja, Catamarca). Cuyo completo (Mendoza, San Juan, San Luis). Patagonia Sur: primera incursión (Comodoro Rivadavia ✓).
 - Pendiente real: validar calidad de los emails y, cuando se apruebe, encender el envío (flip a push-vivo).
 
 ## Última corrida
+**Fecha:** 2026-06-22 | **Modo:** BORRADOR (sin envíos reales)
+**Segmento:** Estudios contables/impositivos — **Córdoba Capital (segundo lote)** + **Comodoro Rivadavia, Chubut (primera incursión Patagonia Sur)**
+**Cupo usado:** 5 leads
+**Leads encontrados:** 5
+**Leads descartados:** 0 (ninguno en La Pampa; ningún duplicado)
+**Emails escritos:** 4 (OCAR: dominio propio ✅, Estudio Contable Córdoba: dominio propio ✅, Koroluk: dominio propio ✅ ⭐⭐, Barria&Perea: dominio propio ✅)
+**Sin email:** 1 (Peinó — modelo remoto, candidato ⭐ corrida futura vía LinkedIn)
+**Email status:** 4 verificados dominio propio (OCAR, Estudio Contable Córdoba, Koroluk, Barria&Perea), 1 not_found (Peinó)
+**Disparador:** Prórroga DDJJ Ganancias/Bienes Personales período 2025 hasta 27/07/2026 (RG ARCA 5851/2026) + ángulo Oil & Gas / Patagonia para Koroluk (65+ clientes energéticos)
+**Archivos:**
+- `funnel/leads/new/borrador-2026-06-22.jsonl` — 5 leads
+- `funnel/reportes/2026-06-22.md` — reporte completo
+**Total acumulado borrador:** 60 leads (12 corridas)
+**Próximo bloqueante:** Validar calidad de emails y activar envío real (`OUTREACH_ENABLED=true` + warm-up). Prioridad emails personales verificados: Libran ⭐⭐ (La Plata, dominio propio), Bisonni ⭐⭐, Herusa, Pereiro (06-17), Betique (06-16), Torre-Pulisich (06-13), Farina (06-13). Candidatos sin email para corrida futura: Peinó ⭐ (Córdoba, LinkedIn), Bonino ⭐ (San Luis, CPCE), Melnik ⭐⭐ (Catamarca, CPCE), Rojas Naser ⭐⭐ (Jujuy, CPCE).
+
+## Gotchas descubiertos (continuación — 2026-06-22)
+- [2026-06-22] OCAR (Córdoba, desde 1942): estudio con 80+ años, cartera empresarial de élite, email ocar@ocar.com.ar (dominio propio). Socios: Gustavo Bagur (UNC) + Ricardo Viano (UCC). Servicios de alto nivel: due diligence, valuación, fusiones. También outsourcing + payroll → ángulo de automatización de procesos propios. Candidato ⭐ para primer envío en Córdoba 2° lote.
+- [2026-06-22] Koroluk, García Gavuzzo y Asociados (Comodoro Rivadavia): 4 profesionales, 65+ empresas clientes en Oil & Gas, transporte y retail. Email impuestos@estudiokg.com.ar (dominio propio). Ángulo diferenciado: el volumen de liquidaciones impositivas en plaza petrolera es significativamente mayor que en estudios de servicios estándar. Candidato ⭐⭐ — mejor lead de Comodoro.
+- [2026-06-22] Fernando Peinó (Córdoba): CPN + Master Dirección de Negocios UNC, modelo 100% remoto, SAS, tax planning estratégico. Sin email publicado (solo WhatsApp/Instagram). Perfil tech-adjacent muy similar a Bisonni ⭐⭐ y Dutto. Buscar email vía LinkedIn o formulario en corrida futura.
+- [2026-06-22] Estudio Guerrero (Córdoba, Raymond Poincaré 7154): socios publicados (Santiago Guerrero, Lucía Lopez, Gianna Fontana, Carla Keuchguerian, Lucila Veliz). Sitio 503 durante la corrida. Candidato para corrida futura cuando el sitio esté accesible.
+- [2026-06-22] Comodoro Rivadavia: primera incursión completada. Mercado con perfil Oil & Gas → ángulo diferenciado (volumen + complejidad de clientes energéticos). Candidatos para próximas corridas: Ferreyra (soluciones@estudiocontableferreyra.com.ar), Rayleff (Daniel Rayleff, Gmail), GM Estudio Contable (gmestudiocontable.com). Fuentes: licuo.com.ar/comodoro-rivadavia, telexplorer.com.ar.
+- [2026-06-22] Barria & Perea (Comodoro): email estudio@barriayperea.com.ar (dominio propio). Nombre de socios no publicado. Investigar via CPCE Chubut o LinkedIn antes del envío real para personalizar.
+- [2026-06-22] Córdoba Capital: ahora con 10 leads (corridas 11/06 y 22/06). Capacidad para 15+ corridas adicionales. Próximas fuentes: Estudio Guerrero (cuando el sitio esté accesible), Dominguez y Asoc (ECONNREFUSED hoy), CPCE Córdoba directorio.
+- [2026-06-22] Hito: 60 leads en borrador (12 corridas). Patagonia Sur inaugurada (Comodoro Rivadavia ✓).
+
+## Corrida anterior (2026-06-21)
 **Fecha:** 2026-06-21 | **Modo:** BORRADOR (sin envíos reales)
 **Segmento:** Estudios contables/impositivos — **La Plata** (capital PBA — primera incursión) + **San Luis Capital** (primera incursión — completa cinturón Cuyo)
 **Cupo usado:** 5 leads
@@ -134,13 +160,10 @@ Nombre, empresa, rubro y un gancho de dolor por rubro.
 **Leads descartados:** 0 (ninguno en La Pampa; ningún duplicado)
 **Emails escritos:** 4 (Castaños: dominio propio ✅, Libran: personal ⭐⭐, Enfoque: Gmail, Moreno Chediack: dominio propio ✅)
 **Sin email:** 1 (Bonino ⭐ — Vocal CPCE San Luis, candidata prioritaria)
-**Email status:** 2 verificados dominio propio (Castaños, Moreno Chediack), 1 personal verificado dominio propio (Libran ⭐⭐), 1 Gmail (Enfoque Contable), 1 not_found (Bonino)
-**Disparador:** Prórroga DDJJ Ganancias/Bienes Personales período 2025 hasta 27/07/2026 (RG ARCA 5851/2026)
 **Archivos:**
 - `funnel/leads/new/borrador-2026-06-21.jsonl` — 5 leads
 - `funnel/reportes/2026-06-21.md` — reporte completo
 **Total acumulado borrador:** 55 leads (11 corridas)
-**Próximo bloqueante:** Validar calidad de emails y activar envío real (`OUTREACH_ENABLED=true` + warm-up). Prioridad emails personales verificados: Libran ⭐⭐ (La Plata, dominio propio), Bisonni ⭐⭐, Herusa, Pereiro (06-17), Betique (06-16), Torre-Pulisich (06-13), Farina (06-13). Candidatos CPCE (sin email, corrida futura): Bonino ⭐ (San Luis), Melnik ⭐⭐ (Catamarca), Rojas Naser ⭐⭐ (Jujuy).
 
 ## Gotchas descubiertos (continuación — 2026-06-21)
 - [2026-06-21] Estudio Contable Libran (La Plata): Cra. Liliana Patricia Libran, en ejercicio desde 1982, email personal en dominio propio (liliana@estudiolibran.com.ar). Mejor candidata de esta corrida ⭐⭐. Monotributistas, autónomos, PyMEs → base de clientes amplia.
