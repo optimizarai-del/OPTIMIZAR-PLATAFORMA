@@ -123,10 +123,38 @@ Nombre, empresa, rubro y un gancho de dolor por rubro.
 - Backend: endpoints externos OK, **migración aplicada**, **chat en vivo sobre el plan funcionando**.
 - **Prospección diaria automática: ACTIVA en MODO BORRADOR** (busca y escribe; NO envía nada).
 - **Envío real de correos: APAGADO** (`OUTREACH_ENABLED=false`). Encender tras validar emails + warm-up.
-- Corridas borrador completadas: 11/06 (Córdoba/Rosario), 12/06 (CABA/GBA), 13/06 (Mendoza/Tucumán), 14/06 (Salta/Mar del Plata), 15/06 (Bahía Blanca/Neuquén), 16/06 (Santa Fe/Paraná), 17/06 (Rosario expansión), 18/06 (San Juan/Resistencia Chaco), 19/06 (Jujuy/Posadas Misiones), 20/06 (La Rioja Capital/Catamarca Capital), 21/06 (La Plata/San Luis Capital), 22/06 (Córdoba 2° lote/Comodoro Rivadavia) → **60 leads en borrador (12 corridas)**. Cinturón NOA completo (Mendoza, Tucumán, Salta, Jujuy, La Rioja, Catamarca). Cuyo completo (Mendoza, San Juan, San Luis). Patagonia Sur: primera incursión (Comodoro Rivadavia ✓).
+- Corridas borrador completadas: 11/06 (Córdoba/Rosario), 12/06 (CABA/GBA), 13/06 (Mendoza/Tucumán), 14/06 (Salta/Mar del Plata), 15/06 (Bahía Blanca/Neuquén), 16/06 (Santa Fe/Paraná), 17/06 (Rosario expansión), 18/06 (San Juan/Resistencia Chaco), 19/06 (Jujuy/Posadas Misiones), 20/06 (La Rioja Capital/Catamarca Capital), 21/06 (La Plata/San Luis Capital), 22/06 (Córdoba 2° lote/Comodoro Rivadavia), 23/06 (Corrientes Capital/Santiago del Estero Capital) → **65 leads en borrador (13 corridas)**. Cinturón NOA completo (Mendoza, Tucumán, Salta, Jujuy, La Rioja, Catamarca, Santiago del Estero ✓). Cuyo completo (Mendoza, San Juan, San Luis). Patagonia Sur iniciada (Comodoro Rivadavia ✓). NEA: Chaco ✓, Misiones ✓, Corrientes ✓.
 - Pendiente real: validar calidad de los emails y, cuando se apruebe, encender el envío (flip a push-vivo).
 
 ## Última corrida
+**Fecha:** 2026-06-23 | **Modo:** BORRADOR (sin envíos reales)
+**Segmento:** Estudios contables/impositivos — **Corrientes Capital** (primera incursión NEA — tercer intento exitoso) + **Santiago del Estero Capital** (primera incursión NOA-adjacent)
+**Cupo usado:** 5 leads
+**Leads encontrados:** 5
+**Leads descartados:** 0 (ninguno en La Pampa; ningún duplicado)
+**Emails escritos:** 3 (Leiva: inferred ✅, Pizzichini: inferred ✅, San Martin: Gmail inferred ✅)
+**Sin email:** 2 (García ⭐ — buscar via CPCE SdE, Facello Palavecino — buscar via CPCE SdE)
+**Email status:** 2 emails de estudios propios inferred (Leiva dominio propio, Pizzichini Hotmail), 1 Gmail inferred (San Martin), 2 not_found (García, Facello)
+**Disparador:** Prórroga DDJJ Ganancias/Bienes Personales período 2025 hasta 27/07/2026 (RG ARCA 5851/2026)
+**Archivos:**
+- `funnel/leads/new/borrador-2026-06-23.jsonl` — 5 leads
+- `funnel/reportes/2026-06-23.md` — reporte completo
+**Total acumulado borrador:** 65 leads (13 corridas)
+**Próximo bloqueante:** Validar calidad de los emails inferred de Corrientes (Leiva, Pizzichini, San Martin) y activar envío real (`OUTREACH_ENABLED=true` + warm-up). Candidatos sin email para corrida futura: García ⭐ (SdE, CPCE), Bonino ⭐ (San Luis, CPCE), Melnik ⭐⭐ (Catamarca, CPCE), Rojas Naser ⭐⭐ (Jujuy, CPCE).
+
+## Gotchas descubiertos (continuación — 2026-06-23)
+- [2026-06-23] Corrientes Capital: primera incursión exitosa tras dos intentos fallidos (06-18 y 06-19 — postergado). Fuente clave que funcionó: ciudad-de-corrientes.licuo.com.ar + az-argentina.com + búsquedas de webs propias. Los 3 emails son inferred (sitios web caídos al momento de la corrida).
+- [2026-06-23] Estudio Leiva (Corrientes, H. Yrigoyen 1364): Cr. Humberto Ariel Leiva, MP 2658, 15+ años de experiencia, servicios contable/impositivo/laboral para PyMEs. Email contabilidad@estudioleiva.com (inferred, sitio 503). Primer candidato de Corrientes.
+- [2026-06-23] Estudio Pizzichini (Corrientes, 9 de Julio 1691): Cr. José Luis Pizzichini, email luis_pizzi@hotmail.com (inferred desde estudiopizzichini.com, ECONNREFUSED). Segundo Corrientes.
+- [2026-06-23] Estudio Contable San Martin (Corrientes): email sanmartin2130@gmail.com (Gmail, inferred), tel +54 379 477-9289. Nombre del titular no encontrado — corrida futura via CPCE Corrientes o LinkedIn.
+- [2026-06-23] Santiago del Estero Capital: segunda ciudad del programa con muy baja presencia web (similar a La Rioja). La mayoría de estudios no tiene sitio propio ni email publicado. Fuente más prometedora: CPCE SE (cpcese.org.ar/matriculados/padron — público, sin login). Candidato prioritario: Cr. Mario Nicolás García ⭐ (60+ clientes, doble titulación UNC+UNT, Congreso 10 esq. Belgrano).
+- [2026-06-23] Estudio Facello Palavecino y Asociados (SdE, San Martín 209): estudio contable + jurídico. Sin email publicado. Candidato para corrida futura vía CPCE SdE o LinkedIn.
+- [2026-06-23] CPCE Santiago del Estero: presidente Cp. Jorge NEME. El padrón de matriculados es público (cpcese.org.ar/matriculados/padron) — tiene centenas de entradas alfabéticas. Fuente para corridas futuras en SdE.
+- [2026-06-23] Corrientes Capital tiene capacidad para 5+ corridas adicionales. Candidatos: Menegaz-Urbani (Av. Gdor. Ruiz), Spessot Gilberto (Salta 648), Estudio Leiva (email inferred, validar), Estudio Franco (Pje A González 1009), Estudio Olivarez y Asoc (La Rioja 840). Fuente: licuo + telexplorer Corrientes.
+- [2026-06-23] Santiago del Estero Capital tiene capacidad para 5+ corridas. Candidatos: Estudio Nasif Rodríguez (Moreno Sur 211), Estudio Arce & Asociados (Libertad 761), Estudio Díaz Yocca (24 de Septiembre 257), Estudio Simonetti (24 de Septiembre 262, simonetti-net.com.ar 503), Estudio Bravo (Avellaneda 292, estudiojdbravo.com.ar ECONNREFUSED). Fuente: telexplorer.com.ar.
+- [2026-06-23] Hito: 65 leads en borrador (13 corridas). Corrientes inaugurada ✓. Santiago del Estero inaugurada ✓.
+
+## Corrida anterior (2026-06-22)
 **Fecha:** 2026-06-22 | **Modo:** BORRADOR (sin envíos reales)
 **Segmento:** Estudios contables/impositivos — **Córdoba Capital (segundo lote)** + **Comodoro Rivadavia, Chubut (primera incursión Patagonia Sur)**
 **Cupo usado:** 5 leads
