@@ -123,24 +123,33 @@ Nombre, empresa, rubro y un gancho de dolor por rubro.
 - Backend: endpoints externos OK, **migración aplicada**, **chat en vivo sobre el plan funcionando**.
 - **Prospección diaria automática: ACTIVA en MODO BORRADOR** (busca y escribe; NO envía nada).
 - **Envío real de correos: APAGADO** (`OUTREACH_ENABLED=false`). Encender tras validar emails + warm-up.
-- Corridas borrador completadas: 11/06 (Córdoba/Rosario), 12/06 (CABA/GBA), 13/06 (Mendoza/Tucumán), 14/06 (Salta/Mar del Plata), 15/06 (Bahía Blanca/Neuquén), 16/06 (Santa Fe/Paraná), 17/06 (Rosario expansión), 18/06 (San Juan/Resistencia Chaco), 19/06 (Jujuy/Posadas Misiones), 20/06 (La Rioja Capital/Catamarca Capital), 21/06 (La Plata/San Luis Capital), 22/06 (Córdoba 2° lote/Comodoro Rivadavia), 23/06 (Corrientes Capital/Santiago del Estero Capital) → **65 leads en borrador (13 corridas)**. Cinturón NOA completo (Mendoza, Tucumán, Salta, Jujuy, La Rioja, Catamarca, Santiago del Estero ✓). Cuyo completo (Mendoza, San Juan, San Luis). Patagonia Sur iniciada (Comodoro Rivadavia ✓). NEA: Chaco ✓, Misiones ✓, Corrientes ✓.
+- Corridas borrador completadas: 11/06 (Córdoba/Rosario), 12/06 (CABA/GBA), 13/06 (Mendoza/Tucumán), 14/06 (Salta/Mar del Plata), 15/06 (Bahía Blanca/Neuquén), 16/06 (Santa Fe/Paraná), 17/06 (Rosario expansión), 18/06 (San Juan/Resistencia Chaco), 19/06 (Jujuy/Posadas Misiones), 20/06 (La Rioja Capital/Catamarca Capital), 21/06 (La Plata/San Luis Capital), 22/06 (Córdoba 2° lote/Comodoro Rivadavia), 23/06 (Corrientes Capital/Santiago del Estero Capital), 24/06 (Formosa Capital/Bariloche Río Negro) → **70 leads en borrador (14 corridas)**. Cinturón NOA completo (Mendoza, Tucumán, Salta, Jujuy, La Rioja, Catamarca, Santiago del Estero ✓). Cuyo completo (Mendoza, San Juan, San Luis). Patagonia: Neuquén ✓, Comodoro ✓, Bariloche ✓. NEA completo: Chaco ✓, Misiones ✓, Corrientes ✓, **Formosa ✓**.
 - Pendiente real: validar calidad de los emails y, cuando se apruebe, encender el envío (flip a push-vivo).
 
 ## Última corrida
-**Fecha:** 2026-06-23 | **Modo:** BORRADOR (sin envíos reales)
-**Segmento:** Estudios contables/impositivos — **Corrientes Capital** (primera incursión NEA — tercer intento exitoso) + **Santiago del Estero Capital** (primera incursión NOA-adjacent)
+**Fecha:** 2026-06-24 | **Modo:** BORRADOR (sin envíos reales)
+**Segmento:** Estudios contables/impositivos — **Formosa Capital** (primera incursión NEA — completa las 4 provincias NEA) + **San Carlos de Bariloche, Río Negro** (primera incursión Patagonia Norte)
 **Cupo usado:** 5 leads
 **Leads encontrados:** 5
 **Leads descartados:** 0 (ninguno en La Pampa; ningún duplicado)
-**Emails escritos:** 3 (Leiva: inferred ✅, Pizzichini: inferred ✅, San Martin: Gmail inferred ✅)
-**Sin email:** 2 (García ⭐ — buscar via CPCE SdE, Facello Palavecino — buscar via CPCE SdE)
-**Email status:** 2 emails de estudios propios inferred (Leiva dominio propio, Pizzichini Hotmail), 1 Gmail inferred (San Martin), 2 not_found (García, Facello)
+**Emails escritos:** 5 (todos con email y copy completo)
+**Sin email:** 0
+**Email status:** 3 verified (Toloza Yahoo ✅, CGD dominio propio ✅, CILS dominio propio ✅), 2 inferred (Kraupner Yahoo, Lambezat dominio propio)
 **Disparador:** Prórroga DDJJ Ganancias/Bienes Personales período 2025 hasta 27/07/2026 (RG ARCA 5851/2026)
 **Archivos:**
-- `funnel/leads/new/borrador-2026-06-23.jsonl` — 5 leads
-- `funnel/reportes/2026-06-23.md` — reporte completo
-**Total acumulado borrador:** 65 leads (13 corridas)
-**Próximo bloqueante:** Validar calidad de los emails inferred de Corrientes (Leiva, Pizzichini, San Martin) y activar envío real (`OUTREACH_ENABLED=true` + warm-up). Candidatos sin email para corrida futura: García ⭐ (SdE, CPCE), Bonino ⭐ (San Luis, CPCE), Melnik ⭐⭐ (Catamarca, CPCE), Rojas Naser ⭐⭐ (Jujuy, CPCE).
+- `funnel/leads/new/borrador-2026-06-24.jsonl` — 5 leads
+- `funnel/reportes/2026-06-24.md` — reporte completo
+**Total acumulado borrador:** 70 leads (14 corridas)
+**Hitos:** NEA completo (Chaco ✓, Misiones ✓, Corrientes ✓, Formosa ✓). Patagonia Norte inaugurada (Bariloche/Río Negro ✓).
+**Próximo bloqueante:** Validar calidad de los emails y activar envío real (`OUTREACH_ENABLED=true` + warm-up). Candidatos prioritarios ⭐⭐: Toloza (Formosa, verified, contenido fiscal propio), CILS/Chinellato (Bariloche, verified, perfil tech-adjacent PIT). Candidatos sin email para corrida futura: García ⭐ (SdE, CPCE), Bonino ⭐ (San Luis, CPCE), Melnik ⭐⭐ (Catamarca, CPCE), Rojas Naser ⭐⭐ (Jujuy, CPCE), Álvarez (Formosa, buscar nombre socio).
+
+## Gotchas descubiertos (continuación — 2026-06-24)
+- [2026-06-24] Toloza (Formosa Capital): perfil de adoptador temprano — publica contenido propio de actualización fiscal (SAS, reforma laboral, wallets digitales 2026). Email hugotoloza@yahoo.com.ar verified en su web Wix. Candidato ⭐ para primer envío real en Formosa. Ángulo: "ya publicás sobre wallets y SAS — OPTIMIZAR es la automatización que le sigue".
+- [2026-06-24] CILS / Javier Chinellato (Bariloche): figura en el Parque Productivo Tecnológico Industrial de Bariloche (PIT) — sugiere clientela tech/industrial. Socio Gerente confirmado en LinkedIn. Email info@estudiocils.com.ar verified. Candidato ⭐⭐ — mejor lead de Bariloche. Ángulo diferenciado: "la automatización que usan tus clientes tech, ahora para tu propio estudio".
+- [2026-06-24] CGD - Cremer, González, Deza (Bariloche, desde 2005): 20 años, equipo diverso, servicios de auditoría/impuestos/laboral/finanzas. Email info@estudiocgd.com.ar verified. Activo en RRSS. Candidato ⭐ sólido.
+- [2026-06-24] Formosa Capital: baja densidad de estudios con web propia (mercado poco saturado por propuestas tech — igual que La Rioja y SdE). Candidatos para corridas futuras: Estudio Álvarez (alvarez_estudio@hotmail.com verified, buscar nombre socio vía CPCE Formosa o LinkedIn), Estudio Eunise Aranda (J.J. Castelli 944, sin email), Estudio H&G (Junín 36, sin email). Fuente: licuo.com.ar/formosa + infoisinfo-ar.com.
+- [2026-06-24] Bariloche: mercado con capacidad para 10+ corridas adicionales. Candidatos: Estudio MG (Neuquén 1060), Martínez González y Asociados. Fuentes: licuo.com.ar, soyciudad, guiamaster Bariloche.
+- [2026-06-24] Hito: 70 leads en borrador (14 corridas). NEA completo: Chaco ✓, Misiones ✓, Corrientes ✓, Formosa ✓. Patagonia Norte inaugurada: Bariloche/Río Negro ✓.
 
 ## Gotchas descubiertos (continuación — 2026-06-23)
 - [2026-06-23] Corrientes Capital: primera incursión exitosa tras dos intentos fallidos (06-18 y 06-19 — postergado). Fuente clave que funcionó: ciudad-de-corrientes.licuo.com.ar + az-argentina.com + búsquedas de webs propias. Los 3 emails son inferred (sitios web caídos al momento de la corrida).
