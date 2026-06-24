@@ -265,6 +265,48 @@ class RequerimientoOut(BaseModel):
     status: RequerimientoStatus
     proyecto_id: Optional[int]
     created_at: datetime
+    # ── Análisis IA contra el catálogo de servicios ──
+    analisis_estado: str = "pendiente"
+    servicio_match_id: Optional[int] = None
+    servicio_match_nombre: Optional[str] = None   # lo completa el endpoint para la UI
+    analisis_justificacion: Optional[str] = None
+    analisis_confianza: Optional[int] = None
+    analisis_at: Optional[datetime] = None
+
+    class Config:
+        from_attributes = True
+
+
+# ── Servicios (catálogo "Nuestros Servicios") ─────────────────────────────────
+
+class ServicioCreate(BaseModel):
+    nombre: str = Field(min_length=1)
+    categoria: Optional[str] = None
+    descripcion: Optional[str] = None
+    capacidades: Optional[str] = None
+    base_referencia: Optional[str] = None
+    activo: bool = True
+
+
+class ServicioUpdate(BaseModel):
+    nombre: Optional[str] = None
+    categoria: Optional[str] = None
+    descripcion: Optional[str] = None
+    capacidades: Optional[str] = None
+    base_referencia: Optional[str] = None
+    activo: Optional[bool] = None
+
+
+class ServicioOut(BaseModel):
+    id: int
+    nombre: str
+    categoria: Optional[str]
+    descripcion: Optional[str]
+    capacidades: Optional[str]
+    base_referencia: Optional[str]
+    activo: bool
+    created_at: datetime
+    updated_at: Optional[datetime]
 
     class Config:
         from_attributes = True

@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom'
 import {
   LayoutGrid, CheckSquare, FileText, Users,
   Zap, Sun, Moon, Briefcase, Code2,
-  ClipboardList, UserCheck, Bell, Keyboard, Kanban, Bot, Megaphone
+  ClipboardList, UserCheck, Bell, Keyboard, Kanban, Bot, Megaphone, Package
 } from 'lucide-react'
 import { useAuth } from '../../context/AuthContext'
 import { useTheme } from '../../context/ThemeContext'
@@ -55,7 +55,12 @@ export default function Sidebar() {
 
       <NavLink to="/requerimientos/nuevo" className={link}>
         <ClipboardList size={15} strokeWidth={1.8} />
-        Nuevo Handover
+        Cargar Requerimiento
+      </NavLink>
+
+      <NavLink to="/servicios" className={link}>
+        <Package size={15} strokeWidth={1.8} />
+        Nuestros Servicios
       </NavLink>
 
       {/* ── MARKETING ───────────────────────────────────── */}

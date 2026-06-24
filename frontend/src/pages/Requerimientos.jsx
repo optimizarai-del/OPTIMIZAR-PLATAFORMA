@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Plus, FileText, Calendar, User } from 'lucide-react'
+import { Plus, FileText, Calendar, User, Sparkles, CheckCircle2, AlertTriangle, RefreshCw, Loader2 } from 'lucide-react'
 import api from '../utils/api'
 import { toast } from '../utils/toast'
 import { SkeletonRow } from '../components/Skeleton'
@@ -31,6 +31,8 @@ export default function Requerimientos() {
   }
   useEffect(() => { load() }, [])
 
+  const [analizando, setAnalizando] = useState(null)
+
   const cambiarStatus = async (id, status) => {
     try {
       await api.patch(`/api/requerimientos/${id}`, { status })
@@ -38,6 +40,19 @@ export default function Requerimientos() {
       load()
     } catch {
       toast.error('No se pudo cambiar el estado')
+    }
+  }
+
+  const reanalizar = async (id) => {
+    setAnalizando(id)
+    try {
+      await api.post(`/api/requerimientos/${id}/analizar`)
+      toast.success('Análisis actualizado')
+      load()
+    } catch {
+      toast.error('No se pudo re-analizar')
+    } finally {
+      setAnalizando(null)
     }
   }
 
@@ -53,7 +68,7 @@ export default function Requerimientos() {
             <p className="hero-sub">Handovers de ventas a desarrollo.</p>
           </div>
           <button onClick={() => nav('/requerimientos/nuevo')} className="btn-accent">
-            <Plus size={14} /> Nuevo handover
+            <Plus size={14} /> Cargar requerimiento
           </button>
         </div>
       </header>
@@ -84,10 +99,10 @@ export default function Requerimientos() {
           icon={FileText}
           title={filtro ? `Sin requerimientos en estado "${STATUS_LABEL[filtro]}"` : 'No hay requerimientos todavía'}
           description={filtro
-            ? 'Probá con otro filtro o cargá un handover nuevo.'
-            : 'Cargá tu primer handover desde Comercial → Nuevo Handover.'}
+            ? 'Probá con otro filtro o cargá un requerimiento nuevo.'
+            : 'Cargá tu primer requerimiento desde Comercial → Cargar Requerimiento.'}
           action={() => nav('/requerimientos/nuevo')}
-          actionLabel="+ Cargar primer handover"
+          actionLabel="+ Cargar primer requerimiento"
         />
       ) : (
         <div className="space-y-3">
@@ -135,10 +150,80 @@ export default function Requerimientos() {
                   )}
                 </div>
               </div>
+
+              {/* Análisis IA: ¿lo cubre algún servicio existente? */}
+              <AnalisisIA r={r} analizando={analizando === r.id} onReanalizar={() => reanalizar(r.id)} />
             </div>
           ))}
         </div>
       )}
+    </div>
+  )
+}
+
+function AnalisisIA({ r, analizando, onReanalizar }) {
+  const estado = r.analisis_estado || 'pendiente'
+
+  const base = "mt-4 pt-4 border-t border-border flex items-start justify-between gap-3 flex-wrap"
+  const reBtn = (
+    <button onClick={onReanalizar} disabled={analizando}
+      className="btn-ghost text-muted text-[12px] shrink-0" title="Volver a analizar">
+      {analizando
+        ? <Loader2 size={13} className="animate-spin" />
+        : <RefreshCw size={13} />}
+      {analizando ? 'Analizando...' : 'Re-analizar'}
+    </button>
+  )
+
+  if (estado === 'cubierto') {
+    return (
+      <div className={base}>
+        <div className="flex items-start gap-2.5 flex-1 min-w-0">
+          <CheckCircle2 size={17} className="text-success shrink-0 mt-0.5" />
+          <div className="min-w-0">
+            <div className="text-[13px] font-semibold text-success flex items-center gap-1.5 flex-wrap">
+              <Sparkles size={12} /> Cubierto por: {r.servicio_match_nombre || 'un servicio existente'}
+              {typeof r.analisis_confianza === 'number' && (
+                <span className="chip-success">{r.analisis_confianza}% confianza</span>
+              )}
+            </div>
+            {r.analisis_justificacion && (
+              <div className="text-[12px] text-muted mt-1">{r.analisis_justificacion}</div>
+            )}
+          </div>
+        </div>
+        {reBtn}
+      </div>
+    )
+  }
+
+  if (estado === 'no_cubierto' || estado === 'error') {
+    return (
+      <div className={base}>
+        <div className="flex items-start gap-2.5 flex-1 min-w-0">
+          <AlertTriangle size={17} className="text-warn shrink-0 mt-0.5" />
+          <div className="min-w-0">
+            <div className="text-[13px] font-bold text-warn">Consultar con área de desarrollo</div>
+            <div className="text-[12px] text-muted mt-1">
+              {estado === 'error'
+                ? (r.analisis_justificacion || 'No se pudo completar el análisis automático.')
+                : (r.analisis_justificacion || 'Ningún servicio del catálogo cubre este requerimiento.')}
+            </div>
+          </div>
+        </div>
+        {reBtn}
+      </div>
+    )
+  }
+
+  // pendiente
+  return (
+    <div className={base}>
+      <div className="flex items-center gap-2.5 text-muted">
+        <Sparkles size={15} className="shrink-0" />
+        <span className="text-[12px]">Análisis de cobertura pendiente.</span>
+      </div>
+      {reBtn}
     </div>
   )
 }

@@ -48,6 +48,126 @@ def _call_claude(prompt: str, max_tokens: int = 2048) -> Dict:
         return {"ok": False, "data": None, "error": f"Error IA: {e}"}
 
 
+# ── 0. Matching requerimiento ↔ catálogo de servicios ─────────────────────────
+
+# Palabras muy comunes que no aportan a un match real (evitan falsos positivos).
+# Incluye stopwords de 3 letras porque bajamos el mínimo a 3 chars para captar
+# acrónimos discriminantes del dominio (AFIP, CAE, PDF, IVA, CRM, ERP, API, BOT).
+_STOPWORDS = {
+    "los", "las", "con", "por", "una", "uno", "del", "que", "sus", "mas", "muy",
+    "son", "fue", "han", "este", "esta", "esto", "para", "como", "cada", "todo",
+    "toda", "desde", "hasta", "sobre", "entre", "tiene", "tienen", "hace", "hacer",
+    "automatico", "automatica", "proceso", "cliente", "empresa", "datos", "sistema",
+    "sistemas", "manual", "manuales", "actual", "actualmente", "ningun", "ninguna",
+}
+
+
+def _tokenizar(texto: str) -> set:
+    """Extrae palabras significativas (≥3 chars, sin puntuación, sin stopwords).
+    El mínimo de 3 deja pasar acrónimos clave del dominio (AFIP, CAE, IVA, CRM...)."""
+    import re
+    palabras = re.findall(r"[a-záéíóúñ0-9]+", texto.lower())
+    return {w for w in palabras if len(w) >= 3 and w not in _STOPWORDS}
+
+
+def _match_keyword_fallback(req: Dict, servicios: List[Dict]) -> Dict:
+    """Fallback determinístico (sin IA) por solapamiento de palabras. Garantiza
+    que el análisis funcione aunque no haya ANTHROPIC_API_KEY configurada."""
+    texto_req = " ".join(str(req.get(k, "") or "") for k in (
+        "nombre_proceso", "trigger_proceso", "pasos_manuales", "sector", "uso_ia"
+    ))
+    palabras_req = _tokenizar(texto_req)
+
+    mejor, mejor_score = None, 0
+    for s in servicios:
+        texto_s = f"{s.get('nombre','')} {s.get('categoria','')} {s.get('descripcion','')} {s.get('capacidades','')}"
+        palabras_s = _tokenizar(texto_s)
+        score = len(palabras_req & palabras_s)
+        if score > mejor_score:
+            mejor, mejor_score = s, score
+
+    # Umbral mínimo de coincidencia para considerarlo "cubierto".
+    if mejor and mejor_score >= 2:
+        return {"cubierto": True, "servicio_id": mejor["id"], "confianza": min(60, 30 + mejor_score * 10),
+                "justificacion": f"Coincidencia básica por palabras clave con «{mejor['nombre']}» (análisis sin IA; configurá ANTHROPIC_API_KEY para un match más preciso)."}
+    return {"cubierto": False, "servicio_id": None, "confianza": 0,
+            "justificacion": "Ningún servicio del catálogo coincide claramente (análisis básico sin IA)."}
+
+
+def match_requerimiento_servicios(req: Dict, servicios: List[Dict]) -> Dict:
+    """
+    Compara un requerimiento contra el catálogo de servicios y decide si alguno
+    lo cubre. Devuelve {cubierto, servicio_id, confianza, justificacion}.
+    Si no hay servicios o no hay API key, usa el fallback por keywords.
+    """
+    if not servicios:
+        return {"cubierto": False, "servicio_id": None, "confianza": 0,
+                "justificacion": "No hay servicios cargados en el catálogo todavía."}
+
+    if not os.getenv("ANTHROPIC_API_KEY", ""):
+        return _match_keyword_fallback(req, servicios)
+
+    servicios_txt = "\n".join(
+        f"- ID {s['id']}: {s['nombre']}"
+        + (f" [{s['categoria']}]" if s.get("categoria") else "")
+        + (f" — {s['descripcion']}" if s.get("descripcion") else "")
+        + (f" | Capacidades: {s['capacidades']}" if s.get("capacidades") else "")
+        for s in servicios
+    )
+
+    prompt = f"""Sos un analista de preventa de una consultora de IA y automatización.
+Te paso un REQUERIMIENTO de un cliente y nuestro CATÁLOGO DE SERVICIOS ya construidos.
+Decidí si el requerimiento puede cubrirse con ALGUNO de los servicios existentes.
+
+REQUERIMIENTO:
+- Cliente: {req.get('nombre_cliente','')}
+- Sector: {req.get('sector','')}
+- Proceso a automatizar: {req.get('nombre_proceso','')}
+- Gatillo: {req.get('trigger_proceso','')}
+- Pasos manuales hoy: {req.get('pasos_manuales','')}
+- Sistemas/stack: {req.get('sistemas_core','')}
+- Uso de IA actual: {req.get('uso_ia','')}
+
+CATÁLOGO DE SERVICIOS:
+{servicios_txt}
+
+Reglas:
+- Elegí el servicio que mejor cubra el requerimiento SOLO si encaja de verdad.
+- Si ninguno encaja bien, marcá cubierto=false (se derivará al área de desarrollo).
+- confianza es 0-100 (qué tan seguro estás del match).
+- Sé honesto: ante la duda, cubierto=false.
+
+Respondé ÚNICAMENTE con JSON válido, sin texto adicional ni markdown:
+{{
+  "cubierto": <true|false>,
+  "servicio_id": <id del servicio elegido o null>,
+  "confianza": <int 0-100>,
+  "justificacion": "<1-2 oraciones en español rioplatense explicando por qué>"
+}}"""
+
+    res = _call_claude(prompt, max_tokens=600)
+    if not res["ok"]:
+        # Si la IA falla, intentamos el fallback antes de rendirnos.
+        fb = _match_keyword_fallback(req, servicios)
+        fb["justificacion"] = f"{fb['justificacion']} (IA no disponible: {res['error']})"
+        return fb
+
+    data = res["data"]
+    # Validación defensiva del JSON devuelto.
+    sid = data.get("servicio_id")
+    if data.get("cubierto") and sid is not None:
+        ids_validos = {s["id"] for s in servicios}
+        if sid not in ids_validos:
+            sid = None
+            data["cubierto"] = False
+    return {
+        "cubierto": bool(data.get("cubierto")),
+        "servicio_id": sid if data.get("cubierto") else None,
+        "confianza": int(data.get("confianza") or 0),
+        "justificacion": str(data.get("justificacion") or ""),
+    }
+
+
 # ── 1. Análisis de commits (existente) ────────────────────────────────────────
 
 def analyze_commits(commits: List[Dict], tareas: List[Dict], plan: List[Dict]) -> Dict:

@@ -8,12 +8,16 @@ load_dotenv(override=True)
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.database import Base, engine
-from app.routers import auth, users, proyectos, tareas, tiempo, requerimientos, dashboard, notificaciones, crm, ads
+from app.routers import (auth, users, proyectos, tareas, tiempo, requerimientos,
+                         dashboard, notificaciones, crm, ads, servicios)
 from app.migrate import migrar_columnas_faltantes
+from app.seed_servicios import seed_servicios_si_vacio
 
 Base.metadata.create_all(bind=engine)
 # Agrega columnas nuevas a tablas ya existentes (idempotente; SQLite + Postgres/Supabase).
 migrar_columnas_faltantes(engine)
+# Carga el catálogo inicial de servicios si la tabla está vacía (idempotente).
+seed_servicios_si_vacio(engine)
 
 # redirect_slashes=False evita los 307 cuando se llama a /api/proyectos en lugar de /api/proyectos/.
 # Esos redirects rompen llamadas cross-origin desde el frontend porque Chrome
@@ -34,7 +38,7 @@ app.add_middleware(
     allow_headers=["Authorization", "Content-Type", "X-API-Key"],
 )
 
-for r in [auth, users, proyectos, tareas, tiempo, requerimientos, dashboard, notificaciones, crm, ads]:
+for r in [auth, users, proyectos, tareas, tiempo, requerimientos, dashboard, notificaciones, crm, ads, servicios]:
     app.include_router(r.router)
 
 

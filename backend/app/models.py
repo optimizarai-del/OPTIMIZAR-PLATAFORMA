@@ -262,6 +262,13 @@ class ChatMensaje(Base):
     created_at = Column(DateTime, default=_utcnow, index=True)
 
 
+class AnalisisEstado(str, Enum):
+    pendiente = "pendiente"      # todavía no se analizó
+    cubierto = "cubierto"        # un servicio existente cubre el requerimiento
+    no_cubierto = "no_cubierto"  # ningún servicio lo cubre → consultar con desarrollo
+    error = "error"              # falló el análisis
+
+
 class Requerimiento(Base):
     __tablename__ = "requerimientos"
 
@@ -285,7 +292,33 @@ class Requerimiento(Base):
     proyecto_id = Column(Integer, ForeignKey("proyectos.id"), nullable=True)
     created_at = Column(DateTime, default=_utcnow)
 
+    # ── Análisis IA: matching contra el catálogo "Nuestros Servicios" ──
+    # Se corre automático al crear el requerimiento (ver routers/requerimientos.py).
+    analisis_estado = Column(String, default=AnalisisEstado.pendiente.value, index=True)
+    servicio_match_id = Column(Integer, ForeignKey("servicios.id"), nullable=True)
+    analisis_justificacion = Column(Text, nullable=True)   # por qué (no) lo cubre
+    analisis_confianza = Column(Integer, nullable=True)    # 0-100
+    analisis_at = Column(DateTime, nullable=True)
+
     proyecto = relationship("Proyecto", back_populates="requerimiento")
+    servicio_match = relationship("Servicio", foreign_keys=[servicio_match_id])
+
+
+class Servicio(Base):
+    """Catálogo editable de servicios que OPTIMIZAR puede ofrecer hoy.
+    Se administra desde la sección "Nuestros Servicios" y la IA lo usa para
+    decidir si un requerimiento nuevo puede cubrirse con algo ya construido."""
+    __tablename__ = "servicios"
+
+    id = Column(Integer, primary_key=True)
+    nombre = Column(String, nullable=False)
+    categoria = Column(String, nullable=True)              # ej: Agentes, Automatización, Dashboards
+    descripcion = Column(Text, nullable=True)              # qué resuelve, en una o dos frases
+    capacidades = Column(Text, nullable=True)              # qué hace concretamente (alimenta el match)
+    base_referencia = Column(String, nullable=True)        # proyecto base reutilizable (ej: Larrañaga)
+    activo = Column(Boolean, default=True, index=True)
+    created_at = Column(DateTime, default=_utcnow)
+    updated_at = Column(DateTime, default=_utcnow, onupdate=_utcnow)
 
 
 # ── Marketing · Meta Ads ──────────────────────────────────────────────────────

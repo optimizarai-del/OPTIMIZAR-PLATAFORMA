@@ -28,6 +28,13 @@ COLUMNAS_ESPERADAS = {
         "outreach_status": "VARCHAR DEFAULT 'sin_contactar'",
         "respuesta_recibida": "TEXT",
     },
+    "requerimientos": {
+        "analisis_estado": "VARCHAR DEFAULT 'pendiente'",
+        "servicio_match_id": "INTEGER",
+        "analisis_justificacion": "TEXT",
+        "analisis_confianza": "INTEGER",
+        "analisis_at": "TIMESTAMP",
+    },
 }
 
 

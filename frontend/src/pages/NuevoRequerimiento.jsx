@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { ArrowLeft, Save } from 'lucide-react'
+import { ArrowLeft, Save, Sparkles, CheckCircle2, AlertTriangle } from 'lucide-react'
 import api from '../utils/api'
 import { toast } from '../utils/toast'
 
@@ -39,6 +39,7 @@ export default function NuevoRequerimiento() {
   })
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState('')
+  const [resultado, setResultado] = useState(null)   // requerimiento creado + análisis
 
   const set = k => e => setForm(f => ({ ...f, [k]: e.target.value }))
 
@@ -54,12 +55,13 @@ export default function NuevoRequerimiento() {
     setSaving(true)
     setError('')
     try {
-      await api.post('/api/requerimientos', {
+      const { data } = await api.post('/api/requerimientos', {
         ...form,
         fecha_entrega: form.fecha_entrega || null,
       })
-      toast.success(`Handover de ${form.nombre_cliente} registrado`)
-      nav('/requerimientos')
+      toast.success(`Requerimiento de ${form.nombre_cliente} registrado`)
+      setResultado(data)   // mostramos el análisis IA antes de salir
+      window.scrollTo({ top: 0, behavior: 'smooth' })
     } catch (err) {
       const msg = err.response?.data?.detail || 'Error al guardar. Verificá los datos.'
       setError(msg)
@@ -67,6 +69,61 @@ export default function NuevoRequerimiento() {
     } finally {
       setSaving(false)
     }
+  }
+
+  if (resultado) {
+    const cubierto = resultado.analisis_estado === 'cubierto'
+    return (
+      <div className="max-w-2xl mx-auto animate-fade-in">
+        <button onClick={() => nav('/requerimientos')} className="btn-ghost mb-6 -ml-2 text-muted">
+          <ArrowLeft size={14} /> Requerimientos
+        </button>
+        <div className="card p-8">
+          <div className="flex items-center gap-2 text-accent text-[12px] font-semibold uppercase tracking-wide mb-4">
+            <Sparkles size={14} /> Análisis automático de cobertura
+          </div>
+          <h1 className="text-2xl font-bold tracking-tight mb-1">{resultado.nombre_cliente}</h1>
+          {resultado.nombre_proceso && <p className="text-muted text-[14px] mb-6">{resultado.nombre_proceso}</p>}
+
+          {cubierto ? (
+            <div className="rounded-2xl p-5 bg-success/5 border border-success/25">
+              <div className="flex items-center gap-2.5 mb-2">
+                <CheckCircle2 size={20} className="text-success" />
+                <span className="font-bold text-success text-[15px]">
+                  Cubierto por: {resultado.servicio_match_nombre || 'un servicio existente'}
+                </span>
+                {typeof resultado.analisis_confianza === 'number' && (
+                  <span className="chip-success">{resultado.analisis_confianza}% confianza</span>
+                )}
+              </div>
+              {resultado.analisis_justificacion && (
+                <p className="text-[13px] text-muted">{resultado.analisis_justificacion}</p>
+              )}
+            </div>
+          ) : (
+            <div className="rounded-2xl p-5 bg-warn/5 border border-warn/30">
+              <div className="flex items-center gap-2.5 mb-2">
+                <AlertTriangle size={20} className="text-warn" />
+                <span className="font-bold text-warn text-[15px]">Consultar con área de desarrollo</span>
+              </div>
+              <p className="text-[13px] text-muted">
+                {resultado.analisis_justificacion || 'Ningún servicio del catálogo cubre este requerimiento.'}
+              </p>
+            </div>
+          )}
+
+          <div className="flex gap-3 mt-7">
+            <button onClick={() => nav('/requerimientos')} className="btn-accent flex-1">
+              Ver en Requerimientos
+            </button>
+            <button onClick={() => { setResultado(null); setForm(f => ({ ...f, nombre_cliente: '', nombre_proceso: '' })) }}
+              className="btn-secondary flex-1">
+              Cargar otro
+            </button>
+          </div>
+        </div>
+      </div>
+    )
   }
 
   return (
@@ -77,7 +134,7 @@ export default function NuevoRequerimiento() {
 
       <header className="mb-10">
         <div className="hero-eyebrow">Optimizar IA — Traspaso Comercial a Desarrollo</div>
-        <h1 className="hero-title text-4xl md:text-5xl mb-3">Formulario de Handover.</h1>
+        <h1 className="hero-title text-4xl md:text-5xl mb-3">Cargar Requerimiento.</h1>
         <p className="hero-sub text-base">
           Documento obligatorio. Desarrollo no inicia evaluación técnica ni emite presupuesto si faltan datos de volumen o detalle de accesos.
         </p>
@@ -213,7 +270,7 @@ export default function NuevoRequerimiento() {
             Cancelar
           </button>
           <button type="submit" disabled={saving} className="btn-accent btn-lg flex-1 disabled:opacity-50">
-            <Save size={15} /> {saving ? 'Guardando...' : 'Enviar handover'}
+            <Save size={15} /> {saving ? 'Guardando...' : 'Enviar requerimiento'}
           </button>
         </div>
       </form>

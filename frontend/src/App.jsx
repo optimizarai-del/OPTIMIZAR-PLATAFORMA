@@ -11,6 +11,7 @@ import ProyectoDetail from './pages/ProyectoDetail'
 import Tareas from './pages/Tareas'
 import Requerimientos from './pages/Requerimientos'
 import NuevoRequerimiento from './pages/NuevoRequerimiento'
+import Servicios from './pages/Servicios'
 import CRM from './pages/CRM'
 import Prospeccion from './pages/Prospeccion'
 import Marketing from './pages/Marketing'
@@ -40,6 +41,9 @@ export default function App() {
             } />
             <Route path="/requerimientos/nuevo" element={
               <ProtectedRoute><Layout><NuevoRequerimiento /></Layout></ProtectedRoute>
+            } />
+            <Route path="/servicios" element={
+              <ProtectedRoute><Layout><Servicios /></Layout></ProtectedRoute>
             } />
             <Route path="/crm" element={
               <ProtectedRoute><Layout fullWidth><CRM /></Layout></ProtectedRoute>
