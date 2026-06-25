@@ -123,25 +123,33 @@ Nombre, empresa, rubro y un gancho de dolor por rubro.
 - Backend: endpoints externos OK, **migración aplicada**, **chat en vivo sobre el plan funcionando**.
 - **Prospección diaria automática: ACTIVA en MODO BORRADOR** (busca y escribe; NO envía nada).
 - **Envío real de correos: APAGADO** (`OUTREACH_ENABLED=false`). Encender tras validar emails + warm-up.
-- Corridas borrador completadas: 11/06 (Córdoba/Rosario), 12/06 (CABA/GBA), 13/06 (Mendoza/Tucumán), 14/06 (Salta/Mar del Plata), 15/06 (Bahía Blanca/Neuquén), 16/06 (Santa Fe/Paraná), 17/06 (Rosario expansión), 18/06 (San Juan/Resistencia Chaco), 19/06 (Jujuy/Posadas Misiones), 20/06 (La Rioja Capital/Catamarca Capital), 21/06 (La Plata/San Luis Capital), 22/06 (Córdoba 2° lote/Comodoro Rivadavia), 23/06 (Corrientes Capital/Santiago del Estero Capital), 24/06 (Formosa Capital/Bariloche Río Negro) → **70 leads en borrador (14 corridas)**. Cinturón NOA completo (Mendoza, Tucumán, Salta, Jujuy, La Rioja, Catamarca, Santiago del Estero ✓). Cuyo completo (Mendoza, San Juan, San Luis). Patagonia: Neuquén ✓, Comodoro ✓, Bariloche ✓. NEA completo: Chaco ✓, Misiones ✓, Corrientes ✓, **Formosa ✓**.
+- Corridas borrador completadas: 11/06 (Córdoba/Rosario), 12/06 (CABA/GBA), 13/06 (Mendoza/Tucumán), 14/06 (Salta/Mar del Plata), 15/06 (Bahía Blanca/Neuquén), 16/06 (Santa Fe/Paraná), 17/06 (Rosario expansión), 18/06 (San Juan/Resistencia Chaco), 19/06 (Jujuy/Posadas Misiones), 20/06 (La Rioja Capital/Catamarca Capital), 21/06 (La Plata/San Luis Capital), 22/06 (Córdoba 2° lote/Comodoro Rivadavia), 23/06 (Corrientes Capital/Santiago del Estero Capital), 24/06 (Formosa Capital/Bariloche Río Negro), 25/06 (Río Cuarto/Río Gallegos Santa Cruz) → **75 leads en borrador (15 corridas)**. Cinturón NOA completo (Mendoza, Tucumán, Salta, Jujuy, La Rioja, Catamarca, Santiago del Estero ✓). Cuyo completo (Mendoza, San Juan, San Luis). Patagonia: Neuquén ✓, Comodoro ✓, Bariloche ✓, **Río Gallegos ✓**. NEA completo: Chaco ✓, Misiones ✓, Corrientes ✓, Formosa ✓. Córdoba interior: **Río Cuarto ✓**.
 - Pendiente real: validar calidad de los emails y, cuando se apruebe, encender el envío (flip a push-vivo).
 
 ## Última corrida
-**Fecha:** 2026-06-24 | **Modo:** BORRADOR (sin envíos reales)
-**Segmento:** Estudios contables/impositivos — **Formosa Capital** (primera incursión NEA — completa las 4 provincias NEA) + **San Carlos de Bariloche, Río Negro** (primera incursión Patagonia Norte)
+**Fecha:** 2026-06-25 | **Modo:** BORRADOR (sin envíos reales)
+**Segmento:** Estudios contables/impositivos — **Río Cuarto (Córdoba)** (primera incursión Córdoba interior) + **Río Gallegos (Santa Cruz)** (primera incursión Patagonia Sur)
 **Cupo usado:** 5 leads
 **Leads encontrados:** 5
-**Leads descartados:** 0 (ninguno en La Pampa; ningún duplicado)
-**Emails escritos:** 5 (todos con email y copy completo)
-**Sin email:** 0
-**Email status:** 3 verified (Toloza Yahoo ✅, CGD dominio propio ✅, CILS dominio propio ✅), 2 inferred (Kraupner Yahoo, Lambezat dominio propio)
+**Leads descartados:** 0 (ninguno en La Pampa; ningún duplicado) | 1 descartado de la búsqueda: Manzanares Montane Pombo (Río Gallegos, riesgo reputacional — contador Kirchner)
+**Emails escritos:** 4 (Scapin ✅, Dalio ✅, Borquez ⚠️ Gmail, Van Thienen ✅)
+**Sin email:** 1 (Magnago — not_found; investigar CPCE Córdoba)
+**Email status:** 2 verified dominio propio (Scapin, Van Thienen), 1 verified dominio propio (Dalio), 1 inferred Gmail (Borquez), 1 not_found (Magnago)
 **Disparador:** Prórroga DDJJ Ganancias/Bienes Personales período 2025 hasta 27/07/2026 (RG ARCA 5851/2026)
 **Archivos:**
-- `funnel/leads/new/borrador-2026-06-24.jsonl` — 5 leads
-- `funnel/reportes/2026-06-24.md` — reporte completo
-**Total acumulado borrador:** 70 leads (14 corridas)
-**Hitos:** NEA completo (Chaco ✓, Misiones ✓, Corrientes ✓, Formosa ✓). Patagonia Norte inaugurada (Bariloche/Río Negro ✓).
-**Próximo bloqueante:** Validar calidad de los emails y activar envío real (`OUTREACH_ENABLED=true` + warm-up). Candidatos prioritarios ⭐⭐: Toloza (Formosa, verified, contenido fiscal propio), CILS/Chinellato (Bariloche, verified, perfil tech-adjacent PIT). Candidatos sin email para corrida futura: García ⭐ (SdE, CPCE), Bonino ⭐ (San Luis, CPCE), Melnik ⭐⭐ (Catamarca, CPCE), Rojas Naser ⭐⭐ (Jujuy, CPCE), Álvarez (Formosa, buscar nombre socio).
+- `funnel/leads/new/borrador-2026-06-25.jsonl` — 5 leads
+- `funnel/reportes/2026-06-25.md` — reporte completo
+**Total acumulado borrador:** 75 leads (15 corridas)
+**Hitos:** Patagonia Sur inaugurada (Río Gallegos/Santa Cruz ✓). Córdoba interior inaugurado (Río Cuarto ✓).
+**Próximo bloqueante:** Validar calidad de los emails y activar envío real (`OUTREACH_ENABLED=true` + warm-up). Candidatos prioritarios ⭐⭐: Toloza (Formosa, verified, contenido fiscal propio), CILS/Chinellato (Bariloche, verified, perfil tech-adjacent PIT). Candidatos sin email para corrida futura: García ⭐ (SdE, CPCE), Bonino ⭐ (San Luis, CPCE), Melnik ⭐⭐ (Catamarca, CPCE), Rojas Naser ⭐⭐ (Jujuy, CPCE), Magnago ⭐ (Río Cuarto, CPCE Córdoba).
+
+## Gotchas descubiertos (continuación — 2026-06-25)
+- [2026-06-25] Scapin & Asociados (Río Cuarto): software contable propio para agro/industria/servicios. Ángulo diferenciado: "la automatización que va por encima del software que ya usan". Email dominio propio verificado. Candidato ⭐.
+- [2026-06-25] Río Cuarto (Córdoba): segunda ciudad de la provincia, capacidad para 10+ corridas. Candidatos pendientes: Magnago (email pendiente CPCE Córdoba ⭐), Battaglino (agropecuario, Facebook), Rambaldi, Boccolini (Paunero 481), SM & Asociados (María Olguín 739). Fuente: telexplorer.com.ar, argentino.com.ar.
+- [2026-06-25] Río Gallegos (Santa Cruz): mercado poco saturado de propuestas tech. Primera incursión exitosa. Candidatos adicionales: Ovando (Sarmiento 143), A Y S Soc (Estrada 140), Luigi Braim CPN (9 de Julio 370), Palicio-Spitaleri (Gdor. Lista 436). Fuente: licuo.com.ar/santa-cruz, infoisinfo rio-gallegos.
+- [2026-06-25] Van Thienen (Río Gallegos): allanado en 2023 por causa binacional Argentina-Chile (lavado/contrabando/drogas). Titular declaró inocencia. Verificar resolución de la causa antes del envío real.
+- [2026-06-25] Manzanares Montane Pombo (Río Gallegos): DESCARTADO permanentemente — Víctor Manzanares es contador de la familia Kirchner, detuvo 2017. Riesgo reputacional inaceptable.
+- [2026-06-25] Hito: 75 leads en borrador (15 corridas). Patagonia Sur inaugurada (Río Gallegos/Santa Cruz ✓).
 
 ## Gotchas descubiertos (continuación — 2026-06-24)
 - [2026-06-24] Toloza (Formosa Capital): perfil de adoptador temprano — publica contenido propio de actualización fiscal (SAS, reforma laboral, wallets digitales 2026). Email hugotoloza@yahoo.com.ar verified en su web Wix. Candidato ⭐ para primer envío real en Formosa. Ángulo: "ya publicás sobre wallets y SAS — OPTIMIZAR es la automatización que le sigue".
