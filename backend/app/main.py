@@ -9,7 +9,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.database import Base, engine
 from app.routers import (auth, users, proyectos, tareas, tiempo, requerimientos,
-                         dashboard, notificaciones, crm, ads, servicios)
+                         dashboard, notificaciones, crm, ads, servicios, agentes)
 from app.migrate import migrar_columnas_faltantes
 from app.seed_servicios import seed_servicios_si_vacio
 
@@ -38,7 +38,7 @@ app.add_middleware(
     allow_headers=["Authorization", "Content-Type", "X-API-Key"],
 )
 
-for r in [auth, users, proyectos, tareas, tiempo, requerimientos, dashboard, notificaciones, crm, ads, servicios]:
+for r in [auth, users, proyectos, tareas, tiempo, requerimientos, dashboard, notificaciones, crm, ads, servicios, agentes]:
     app.include_router(r.router)
 
 

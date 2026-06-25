@@ -251,15 +251,41 @@ class LeadJob(Base):
 
 class ChatMensaje(Base):
     """Chat persistente entre el humano y el orquestador del equipo. Siempre visible.
-    El agente escribe vía API key; el humano vía JWT. Las aprobaciones pausan acciones."""
+    El agente escribe vía API key; el humano vía JWT. Las aprobaciones pausan acciones.
+
+    `canal` separa conversaciones por orquestador: 'crm' (funnel de ventas, default
+    histórico) y 'agentes' (centro de comando de marketing/general). Aditivo y nullable."""
     __tablename__ = "chat_mensajes"
 
     id = Column(Integer, primary_key=True)
+    canal = Column(String, default="crm", index=True)  # crm / agentes
     rol = Column(String, nullable=False)               # agente/humano/sistema
     contenido = Column(Text, nullable=False)
     requiere_aprobacion = Column(Boolean, default=False)
     estado = Column(String, default="info")            # info/esperando/aprobado/rechazado
     created_at = Column(DateTime, default=_utcnow, index=True)
+
+
+class AgenteTarea(Base):
+    """Tarea que el orquestador le encarga a un subagente especializado. La plataforma
+    la encola; el subagente (Claude Code sobre el plan) la consume por polling con API key,
+    la ejecuta usando sus MCPs y devuelve el resultado. Patrón de polling invertido.
+
+    Implementa los roles del documento VIVE: investigacion, contenido, creativo, sdr,
+    calificacion, crm, ads."""
+    __tablename__ = "agente_tareas"
+
+    id = Column(Integer, primary_key=True)
+    agente = Column(String, nullable=False, index=True)   # investigacion/contenido/creativo/sdr/calificacion/crm/ads
+    instruccion = Column(Text, nullable=False)             # qué pidió el orquestador
+    contexto = Column(JSON, default=dict)                  # datos extra (ids, params)
+    estado = Column(String, default="pendiente", index=True)  # pendiente/en_proceso/completado/error/requiere_aprobacion
+    resultado = Column(Text, nullable=True)               # salida del subagente
+    origen = Column(String, default="orquestador")        # orquestador/humano
+    prioridad = Column(String, default="media")           # alta/media/baja
+    created_at = Column(DateTime, default=_utcnow, index=True)
+    updated_at = Column(DateTime, default=_utcnow, onupdate=_utcnow)
+    processed_at = Column(DateTime, nullable=True)
 
 
 class AnalisisEstado(str, Enum):

@@ -15,6 +15,7 @@ import Servicios from './pages/Servicios'
 import CRM from './pages/CRM'
 import Prospeccion from './pages/Prospeccion'
 import Marketing from './pages/Marketing'
+import Agentes from './pages/Agentes'
 import Equipo from './pages/Equipo'
 import Notificaciones from './pages/Notificaciones'
 
@@ -53,6 +54,9 @@ export default function App() {
             } />
             <Route path="/marketing" element={
               <ProtectedRoute requireManager><Layout fullWidth><Marketing /></Layout></ProtectedRoute>
+            } />
+            <Route path="/agentes" element={
+              <ProtectedRoute requireManager><Layout fullWidth><Agentes /></Layout></ProtectedRoute>
             } />
             <Route path="/equipo" element={
               <ProtectedRoute requireManager><Layout><Equipo /></Layout></ProtectedRoute>

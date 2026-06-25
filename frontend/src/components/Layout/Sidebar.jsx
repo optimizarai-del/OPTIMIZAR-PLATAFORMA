@@ -74,6 +74,10 @@ export default function Sidebar() {
             <Megaphone size={15} strokeWidth={1.8} />
             Meta Ads
           </NavLink>
+          <NavLink to="/agentes" className={link}>
+            <Bot size={15} strokeWidth={1.8} />
+            Centro de Agentes
+          </NavLink>
         </>
       )}
 

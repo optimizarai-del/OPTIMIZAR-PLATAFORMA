@@ -35,6 +35,9 @@ COLUMNAS_ESPERADAS = {
         "analisis_confianza": "INTEGER",
         "analisis_at": "TIMESTAMP",
     },
+    "chat_mensajes": {
+        "canal": "VARCHAR DEFAULT 'crm'",
+    },
 }
 
 

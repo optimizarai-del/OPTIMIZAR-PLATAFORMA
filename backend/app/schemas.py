@@ -453,15 +453,53 @@ class LeadJobOut(BaseModel):
 class ChatMensajeCreate(BaseModel):
     contenido: str
     requiere_aprobacion: bool = False
+    canal: str = "crm"
 
 
 class ChatMensajeOut(BaseModel):
     id: int
+    canal: str = "crm"
     rol: str
     contenido: str
     requiere_aprobacion: bool
     estado: str
     created_at: datetime
+
+    class Config:
+        from_attributes = True
+
+
+# ── Centro de Agentes (orquestación) ──────────────────────────────────────────
+
+# Roles válidos = los del documento VIVE.
+AGENTES_VALIDOS = {"investigacion", "contenido", "creativo", "sdr", "calificacion", "crm", "ads"}
+
+
+class AgenteTareaCreate(BaseModel):
+    agente: str = Field(min_length=1)
+    instruccion: str = Field(min_length=1)
+    contexto: dict = {}
+    prioridad: str = "media"
+    origen: str = "orquestador"
+
+
+class AgenteTareaUpdate(BaseModel):
+    estado: Optional[str] = None         # en_proceso/completado/error/requiere_aprobacion
+    resultado: Optional[str] = None
+
+
+class AgenteTareaOut(BaseModel):
+    id: int
+    agente: str
+    instruccion: str
+    contexto: dict = {}
+    estado: str
+    resultado: Optional[str] = None
+    origen: str
+    prioridad: str
+    created_at: datetime
+    updated_at: Optional[datetime] = None
+    processed_at: Optional[datetime] = None
 
     class Config:
         from_attributes = True
