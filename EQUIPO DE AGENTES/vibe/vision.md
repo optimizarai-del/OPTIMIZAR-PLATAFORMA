@@ -1,52 +1,46 @@
 # vision.md — Visión y posicionamiento
 
-> Capa V del framework. Lo define el EQUIPO en la reunión (Bloque 1).
-> Esto es lo que más impacta: si está flojo, todo lo demás amplifica mediocridad.
+> Capa V del framework. Definido en la reunión y consolidado con el doc Vibe Marketing FINAL (jun 2026).
+> Regla de oro: si la Visión es débil, los agentes solo amplifican mediocridad a escala.
 
-## Posicionamiento en una frase
-> Cómo lo explicaríamos tomando un café, no el pitch formal.
+## Posicionamiento
+**Automatización inteligente para hacer crecer tu negocio con IA a medida.**
 
-**Somos una empresa de desarrollo de software y soluciones personalizadas que integra IA en empresas.**
+> "Donde haya un proceso repetitivo o un gran volumen de datos, hay una oportunidad de optimizar."
 
-## Qué nos diferencia
-> Vs. otras agencias de IA/automatización en Argentina y LATAM.
+Frase de marca: *"La IA debe adaptarse a cada negocio, no al revés. Por eso desarrollamos
+soluciones personalizadas, escalables y accesibles, diseñadas para generar resultados medibles
+desde el primer día."*
 
-- **No vendemos un producto de cartón.** Nuestro producto es 100% personalizado a la necesidad
-  real de cada cliente — no una plantilla genérica que tenés que adaptar vos.
-- _Respaldo:_ proyectos grandes ya entregados (Larrañaga), stack propio end-to-end
-  (Python + FastAPI + Supabase + React + n8n + Claude Code), IP propia en algunos productos.
-
-## Objetivo de negocio
-Flujo predecible de clientes en los verticales foco (construcción + stock + inmobiliarias),
-posicionando a OPTIMIZAR como referente y generando leads calificados.
-
-## Metas a 90 días
-> Bloque 4.
-
-- **Ambos: autoridad + leads.** Construir reputación (mostrar que sabemos y entregamos) y
-  al mismo tiempo generar consultas reales por Instagram, LinkedIn y la web.
-
-## Estrategia de contenido (90 días)
-- **Enfoque:** probar **de todo un poco** (educativo, detrás de escena, casos) hasta
-  encontrar qué formato funciona, y después doblar la apuesta en eso.
-- **Primer contenido / prueba social:** caso de **Gabi (SONNER)** — su agente ya agenda
-  eventos en automático. Es el caso más mostrable y concreto para arrancar.
-- **Capacidad real del equipo:** ~**1 hora por día**. Por eso el objetivo es **maximizar
-  con IA**: que los agentes (investigación → contenido → creativo) hagan el grueso y el
-  equipo solo revise y apruebe.
-
-## Geografía
-> ¿Argentina solo o LATAM desde el arranque?
-
-`[POR DEFINIR — Bloque 2, pregunta 4]`
+## Diferencial real (lo que otros no hacen igual)
+1. **Diagnóstico comercial primero:** no se desarrolla sin entender el negocio. Comercial
+   (Tomás y Uli) detecta los cuellos de botella antes de que Desarrollo (Fede, Gian, Gero)
+   toque una línea de código.
+2. **Personalización real:** no son herramientas genéricas; cada solución se diseña para el
+   proceso específico del cliente, con seguimiento hasta que sea productiva en el día a día.
+3. **Trazabilidad y medición:** cada automatización entrega un dato. El cliente ve el impacto,
+   no solo lo siente.
+4. **IP propia:** soluciones como la plataforma de Larrañaga son de OPTIMIZAR — se pueden
+   licenciar o replicar para el mismo sector.
 
 ## Equipo
-Somos 4:
-- **Ulises** y **Tomás** — área comercial. Son la cara en las reuniones con clientes.
-- **Fede** y **Gian** — área de desarrollo.
+| Área | Integrantes | Rol |
+|------|-------------|-----|
+| **Comercial** | Tomás + Uli | Diagnóstico, detección de oportunidades, cierre. Alimentan ICP y casos. Cara en reuniones. |
+| **Desarrollo** | Fede + Gian + Gero | Implementación, personalización, mantenimiento. Definen viabilidad técnica. |
 
 ## Presencia pública
-> ¿Cara visible o 100% marca?
+La marca es **@optimizar**. Todo el contenido sale desde la marca institucional, **sin caras
+visibles** en esta etapa (se evalúa a futuro). Nos presentamos como equipo/grupo.
 
-La marca es **OPTIMIZAR**, pero nos presentamos como **equipo/grupo** (no una sola cara personal).
-La comunicación sale desde la marca, mostrando que detrás hay un equipo real.
+## Objetivo de negocio
+Construir un pipeline real: presencia + posicionamiento + interés que genere reuniones de
+diagnóstico. **Métrica clave del trimestre: reuniones de diagnóstico agendadas.**
+
+## Metas a 90 días
+Ambos: **autoridad + leads**. En los primeros 90 días el objetivo NO es cerrar ventas masivas,
+es generar presencia, posicionamiento e interés. Ver `estrategia-contenido.md` y `plan-90-dias.md`.
+
+## Geografía
+**Argentina** (fase 1). **LATAM** en fase 2, una vez consolidada la base local. Trabajamos
+bien en remoto (Zoom/Meet).

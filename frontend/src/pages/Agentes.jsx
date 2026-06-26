@@ -135,20 +135,33 @@ export default function Agentes() {
 
         {/* ── Panel lateral: equipo + tareas ── */}
         <div className="space-y-6">
-          {/* Catálogo de agentes */}
+          {/* Catálogo de agentes agrupado por área */}
           <div className="card p-5">
             <div className="font-bold text-[13px] tracking-tight mb-3">El equipo</div>
-            <div className="space-y-2">
-              {catalogo.map(a => (
-                <div key={a.agente} className="flex items-start gap-2.5">
-                  <div className={`w-2 h-2 rounded-full mt-1.5 shrink-0 ${a.listo ? 'bg-success' : 'bg-warn'}`} />
-                  <div className="min-w-0">
-                    <div className="text-[13px] font-semibold">{a.nombre}</div>
-                    <div className="text-[11px] text-muted">{a.rol}</div>
-                    {a.requiere && <div className="text-[10px] text-warn mt-0.5">⚠ {a.requiere}</div>}
+            <div className="space-y-4">
+              {['Marketing', 'Comercial', 'Desarrollo'].map(area => {
+                const delArea = catalogo.filter(a => a.area === area)
+                if (!delArea.length) return null
+                return (
+                  <div key={area}>
+                    <div className="text-[10px] uppercase tracking-wide text-accent font-semibold mb-1.5">{area}</div>
+                    <div className="space-y-2">
+                      {delArea.map(a => (
+                        <div key={a.agente} className="flex items-start gap-2.5">
+                          <div className={`w-2 h-2 rounded-full mt-1.5 shrink-0 ${a.listo ? 'bg-success' : 'bg-warn'}`} />
+                          <div className="min-w-0">
+                            <div className={`text-[13px] ${a.director ? 'font-bold' : 'font-semibold'}`}>
+                              {a.nombre}{a.director && ' ★'}
+                            </div>
+                            <div className="text-[11px] text-muted">{a.rol}</div>
+                            {a.requiere && <div className="text-[10px] text-warn mt-0.5">⚠ {a.requiere}</div>}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
                   </div>
-                </div>
-              ))}
+                )
+              })}
             </div>
           </div>
 

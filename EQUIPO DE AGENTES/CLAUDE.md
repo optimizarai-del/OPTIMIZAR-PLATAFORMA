@@ -30,26 +30,29 @@ Se escribe **una vez** y se usa **cientos de veces**.
 Si un dato del `vibe/` dice `[POR DEFINIR]`, el agente **no inventa**: marca el hueco
 y lo reporta, no lo rellena con suposiciones.
 
-## Agentes en este repo (lado orgánico — lo que faltaba)
+## Estructura: 3 Directores IA + sus equipos (doc Vibe Marketing FINAL)
 
-| Agente | Rol | Estado |
-|--------|-----|--------|
-| `investigacion` | Monitorea tendencias IA/competidores → reporte semanal de ideas | nuevo |
-| `content-creator` | Genera posts/carruseles/reels para IG + LinkedIn | nuevo |
-| `creative-designer` | Briefs de imágenes/gráficos on-brand | nuevo |
-| `meta-ads-analyst` | Analiza Meta Ads (MCP Pipeboard) → recomendaciones a la plataforma | copiado de la plataforma |
+El equipo le habla a los **directores** por el chat del Centro de Agentes. Cada director
+coordina a sus subagentes creando tareas en la cola (`/api/agentes`).
+
+**Director de Marketing** → `investigacion`, `contenido` (content-creator), `creativo`
+(creative-designer), `programador`, `metricas`, `ads` (meta-ads-analyst).
+
+**Director Comercial** → `sdr`, `calificacion`, `agenda`, `crm`, `propuestas`.
+
+**Director de Desarrollo** → `relevador`, `planificador`, `desarrollador`, `revisor`,
+`qa`, `devops`, `soporte`, `documentador`.
+
+Conexión entre áreas (vía la plataforma/Supabase): Marketing avisa señales de intención a
+Comercial; Comercial pasa objeciones a Marketing y requerimientos ganados a Desarrollo;
+Desarrollo devuelve casos con métricas a Marketing/Comercial.
 
 > El MCP `meta-ads` se configura en `.mcp.json` (token en `.env`, ignorado por git).
-> Se activa al abrir Claude Code dentro de este repo.
 
-## Agentes que NO viven acá (ya corren en la plataforma)
-
-No duplicar. Estos están en `OPTIMIZAR PF/app/`:
-- **Ventas (7):** funnel-orchestrator, funnel-coo, cold-lead-finder, sales-copywriter,
-  inbox-responder, automation-developer, agent-improver.
-- **Marketing (1):** meta-ads-analyst (Meta Ads vía Pipeboard MCP).
-
-Punto de integración: el scheduled cloud agent del funnel debe leer `vibe/` al arrancar.
+## Nota de runtime (a alinear)
+El doc pide agentes en **Python** (n8n solo como trigger). Hoy estos están definidos como
+subagentes de Claude Code sobre el plan (polling invertido). Las definiciones `.md` sirven de
+spec para cualquier runtime; la decisión Python vs Claude Code queda abierta.
 
 ## Restricción técnica (heredada del funnel)
 

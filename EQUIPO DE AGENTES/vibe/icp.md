@@ -1,37 +1,25 @@
 # icp.md — Cliente ideal (ICP)
 
-> Capa V. A quién le hablamos. Los agentes de prospección y contenido filtran TODO con esto.
+> Capa V. A quién le hablamos. Los agentes de prospección, contenido y comercial filtran TODO con esto.
 
-## Verticales prioritarios
-1. **Construcción** (el foco principal): corralones, empresas constructoras, arquitectos.
-   Es donde creemos tener mayor impacto y mercado — base en RCA y Trebol.
-2. **Negocios con stock grande** (manejo de inventario complejo).
-3. **Inmobiliarias** (base en Ciudad).
+| Dimensión | Descripción |
+|-----------|-------------|
+| **Tipo de empresa** | PyME argentina con **5–50 empleados**, cualquier sector productivo o de servicios. |
+| **Decisor** | El **dueño** o socio gerente. Llega por referido o contacto comercial presencial. |
+| **Rubros prioritarios** | **Inmobiliario, contable (fuera de La Pampa), construcción.** Expansión por sector según capacidad. |
+| **Estado de digitalización** | Puede estar digitalizado o no. El digitalizado adopta más rápido; el que no, tiene mayor impacto potencial. |
+| **Dolor principal** | Tareas repetitivas que consumen tiempo, pérdida de información entre áreas, falta de trazabilidad y control. |
+| **Geografía fase 1** | Argentina. LATAM en fase 2. |
+| **Ticket objetivo** | **~USD 5.000 por proyecto**, entrega en **1,5–2 meses**, + mantenimiento mensual. |
+| **Cliente que NO queremos** | Proyectos >4–6 meses sin estructura de cobro clara. Proyectos de bajo margen que demandan demasiado tiempo de desarrollo. |
 
-_Por qué construcción primero:_ es donde el dolor encaja con lo que sabemos resolver y el
-mercado es amplio (toda la cadena: corralón → constructora → arquitecto).
+**Canal de entrada hoy:** presencial + referido. **El sistema de Vibe Marketing agrega un canal
+paralelo:** inbound desde contenido en redes + outbound automatizado.
 
-## Perfil de empresa
-- **Tamaño:** PyME / negocio con dueño presente (decisor accesible).
-- **Madurez digital:** `[POR DEFINIR — pero típicamente con procesos manuales/Excel]`
-
-## Decisor
-> ¿Quién nos compra y cómo llega hoy a nosotros?
-
-- **Rol:** el **dueño**. Hasta ahora todas las conversaciones fueron directo con dueños.
-- **Canal de entrada actual:** `[POR DEFINIR — hasta ahora referidos/contacto directo]`
-
-## Dolor principal que resolvemos
-Trabajo manual repetitivo y gestión de stock/operación que consume horas. En construcción:
-manejo de inventario, presupuestos, seguimiento de obra, administración.
+## ⛔ Exclusión dura — La Pampa (contractual, SOLO contables)
+Por exclusividad territorial con **Larrañaga y Asociados**, NO prospectar estudios contables/
+impositivos radicados en la **Provincia de La Pampa** (Santa Rosa, General Pico, Toay, etc.).
+Aplica únicamente a contables; otros rubros en La Pampa están permitidos.
 
 ## Objeciones típicas (y respuesta)
-- `[POR DEFINIR]`
-
-## Cliente que NO queremos (por ahora)
-**Estudios contables** — todavía no tenemos la solución 100% desarrollada como para
-venderla con confianza. (Revisar cuando la plataforma contable AFIP/ARCA esté madura.)
-
-## Geografía
-**Argentina primero**, pero **LATAM también** desde el arranque — trabajamos bien en remoto
-por Zoom/Meet, así que la distancia no es una barrera.
+- `[POR DEFINIR — las irá alimentando el Director Comercial con lo que reporten los leads]`

@@ -535,8 +535,15 @@ class ChatMensajeOut(BaseModel):
 
 # ── Centro de Agentes (orquestación) ──────────────────────────────────────────
 
-# Roles válidos = los del documento VIVE.
-AGENTES_VALIDOS = {"investigacion", "contenido", "creativo", "sdr", "calificacion", "crm", "ads"}
+# Roles válidos = los 3 equipos del documento Vibe Marketing (Marketing, Comercial, Desarrollo).
+AGENTES_VALIDOS = {
+    # Marketing
+    "investigacion", "contenido", "creativo", "programador", "metricas", "ads",
+    # Comercial
+    "sdr", "calificacion", "agenda", "crm", "propuestas",
+    # Desarrollo
+    "relevador", "planificador", "desarrollador", "revisor", "qa", "devops", "soporte", "documentador",
+}
 
 
 class AgenteTareaCreate(BaseModel):
