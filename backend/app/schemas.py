@@ -421,6 +421,70 @@ class OportunidadExternal(BaseModel):
     respuesta_recibida: Optional[str] = None
 
 
+# ── Contactos (base de prospección) ───────────────────────────────────────────
+
+class ContactoCreate(BaseModel):
+    empresa: str = Field(min_length=1)
+    nombre: Optional[str] = None
+    email: Optional[str] = None
+    telefono: Optional[str] = None
+    info: Optional[str] = None
+    origen: str = "manual"
+    idioma: Optional[str] = None
+    disparador: Optional[str] = None
+
+
+class ContactoUpdate(BaseModel):
+    empresa: Optional[str] = None
+    nombre: Optional[str] = None
+    email: Optional[str] = None
+    telefono: Optional[str] = None
+    info: Optional[str] = None
+    origen: Optional[str] = None
+    estado: Optional[str] = None
+    mensaje_asunto: Optional[str] = None
+    mensaje_cuerpo: Optional[str] = None
+
+
+class ContactoOut(BaseModel):
+    id: int
+    empresa: str
+    nombre: Optional[str]
+    email: Optional[str]
+    telefono: Optional[str]
+    info: Optional[str]
+    origen: str
+    idioma: Optional[str]
+    disparador: Optional[str]
+    mensaje_asunto: Optional[str]
+    mensaje_cuerpo: Optional[str]
+    respuesta_recibida: Optional[str]
+    estado: str
+    external_id: Optional[str]
+    oportunidad_id: Optional[int]
+    created_at: datetime
+    updated_at: Optional[datetime]
+
+    class Config:
+        from_attributes = True
+
+
+class ContactoExternal(BaseModel):
+    """Payload del agente SDR (API Key). Upsert idempotente por external_id."""
+    external_id: str = Field(min_length=1)
+    empresa: str = Field(min_length=1)
+    nombre: Optional[str] = None
+    email: Optional[str] = None
+    telefono: Optional[str] = None
+    info: Optional[str] = None
+    origen: Optional[str] = None
+    idioma: Optional[str] = None
+    disparador: Optional[str] = None
+    mensaje_asunto: Optional[str] = None
+    mensaje_cuerpo: Optional[str] = None
+    estado: Optional[str] = None        # nuevo/escrito/contactado
+
+
 # ── Lead Jobs (cola de búsqueda) ──────────────────────────────────────────────
 
 class LeadJobCreate(BaseModel):

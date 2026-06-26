@@ -41,6 +41,11 @@ export default function Sidebar() {
         CRM · Pipeline
       </NavLink>
 
+      <NavLink to="/contactos" className={link}>
+        <Users size={15} strokeWidth={1.8} />
+        Contactos
+      </NavLink>
+
       {isManager && (
         <NavLink to="/prospeccion" className={link}>
           <Bot size={15} strokeWidth={1.8} />

@@ -233,6 +233,46 @@ class Oportunidad(Base):
     proyecto = relationship("Proyecto", foreign_keys=[proyecto_id])
 
 
+class Contacto(Base):
+    """Base de prospección. Los agentes (SDR) dejan acá los leads que encuentran y contactan.
+    NO es el pipeline de ventas: un contacto sube a Oportunidad (pipeline) SOLO cuando responde
+    el primer contacto. Los contactados sin respuesta quedan acá con estado='contactado'."""
+    __tablename__ = "contactos"
+
+    id = Column(Integer, primary_key=True)
+
+    # ── Identidad / info ──
+    empresa = Column(String, nullable=False)
+    nombre = Column(String, nullable=True)
+    email = Column(String, nullable=True, index=True)
+    telefono = Column(String, nullable=True)
+    info = Column(Text, nullable=True)                 # contexto/descripción del lead
+
+    # ── Etiqueta de origen (de dónde viene) ──
+    origen = Column(String, default="agente", index=True)  # ej: "Agente SDR", "manual", vertical/campaña
+
+    # ── Outreach ──
+    idioma = Column(String, nullable=True)
+    disparador = Column(Text, nullable=True)           # razón concreta del contacto
+    mensaje_asunto = Column(String, nullable=True)
+    mensaje_cuerpo = Column(Text, nullable=True)
+    respuesta_recibida = Column(Text, nullable=True)
+
+    # estado: nuevo / escrito / contactado / respondido / rebote / baja
+    estado = Column(String, default="nuevo", index=True)
+
+    # ── Idempotencia (upsert del agente) ──
+    external_id = Column(String, nullable=True, unique=True, index=True)
+
+    # ── Promoción al pipeline (cuando responde) ──
+    oportunidad_id = Column(Integer, ForeignKey("oportunidades.id"), nullable=True)
+
+    created_at = Column(DateTime, default=_utcnow)
+    updated_at = Column(DateTime, default=_utcnow, onupdate=_utcnow)
+
+    oportunidad = relationship("Oportunidad", foreign_keys=[oportunidad_id])
+
+
 class LeadJob(Base):
     """Pedido de búsqueda de leads encolado desde la plataforma. Lo consume el
     Equipo de Venta y Prospección (Claude Code) por polling y devuelve los leads

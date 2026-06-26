@@ -13,6 +13,7 @@ import Requerimientos from './pages/Requerimientos'
 import NuevoRequerimiento from './pages/NuevoRequerimiento'
 import Servicios from './pages/Servicios'
 import CRM from './pages/CRM'
+import Contactos from './pages/Contactos'
 import Prospeccion from './pages/Prospeccion'
 import Marketing from './pages/Marketing'
 import Agentes from './pages/Agentes'
@@ -48,6 +49,9 @@ export default function App() {
             } />
             <Route path="/crm" element={
               <ProtectedRoute><Layout fullWidth><CRM /></Layout></ProtectedRoute>
+            } />
+            <Route path="/contactos" element={
+              <ProtectedRoute><Layout><Contactos /></Layout></ProtectedRoute>
             } />
             <Route path="/prospeccion" element={
               <ProtectedRoute requireManager><Layout fullWidth><Prospeccion /></Layout></ProtectedRoute>

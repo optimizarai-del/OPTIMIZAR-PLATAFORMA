@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, BackgroundTasks
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy import func
-from typing import List
+from typing import List, Optional
 from datetime import datetime, timezone
 import os
 import logging
@@ -10,12 +10,13 @@ import httpx
 from app.database import get_db
 from app.models import (Oportunidad, EtapaOportunidad, FuenteOportunidad,
                         Proyecto, ProyectoStatus, User, UserRole,
-                        LeadJob, ChatMensaje)
+                        LeadJob, ChatMensaje, Contacto)
 from app.schemas import (OportunidadCreate, OportunidadUpdate, OportunidadOut,
                          OportunidadExternal, CRMStats, ProyectoOut,
                          LeadJobCreate, LeadJobUpdate, LeadJobOut,
                          ChatMensajeCreate, ChatMensajeOut, FunnelNotify,
-                         RespuestaInbound)
+                         RespuestaInbound,
+                         ContactoCreate, ContactoUpdate, ContactoOut, ContactoExternal)
 from app.security import get_db_user, verify_api_key, require_manager, require_editor
 
 logger = logging.getLogger(__name__)
@@ -297,14 +298,58 @@ def outbox(db: Session = Depends(get_db), _=Depends(verify_api_key)):
               .all())
 
 
+def _promover_contacto(c: Contacto, db: Session) -> Oportunidad:
+    """Sube un contacto al pipeline creando una Oportunidad (etapa 'contactado').
+    Si ya estaba promovido, devuelve la oportunidad existente."""
+    if c.oportunidad_id:
+        return db.query(Oportunidad).filter_by(id=c.oportunidad_id).first()
+    base = db.query(Oportunidad).filter_by(etapa=EtapaOportunidad.contactado).count()
+    op = Oportunidad(
+        empresa=c.empresa,
+        titulo=f"{c.empresa} — respondió",
+        contacto_nombre=c.nombre,
+        contacto_email=c.email,
+        contacto_telefono=c.telefono,
+        descripcion=c.info,
+        etapa=EtapaOportunidad.contactado,
+        fuente=FuenteOportunidad.api,
+        orden=base,
+        idioma=c.idioma,
+        disparador=c.disparador,
+        mensaje_asunto=c.mensaje_asunto,
+        mensaje_cuerpo=c.mensaje_cuerpo,
+        outreach_status="respondido",
+        respuesta_recibida=c.respuesta_recibida,
+    )
+    db.add(op)
+    db.flush()
+    c.oportunidad_id = op.id
+    return op
+
+
 @router.post("/external/respuesta", tags=["crm-external"])
 def registrar_respuesta(data: RespuestaInbound, db: Session = Depends(get_db),
                         _=Depends(verify_api_key)):
-    """Registra la respuesta de un lead (la trae n8n desde el inbox). Matchea la
-    oportunidad por contacto_email (la más reciente), marca outreach_status='respondido',
-    guarda el texto y mueve la etapa a 'contactado' si todavía estaba en 'lead'."""
+    """Registra la respuesta de un lead (la trae n8n desde el inbox). Matchea el CONTACTO
+    por email (el más reciente), marca estado='respondido', guarda el texto y lo PROMUEVE
+    al pipeline (crea una Oportunidad en etapa 'contactado'). Si no hay contacto, cae al
+    matcheo histórico por Oportunidad (compatibilidad)."""
+    email = (data.email or "").strip().lower()
+    c = (db.query(Contacto)
+           .filter(func.lower(Contacto.email) == email)
+           .order_by(Contacto.created_at.desc())
+           .first())
+    if c:
+        c.respuesta_recibida = data.texto
+        c.estado = "respondido"
+        op = _promover_contacto(c, db)
+        db.commit()
+        return {"matched": True, "contacto_id": c.id, "empresa": c.empresa,
+                "promovido": True, "oportunidad_id": op.id if op else None}
+
+    # Fallback histórico: leads que ya estaban directo en el pipeline.
     op = (db.query(Oportunidad)
-            .filter(func.lower(Oportunidad.contacto_email) == (data.email or "").strip().lower())
+            .filter(func.lower(Oportunidad.contacto_email) == email)
             .order_by(Oportunidad.created_at.desc())
             .first())
     if not op:
@@ -314,12 +359,109 @@ def registrar_respuesta(data: RespuestaInbound, db: Session = Depends(get_db),
     if op.etapa == EtapaOportunidad.lead:
         op.etapa = EtapaOportunidad.contactado
     db.commit()
-    return {"matched": True, "id": op.id, "empresa": op.empresa}
+    return {"matched": True, "id": op.id, "empresa": op.empresa, "promovido": False}
+
+
+# ── Contactos (base de prospección) ───────────────────────────────────────────
+# Los agentes SDR dejan acá los leads que encuentran/contactan. Solo suben al
+# pipeline (Oportunidad) cuando responden. Los contactados sin respuesta quedan
+# acá con estado='contactado'.
+
+@router.get("/contactos", response_model=List[ContactoOut])
+def listar_contactos(estado: Optional[str] = None, origen: Optional[str] = None,
+                     db: Session = Depends(get_db), _=Depends(get_db_user)):
+    q = db.query(Contacto)
+    if estado:
+        q = q.filter(Contacto.estado == estado)
+    if origen:
+        q = q.filter(Contacto.origen == origen)
+    return q.order_by(Contacto.created_at.desc()).all()
+
+
+@router.post("/contactos", response_model=ContactoOut)
+def crear_contacto(data: ContactoCreate, db: Session = Depends(get_db), _=Depends(require_editor)):
+    c = Contacto(**data.model_dump())
+    db.add(c); db.commit(); db.refresh(c)
+    return c
+
+
+@router.patch("/contactos/{cid}", response_model=ContactoOut)
+def editar_contacto(cid: int, data: ContactoUpdate, db: Session = Depends(get_db),
+                    _=Depends(require_editor)):
+    c = db.query(Contacto).filter_by(id=cid).first()
+    if not c:
+        raise HTTPException(404, "Contacto no encontrado")
+    for k, v in data.model_dump(exclude_unset=True).items():
+        setattr(c, k, v)
+    db.commit(); db.refresh(c)
+    return c
+
+
+@router.post("/contactos/{cid}/promover", response_model=OportunidadOut)
+def promover_contacto_manual(cid: int, db: Session = Depends(get_db), _=Depends(require_editor)):
+    """Sube manualmente un contacto al pipeline (sin esperar respuesta)."""
+    c = db.query(Contacto).filter_by(id=cid).first()
+    if not c:
+        raise HTTPException(404, "Contacto no encontrado")
+    op = _promover_contacto(c, db)
+    if c.estado not in ("respondido",):
+        c.estado = "respondido"
+    db.commit(); db.refresh(op)
+    return op
+
+
+@router.delete("/contactos/{cid}")
+def eliminar_contacto(cid: int, db: Session = Depends(get_db),
+                      current_user: User = Depends(get_db_user)):
+    if current_user.role not in [UserRole.admin, UserRole.manager]:
+        raise HTTPException(403, "Sin permisos")
+    c = db.query(Contacto).filter_by(id=cid).first()
+    if not c:
+        raise HTTPException(404, "Contacto no encontrado")
+    db.delete(c); db.commit()
+    return {"ok": True}
+
+
+@router.post("/external/contactos", response_model=ContactoOut, tags=["crm-external"])
+def upsert_contacto_externo(data: ContactoExternal, db: Session = Depends(get_db),
+                            _=Depends(verify_api_key)):
+    """El agente SDR deja/actualiza un lead en la base de prospección. Upsert idempotente
+    por external_id. NO entra al pipeline: vive en Contactos hasta que responda."""
+    c = db.query(Contacto).filter_by(external_id=data.external_id).first()
+    payload = data.model_dump(exclude_unset=True)
+    if c:
+        for k, v in payload.items():
+            if k == "external_id":
+                continue
+            setattr(c, k, v)
+        db.commit(); db.refresh(c)
+        return c
+    c = Contacto(origen=payload.pop("origen", None) or "Agente SDR", **payload)
+    db.add(c)
+    try:
+        db.commit()
+    except IntegrityError:
+        db.rollback()
+        c = db.query(Contacto).filter_by(external_id=data.external_id).first()
+        if not c:
+            raise HTTPException(409, "Conflicto al crear el contacto.")
+    db.refresh(c)
+    return c
+
+
+@router.get("/external/contactos/outbox", response_model=List[ContactoOut], tags=["crm-external"])
+def contactos_outbox(db: Session = Depends(get_db), _=Depends(verify_api_key)):
+    """Contactos con el mensaje YA escrito, pendientes de envío (estado='escrito').
+    Lo consume n8n para disparar el primer contacto."""
+    return (db.query(Contacto)
+              .filter(Contacto.estado == "escrito", Contacto.email.isnot(None))
+              .order_by(Contacto.created_at)
+              .all())
 
 
 # ── Cola de búsqueda (Lead Jobs) ──────────────────────────────────────────────
 # La plataforma encola pedidos (JWT); el Equipo de Venta y Prospección los
-# consume por polling (API Key) y devuelve los leads vía /external/oportunidades.
+# consume por polling (API Key) y devuelve los leads vía /external/contactos.
 
 @router.post("/lead-jobs", response_model=LeadJobOut)
 def crear_lead_job(data: LeadJobCreate, db: Session = Depends(get_db),
