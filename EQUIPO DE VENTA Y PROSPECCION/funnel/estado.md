@@ -123,10 +123,37 @@ Nombre, empresa, rubro y un gancho de dolor por rubro.
 - Backend: endpoints externos OK, **migración aplicada**, **chat en vivo sobre el plan funcionando**.
 - **Prospección diaria automática: ACTIVA en MODO BORRADOR** (busca y escribe; NO envía nada).
 - **Envío real de correos: APAGADO** (`OUTREACH_ENABLED=false`). Encender tras validar emails + warm-up.
-- Corridas borrador completadas: 11/06 (Córdoba/Rosario), 12/06 (CABA/GBA), 13/06 (Mendoza/Tucumán), 14/06 (Salta/Mar del Plata), 15/06 (Bahía Blanca/Neuquén), 16/06 (Santa Fe/Paraná), 17/06 (Rosario expansión), 18/06 (San Juan/Resistencia Chaco), 19/06 (Jujuy/Posadas Misiones), 20/06 (La Rioja Capital/Catamarca Capital), 21/06 (La Plata/San Luis Capital), 22/06 (Córdoba 2° lote/Comodoro Rivadavia), 23/06 (Corrientes Capital/Santiago del Estero Capital), 24/06 (Formosa Capital/Bariloche Río Negro), 25/06 (Río Cuarto/Río Gallegos Santa Cruz) → **75 leads en borrador (15 corridas)**. Cinturón NOA completo (Mendoza, Tucumán, Salta, Jujuy, La Rioja, Catamarca, Santiago del Estero ✓). Cuyo completo (Mendoza, San Juan, San Luis). Patagonia: Neuquén ✓, Comodoro ✓, Bariloche ✓, **Río Gallegos ✓**. NEA completo: Chaco ✓, Misiones ✓, Corrientes ✓, Formosa ✓. Córdoba interior: **Río Cuarto ✓**.
+- Corridas borrador completadas: 11/06 (Córdoba/Rosario), 12/06 (CABA/GBA), 13/06 (Mendoza/Tucumán), 14/06 (Salta/Mar del Plata), 15/06 (Bahía Blanca/Neuquén), 16/06 (Santa Fe/Paraná), 17/06 (Rosario expansión), 18/06 (San Juan/Resistencia Chaco), 19/06 (Jujuy/Posadas Misiones), 20/06 (La Rioja Capital/Catamarca Capital), 21/06 (La Plata/San Luis Capital), 22/06 (Córdoba 2° lote/Comodoro Rivadavia), 23/06 (Corrientes Capital/Santiago del Estero Capital), 24/06 (Formosa Capital/Bariloche Río Negro), 25/06 (Río Cuarto/Río Gallegos Santa Cruz), 26/06 (Tandil/General Roca Río Negro) → **80 leads en borrador (16 corridas)**. Cinturón NOA completo (Mendoza, Tucumán, Salta, Jujuy, La Rioja, Catamarca, Santiago del Estero ✓). Cuyo completo (Mendoza, San Juan, San Luis). Patagonia: Neuquén ✓, Comodoro ✓, Bariloche ✓, Río Gallegos ✓, **General Roca ✓**. NEA completo: Chaco ✓, Misiones ✓, Corrientes ✓, Formosa ✓. Córdoba interior: Río Cuarto ✓. PBA interior: **Tandil ✓**.
 - Pendiente real: validar calidad de los emails y, cuando se apruebe, encender el envío (flip a push-vivo).
 
 ## Última corrida
+**Fecha:** 2026-06-26 | **Modo:** BORRADOR (sin envíos reales)
+**Segmento:** Estudios contables/impositivos — **Tandil (Buenos Aires)** (primera incursión PBA interior) + **General Roca (Río Negro)** (primera incursión Patagonia Centro-Norte / Alto Valle)
+**Cupo usado:** 5 leads
+**Leads encontrados:** 5
+**Leads descartados:** 0 (ninguno en La Pampa; ningún duplicado) | Sitios caídos descartados: Símaro Torchelli (503), Robles & Asociados (403), RGA (resultó ser CABA)
+**Emails escritos:** 4 (ARHEX ✅ dominio propio, Gustavo López ✅ dominio propio, Fernández Carrera Molejón ✅ dominio propio ⭐⭐, Wendy Apcarian ✅ dominio propio)
+**Sin email:** 1 (López Madina — not_found; sitio 503 durante la corrida; investigar CPCE PBA Tandil)
+**Email status:** 4 verified dominio propio, 1 not_found
+**Disparador:** Prórroga DDJJ Ganancias/Bienes Personales período 2025 hasta 27/07/2026 (RG ARCA 5851/2026)
+**Archivos:**
+- `funnel/leads/new/borrador-2026-06-26.jsonl` — 5 leads
+- `funnel/reportes/2026-06-26.md` — reporte completo
+**Total acumulado borrador:** 80 leads (16 corridas)
+**Hitos:** PBA interior inaugurado (Tandil ✓). Patagonia Centro-Norte inaugurada (General Roca/Alto Valle ✓). 80 leads = hito de escala.
+**Próximo bloqueante:** Validar calidad de los emails y activar envío real (`OUTREACH_ENABLED=true` + warm-up). Candidatos prioritarios ⭐⭐: Fernández Carrera Molejón (ISO 9001, General Roca, verified), Toloza (Formosa, verified), CILS/Chinellato (Bariloche, verified). Candidatos sin email para corrida futura: López Madina ⭐ (Tandil, CPCE PBA), Símaro Torchelli ⭐⭐ (Tandil, site 503), García ⭐ (SdE, CPCE), Bonino ⭐ (San Luis, CPCE), Melnik ⭐⭐ (Catamarca, CPCE), Rojas Naser ⭐⭐ (Jujuy, CPCE), Magnago ⭐ (Río Cuarto, CPCE Córdoba).
+
+## Gotchas descubiertos (continuación — 2026-06-26)
+- [2026-06-26] Fernández Carrera Molejón (General Roca, ISO 9001): segundo estudio con certificación ISO del programa (el primero fue Contadores Rosario). Eduardo Fernández Carrera (UNComahue + Master EIN) y Andrea Molejón (UNQuilmes + Coach Ontológico). Email fcm@fernandezcarreramolejon.com.ar verified. Ángulo diferenciado único: "ISO 9001 = procesos documentados → OPTIMIZAR los automatiza". Candidato ⭐⭐ para primer envío real en General Roca.
+- [2026-06-26] ARHEX (Tandil, desde 1973): 51 años de trayectoria + servicios de criptomonedas. Doble matrícula CPCECABA y CPCEPBA. Primer estudio del programa que ofrece criptomonedas explícitamente. Ángulo complementario: "la automatización que va por encima del accounting de cripto". Email info@estudioarhex.com.ar verified.
+- [2026-06-26] Símaro Torchelli (Tandil, desde 1992): el estudio más consolidado de Tandil (multi-sucursal: Tandil, Buenos Aires, Azul, Olavarría, Bolívar, Juárez). Sitio 503 durante toda la corrida. Nombre completo: Othar Símaro + Torchelli. CUIT: 30-71749744-5. Candidato ⭐⭐ para corrida futura.
+- [2026-06-26] López Madina SRL (Tandil): Patricio López Madina CPN, clientes en agro/industria del centro bonaerense (Grupo Ceres Tolvas). Sitio 503, email no publicado. Candidato ⭐ para corrida futura vía CPCE PBA Tandil o LinkedIn.
+- [2026-06-26] Tandil tiene capacidad para 5+ corridas adicionales: Símaro Torchelli ⭐⭐, López Madina ⭐, AD Estudio (ENOTFOUND), Morgado branch (San Martín 348), Estudio LMA (tres contadoras, tel +54 9 249 462 4664, sin email web), Estudio Rosales & Asoc (Facebook).
+- [2026-06-26] General Roca tiene 49+ estudios en directorio SoyCiudad. Capacidad para 10+ corridas. Candidatos inmediatos: Ariel Lodosky (Canada 703, tel 0298-4421433), Neiman Fernández (Mendoza 1119, tel 0298-442-6702), N&M Contadores Públicos (JF Kennedy 1765), Robles & Asociados (403 hoy), Eduardo Roca (30+ años, sin email web).
+- [2026-06-26] Wendy Apcarian: email alternativo de Franco Ghirardelli (jefe contable): contable@estudiowendy.com.ar. Usar si recepcion@ no responde.
+- [2026-06-26] Hito: 80 leads en borrador (16 corridas). PBA interior inaugurado (Tandil ✓). Patagonia Centro-Norte inaugurada (General Roca/Alto Valle ✓).
+
+## Corrida anterior (2026-06-25)
 **Fecha:** 2026-06-25 | **Modo:** BORRADOR (sin envíos reales)
 **Segmento:** Estudios contables/impositivos — **Río Cuarto (Córdoba)** (primera incursión Córdoba interior) + **Río Gallegos (Santa Cruz)** (primera incursión Patagonia Sur)
 **Cupo usado:** 5 leads
