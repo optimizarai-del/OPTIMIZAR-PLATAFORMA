@@ -19,7 +19,7 @@ from email.utils import formataddr
 
 from sqlalchemy.orm import Session
 from app.database import SessionLocal
-from app.models import Oportunidad, EtapaOportunidad
+from app.models import Contacto
 
 logger = logging.getLogger(__name__)
 
@@ -66,44 +66,41 @@ def _enviar_uno(to_email: str, asunto: str, cuerpo: str):
 
 
 def enviar_pendientes(db: Session = None) -> int:
-    """Manda los correos de las oportunidades con outreach_status='escrito'.
-    Respeta el tope diario y el throttling de warm-up. Devuelve cuántos envió."""
+    """Manda el primer contacto a los CONTACTOS con estado='escrito'. Al enviar, el contacto
+    queda 'contactado' (sigue en la base de Contactos, NO sube al pipeline — solo sube si
+    responde). Respeta el tope diario y el throttling de warm-up. Devuelve cuántos envió."""
     propio = db is None
     db = db or SessionLocal()
     enviados = 0
     try:
-        # Selección + CLAIM atómico: tomamos las filas con lock de fila (skip_locked en
-        # Postgres; no-op en SQLite que serializa escrituras) y las marcamos 'enviando'
-        # con commit ANTES de enviar. Así una corrida manual y el cron no toman el mismo
-        # lote → no hay doble envío al mismo lead.
-        q = (db.query(Oportunidad)
-               .filter(Oportunidad.outreach_status == "escrito",
-                       Oportunidad.contacto_email.isnot(None),
-                       Oportunidad.mensaje_cuerpo.isnot(None))
-               .order_by(Oportunidad.created_at)
+        # Selección + CLAIM atómico: marcamos 'enviando' con commit ANTES de enviar para que
+        # una corrida manual y el cron no tomen el mismo lote → sin doble envío.
+        q = (db.query(Contacto)
+               .filter(Contacto.estado == "escrito",
+                       Contacto.email.isnot(None),
+                       Contacto.mensaje_cuerpo.isnot(None))
+               .order_by(Contacto.created_at)
                .limit(OUTREACH_DAILY_CAP))
         try:
             pendientes = q.with_for_update(skip_locked=True).all()
         except Exception:
             pendientes = q.all()          # motor sin FOR UPDATE: seguimos igual
-        for op in pendientes:
-            op.outreach_status = "enviando"
+        for c in pendientes:
+            c.estado = "enviando"
         db.commit()                        # claim confirmado
 
         total = len(pendientes)
-        for i, op in enumerate(pendientes):
-            err = _enviar_uno(op.contacto_email, op.mensaje_asunto, op.mensaje_cuerpo)
+        for i, c in enumerate(pendientes):
+            err = _enviar_uno(c.email, c.mensaje_asunto, c.mensaje_cuerpo)
             if err is None:
-                op.outreach_status = "enviado"
-                if op.etapa == EtapaOportunidad.lead:
-                    op.etapa = EtapaOportunidad.contactado
+                c.estado = "contactado"     # contactado sin respuesta — queda en Contactos
                 db.commit()
                 enviados += 1
-                logger.info(f"[outreach] enviado a {op.contacto_email} ({op.empresa})")
+                logger.info(f"[outreach] enviado a {c.email} ({c.empresa})")
             else:
-                op.outreach_status = "escrito"   # liberar para reintentar
+                c.estado = "escrito"        # liberar para reintentar
                 db.commit()
-                logger.error(f"[outreach] fallo enviando a {op.contacto_email}: {err}")
+                logger.error(f"[outreach] fallo enviando a {c.email}: {err}")
             # throttling de warm-up entre envíos (no después del último)
             if i < total - 1 and OUTREACH_THROTTLE_SEC > 0:
                 time.sleep(OUTREACH_THROTTLE_SEC)
@@ -118,8 +115,9 @@ def enviar_pendientes(db: Session = None) -> int:
 # ── ESCUCHA ───────────────────────────────────────────────────────────────────
 
 def revisar_inbox(db: Session = None) -> int:
-    """Lee respuestas nuevas (no leídas) del inbox por IMAP, matchea la oportunidad por
-    email del remitente y la marca 'respondido'. Devuelve cuántas registró."""
+    """Lee respuestas nuevas (no leídas) del inbox por IMAP, matchea el CONTACTO por email
+    del remitente, lo marca 'respondido' y lo PROMUEVE al pipeline (Oportunidad). Devuelve
+    cuántas registró."""
     if not (IMAP_HOST and SMTP_USER and SMTP_PASSWORD):
         logger.warning("[inbox] IMAP no configurado.")
         return 0
@@ -141,16 +139,17 @@ def revisar_inbox(db: Session = None) -> int:
                 texto = (msg.text or msg.html or "")[:4000]
                 if not remitente:
                     continue
-                op = (db.query(Oportunidad)
-                        .filter(Oportunidad.contacto_email.ilike(remitente))
-                        .order_by(Oportunidad.created_at.desc())
-                        .first())
-                if not op:
+                c = (db.query(Contacto)
+                       .filter(Contacto.email.ilike(remitente))
+                       .order_by(Contacto.created_at.desc())
+                       .first())
+                if not c:
                     continue
-                op.respuesta_recibida = texto
-                op.outreach_status = "respondido"
-                if op.etapa == EtapaOportunidad.lead:
-                    op.etapa = EtapaOportunidad.contactado
+                c.respuesta_recibida = texto
+                c.estado = "respondido"
+                # Promoción al pipeline (import diferido para evitar ciclo con el router).
+                from app.routers.crm import _promover_contacto
+                _promover_contacto(c, db)
                 try:
                     db.commit()
                 except Exception:
@@ -163,7 +162,7 @@ def revisar_inbox(db: Session = None) -> int:
                 except Exception as e:
                     logger.warning(f"[inbox] no se pudo marcar SEEN {remitente}: {e}")
                 registradas += 1
-                logger.info(f"[inbox] respuesta de {remitente} → {op.empresa}")
+                logger.info(f"[inbox] respuesta de {remitente} → {c.empresa} (promovido al pipeline)")
         if registradas:
             logger.info(f"[inbox] {registradas} respuesta(s) registrada(s).")
         return registradas

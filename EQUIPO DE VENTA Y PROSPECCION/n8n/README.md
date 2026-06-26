@@ -11,8 +11,9 @@ n8n es **el transporte**: no busca ni escribe (eso lo hacen los agentes de Claud
 Solo **dispara** los correos ya escritos y **escucha** las respuestas.
 
 ## Workflow 1 — Envío (`workflow-1-envio.json`)
-Lee del CRM los leads con email ya escrito y los manda por SMTP de Hostinger, uno por vez
-con espera entre envíos (warm-up), y marca cada uno como `enviado` + etapa `contactado`.
+Lee de **Contactos** los leads con mensaje ya escrito (`estado='escrito'`) y los manda por SMTP
+de Hostinger, uno por vez con espera entre envíos (warm-up), y marca cada uno como `contactado`.
+El contacto queda en la base de Contactos; solo sube al pipeline si responde.
 
 ```
 Cada día 9hs → Obtener pendientes (GET outbox) → Separar leads → Loop 1x1
@@ -52,9 +53,9 @@ y se lo registra al CRM (matchea el lead por email).
 ```
 Inbox IMAP (nuevo mail) → Extraer email + texto → ¿Tiene email? → Registrar respuesta (POST)
 ```
-El backend (`POST /api/crm/external/respuesta`) busca la oportunidad por `contacto_email`, marca
-`outreach_status="respondido"`, guarda el texto en `respuesta_recibida` y mueve la etapa a `contactado`.
-Después, el agente `inbox-responder` clasifica y borradorea la contestación.
+El backend (`POST /api/crm/external/respuesta`) busca el **contacto** por email, lo marca
+`estado="respondido"`, guarda el texto y lo **promueve al pipeline** (crea una Oportunidad en
+etapa `contactado`). Después, el agente `inbox-responder` clasifica y borradorea la contestación.
 
 ### Cómo importarlo
 1. n8n → **Import from File** → `workflow-2-escucha.json`.

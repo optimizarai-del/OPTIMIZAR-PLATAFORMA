@@ -12,7 +12,7 @@
     {
       "parameters": {
         "method": "GET",
-        "url": "https://API_BASE/api/crm/external/outbox",
+        "url": "https://API_BASE/api/crm/external/contactos/outbox",
         "sendHeaders": true,
         "headerParameters": { "parameters": [ { "name": "X-API-Key", "value": "API_KEY_AQUI" } ] },
         "options": {}
@@ -26,7 +26,7 @@
     },
     {
       "parameters": {
-        "jsCode": "const items = $input.all();\nif (items.length && items[0].json && items[0].json.contacto_email) return items;\nconst body = items.length ? items[0].json : {};\nconst arr = Array.isArray(body) ? body : (body.body || body.data || []);\nreturn arr.map(o => ({ json: o }));"
+        "jsCode": "const items = $input.all();\nif (items.length && items[0].json && items[0].json.email) return items;\nconst body = items.length ? items[0].json : {};\nconst arr = Array.isArray(body) ? body : (body.body || body.data || []);\nreturn arr.map(o => ({ json: o }));"
       },
       "id": "a3",
       "name": "Separar leads",
@@ -45,7 +45,7 @@
     {
       "parameters": {
         "fromEmail": "OPTIMIZAR <info@TUDOMINIO.com>",
-        "toEmail": "={{ $json.contacto_email }}",
+        "toEmail": "={{ $json.email }}",
         "subject": "={{ $json.mensaje_asunto }}",
         "html": "={{ $json.mensaje_cuerpo }}",
         "options": {}
@@ -61,12 +61,12 @@
     {
       "parameters": {
         "method": "POST",
-        "url": "https://API_BASE/api/crm/external/oportunidades",
+        "url": "https://API_BASE/api/crm/external/contactos",
         "sendHeaders": true,
         "headerParameters": { "parameters": [ { "name": "X-API-Key", "value": "API_KEY_AQUI" } ] },
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={{ JSON.stringify({ external_id: $('Loop 1x1').item.json.external_id, empresa: $('Loop 1x1').item.json.empresa, outreach_status: 'enviado', etapa: 'contactado' }) }}",
+        "jsonBody": "={{ JSON.stringify({ external_id: $('Loop 1x1').item.json.external_id, empresa: $('Loop 1x1').item.json.empresa, estado: 'contactado' }) }}",
         "options": {}
       },
       "id": "a6",
