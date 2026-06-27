@@ -287,6 +287,22 @@ def test_fire_chat(current_user: User = Depends(get_db_user)):
     return _fire_chat_responder("PRUEBA DIAGNOSTICO: confirmá en una línea que el disparo automático anda.")
 
 
+@router.get("/external/stats", response_model=CRMStats, tags=["crm-external"])
+def stats_externo(db: Session = Depends(get_db), _=Depends(verify_api_key)):
+    """Stats del pipeline para los agentes en la nube (API key). Misma data que /stats (JWT)."""
+    return stats(db=db, _=None)
+
+
+@router.get("/external/contactos/resumen", tags=["crm-external"])
+def contactos_resumen(db: Session = Depends(get_db), _=Depends(verify_api_key)):
+    """Resumen de Contactos por estado, para el ciclo comercial autónomo (API key)."""
+    from sqlalchemy import func as _func
+    filas = (db.query(Contacto.estado, _func.count(Contacto.id))
+               .group_by(Contacto.estado).all())
+    return {"por_estado": {estado: cant for estado, cant in filas},
+            "total": sum(c for _, c in filas)}
+
+
 @router.get("/external/outbox", response_model=List[OportunidadOut], tags=["crm-external"])
 def outbox(db: Session = Depends(get_db), _=Depends(verify_api_key)):
     """Leads con email YA escrito y pendientes de envío. Lo consume n8n para disparar
