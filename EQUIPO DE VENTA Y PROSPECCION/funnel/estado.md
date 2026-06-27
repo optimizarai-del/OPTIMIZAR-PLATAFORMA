@@ -123,10 +123,27 @@ Nombre, empresa, rubro y un gancho de dolor por rubro.
 - Backend: endpoints externos OK, **migración aplicada**, **chat en vivo sobre el plan funcionando**.
 - **Prospección diaria automática: ACTIVA en MODO BORRADOR** (busca y escribe; NO envía nada).
 - **Envío real de correos: APAGADO** (`OUTREACH_ENABLED=false`). Encender tras validar emails + warm-up.
-- Corridas borrador completadas: 11/06 (Córdoba/Rosario), 12/06 (CABA/GBA), 13/06 (Mendoza/Tucumán), 14/06 (Salta/Mar del Plata), 15/06 (Bahía Blanca/Neuquén), 16/06 (Santa Fe/Paraná), 17/06 (Rosario expansión), 18/06 (San Juan/Resistencia Chaco), 19/06 (Jujuy/Posadas Misiones), 20/06 (La Rioja Capital/Catamarca Capital), 21/06 (La Plata/San Luis Capital), 22/06 (Córdoba 2° lote/Comodoro Rivadavia), 23/06 (Corrientes Capital/Santiago del Estero Capital), 24/06 (Formosa Capital/Bariloche Río Negro), 25/06 (Río Cuarto/Río Gallegos Santa Cruz), 26/06 (Tandil/General Roca Río Negro) → **80 leads en borrador (16 corridas)**. Cinturón NOA completo (Mendoza, Tucumán, Salta, Jujuy, La Rioja, Catamarca, Santiago del Estero ✓). Cuyo completo (Mendoza, San Juan, San Luis). Patagonia: Neuquén ✓, Comodoro ✓, Bariloche ✓, Río Gallegos ✓, **General Roca ✓**. NEA completo: Chaco ✓, Misiones ✓, Corrientes ✓, Formosa ✓. Córdoba interior: Río Cuarto ✓. PBA interior: **Tandil ✓**.
+- Corridas borrador completadas: 11/06 (Córdoba/Rosario), 12/06 (CABA/GBA), 13/06 (Mendoza/Tucumán), 14/06 (Salta/Mar del Plata), 15/06 (Bahía Blanca/Neuquén), 16/06 (Santa Fe/Paraná), 17/06 (Rosario expansión), 18/06 (San Juan/Resistencia Chaco), 19/06 (Jujuy/Posadas Misiones), 20/06 (La Rioja Capital/Catamarca Capital), 21/06 (La Plata/San Luis Capital), 22/06 (Córdoba 2° lote/Comodoro Rivadavia), 23/06 (Corrientes Capital/Santiago del Estero Capital), 24/06 (Formosa Capital/Bariloche Río Negro), 25/06 (Río Cuarto/Río Gallegos Santa Cruz), 26/06 (Tandil/General Roca Río Negro), 27/06 (Concordia Entre Ríos/Pergamino Buenos Aires) → **85 leads en borrador (17 corridas)**. Cinturón NOA completo (Mendoza, Tucumán, Salta, Jujuy, La Rioja, Catamarca, Santiago del Estero ✓). Cuyo completo (Mendoza, San Juan, San Luis). Patagonia: Neuquén ✓, Comodoro ✓, Bariloche ✓, Río Gallegos ✓, General Roca ✓. NEA completo: Chaco ✓, Misiones ✓, Corrientes ✓, Formosa ✓. Córdoba interior: Río Cuarto ✓. PBA interior: Tandil ✓, **Pergamino ✓**. Entre Ríos interior: **Concordia ✓**.
 - Pendiente real: validar calidad de los emails y, cuando se apruebe, encender el envío (flip a push-vivo).
 
 ## Última corrida
+**Fecha:** 2026-06-27 | **Modo:** BORRADOR (sin envíos reales)
+**Segmento:** Estudios contables/impositivos — **Concordia (Entre Ríos)** (primera incursión Entre Ríos interior) + **Pergamino (Buenos Aires)** (primera incursión PBA agrícola norte)
+**Cupo usado:** 5 leads
+**Leads encontrados:** 5
+**Leads descartados:** 0 (ninguno en La Pampa; ningún duplicado)
+**Emails escritos:** 4 (Narbais ✅ arnetbiz ISP, Azambuya ✅ Gmail, Marturet ✅ dominio propio ⭐, Carnevale ✅ dominio propio ⭐)
+**Sin email:** 1 (Selmi — not_found; sin nombre socio publicado; investigar CPCE PBA Pergamino o LinkedIn)
+**Email status:** 2 verified dominio propio (Marturet, Carnevale), 1 ISP (Narbais arnetbiz), 1 Gmail (Azambuya), 1 not_found (Selmi)
+**Disparador:** Prórroga DDJJ Ganancias/Bienes Personales período 2025 hasta 27/07/2026 (RG ARCA 5851/2026) — quedan 30 días
+**Archivos:**
+- `funnel/leads/new/borrador-2026-06-27.jsonl` — 5 leads
+- `funnel/reportes/2026-06-27.md` — reporte completo
+**Total acumulado borrador:** 85 leads (17 corridas)
+**Hitos:** Entre Ríos interior inaugurado (Concordia ✓). PBA agrícola norte inaugurado (Pergamino ✓).
+**Próximo bloqueante:** Validar calidad de los emails y activar envío real (`OUTREACH_ENABLED=true` + warm-up). Candidatos prioritarios ⭐: Marturet (Concordia, 14 profes, dominio propio), Carnevale (Pergamino, 50 años, dominio propio), Fernández Carrera Molejón (ISO 9001, General Roca, verified ⭐⭐), Toloza (Formosa, verified), CILS/Chinellato (Bariloche, verified). Candidatos sin email para corrida futura: Selmi ⭐ (Pergamino, CPCE PBA), López Madina ⭐ (Tandil, CPCE PBA), Símaro Torchelli ⭐⭐ (Tandil, site 503), García ⭐ (SdE, CPCE), Bonino ⭐ (San Luis, CPCE), Melnik ⭐⭐ (Catamarca, CPCE), Rojas Naser ⭐⭐ (Jujuy, CPCE), Magnago ⭐ (Río Cuarto, CPCE Córdoba).
+
+## Corrida anterior (2026-06-26)
 **Fecha:** 2026-06-26 | **Modo:** BORRADOR (sin envíos reales)
 **Segmento:** Estudios contables/impositivos — **Tandil (Buenos Aires)** (primera incursión PBA interior) + **General Roca (Río Negro)** (primera incursión Patagonia Centro-Norte / Alto Valle)
 **Cupo usado:** 5 leads
@@ -141,7 +158,16 @@ Nombre, empresa, rubro y un gancho de dolor por rubro.
 - `funnel/reportes/2026-06-26.md` — reporte completo
 **Total acumulado borrador:** 80 leads (16 corridas)
 **Hitos:** PBA interior inaugurado (Tandil ✓). Patagonia Centro-Norte inaugurada (General Roca/Alto Valle ✓). 80 leads = hito de escala.
-**Próximo bloqueante:** Validar calidad de los emails y activar envío real (`OUTREACH_ENABLED=true` + warm-up). Candidatos prioritarios ⭐⭐: Fernández Carrera Molejón (ISO 9001, General Roca, verified), Toloza (Formosa, verified), CILS/Chinellato (Bariloche, verified). Candidatos sin email para corrida futura: López Madina ⭐ (Tandil, CPCE PBA), Símaro Torchelli ⭐⭐ (Tandil, site 503), García ⭐ (SdE, CPCE), Bonino ⭐ (San Luis, CPCE), Melnik ⭐⭐ (Catamarca, CPCE), Rojas Naser ⭐⭐ (Jujuy, CPCE), Magnago ⭐ (Río Cuarto, CPCE Córdoba).
+
+## Gotchas descubiertos (continuación — 2026-06-27)
+- [2026-06-27] Consultora Marturet (Concordia, ER, desde 1982, 14 profesionales): mayor equipo de la corrida. Email contacto@consultoramarturet.com.ar verified. Ángulo multiplicador: cada hora automatizada se multiplica por 14. Candidato ⭐ para primer envío en Concordia.
+- [2026-06-27] Estudio Carnevale (Pergamino, BA, desde 1975): primer estudio del programa en Pergamino. Email info@estudiocarnevale.com verified. 50 años de trayectoria = alto volumen de clientes PyME = muchos procesos optimizables. Candidato ⭐ para primer envío en Pergamino.
+- [2026-06-27] Narbais & Asociados (Concordia, ER, 30+ años): especializado en PyMEs y sociedades agrarias. Email estudionarbais@arnetbiz.com.ar (arnetbiz = ISP Telecom/Arnet, similar deliverability a dominio propio). Validar mailbox activo antes del envío real.
+- [2026-06-27] Morera-Azambuya & Asociados (Concordia): perfil triple contable+jurídico+laboral, tres socios (Morera, Azambuya, Zalisñak). Email Gmail — deliverability estándar. Ayelén Azambuya es la contacto más accesible web.
+- [2026-06-27] Selmi & Asociados (Pergamino): 20+ años, sin nombre de socio ni email públicos. Fuente solo Páginas Amarillas. Investigar vía CPCE Buenos Aires delegación Pergamino o LinkedIn para corrida futura.
+- [2026-06-27] Concordia, Entre Ríos: primera incursión exitosa. Segunda ciudad de ER (~150k hab), hub citrícola-agrícola. Baja exposición tech = diferenciador real. Capacidad para 5+ corridas adicionales. Candidatos pendientes: otros estudios del directorio licuo.com.ar/concordia, CPCE ER delegación Concordia.
+- [2026-06-27] Pergamino, Buenos Aires: primera incursión exitosa. Hub agrícola norte bonaerense (~100k hab). Ángulo DDJJ + Bienes Personales es especialmente potente en zonas agropecuarias (muchos clientes con campo/acciones). Capacidad para 5+ corridas adicionales.
+- [2026-06-27] Hito: 85 leads en borrador (17 corridas). Entre Ríos interior inaugurado (Concordia ✓). PBA agrícola norte inaugurado (Pergamino ✓).
 
 ## Gotchas descubiertos (continuación — 2026-06-26)
 - [2026-06-26] Fernández Carrera Molejón (General Roca, ISO 9001): segundo estudio con certificación ISO del programa (el primero fue Contadores Rosario). Eduardo Fernández Carrera (UNComahue + Master EIN) y Andrea Molejón (UNQuilmes + Coach Ontológico). Email fcm@fernandezcarreramolejon.com.ar verified. Ángulo diferenciado único: "ISO 9001 = procesos documentados → OPTIMIZAR los automatiza". Candidato ⭐⭐ para primer envío real en General Roca.
