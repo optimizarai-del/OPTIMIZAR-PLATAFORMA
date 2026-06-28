@@ -118,15 +118,40 @@ Nombre, empresa, rubro y un gancho de dolor por rubro.
 - [2026-06-14] B&R / SMS Latinoamérica (Mar del Plata): perfil corporativo con red regional — posiblemente los socios no son públicos. Investigar vía LinkedIn o SMS Argentina.
 - [2026-06-14] Para Salta en general: La Guía Salta lista 20+ estudios pero la mayoría sin web propia. CPCE de Salta puede tener directorio de matriculados con emails. Fuente valiosa para próximas corridas en el NOA.
 
+## Gotchas descubiertos (continuación — 2026-06-28)
+- [2026-06-28] SAIPE Estudio Contable S.A. (Rafaela, SF): firma S.A. multi-sucursal con 6 sedes (Rafaela, Humberto, Ataliva, Sarmiento, Vera, Reconquista). 4 socios con emails personales en dominio propio: alfiore@saipe.com.ar (fundador), mbruno@saipe.com.ar (impuestos), fabioairasca@ y mgrande@ (inferidos). Candidato ⭐ para primer envío en Rafaela. Ángulo multi-sucursal: cada hora automatizada se multiplica por 6 sedes.
+- [2026-06-28] Laura, Sasia y Asociados S.A. (Rafaela, SF, 70 años): la firma más antigua de la corrida y del programa. José Sasia verificado en LinkedIn. Email info@ls-sa.com.ar. Ángulo diferenciado: "70 años de adaptación constante = la firma que siempre adoptó lo que venía". Candidato ⭐ para primer envío en Rafaela.
+- [2026-06-28] Estudio Ayuste (Rafaela, SF, 30+ años): equipo de 5+ profesionales con emails en dominio propio (cayuste@, lpietrobon@, mrbarberis@, fgaggiotti@, sbersano@). Email personal de titular verificado. Candidato sólido para primer envío.
+- [2026-06-28] Rafaela, Santa Fe: ciudad con alta densidad de estudios con web propia y emails publicados. Capacidad para 5+ corridas adicionales. Candidatos pendientes: Cassina (Alvear 360, sin email), Ingaramo (Colón 332, sin email), Carlos Sara y Asoc (San Martín 226, sin email). Fuentes: rafaela.licuo.com.ar, argentino.com.ar/rafaela, Páginas Amarillas Rafaela.
+- [2026-06-28] Junín, Buenos Aires: mercado con BAJA presencia digital — ningún estudio contable tiene web indexada ni email publicado en directorios. Estrategia recomendada: contactar CPBA delegación Junín (dlgjunin@cpba.com.ar / 0236-443-3952) para obtener padrón de matriculados con emails. Firmas objetivo: Daniel Massari ⭐ (Suárez 225), Balbi-Bergamini ⭐ (A Roca 119), Di Prinzio (Lavalle 120), García (B De Miguel 111). El mercado existe (hub agroindustrial ~100k hab) pero requiere estrategia de contacto alternativa.
+- [2026-06-28] Hito: 90 leads en borrador (18 corridas). Rafaela SF inaugurada ✓. Junín BA inaugurado ✓. Santa Fe interior: Rafaela ✓ (suma a: Santa Fe Capital ✓, Rosario ✓, Paraná ✓).
+
 ## Estado del sistema (infra — lo mantiene el equipo de desarrollo, NO lo cambian las corridas)
 - Plataforma OPTIMIZAR **deployada en producción** (EasyPanel): CRM + Prospección IA operativos.
 - Backend: endpoints externos OK, **migración aplicada**, **chat en vivo sobre el plan funcionando**.
 - **Prospección diaria automática: ACTIVA en MODO BORRADOR** (busca y escribe; NO envía nada).
 - **Envío real de correos: APAGADO** (`OUTREACH_ENABLED=false`). Encender tras validar emails + warm-up.
-- Corridas borrador completadas: 11/06 (Córdoba/Rosario), 12/06 (CABA/GBA), 13/06 (Mendoza/Tucumán), 14/06 (Salta/Mar del Plata), 15/06 (Bahía Blanca/Neuquén), 16/06 (Santa Fe/Paraná), 17/06 (Rosario expansión), 18/06 (San Juan/Resistencia Chaco), 19/06 (Jujuy/Posadas Misiones), 20/06 (La Rioja Capital/Catamarca Capital), 21/06 (La Plata/San Luis Capital), 22/06 (Córdoba 2° lote/Comodoro Rivadavia), 23/06 (Corrientes Capital/Santiago del Estero Capital), 24/06 (Formosa Capital/Bariloche Río Negro), 25/06 (Río Cuarto/Río Gallegos Santa Cruz), 26/06 (Tandil/General Roca Río Negro), 27/06 (Concordia Entre Ríos/Pergamino Buenos Aires) → **85 leads en borrador (17 corridas)**. Cinturón NOA completo (Mendoza, Tucumán, Salta, Jujuy, La Rioja, Catamarca, Santiago del Estero ✓). Cuyo completo (Mendoza, San Juan, San Luis). Patagonia: Neuquén ✓, Comodoro ✓, Bariloche ✓, Río Gallegos ✓, General Roca ✓. NEA completo: Chaco ✓, Misiones ✓, Corrientes ✓, Formosa ✓. Córdoba interior: Río Cuarto ✓. PBA interior: Tandil ✓, **Pergamino ✓**. Entre Ríos interior: **Concordia ✓**.
+- Corridas borrador completadas: 11/06 (Córdoba/Rosario), 12/06 (CABA/GBA), 13/06 (Mendoza/Tucumán), 14/06 (Salta/Mar del Plata), 15/06 (Bahía Blanca/Neuquén), 16/06 (Santa Fe/Paraná), 17/06 (Rosario expansión), 18/06 (San Juan/Resistencia Chaco), 19/06 (Jujuy/Posadas Misiones), 20/06 (La Rioja Capital/Catamarca Capital), 21/06 (La Plata/San Luis Capital), 22/06 (Córdoba 2° lote/Comodoro Rivadavia), 23/06 (Corrientes Capital/Santiago del Estero Capital), 24/06 (Formosa Capital/Bariloche Río Negro), 25/06 (Río Cuarto/Río Gallegos Santa Cruz), 26/06 (Tandil/General Roca Río Negro), 27/06 (Concordia Entre Ríos/Pergamino Buenos Aires), 28/06 (**Rafaela Santa Fe/Junín Buenos Aires**) → **90 leads en borrador (18 corridas)**. Cinturón NOA completo (Mendoza, Tucumán, Salta, Jujuy, La Rioja, Catamarca, Santiago del Estero ✓). Cuyo completo (Mendoza, San Juan, San Luis). Patagonia: Neuquén ✓, Comodoro ✓, Bariloche ✓, Río Gallegos ✓, General Roca ✓. NEA completo: Chaco ✓, Misiones ✓, Corrientes ✓, Formosa ✓. Córdoba interior: Río Cuarto ✓. PBA interior: Tandil ✓, Pergamino ✓, **Junín ✓**. Entre Ríos interior: Concordia ✓. Santa Fe interior: **Rafaela ✓**.
 - Pendiente real: validar calidad de los emails y, cuando se apruebe, encender el envío (flip a push-vivo).
 
 ## Última corrida
+**Fecha:** 2026-06-28 | **Modo:** BORRADOR (sin envíos reales)
+**Segmento:** Estudios contables/impositivos — **Rafaela (Santa Fe)** (primera incursión) + **Junín (Buenos Aires)** (primera incursión PBA noroeste agroindustrial)
+**Cupo usado:** 5 leads
+**Leads encontrados:** 5
+**Leads descartados:** 0 (ninguno en La Pampa; ningún duplicado)
+**Emails escritos:** 3 (SAIPE ✅ dominio propio ⭐, LS S.A. ✅ dominio propio ⭐, Ayuste ✅ dominio propio personal)
+**Sin email:** 2 (Massari — not_found, Balbi-Bergamini — not_found; Junín tiene baja presencia digital — investigar vía CPBA Junín)
+**Email status:** 3 verified dominio propio (SAIPE, LS S.A., Ayuste), 2 not_found (Massari, Balbi-Bergamini)
+**Disparador:** Prórroga DDJJ Ganancias/Bienes Personales período 2025 hasta 27/07/2026 (RG ARCA 5851/2026) — quedan 29 días
+**Archivos:**
+- `funnel/leads/new/borrador-2026-06-28.jsonl` — 5 leads
+- `funnel/reportes/2026-06-28.md` — reporte completo
+**Total acumulado borrador:** 90 leads (18 corridas)
+**Hitos:** Rafaela Santa Fe inaugurado ✓. Junín Buenos Aires inaugurado ✓ (mercado de baja presencia digital — estrategia CPBA para próximas corridas). Hito 90 leads (18 corridas).
+**Próximo bloqueante:** Validar calidad de los emails y activar envío real (`OUTREACH_ENABLED=true` + warm-up). Candidatos prioritarios ⭐: SAIPE (multi-sucursal, email personal alfiore@), LS S.A. (José Sasia, 70 años), Marturet (Concordia), Carnevale (Pergamino), Fernández Carrera Molejón (ISO 9001, General Roca ⭐⭐). Candidatos sin email para corrida futura: Massari ⭐ (Junín, CPBA), Balbi-Bergamini ⭐ (Junín, CPBA), Di Prinzio (Junín, CPBA), Selmi ⭐ (Pergamino, CPCE PBA), López Madina ⭐ (Tandil, CPCE PBA).
+
+## Corrida anterior (2026-06-27)
 **Fecha:** 2026-06-27 | **Modo:** BORRADOR (sin envíos reales)
 **Segmento:** Estudios contables/impositivos — **Concordia (Entre Ríos)** (primera incursión Entre Ríos interior) + **Pergamino (Buenos Aires)** (primera incursión PBA agrícola norte)
 **Cupo usado:** 5 leads
