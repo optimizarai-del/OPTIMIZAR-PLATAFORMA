@@ -11,7 +11,14 @@ const ESTADO_TAREA = {
   requiere_aprobacion: { label: 'Aprobación', chip: 'chip-accent', icon: AlertTriangle },
 }
 
+const DIRECTORES = [
+  { canal: 'marketing',  nombre: 'Director de Marketing', area: 'Marketing' },
+  { canal: 'comercial',  nombre: 'Director Comercial',    area: 'Comercial' },
+  { canal: 'desarrollo', nombre: 'Director de Desarrollo', area: 'Desarrollo' },
+]
+
 export default function Agentes() {
+  const [canal, setCanal] = useState('comercial')
   const [chat, setChat] = useState([])
   const [catalogo, setCatalogo] = useState([])
   const [tareas, setTareas] = useState([])
@@ -19,17 +26,22 @@ export default function Agentes() {
   const [enviando, setEnviando] = useState(false)
   const chatEndRef = useRef(null)
 
-  const cargar = () => {
-    api.get('/api/agentes/chat').then(r => setChat(r.data)).catch(() => {})
+  const director = DIRECTORES.find(d => d.canal === canal)
+
+  const cargar = (c = canal) => {
+    api.get(`/api/agentes/chat?canal=${c}`).then(r => setChat(r.data)).catch(() => {})
     api.get('/api/agentes/tareas').then(r => setTareas(r.data)).catch(() => {})
   }
 
   useEffect(() => {
     api.get('/api/agentes/catalogo').then(r => setCatalogo(r.data)).catch(() => {})
-    cargar()
-    const t = setInterval(cargar, 5000)   // refresco en vivo (polling)
-    return () => clearInterval(t)
   }, [])
+
+  useEffect(() => {
+    cargar(canal)
+    const t = setInterval(() => cargar(canal), 5000)   // refresco en vivo (polling)
+    return () => clearInterval(t)
+  }, [canal])
 
   useEffect(() => { chatEndRef.current?.scrollIntoView({ behavior: 'smooth' }) }, [chat.length])
 
@@ -40,8 +52,8 @@ export default function Agentes() {
     setEnviando(true)
     setTexto('')
     try {
-      await api.post('/api/agentes/chat', { contenido: msg, canal: 'agentes' })
-      cargar()
+      await api.post('/api/agentes/chat', { contenido: msg, canal })
+      cargar(canal)
     } catch {
       toast.error('No se pudo enviar el mensaje')
       setTexto(msg)
@@ -61,11 +73,24 @@ export default function Agentes() {
 
   return (
     <div className="animate-fade-in">
-      <header className="mb-8">
+      <header className="mb-6">
         <div className="hero-eyebrow">Equipo de IA</div>
         <h1 className="hero-title text-4xl md:text-5xl mb-2">Centro de Agentes.</h1>
-        <p className="hero-sub">Hablá con el orquestador. Él reparte el trabajo a los subagentes y te reporta.</p>
+        <p className="hero-sub">Cada Director trabaja independiente, con su propia clave. Elegí con quién hablar.</p>
       </header>
+
+      {/* Pestañas: un chat por Director */}
+      <div className="flex gap-2 mb-6 flex-wrap">
+        {DIRECTORES.map(d => (
+          <button key={d.canal} onClick={() => setCanal(d.canal)}
+            className={`px-4 py-2 rounded-full text-[13px] font-medium transition-all ${
+              canal === d.canal ? 'bg-primary text-neutral-50 shadow-soft'
+                : 'bg-white text-muted hover:bg-neutral-200/70 border border-border'
+            }`}>
+            {d.nombre}
+          </button>
+        ))}
+      </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
@@ -76,8 +101,8 @@ export default function Agentes() {
               <Bot size={16} />
             </div>
             <div>
-              <div className="font-bold text-[14px] tracking-tight">Orquestador</div>
-              <div className="text-[11px] text-muted">Punto de entrada del equipo</div>
+              <div className="font-bold text-[14px] tracking-tight">{director?.nombre || 'Director'}</div>
+              <div className="text-[11px] text-muted">Coordina el equipo de {director?.area}</div>
             </div>
           </div>
 
@@ -137,9 +162,9 @@ export default function Agentes() {
         <div className="space-y-6">
           {/* Catálogo de agentes agrupado por área */}
           <div className="card p-5">
-            <div className="font-bold text-[13px] tracking-tight mb-3">El equipo</div>
+            <div className="font-bold text-[13px] tracking-tight mb-3">Equipo de {director?.area}</div>
             <div className="space-y-4">
-              {['Marketing', 'Comercial', 'Desarrollo'].map(area => {
+              {[director?.area].filter(Boolean).map(area => {
                 const delArea = catalogo.filter(a => a.area === area)
                 if (!delArea.length) return null
                 return (

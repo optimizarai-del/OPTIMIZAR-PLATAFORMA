@@ -27,7 +27,9 @@ from app.security import (get_db_user, verify_api_key, require_manager, require_
 logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/api/agentes", tags=["agentes"])
 
-CANAL = "agentes"
+# Un canal de chat por Director IA: cada uno trabaja independiente, con su propia routine y clave.
+AREAS = {"marketing", "comercial", "desarrollo"}
+CANAL_DEFAULT = "comercial"
 ESTADOS_CHAT_VALIDOS = {"aprobado", "rechazado", "esperando", "info"}
 ESTADOS_TAREA_VALIDOS = {"pendiente", "en_proceso", "completado", "error", "requiere_aprobacion"}
 
@@ -110,24 +112,28 @@ CATALOGO = [
 ]
 
 
-def _fire_orquestador(contenido: str) -> dict:
-    """Gatilla la routine del orquestador en el plan (Claude Code online) para que
-    responda este mensaje. Sin API de generación: solo dispara la ejecución sobre el plan.
-    Si no está configurado, el chat funciona como buzón (lo levanta el ciclo programado)."""
+def _fire_director(canal: str, contenido: str) -> dict:
+    """Gatilla la routine del Director del área `canal` (marketing/comercial/desarrollo) sobre
+    el plan de Claude. Cada director tiene su propia fire URL y su propia API key. Si no está
+    configurado, el chat funciona como buzón (lo levanta el ciclo programado del director)."""
     def _norm(s: str) -> str:
         return (s.replace("—", "-").replace("–", "-").replace("−", "-")
                  .replace("“", '"').replace("”", '"').strip())
-    # Permite una routine propia para el orquestador; si no, cae a la genérica del proyecto.
-    fire_url = _norm(os.getenv("CLAUDE_ORQUESTADOR_FIRE_URL", "") or os.getenv("CLAUDE_ROUTINE_FIRE_URL", ""))
+    area = canal if canal in AREAS else CANAL_DEFAULT
+    # Fire URL del director del área; cae a la genérica si no está la específica.
+    fire_url = _norm(os.getenv(f"CLAUDE_FIRE_{area.upper()}", "")
+                     or os.getenv("CLAUDE_ORQUESTADOR_FIRE_URL", ""))
     token    = _norm(os.getenv("CLAUDE_ROUTINE_TOKEN", ""))
     api_base = _norm(os.getenv("SELF_API_BASE", ""))
-    api_key  = _norm(os.getenv("EXTERNAL_API_KEY", ""))
+    # API key propia del área; cae a la global.
+    api_key  = _norm(os.getenv(f"EXTERNAL_API_KEY_{area.upper()}", "")
+                     or os.getenv("EXTERNAL_API_KEY", ""))
     faltan = [n for n, v in [("FIRE_URL", fire_url), ("TOKEN", token),
-                             ("SELF_API_BASE", api_base), ("EXTERNAL_API_KEY", api_key)] if not v]
+                             ("SELF_API_BASE", api_base), ("API_KEY", api_key)] if not v]
     if faltan:
-        logger.warning(f"[agentes] fire no configurado, faltan: {faltan}")
+        logger.warning(f"[agentes:{area}] fire no configurado, faltan: {faltan}")
         return {"ok": False, "motivo": "config_incompleta", "faltan": faltan}
-    texto = f"CANAL=agentes\nAPI_BASE={api_base}\nAPI_KEY={api_key}\nMENSAJE: {contenido}"
+    texto = f"CANAL={area}\nAPI_BASE={api_base}\nAPI_KEY={api_key}\nMENSAJE: {contenido}"
     try:
         r = httpx.post(fire_url, headers={
             "Authorization": f"Bearer {token}",
@@ -135,10 +141,10 @@ def _fire_orquestador(contenido: str) -> dict:
             "anthropic-beta": "experimental-cc-routine-2026-04-01",
             "Content-Type": "application/json",
         }, json={"text": texto}, timeout=20)
-        logger.info(f"[agentes] fire -> HTTP {r.status_code}")
+        logger.info(f"[agentes:{area}] fire -> HTTP {r.status_code}")
         return {"ok": r.status_code < 300, "status": r.status_code}
     except Exception as e:
-        logger.warning(f"[agentes] fire excepción: {e}")
+        logger.warning(f"[agentes:{area}] fire excepción: {e}")
         return {"ok": False, "motivo": "excepcion", "error": str(e)}
 
 
@@ -151,18 +157,24 @@ def catalogo(_=Depends(get_db_user)):
 
 # ── Chat humano ↔ orquestador (canal 'agentes') ───────────────────────────────
 
+def _canal_valido(canal: str) -> str:
+    return canal if canal in AREAS else CANAL_DEFAULT
+
+
 @router.get("/chat", response_model=List[ChatMensajeOut])
-def listar_chat(db: Session = Depends(get_db), _=Depends(get_db_user)):
-    return (db.query(ChatMensaje).filter_by(canal=CANAL)
+def listar_chat(canal: str = CANAL_DEFAULT, db: Session = Depends(get_db), _=Depends(get_db_user)):
+    return (db.query(ChatMensaje).filter_by(canal=_canal_valido(canal))
               .order_by(ChatMensaje.created_at).all())
 
 
 @router.post("/chat", response_model=ChatMensajeOut)
 def postear_humano(data: ChatMensajeCreate, background_tasks: BackgroundTasks,
                    db: Session = Depends(get_db), _=Depends(require_editor)):
-    msg = ChatMensaje(canal=CANAL, rol="humano", contenido=data.contenido)
+    canal = _canal_valido(data.canal)
+    msg = ChatMensaje(canal=canal, rol="humano", contenido=data.contenido)
     db.add(msg); db.commit(); db.refresh(msg)
-    background_tasks.add_task(_fire_orquestador, data.contenido)
+    # Dispara al Director del área correspondiente (su routine + su API key).
+    background_tasks.add_task(_fire_director, canal, data.contenido)
     return msg
 
 
@@ -171,7 +183,7 @@ def set_estado_chat(mid: int, estado: str, db: Session = Depends(get_db),
                     _=Depends(require_manager)):
     if estado not in ESTADOS_CHAT_VALIDOS:
         raise HTTPException(422, f"Estado inválido. Permitidos: {sorted(ESTADOS_CHAT_VALIDOS)}")
-    msg = db.query(ChatMensaje).filter_by(id=mid, canal=CANAL).first()
+    msg = db.query(ChatMensaje).filter_by(id=mid).first()
     if not msg:
         raise HTTPException(404, "Mensaje no encontrado")
     msg.estado = estado
@@ -180,9 +192,11 @@ def set_estado_chat(mid: int, estado: str, db: Session = Depends(get_db),
 
 
 @router.get("/external/chat", response_model=List[ChatMensajeOut], tags=["agentes-external"])
-def listar_chat_externo(limit: int = 50, db: Session = Depends(get_db), _=Depends(verify_api_key)):
-    """Lo lee el orquestador (Claude Code) por polling para detectar mensajes humanos sin responder."""
-    msgs = (db.query(ChatMensaje).filter_by(canal=CANAL)
+def listar_chat_externo(canal: str = CANAL_DEFAULT, limit: int = 50,
+                        db: Session = Depends(get_db), _=Depends(verify_api_key)):
+    """Lo lee el Director (Claude Code) por polling para detectar mensajes humanos sin responder.
+    Cada director consulta su propio canal."""
+    msgs = (db.query(ChatMensaje).filter_by(canal=_canal_valido(canal))
               .order_by(ChatMensaje.created_at.desc()).limit(limit).all())
     return list(reversed(msgs))
 
@@ -190,7 +204,7 @@ def listar_chat_externo(limit: int = 50, db: Session = Depends(get_db), _=Depend
 @router.post("/external/chat", response_model=ChatMensajeOut, tags=["agentes-external"])
 def postear_agente(data: ChatMensajeCreate, db: Session = Depends(get_db), _=Depends(verify_api_key)):
     msg = ChatMensaje(
-        canal=CANAL, rol="agente", contenido=data.contenido,
+        canal=_canal_valido(data.canal), rol="agente", contenido=data.contenido,
         requiere_aprobacion=data.requiere_aprobacion,
         estado="esperando" if data.requiere_aprobacion else "info",
     )

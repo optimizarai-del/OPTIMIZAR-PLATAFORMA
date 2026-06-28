@@ -52,18 +52,44 @@ ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES", 10080
 # Clave para el endpoint externo del CRM (integraciones: n8n, webhooks, scripts).
 EXTERNAL_API_KEY = os.getenv("EXTERNAL_API_KEY", "")
 
+# Claves por área (cada Director IA tiene la suya, para trabajar independiente). Cualquiera
+# de estas (o la global) es válida en los endpoints externos. Permite rotar/aislar por área.
+AREA_API_KEYS = {
+    "marketing": os.getenv("EXTERNAL_API_KEY_MARKETING", ""),
+    "comercial": os.getenv("EXTERNAL_API_KEY_COMERCIAL", ""),
+    "desarrollo": os.getenv("EXTERNAL_API_KEY_DESARROLLO", ""),
+}
+
+
+def _claves_validas() -> dict:
+    """{clave: area} para todas las claves configuradas. La global mapea a 'global'."""
+    d = {}
+    if EXTERNAL_API_KEY:
+        d[EXTERNAL_API_KEY] = "global"
+    for area, k in AREA_API_KEYS.items():
+        if k:
+            d[k] = area
+    return d
+
+
+def area_de_clave(key: str) -> str:
+    """Devuelve el área dueña de la clave ('marketing'/'comercial'/'desarrollo'/'global'), o ''."""
+    return _claves_validas().get(key or "", "")
+
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 oauth2 = OAuth2PasswordBearer(tokenUrl="/auth/login")
 api_key_header = APIKeyHeader(name="X-API-Key", auto_error=False)
 
 
 def verify_api_key(key: str = Depends(api_key_header)):
-    """Protege el endpoint externo del CRM. Compara contra EXTERNAL_API_KEY del .env.
-    Si la clave no está configurada, el endpoint queda deshabilitado (503)."""
-    if not EXTERNAL_API_KEY:
+    """Protege los endpoints externos. Acepta la clave global EXTERNAL_API_KEY o cualquiera
+    de las claves por área (cada Director IA tiene la suya). 503 si no hay ninguna configurada."""
+    validas = _claves_validas()
+    if not validas:
         raise HTTPException(status.HTTP_503_SERVICE_UNAVAILABLE,
-                            "Endpoint externo deshabilitado: EXTERNAL_API_KEY no configurada.")
-    if not key or not secrets.compare_digest(key, EXTERNAL_API_KEY):
+                            "Endpoint externo deshabilitado: ninguna API key configurada.")
+    # compare_digest contra cada clave válida (evita timing leaks y soporta múltiples claves).
+    if not key or not any(secrets.compare_digest(key, v) for v in validas):
         raise HTTPException(status.HTTP_401_UNAUTHORIZED, "API Key inválida o ausente.",
                             headers={"WWW-Authenticate": "X-API-Key"})
     return True
