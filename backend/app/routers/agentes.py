@@ -123,7 +123,9 @@ def _fire_director(canal: str, contenido: str) -> dict:
     # Fire URL del director del área; cae a la genérica si no está la específica.
     fire_url = _norm(os.getenv(f"CLAUDE_FIRE_{area.upper()}", "")
                      or os.getenv("CLAUDE_ORQUESTADOR_FIRE_URL", ""))
-    token    = _norm(os.getenv("CLAUDE_ROUTINE_TOKEN", ""))
+    # Token de fire propio del área (cada routine tiene el suyo); cae al global si no está.
+    token    = _norm(os.getenv(f"CLAUDE_ROUTINE_TOKEN_{area.upper()}", "")
+                     or os.getenv("CLAUDE_ROUTINE_TOKEN", ""))
     api_base = _norm(os.getenv("SELF_API_BASE", ""))
     # API key propia del área; cae a la global.
     api_key  = _norm(os.getenv(f"EXTERNAL_API_KEY_{area.upper()}", "")
