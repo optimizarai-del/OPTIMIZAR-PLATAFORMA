@@ -17,8 +17,13 @@ no lo rompe.
 - **Video / Reels con IA** (movimiento, cinematográfico): **Higgsfield**.
 - Elegí la herramienta según el formato que pidió Contenido: carrusel/post → imagen; reel → video.
 
-## Higgsfield — cómo generar video (CLI, vía Bash)
-1. Instalá el CLI (si no está): `npm install -g @higgsfield/cli`
+## Higgsfield — cómo generar imágenes/video
+**Usá el skill `higgsfield-generate`** (instalado en `.claude/skills/`): envuelve el CLI y cubre
+imagen, video, 3D, audio y Marketing Studio (ads, avatares, productos). Para identidad/cara
+consistente, encadenalo con `higgsfield-soul-id`. El skill tiene toda la referencia de modelos y
+prompt-engineering. Pasos base (los detalla el skill):
+
+1. Instalá el CLI (si no está): `npm install -g @higgsfield/cli` (o el `install.sh` del skill).
 2. Autenticá: `higgsfield auth login`.
    - **Local:** es interactivo (login en el navegador) — la primera vez lo hace el humano.
    - **Cloud (routines):** el login interactivo no corre. Usá la variante no-interactiva con la
