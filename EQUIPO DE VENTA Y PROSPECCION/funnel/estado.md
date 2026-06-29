@@ -118,6 +118,16 @@ Nombre, empresa, rubro y un gancho de dolor por rubro.
 - [2026-06-14] B&R / SMS Latinoamérica (Mar del Plata): perfil corporativo con red regional — posiblemente los socios no son públicos. Investigar vía LinkedIn o SMS Argentina.
 - [2026-06-14] Para Salta en general: La Guía Salta lista 20+ estudios pero la mayoría sin web propia. CPCE de Salta puede tener directorio de matriculados con emails. Fuente valiosa para próximas corridas en el NOA.
 
+## Gotchas descubiertos (continuación — 2026-06-29)
+- [2026-06-29] Estudio Bocco (Villa María, Córdoba, 13 años, agropecuario): dominio propio verificado (info@estudiobocco.com). Matrícula 10-17852-6. Especializado en tributación + agro + laboral. Candidato ⭐ para primer envío en Villa María. Ángulo: zona agropecuaria con clientes BP y Ganancias = julio es el mes más intenso del año.
+- [2026-06-29] Estudio Barceló (Villa María): email personal Yahoo publicado en sitio propio (ebarcelogili@yahoo.com.ar). CPN María José Barceló. Contacto fácil, estudio orientado a PyMEs y particulares.
+- [2026-06-29] Alvarez & Asociados S.A.S. (Villa María, ~40 años, fundado 1986, CUIT 30-71631053-8): sin email ni nombre de titular publicado. Sitio caído (503). Investigar vía CPCE Córdoba delegación Villa María (Mendoza 1439, Villa María). Candidato ⭐ para corrida futura.
+- [2026-06-29] Estudio Ronconi (Gualeguaychú, Entre Ríos): CPN Alejandra M. Ronconi (matrícula 3019), estudio unipersonal. Email Gmail verificado en sitio Wix. Ángulo: la carga operativa de un estudio unipersonal en julio es la más alta del año.
+- [2026-06-29] Estudio Fernandez Tesone (Gualeguaychú, +40 años, +200 empresas activas ⭐): el prospecto de mayor volumen de esta corrida. Sin email ni titular publicado. Sitio caído. Candidato prioritario para corrida futura vía CPCE Entre Ríos delegación Gualeguaychú. Con 200+ empresas en cartera, es el prospecto de mayor impacto potencial de todo Gualeguaychú.
+- [2026-06-29] Villa María tiene capacidad para 5+ corridas adicionales. Candidatos pendientes: Magnago (mencionado corrida 06-25, email pendiente CPCE Córdoba), otros estudios en buscador5900.com.ar/profesionales, CPCE Córdoba delegación Villa María como fuente.
+- [2026-06-29] Gualeguaychú: primera incursión exitosa. Hub turístico-industrial ~90k hab. Baja exposición tech = diferenciador real. Candidatos adicionales: Estudio Grosso (telexplorer.com.ar/Gualeguaychu), Estudio Vásquez, Estudio Pagnanini. CPCE Entre Ríos delegación Gualeguaychú como fuente para próximas corridas.
+- [2026-06-29] Entre Ríos completa: Paraná ✓, Concordia ✓, Gualeguaychú ✓. Córdoba interior: Río Cuarto ✓, Villa María ✓. Hito 95 leads (19 corridas).
+
 ## Gotchas descubiertos (continuación — 2026-06-28)
 - [2026-06-28] SAIPE Estudio Contable S.A. (Rafaela, SF): firma S.A. multi-sucursal con 6 sedes (Rafaela, Humberto, Ataliva, Sarmiento, Vera, Reconquista). 4 socios con emails personales en dominio propio: alfiore@saipe.com.ar (fundador), mbruno@saipe.com.ar (impuestos), fabioairasca@ y mgrande@ (inferidos). Candidato ⭐ para primer envío en Rafaela. Ángulo multi-sucursal: cada hora automatizada se multiplica por 6 sedes.
 - [2026-06-28] Laura, Sasia y Asociados S.A. (Rafaela, SF, 70 años): la firma más antigua de la corrida y del programa. José Sasia verificado en LinkedIn. Email info@ls-sa.com.ar. Ángulo diferenciado: "70 años de adaptación constante = la firma que siempre adoptó lo que venía". Candidato ⭐ para primer envío en Rafaela.
@@ -131,10 +141,27 @@ Nombre, empresa, rubro y un gancho de dolor por rubro.
 - Backend: endpoints externos OK, **migración aplicada**, **chat en vivo sobre el plan funcionando**.
 - **Prospección diaria automática: ACTIVA en MODO BORRADOR** (busca y escribe; NO envía nada).
 - **Envío real de correos: APAGADO** (`OUTREACH_ENABLED=false`). Encender tras validar emails + warm-up.
-- Corridas borrador completadas: 11/06 (Córdoba/Rosario), 12/06 (CABA/GBA), 13/06 (Mendoza/Tucumán), 14/06 (Salta/Mar del Plata), 15/06 (Bahía Blanca/Neuquén), 16/06 (Santa Fe/Paraná), 17/06 (Rosario expansión), 18/06 (San Juan/Resistencia Chaco), 19/06 (Jujuy/Posadas Misiones), 20/06 (La Rioja Capital/Catamarca Capital), 21/06 (La Plata/San Luis Capital), 22/06 (Córdoba 2° lote/Comodoro Rivadavia), 23/06 (Corrientes Capital/Santiago del Estero Capital), 24/06 (Formosa Capital/Bariloche Río Negro), 25/06 (Río Cuarto/Río Gallegos Santa Cruz), 26/06 (Tandil/General Roca Río Negro), 27/06 (Concordia Entre Ríos/Pergamino Buenos Aires), 28/06 (**Rafaela Santa Fe/Junín Buenos Aires**) → **90 leads en borrador (18 corridas)**. Cinturón NOA completo (Mendoza, Tucumán, Salta, Jujuy, La Rioja, Catamarca, Santiago del Estero ✓). Cuyo completo (Mendoza, San Juan, San Luis). Patagonia: Neuquén ✓, Comodoro ✓, Bariloche ✓, Río Gallegos ✓, General Roca ✓. NEA completo: Chaco ✓, Misiones ✓, Corrientes ✓, Formosa ✓. Córdoba interior: Río Cuarto ✓. PBA interior: Tandil ✓, Pergamino ✓, **Junín ✓**. Entre Ríos interior: Concordia ✓. Santa Fe interior: **Rafaela ✓**.
+- Corridas borrador completadas: 11/06 (Córdoba/Rosario), 12/06 (CABA/GBA), 13/06 (Mendoza/Tucumán), 14/06 (Salta/Mar del Plata), 15/06 (Bahía Blanca/Neuquén), 16/06 (Santa Fe/Paraná), 17/06 (Rosario expansión), 18/06 (San Juan/Resistencia Chaco), 19/06 (Jujuy/Posadas Misiones), 20/06 (La Rioja Capital/Catamarca Capital), 21/06 (La Plata/San Luis Capital), 22/06 (Córdoba 2° lote/Comodoro Rivadavia), 23/06 (Corrientes Capital/Santiago del Estero Capital), 24/06 (Formosa Capital/Bariloche Río Negro), 25/06 (Río Cuarto/Río Gallegos Santa Cruz), 26/06 (Tandil/General Roca Río Negro), 27/06 (Concordia Entre Ríos/Pergamino Buenos Aires), 28/06 (Rafaela Santa Fe/Junín Buenos Aires), 29/06 (**Villa María Córdoba/Gualeguaychú Entre Ríos**) → **95 leads en borrador (19 corridas)**. Cinturón NOA completo (Mendoza, Tucumán, Salta, Jujuy, La Rioja, Catamarca, Santiago del Estero ✓). Cuyo completo (Mendoza, San Juan, San Luis). Patagonia: Neuquén ✓, Comodoro ✓, Bariloche ✓, Río Gallegos ✓, General Roca ✓. NEA completo: Chaco ✓, Misiones ✓, Corrientes ✓, Formosa ✓. Córdoba interior: Río Cuarto ✓, **Villa María ✓**. PBA interior: Tandil ✓, Pergamino ✓, Junín ✓. Entre Ríos: Paraná ✓, Concordia ✓, **Gualeguaychú ✓** (Entre Ríos completa). Santa Fe interior: Rafaela ✓.
 - Pendiente real: validar calidad de los emails y, cuando se apruebe, encender el envío (flip a push-vivo).
 
 ## Última corrida
+**Fecha:** 2026-06-29 | **Modo:** BORRADOR (sin envíos reales)
+**Segmento:** Estudios contables/impositivos — **Villa María (Córdoba)** (primera incursión Córdoba interior 2ª ciudad) + **Gualeguaychú (Entre Ríos)** (primera incursión — completa Entre Ríos)
+**Cupo usado:** 5 leads
+**Leads encontrados:** 5
+**Leads descartados:** 0 (ninguno en La Pampa; ningún duplicado)
+**Emails escritos:** 3 (Barceló ✅ personal Yahoo, Bocco ✅ dominio propio ⭐, Ronconi ✅ Gmail verificado)
+**Sin email:** 2 (Alvarez & Asociados — not_found, sitio 503; Fernandez Tesone — not_found ⭐, +200 empresas)
+**Email status:** 1 verified_domain (Bocco ⭐), 2 verified_personal (Barceló Yahoo, Ronconi Gmail), 2 not_found
+**Disparador:** Prórroga DDJJ Ganancias/Bienes Personales período 2025 hasta 27/07/2026 (RG ARCA 5851/2026) — quedan 28 días
+**Archivos:**
+- `funnel/leads/new/borrador-2026-06-29.jsonl` — 5 leads
+- `funnel/reportes/2026-06-29.md` — reporte completo
+**Total acumulado borrador:** 95 leads (19 corridas)
+**Hitos:** Villa María (Córdoba) inaugurada ✓. Gualeguaychú (Entre Ríos) inaugurada ✓. Entre Ríos completa: Paraná ✓, Concordia ✓, Gualeguaychú ✓. Córdoba interior: Río Cuarto ✓, Villa María ✓.
+**Próximo bloqueante:** Validar calidad de los emails y activar envío real (`OUTREACH_ENABLED=true` + warm-up). Candidatos prioritarios ⭐: Bocco (Villa María, dominio propio, agro), SAIPE (multi-sucursal, email personal alfiore@), LS S.A. (José Sasia, 70 años), Marturet (Concordia), Carnevale (Pergamino), Fernández Carrera Molejón (ISO 9001, General Roca ⭐⭐). Candidatos sin email para corrida futura: Fernandez Tesone ⭐ (Gualeguaychú, +200 empresas, CPCE ER), Alvarez & Asociados ⭐ (Villa María, 40 años, CPCE Córdoba), Massari ⭐ (Junín, CPBA), Balbi-Bergamini ⭐ (Junín, CPBA).
+
+## Corrida anterior (2026-06-28)
 **Fecha:** 2026-06-28 | **Modo:** BORRADOR (sin envíos reales)
 **Segmento:** Estudios contables/impositivos — **Rafaela (Santa Fe)** (primera incursión) + **Junín (Buenos Aires)** (primera incursión PBA noroeste agroindustrial)
 **Cupo usado:** 5 leads
@@ -149,7 +176,6 @@ Nombre, empresa, rubro y un gancho de dolor por rubro.
 - `funnel/reportes/2026-06-28.md` — reporte completo
 **Total acumulado borrador:** 90 leads (18 corridas)
 **Hitos:** Rafaela Santa Fe inaugurado ✓. Junín Buenos Aires inaugurado ✓ (mercado de baja presencia digital — estrategia CPBA para próximas corridas). Hito 90 leads (18 corridas).
-**Próximo bloqueante:** Validar calidad de los emails y activar envío real (`OUTREACH_ENABLED=true` + warm-up). Candidatos prioritarios ⭐: SAIPE (multi-sucursal, email personal alfiore@), LS S.A. (José Sasia, 70 años), Marturet (Concordia), Carnevale (Pergamino), Fernández Carrera Molejón (ISO 9001, General Roca ⭐⭐). Candidatos sin email para corrida futura: Massari ⭐ (Junín, CPBA), Balbi-Bergamini ⭐ (Junín, CPBA), Di Prinzio (Junín, CPBA), Selmi ⭐ (Pergamino, CPCE PBA), López Madina ⭐ (Tandil, CPCE PBA).
 
 ## Corrida anterior (2026-06-27)
 **Fecha:** 2026-06-27 | **Modo:** BORRADOR (sin envíos reales)
