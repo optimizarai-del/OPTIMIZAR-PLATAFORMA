@@ -8,8 +8,8 @@ Cómo opera el equipo de IA de OPTIMIZAR, manejado desde la plataforma.
 |-----------------|---------|--------|
 | `orquestador`   | `.claude/agents/orquestador.md` | ✅ punto de entrada |
 | `investigacion` | `.claude/agents/investigacion.md` | ✅ listo |
-| `contenido`     | `.claude/agents/content-creator.md` | ✅ listo (publicar necesita tokens IG/LinkedIn) |
-| `creativo`      | `.claude/agents/creative-designer.md` | ✅ listo (generar imagen necesita API) |
+| `contenido`     | `.claude/agents/contenido.md` | ✅ listo (publicar necesita tokens IG/LinkedIn) |
+| `creativo`      | `.claude/agents/creativo.md` | ✅ listo (OpenAI imágenes + Higgsfield video) |
 | `ads`           | `.claude/agents/meta-ads-analyst.md` | ✅ listo (token Pipeboard cargado) |
 | `sdr`           | `.claude/agents/sdr.md` | ✅ listo (envío real necesita Apollo/Instantly) |
 | `calificacion`  | `.claude/agents/calificacion.md` | ⚠️ necesita WhatsApp + Calendar |
