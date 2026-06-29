@@ -87,7 +87,7 @@ class ProyectoOut(BaseModel):
     github_repo: Optional[str] = None
     github_last_sync: Optional[datetime] = None
     github_last_commit_sha: Optional[str] = None
-    created_at: datetime
+    created_at: Optional[datetime] = None
 
     class Config:
         from_attributes = True
@@ -142,7 +142,7 @@ class PuntoAccionOut(BaseModel):
     descripcion: Optional[str]
     orden: int
     completado: bool
-    created_at: datetime
+    created_at: Optional[datetime] = None
 
     class Config:
         from_attributes = True
@@ -187,7 +187,7 @@ class TareaOut(BaseModel):
     fecha_fin_real: Optional[date]
     minutos_estimados: Optional[int]
     minutos_trabajados: int = 0
-    created_at: datetime
+    created_at: Optional[datetime] = None
 
     class Config:
         from_attributes = True
@@ -214,7 +214,7 @@ class RegistroTiempoOut(BaseModel):
     resultado: Optional[str]
     tipo: TipoRegistro
     fecha: date
-    created_at: datetime
+    created_at: Optional[datetime] = None
 
     class Config:
         from_attributes = True
@@ -266,7 +266,7 @@ class RequerimientoOut(BaseModel):
     fecha_entrega: Optional[date]
     status: RequerimientoStatus
     proyecto_id: Optional[int]
-    created_at: datetime
+    created_at: Optional[datetime] = None
     # ── Análisis IA contra el catálogo de servicios ──
     analisis_estado: str = "pendiente"
     servicio_match_id: Optional[int] = None
@@ -307,7 +307,7 @@ class ServicioOut(BaseModel):
     capacidades: Optional[str]
     base_referencia: Optional[str]
     activo: bool
-    created_at: datetime
+    created_at: Optional[datetime] = None
     updated_at: Optional[datetime]
 
     class Config:
@@ -325,7 +325,7 @@ class NotificacionOut(BaseModel):
     asunto: str
     enviado: bool
     error: Optional[str]
-    created_at: datetime
+    created_at: Optional[datetime] = None
 
     class Config:
         from_attributes = True
@@ -374,11 +374,11 @@ class OportunidadOut(BaseModel):
     contacto_telefono: Optional[str]
     titulo: str
     descripcion: Optional[str]
-    etapa: EtapaOportunidad
-    valor_estimado: float
-    probabilidad: int
-    orden: int
-    fuente: FuenteOportunidad
+    etapa: EtapaOportunidad = EtapaOportunidad.lead
+    valor_estimado: float = 0.0
+    probabilidad: int = 0
+    orden: int = 0
+    fuente: FuenteOportunidad = FuenteOportunidad.manual
     external_id: Optional[str]
     responsable: Optional[str]
     proxima_accion: Optional[str]
@@ -391,7 +391,7 @@ class OportunidadOut(BaseModel):
     mensaje_cuerpo: Optional[str] = None
     outreach_status: Optional[str] = None
     respuesta_recibida: Optional[str] = None
-    created_at: datetime
+    created_at: Optional[datetime] = None
     updated_at: Optional[datetime]
 
     class Config:
@@ -455,16 +455,16 @@ class ContactoOut(BaseModel):
     email: Optional[str]
     telefono: Optional[str]
     info: Optional[str]
-    origen: str
+    origen: str = "agente"
     idioma: Optional[str]
     disparador: Optional[str]
     mensaje_asunto: Optional[str]
     mensaje_cuerpo: Optional[str]
     respuesta_recibida: Optional[str]
-    estado: str
+    estado: str = "nuevo"
     external_id: Optional[str]
     oportunidad_id: Optional[int]
-    created_at: datetime
+    created_at: Optional[datetime] = None
     updated_at: Optional[datetime]
 
     class Config:
@@ -507,7 +507,7 @@ class LeadJobOut(BaseModel):
     status: str
     fundamento: Optional[str]
     resumen: Optional[str]
-    created_at: datetime
+    created_at: Optional[datetime] = None
     processed_at: Optional[datetime]
 
     class Config:
@@ -529,7 +529,7 @@ class ChatMensajeOut(BaseModel):
     contenido: str
     requiere_aprobacion: bool
     estado: str
-    created_at: datetime
+    created_at: Optional[datetime] = None
 
     class Config:
         from_attributes = True
@@ -570,7 +570,7 @@ class AgenteTareaOut(BaseModel):
     resultado: Optional[str] = None
     origen: str
     prioridad: str
-    created_at: datetime
+    created_at: Optional[datetime] = None
     updated_at: Optional[datetime] = None
     processed_at: Optional[datetime] = None
 
@@ -641,15 +641,15 @@ class AdMetricOut(BaseModel):
 class AdCampaignOut(BaseModel):
     id: int
     external_id: str
-    plataforma: str
+    plataforma: str = "meta"
     nombre: str
-    estado: str
+    estado: str = "ACTIVE"
     objetivo: Optional[str] = None
     cuenta_id: Optional[str] = None
     cuenta_nombre: Optional[str] = None
     presupuesto_diario: Optional[float] = None
-    moneda: str
-    ultima_sync: datetime
+    moneda: str = "ARS"
+    ultima_sync: Optional[datetime] = None
     # agregados del rango consultado (los calcula el endpoint)
     gasto_total: float = 0.0
     impresiones_total: int = 0
@@ -674,7 +674,7 @@ class AdRecommendationOut(BaseModel):
     accion_sugerida: Optional[str] = None
     metricas_clave: dict = {}
     estado: str
-    created_at: datetime
+    created_at: Optional[datetime] = None
     # nombre de la campaña (lo completa el endpoint para la UI)
     campana_nombre: Optional[str] = None
 

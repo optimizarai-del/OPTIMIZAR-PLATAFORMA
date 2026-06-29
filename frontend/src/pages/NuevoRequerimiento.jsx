@@ -40,8 +40,18 @@ export default function NuevoRequerimiento() {
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState('')
   const [resultado, setResultado] = useState(null)   // requerimiento creado + análisis
+  const [herramientaOtro, setHerramientaOtro] = useState('')  // campo "Otro" (controlado)
 
   const set = k => e => setForm(f => ({ ...f, [k]: e.target.value }))
+
+  // El "Otro" de herramientas: reconstruye el array con las predefinidas tildadas + el texto libre.
+  const setOtroHerramienta = (texto) => {
+    setHerramientaOtro(texto)
+    setForm(f => {
+      const predefinidas = f.herramientas.filter(h => HERRAMIENTAS_OPT.includes(h))
+      return { ...f, herramientas: texto.trim() ? [...predefinidas, texto.trim()] : predefinidas }
+    })
+  }
 
   const toggleArr = (key, val) => setForm(f => ({
     ...f,
@@ -174,12 +184,9 @@ export default function NuevoRequerimiento() {
               ))}
               <div className="flex items-center gap-3">
                 <div className="w-4 h-4 rounded border-border border-2 flex-shrink-0" />
-                <input className="input !py-2" placeholder="Otro: ..." onChange={e => {
-                  if (e.target.value) {
-                    const otros = form.herramientas.filter(h => !HERRAMIENTAS_OPT.includes(h))
-                    setForm(f => ({ ...f, herramientas: [...HERRAMIENTAS_OPT.filter(h => f.herramientas.includes(h)), e.target.value] }))
-                  }
-                }} />
+                <input className="input !py-2" placeholder="Otro: ..."
+                  value={herramientaOtro}
+                  onChange={e => setOtroHerramienta(e.target.value)} />
               </div>
             </div>
           </div>

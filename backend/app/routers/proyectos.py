@@ -1,9 +1,9 @@
-from datetime import datetime
+from datetime import datetime, timezone
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from typing import List
 from app.database import get_db
-from app.models import Proyecto, PuntoAccion, Tarea, TareaStatus, User, UserRole
+from app.models import Proyecto, PuntoAccion, Tarea, TareaStatus, TareaPrioridad, User, UserRole
 from app.schemas import (ProyectoCreate, ProyectoUpdate, ProyectoOut,
                           PuntoAccionCreate, PuntoAccionUpdate, PuntoAccionOut,
                           GitHubRepoSet, GitHubSyncResult,
@@ -183,9 +183,15 @@ def sync_github(pid: int, db: Session = Depends(get_db), _=Depends(get_db_user))
 
     task_updates_applied = []
     for upd in result.get("task_updates", []):
+        # Validamos el status que devuelve la IA contra el enum: un valor fuera de
+        # TareaStatus haría fallar el commit (500). Si es inválido, lo ignoramos.
+        try:
+            nuevo_status = TareaStatus(upd["status"])
+        except (ValueError, KeyError):
+            continue
         tarea = db.query(Tarea).filter_by(id=upd["id"], proyecto_id=pid).first()
-        if tarea and tarea.status.value != upd["status"]:
-            tarea.status = upd["status"]
+        if tarea and tarea.status != nuevo_status:
+            tarea.status = nuevo_status
             task_updates_applied.append(upd)
 
     plan_updates_applied = []
@@ -196,7 +202,7 @@ def sync_github(pid: int, db: Session = Depends(get_db), _=Depends(get_db_user))
             plan_updates_applied.append(upd)
 
     latest_sha = commits[0]["sha"] if commits else p.github_last_commit_sha
-    p.github_last_sync = datetime.utcnow()
+    p.github_last_sync = datetime.now(timezone.utc)
     p.github_last_commit_sha = latest_sha
     db.commit()
 
@@ -279,11 +285,16 @@ def ai_generar_tareas(pid: int, db: Session = Depends(get_db), _=Depends(get_db_
 
     creadas = []
     for item in tareas_nuevas:
+        # La prioridad de la IA puede venir fuera del enum → caería el commit. La validamos.
+        try:
+            prioridad = TareaPrioridad(item.get("prioridad", "media"))
+        except (ValueError, KeyError):
+            prioridad = TareaPrioridad.media
         tarea = Tarea(
             proyecto_id=pid,
             titulo=item.get("titulo", "")[:200],
             descripcion=item.get("descripcion"),
-            prioridad=item.get("prioridad", "media"),
+            prioridad=prioridad,
             minutos_estimados=item.get("minutos_estimados"),
         )
         db.add(tarea)
