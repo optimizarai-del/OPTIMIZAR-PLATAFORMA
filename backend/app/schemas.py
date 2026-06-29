@@ -40,7 +40,9 @@ class UserOut(BaseModel):
     email: str
     role: UserRole
     is_active: bool
-    created_at: datetime
+    # Optional para que una fila con created_at NULL (p.ej. cargada por SQL manual)
+    # no rompa la serialización de la respuesta (evita 500 en el login).
+    created_at: Optional[datetime] = None
 
     class Config:
         from_attributes = True
