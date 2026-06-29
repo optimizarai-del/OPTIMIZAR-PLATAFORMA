@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta, timezone
 from jose import jwt, JWTError
-from passlib.context import CryptContext
+import bcrypt
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer, APIKeyHeader
 from sqlalchemy.orm import Session
@@ -76,7 +76,6 @@ def area_de_clave(key: str) -> str:
     """Devuelve el área dueña de la clave ('marketing'/'comercial'/'desarrollo'/'global'), o ''."""
     return _claves_validas().get(key or "", "")
 
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 oauth2 = OAuth2PasswordBearer(tokenUrl="/auth/login")
 api_key_header = APIKeyHeader(name="X-API-Key", auto_error=False)
 
@@ -95,12 +94,25 @@ def verify_api_key(key: str = Depends(api_key_header)):
     return True
 
 
+def _pw_bytes(p: str) -> bytes:
+    """bcrypt opera sobre bytes y trunca a 72 bytes (igual que passlib lo hacía)."""
+    return (p or "").encode("utf-8")[:72]
+
+
 def hash_pw(p: str) -> str:
-    return pwd_context.hash(p)
+    """Genera un hash bcrypt ($2b$). Usa la lib `bcrypt` directo (estable en 4.x y 5.x),
+    sin passlib en el medio (passlib 1.7.x rompe con bcrypt >= 4.1)."""
+    return bcrypt.hashpw(_pw_bytes(p), bcrypt.gensalt()).decode("utf-8")
 
 
 def verify_pw(plain: str, hashed: str) -> bool:
-    return pwd_context.verify(plain, hashed)
+    """Verifica contra un hash bcrypt. Nunca propaga excepción: un hash corrupto o vacío
+    devuelve False en vez de tirar 500."""
+    try:
+        return bcrypt.checkpw(_pw_bytes(plain), (hashed or "").encode("utf-8"))
+    except (ValueError, TypeError) as e:
+        logger.warning("verify_pw falló al comparar el hash: %s", e)
+        return False
 
 
 def create_token(data: dict) -> str:
