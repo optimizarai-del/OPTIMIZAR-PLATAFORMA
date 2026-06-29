@@ -25,6 +25,7 @@ export default function Agentes() {
   const [texto, setTexto] = useState('')
   const [enviando, setEnviando] = useState(false)
   const chatEndRef = useRef(null)
+  const busyRef = useRef(false)   // bloquea el polling mientras hay una acción del usuario en curso
 
   const director = DIRECTORES.find(d => d.canal === canal)
 
@@ -39,7 +40,8 @@ export default function Agentes() {
 
   useEffect(() => {
     cargar(canal)
-    const t = setInterval(() => cargar(canal), 5000)   // refresco en vivo (polling)
+    // refresco en vivo (polling): no pisa una acción en vuelo (enviar/aprobar)
+    const t = setInterval(() => { if (!busyRef.current) cargar(canal) }, 5000)
     return () => clearInterval(t)
   }, [canal])
 
@@ -51,6 +53,7 @@ export default function Agentes() {
     if (!msg) return
     setEnviando(true)
     setTexto('')
+    busyRef.current = true
     try {
       await api.post('/api/agentes/chat', { contenido: msg, canal })
       cargar(canal)
@@ -59,15 +62,19 @@ export default function Agentes() {
       setTexto(msg)
     } finally {
       setEnviando(false)
+      busyRef.current = false
     }
   }
 
   const aprobar = async (mid, estado) => {
+    busyRef.current = true
     try {
       await api.patch(`/api/agentes/chat/${mid}/estado?estado=${estado}`)
-      cargar()
+      cargar(canal)
     } catch {
       toast.error('No se pudo actualizar')
+    } finally {
+      busyRef.current = false
     }
   }
 

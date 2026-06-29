@@ -243,21 +243,24 @@ def upsert_externo(data: OportunidadExternal, db: Session = Depends(get_db),
 # Útil para testear sin esperar al scheduler. Protegidos con JWT (uso interno).
 
 @router.post("/outreach/enviar")
-def disparar_envio(db: Session = Depends(get_db), current_user: User = Depends(get_db_user)):
+def disparar_envio(bg: BackgroundTasks, current_user: User = Depends(get_db_user)):
     if current_user.role not in [UserRole.admin, UserRole.manager]:
         raise HTTPException(403, "Sin permisos")
+    # El envío respeta un throttling (sleep entre emails) que puede tardar minutos: lo
+    # corremos en background con su propia sesión para no colgar la respuesta HTTP.
     from app.outreach_service import enviar_pendientes
-    enviados = enviar_pendientes(db)
-    return {"enviados": enviados}
+    bg.add_task(enviar_pendientes)
+    return {"ok": True, "mensaje": "Envío encolado. Se procesa en segundo plano."}
 
 
 @router.post("/outreach/revisar-inbox")
-def disparar_inbox(db: Session = Depends(get_db), current_user: User = Depends(get_db_user)):
+def disparar_inbox(bg: BackgroundTasks, current_user: User = Depends(get_db_user)):
     if current_user.role not in [UserRole.admin, UserRole.manager]:
         raise HTTPException(403, "Sin permisos")
+    # La lectura IMAP del inbox también puede tardar: a background.
     from app.outreach_service import revisar_inbox
-    registradas = revisar_inbox(db)
-    return {"registradas": registradas}
+    bg.add_task(revisar_inbox)
+    return {"ok": True, "mensaje": "Revisión de inbox encolada. Se procesa en segundo plano."}
 
 
 @router.get("/outreach/config-check")
@@ -318,7 +321,12 @@ def _promover_contacto(c: Contacto, db: Session) -> Oportunidad:
     """Sube un contacto al pipeline creando una Oportunidad (etapa 'contactado').
     Si ya estaba promovido, devuelve la oportunidad existente."""
     if c.oportunidad_id:
-        return db.query(Oportunidad).filter_by(id=c.oportunidad_id).first()
+        existente = db.query(Oportunidad).filter_by(id=c.oportunidad_id).first()
+        if existente:
+            return existente
+        # Puntero colgado (la oportunidad fue borrada): lo reseteamos y creamos una nueva
+        # en vez de devolver None (que rompía el db.refresh del caller con un 500).
+        c.oportunidad_id = None
     base = db.query(Oportunidad).filter_by(etapa=EtapaOportunidad.contactado).count()
     op = Oportunidad(
         empresa=c.empresa,
