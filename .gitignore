@@ -28,3 +28,7 @@ Thumbs.db
 
 # Claude Code internal
 .claude/worktrees/
+
+# Python cache
+__pycache__/
+*.pyc
