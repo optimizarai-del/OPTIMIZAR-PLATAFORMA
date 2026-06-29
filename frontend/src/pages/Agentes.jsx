@@ -1,14 +1,26 @@
-import { useEffect, useRef, useState } from 'react'
-import { Bot, Send, Sparkles, CheckCircle2, AlertTriangle, Clock, Loader2, Check, X } from 'lucide-react'
+import { useEffect, useMemo, useRef, useState } from 'react'
+import { Bot, Send, Sparkles, CheckCircle2, AlertTriangle, Clock, Loader2, Check, X, Activity } from 'lucide-react'
 import api from '../utils/api'
 import { toast } from '../utils/toast'
 
+// chip = badge de estado · dot = color del puntito del agente · border = borde de la tarjeta
+// pulse = el agente "se prende" (anima) cuando está trabajando
 const ESTADO_TAREA = {
-  pendiente:        { label: 'Pendiente',   chip: 'chip-muted',    icon: Clock },
-  en_proceso:       { label: 'En proceso',  chip: 'chip-warn',     icon: Loader2 },
-  completado:       { label: 'Completado',  chip: 'chip-success',  icon: CheckCircle2 },
-  error:            { label: 'Error',       chip: 'chip-danger',   icon: AlertTriangle },
-  requiere_aprobacion: { label: 'Aprobación', chip: 'chip-accent', icon: AlertTriangle },
+  pendiente:        { label: 'Pendiente',   chip: 'chip-muted',    icon: Clock,         dot: 'bg-neutral-300 dark:bg-slate-600', border: 'border-border' },
+  en_proceso:       { label: 'Trabajando',  chip: 'chip-warn',     icon: Loader2,       dot: 'bg-warn',    border: 'border-warn/50', pulse: true },
+  completado:       { label: 'Completado',  chip: 'chip-success',  icon: CheckCircle2,  dot: 'bg-success', border: 'border-success/40' },
+  error:            { label: 'Error',       chip: 'chip-danger',   icon: AlertTriangle, dot: 'bg-danger',  border: 'border-danger/40' },
+  requiere_aprobacion: { label: 'Aprobación', chip: 'chip-accent', icon: AlertTriangle, dot: 'bg-accent',  border: 'border-accent/50', pulse: true },
+}
+
+// "hace 3 min" — tiempo relativo corto
+function hace(ts) {
+  if (!ts) return ''
+  const s = Math.max(0, (Date.now() - new Date(ts).getTime()) / 1000)
+  if (s < 60) return 'recién'
+  if (s < 3600) return `hace ${Math.floor(s / 60)} min`
+  if (s < 86400) return `hace ${Math.floor(s / 3600)} h`
+  return `hace ${Math.floor(s / 86400)} d`
 }
 
 const DIRECTORES = [
@@ -29,6 +41,28 @@ export default function Agentes() {
 
   const director = DIRECTORES.find(d => d.canal === canal)
 
+  // Agentes que pertenecen al área del director actual (para filtrar tareas/equipo)
+  const agentesDelArea = useMemo(
+    () => new Set(catalogo.filter(a => a.area === director?.area && !a.director).map(a => a.agente)),
+    [catalogo, director?.area]
+  )
+  // Tareas de este equipo (las tareas vienen ordenadas por created_at desc del backend)
+  const tareasArea = useMemo(
+    () => tareas.filter(t => agentesDelArea.has(t.agente)),
+    [tareas, agentesDelArea]
+  )
+  // Estado actual de cada agente = su tarea más reciente (la 1ra que aparece, por el orden desc)
+  const estadoPorAgente = useMemo(() => {
+    const m = {}
+    for (const t of tareasArea) if (!m[t.agente]) m[t.agente] = t
+    return m
+  }, [tareasArea])
+  // Quién está trabajando AHORA (tarea en_proceso)
+  const trabajandoAhora = useMemo(
+    () => Object.values(estadoPorAgente).filter(t => t.estado === 'en_proceso'),
+    [estadoPorAgente]
+  )
+
   const cargar = (c = canal) => {
     api.get(`/api/agentes/chat?canal=${c}`).then(r => setChat(r.data)).catch(() => {})
     api.get('/api/agentes/tareas').then(r => setTareas(r.data)).catch(() => {})
@@ -41,7 +75,7 @@ export default function Agentes() {
   useEffect(() => {
     cargar(canal)
     // refresco en vivo (polling): no pisa una acción en vuelo (enviar/aprobar)
-    const t = setInterval(() => { if (!busyRef.current) cargar(canal) }, 5000)
+    const t = setInterval(() => { if (!busyRef.current) cargar(canal) }, 3000)
     return () => clearInterval(t)
   }, [canal])
 
@@ -117,7 +151,7 @@ export default function Agentes() {
             {chat.length === 0 ? (
               <div className="text-center text-muted text-[13px] mt-10">
                 <Sparkles size={20} className="mx-auto mb-2 opacity-50" />
-                Escribile al orquestador para empezar.<br />
+                Escribile al Director para empezar.<br />
                 Ej: "Generá 3 piezas de contenido sobre el caso de Gabi".
               </div>
             ) : chat.map(m => (
@@ -157,7 +191,7 @@ export default function Agentes() {
           </div>
 
           <form onSubmit={enviar} className="p-3 border-t border-border flex gap-2">
-            <input className="input flex-1" placeholder="Pedile algo al orquestador..."
+            <input className="input flex-1" placeholder="Pedile algo al Director..."
               value={texto} onChange={e => setTexto(e.target.value)} />
             <button type="submit" disabled={enviando} className="btn-accent disabled:opacity-50">
               {enviando ? <Loader2 size={15} className="animate-spin" /> : <Send size={15} />}
@@ -167,7 +201,22 @@ export default function Agentes() {
 
         {/* ── Panel lateral: equipo + tareas ── */}
         <div className="space-y-6">
-          {/* Catálogo de agentes agrupado por área */}
+          {/* Banner "trabajando ahora" */}
+          {trabajandoAhora.length > 0 && (
+            <div className="card p-4 border-warn/40 bg-warn/5">
+              <div className="flex items-center gap-2 text-[11px] uppercase tracking-wide text-warn font-semibold mb-1.5">
+                <Activity size={12} className="animate-pulse" /> Trabajando ahora
+              </div>
+              {trabajandoAhora.map(t => (
+                <div key={t.id} className="text-[12px]">
+                  <span className="font-bold capitalize">{t.agente}</span>
+                  <span className="text-muted"> — {t.instruccion}</span>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* Catálogo de agentes — se prenden según su estado en vivo */}
           <div className="card p-5">
             <div className="font-bold text-[13px] tracking-tight mb-3">Equipo de {director?.area}</div>
             <div className="space-y-4">
@@ -178,18 +227,34 @@ export default function Agentes() {
                   <div key={area}>
                     <div className="text-[10px] uppercase tracking-wide text-accent font-semibold mb-1.5">{area}</div>
                     <div className="space-y-2">
-                      {delArea.map(a => (
-                        <div key={a.agente} className="flex items-start gap-2.5">
-                          <div className={`w-2 h-2 rounded-full mt-1.5 shrink-0 ${a.listo ? 'bg-success' : 'bg-warn'}`} />
-                          <div className="min-w-0">
-                            <div className={`text-[13px] ${a.director ? 'font-bold' : 'font-semibold'}`}>
-                              {a.nombre}{a.director && ' ★'}
+                      {delArea.map(a => {
+                        const t = estadoPorAgente[a.agente]
+                        const cfg = t ? (ESTADO_TAREA[t.estado] || ESTADO_TAREA.pendiente) : null
+                        const activo = cfg?.pulse
+                        return (
+                          <div key={a.agente}
+                            className={`flex items-start gap-2.5 rounded-lg px-1.5 py-1 -mx-1.5 transition-colors ${
+                              activo ? 'bg-warn/10' : ''}`}>
+                            <div className="relative mt-1.5 shrink-0">
+                              {/* puntito: estado en vivo si hay tarea, si no el de "listo/falta credencial" */}
+                              <div className={`w-2 h-2 rounded-full ${cfg ? cfg.dot : (a.listo ? 'bg-success' : 'bg-warn')}`} />
+                              {activo && <div className={`absolute inset-0 w-2 h-2 rounded-full ${cfg.dot} animate-ping`} />}
                             </div>
-                            <div className="text-[11px] text-muted">{a.rol}</div>
-                            {a.requiere && <div className="text-[10px] text-warn mt-0.5">⚠ {a.requiere}</div>}
+                            <div className="min-w-0 flex-1">
+                              <div className="flex items-center gap-1.5">
+                                <span className={`text-[13px] ${a.director ? 'font-bold' : 'font-semibold'}`}>
+                                  {a.nombre}{a.director && ' ★'}
+                                </span>
+                                {cfg && <span className={`text-[9px] uppercase tracking-wide font-semibold ${
+                                  activo ? 'text-warn' : t.estado === 'completado' ? 'text-success' : 'text-muted'
+                                }`}>{cfg.label}</span>}
+                              </div>
+                              <div className="text-[11px] text-muted">{a.rol}</div>
+                              {a.requiere && !cfg && <div className="text-[10px] text-warn mt-0.5">⚠ {a.requiere}</div>}
+                            </div>
                           </div>
-                        </div>
-                      ))}
+                        )
+                      })}
                     </div>
                   </div>
                 )
@@ -197,25 +262,34 @@ export default function Agentes() {
             </div>
           </div>
 
-          {/* Feed de tareas */}
+          {/* Feed de tareas — en vivo */}
           <div className="card p-5">
             <div className="font-bold text-[13px] tracking-tight mb-3">Tareas del equipo</div>
-            {tareas.length === 0 ? (
+            {tareasArea.length === 0 ? (
               <div className="text-[12px] text-muted">Sin tareas todavía.</div>
             ) : (
               <div className="space-y-2 max-h-[40vh] overflow-y-auto">
-                {tareas.map(t => {
+                {tareasArea.map(t => {
                   const cfg = ESTADO_TAREA[t.estado] || ESTADO_TAREA.pendiente
+                  const Icon = cfg.icon
                   return (
-                    <div key={t.id} className="border border-border rounded-xl p-3">
+                    <div key={t.id} className={`border rounded-xl p-3 transition-colors ${cfg.border} ${
+                      cfg.pulse ? 'bg-warn/5' : ''}`}>
                       <div className="flex items-center justify-between gap-2 mb-1">
-                        <span className="text-[12px] font-semibold capitalize">{t.agente}</span>
+                        <span className="text-[12px] font-semibold capitalize flex items-center gap-1.5">
+                          <Icon size={12} className={
+                            t.estado === 'en_proceso' ? 'animate-spin text-warn'
+                            : t.estado === 'completado' ? 'text-success'
+                            : t.estado === 'requiere_aprobacion' ? 'text-accent' : 'text-muted'} />
+                          {t.agente}
+                        </span>
                         <span className={cfg.chip}>{cfg.label}</span>
                       </div>
                       <div className="text-[11px] text-muted line-clamp-2">{t.instruccion}</div>
                       {t.resultado && (
                         <div className="text-[11px] text-success mt-1 line-clamp-2">→ {t.resultado}</div>
                       )}
+                      <div className="text-[10px] text-muted/60 mt-1">{hace(t.processed_at || t.created_at)}</div>
                     </div>
                   )
                 })}

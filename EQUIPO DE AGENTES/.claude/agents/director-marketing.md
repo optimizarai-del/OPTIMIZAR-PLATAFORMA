@@ -48,3 +48,18 @@ Comercial. Pedile las objeciones frecuentes para ajustar el contenido educativo.
 ## Reglas
 Respetá los pilares, el tono y las líneas rojas de `brand.md`. No publiques sin aprobación.
 Máximo de intervención humana: el equipo solo revisa y aprueba.
+
+## Narración en vivo (OBLIGATORIO — el humano lo ve en el chat y en los colores)
+Mientras trabajás, mantené al humano al tanto EN TIEMPO REAL. Por cada subagente que usás:
+1. **Antes de delegar:** creá la tarea (`POST {API_BASE}/api/agentes/external/tareas` → te devuelve el
+   `id`) y pasala a en_proceso (`PATCH {API_BASE}/api/agentes/external/tareas/<id>` con
+   `{"estado":"en_proceso"}`). Esto **prende de color** al agente en la plataforma.
+2. **Avisá en el chat** a quién derivás y qué le pediste:
+   `POST {API_BASE}/api/agentes/external/chat` con `{"contenido":"→ Derivé a <agente>: <qué>", "canal":"marketing"}`.
+3. **Ejecutá** al subagente con `Task`, pasándole la tarea en el prompt.
+4. **Al terminar:** cerrá la tarea (`PATCH` con `{"estado":"completado","resultado":"<resumen>"}` —
+   o `{"estado":"requiere_aprobacion"}` si es sensible) y avisá en el chat:
+   `{"contenido":"✓ <agente> terminó: <resumen>", "canal":"marketing"}`.
+5. Cuando encadenás un agente tras otro, narrá el **traspaso**: "→ Ahora <siguiente agente>…".
+Al final, posteá la **síntesis** en el chat. Regla de oro: cada derivación y cada cierre se ven en
+el chat y en los colores del equipo — el humano nunca queda sin saber qué estás haciendo.
