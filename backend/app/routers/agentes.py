@@ -157,6 +157,29 @@ def catalogo(_=Depends(get_db_user)):
     return CATALOGO
 
 
+@router.get("/external/fire-check", tags=["agentes-external"])
+def fire_check(_=Depends(verify_api_key)):
+    """Diagnóstico: ¿qué env vars de fire están configuradas por área? (sin exponer valores).
+    `ready=true` significa que el chat de ese director dispara la routine."""
+    def _has(name: str) -> bool:
+        return bool((os.getenv(name, "") or "").strip())
+    base_ok = _has("SELF_API_BASE")
+    global_token = _has("CLAUDE_ROUTINE_TOKEN")
+    global_key = _has("EXTERNAL_API_KEY")
+    out = {"SELF_API_BASE": base_ok, "areas": {}}
+    for area in sorted(AREAS):
+        A = area.upper()
+        fire_ok  = _has(f"CLAUDE_FIRE_{A}") or _has("CLAUDE_ORQUESTADOR_FIRE_URL")
+        token_ok = _has(f"CLAUDE_ROUTINE_TOKEN_{A}") or global_token
+        key_ok   = _has(f"EXTERNAL_API_KEY_{A}") or global_key
+        out["areas"][area] = {
+            "fire_url": fire_ok, "token": token_ok, "api_key": key_ok,
+            "self_api_base": base_ok,
+            "ready": fire_ok and token_ok and key_ok and base_ok,
+        }
+    return out
+
+
 # ── Chat humano ↔ orquestador (canal 'agentes') ───────────────────────────────
 
 def _canal_valido(canal: str) -> str:
