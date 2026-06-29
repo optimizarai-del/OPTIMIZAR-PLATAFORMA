@@ -1,4 +1,5 @@
 import os
+import re
 import json
 import httpx
 from typing import Literal
@@ -133,25 +134,33 @@ def route_intent(message: str, conversation_history: list[dict] | None = None) -
         return {**_fallback_intent(message), "error": str(e)}
 
 
+def _kw_match(text: str, keywords: list[str]) -> bool:
+    """Coincidencia con word boundaries para evitar falsos positivos por substring."""
+    return any(re.search(r'\b' + re.escape(k) + r'\b', text) for k in keywords)
+
+
 def _fallback_intent(message: str) -> dict:
     """
     Clasificación determinística por keywords cuando la API no está disponible.
-    Cubre los casos más obvios; para el resto devuelve consulta_general.
+    Usa word boundaries para evitar falsos positivos (ej: "zona" en "zonas").
+    Prioridad: visita > búsqueda > contrato > general (búsqueda antes de contrato
+    porque "busco para alquilar" es búsqueda, no inicio de contrato).
     """
     text = message.lower()
 
     visita_kw = ["visita", "ver la propiedad", "conocer el depto", "puedo ir", "cuando puedo", "agendar"]
-    contrato_kw = ["contrato", "reserva", "alquilar", "firmar", "hacer la oferta", "cerrar"]
+    # "alquilar" solo no es suficiente para inferir contrato; se usan frases más específicas
+    contrato_kw = ["contrato", "reserva", "firmar", "hacer la oferta", "iniciar reserva", "cerrar trato"]
     busqueda_kw = ["busco", "necesito", "quiero comprar", "quiero alquilar", "tienen algo",
                    "propiedades", "departamento", "casa", "oficina", "local", "terreno",
-                   "zona", "barrio", "ambientes", "m2", "metros", "precio", "presupuesto"]
+                   "zona", "barrio", "ambientes", "metros", "precio", "presupuesto"]
 
-    if any(k in text for k in visita_kw):
+    if _kw_match(text, visita_kw):
         intent = "agendar_visita"
-    elif any(k in text for k in contrato_kw):
-        intent = "generar_contrato"
-    elif any(k in text for k in busqueda_kw):
+    elif _kw_match(text, busqueda_kw):
         intent = "buscar_propiedad"
+    elif _kw_match(text, contrato_kw):
+        intent = "generar_contrato"
     else:
         intent = "consulta_general"
 
