@@ -6,6 +6,12 @@ from typing import Literal
 ANTHROPIC_URL = "https://api.anthropic.com/v1/messages"
 MODEL = "claude-haiku-4-5-20251001"
 
+# Confianza mínima para aceptar la clasificación del modelo.
+# Por debajo de este umbral se retorna consulta_general como fallback seguro
+# para evitar actuar sobre intenciones ambiguas (ej: disparar generar_contrato
+# con 0.5 de confianza podría iniciar un flujo crítico por error).
+CONFIDENCE_THRESHOLD = 0.7
+
 Intent = Literal["buscar_propiedad", "agendar_visita", "generar_contrato", "consulta_general"]
 
 INTENT_TOOL = {
@@ -101,9 +107,22 @@ def route_intent(message: str, conversation_history: list[dict] | None = None) -
             return _fallback_intent(message)
 
         result = tool_use_block["input"]
+        confidence = float(result.get("confidence", 0.8))
+
+        # Si la confianza es baja, descartar la clasificación y retornar
+        # consulta_general como fallback seguro para evitar flujos críticos
+        # (ej: generar_contrato) disparados por clasificaciones ambiguas.
+        if confidence < CONFIDENCE_THRESHOLD:
+            return {
+                "intent": "consulta_general",
+                "confidence": confidence,
+                "extracted_data": result.get("extracted_data", {}),
+                "error": None,
+            }
+
         return {
             "intent": result["intent"],
-            "confidence": float(result.get("confidence", 0.8)),
+            "confidence": confidence,
             "extracted_data": result.get("extracted_data", {}),
             "error": None,
         }

@@ -49,7 +49,26 @@ class SessionManager:
             .execute()
         )
         if res.data:
-            self._row = res.data
+            row = res.data
+            # Validar que la sesión no haya expirado.
+            # Si expires_at <= NOW() se trata como sesión nueva: se descarta
+            # historial y contexto previos para no contaminar la nueva conversación.
+            # NOTA: las filas expiradas se acumulan en la tabla; agregar un job
+            # de limpieza periódico via pg_cron:
+            #   SELECT cron.schedule('purge_expired_sessions', '0 * * * *',
+            #       $$DELETE FROM agent_sessions WHERE expires_at < now()$$);
+            expires_raw = row.get("expires_at")
+            if expires_raw:
+                # Supabase devuelve el timestamp como string ISO 8601 con offset.
+                expires_dt = datetime.fromisoformat(expires_raw)
+                if expires_dt.tzinfo is None:
+                    expires_dt = expires_dt.replace(tzinfo=timezone.utc)
+                if expires_dt <= datetime.now(timezone.utc):
+                    # Sesión expirada: iniciar conversación limpia reutilizando la fila.
+                    self._row = row
+                    self.reset()
+                    return
+            self._row = row
         else:
             self._row = self._create_session()
 

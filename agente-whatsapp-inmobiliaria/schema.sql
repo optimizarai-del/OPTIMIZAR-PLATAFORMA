@@ -14,7 +14,8 @@ create extension if not exists "pgcrypto";
 -- ------------------------------------------------------------
 create table if not exists agent_sessions (
     id              uuid primary key default gen_random_uuid(),
-    wa_phone        text not null unique,           -- número E.164 ej: +5491112345678
+    wa_phone        text not null,                  -- número E.164 ej: +5491112345678
+    constraint uq_agent_sessions_wa_phone unique (wa_phone),  -- target explícito para ON CONFLICT (wa_phone)
     lead_id         uuid references leads(id) on delete set null,
     messages        jsonb not null default '[]',    -- historial [{role, content, ts}]
     last_intent     text,                           -- última intención clasificada
@@ -129,12 +130,27 @@ create trigger trg_properties_updated_at
     for each row execute function touch_updated_at();
 
 -- ------------------------------------------------------------
--- RLS: habilitar Row Level Security (ajustar policies según auth)
--- Por ahora solo el service_role puede escribir; anon puede leer properties.
+-- RLS: habilitar Row Level Security
+-- Acceso a leads y agent_sessions es EXCLUSIVO via service_role.
+-- El service_role bypasea RLS automáticamente en Supabase, por lo que
+-- las policies de abajo actúan como red de seguridad contra acceso anon directo.
+-- Properties permite lectura pública de propiedades activas (portal web).
 -- ------------------------------------------------------------
 alter table agent_sessions enable row level security;
 alter table leads           enable row level security;
 alter table properties      enable row level security;
+
+-- Bloqueo total para el rol anon en tablas sensibles.
+-- Todo acceso legítimo ocurre con service_role (n8n, edge functions).
+create policy "no anon access"
+    on agent_sessions for all
+    to anon
+    using (false);
+
+create policy "no anon access"
+    on leads for all
+    to anon
+    using (false);
 
 -- Service role bypasses RLS automáticamente en Supabase.
 -- Policy pública solo para properties activas (el agente n8n usa service_role,
