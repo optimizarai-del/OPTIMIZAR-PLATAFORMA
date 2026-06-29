@@ -3,6 +3,10 @@
     "meta-ads": {
       "type": "http",
       "url": "https://meta-ads.mcp.pipeboard.co/?token=${PIPEBOARD_API_TOKEN}"
+    },
+    "higgsfield": {
+      "type": "http",
+      "url": "https://mcp.higgsfield.ai/mcp"
     }
   }
 }

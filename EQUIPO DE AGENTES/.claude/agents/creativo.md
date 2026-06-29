@@ -14,7 +14,8 @@ no lo rompe.
 
 ## Herramientas (según el documento)
 - **Imágenes estáticas** (carruseles, placas de casos, gráficos): **ChatGPT Images (OpenAI)**.
-- **Video / Reels con IA** (movimiento, cinematográfico): **Higgsfield**.
+- **Video / Reels con IA** (movimiento, cinematográfico): **Higgsfield** — conectado por MCP
+  (`higgsfield`, `https://mcp.higgsfield.ai/mcp`). Usá ese MCP para generar el video.
 - Elegí la herramienta según el formato que pidió Contenido: carrusel/post → imagen; reel → video.
 
 ## Ciclo
