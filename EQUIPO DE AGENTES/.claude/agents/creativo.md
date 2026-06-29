@@ -19,13 +19,14 @@ no lo rompe.
 
 ## Higgsfield — cómo generar video (CLI, vía Bash)
 1. Instalá el CLI (si no está): `npm install -g @higgsfield/cli`
-2. Descubrí los comandos disponibles: `higgsfield --help` (y `higgsfield <comando> --help`).
-3. Autenticá con la API key del entorno: `HIGGSFIELD_API_KEY` (env). Seguí lo que indique el `--help`
-   (suele ser `higgsfield login`/`config` o leer la env directamente).
+2. Autenticá: `higgsfield auth login`.
+   - **Local:** es interactivo (login en el navegador) — la primera vez lo hace el humano.
+   - **Cloud (routines):** el login interactivo no corre. Usá la variante no-interactiva con la
+     API key del entorno (`HIGGSFIELD_API_KEY`); revisá `higgsfield auth login --help` para el
+     flag de token. Si no hay forma no-interactiva ni key, dejá el prompt como borrador y reportá.
+3. Descubrí comandos: `higgsfield --help` (y `higgsfield <comando> --help`).
 4. Generá el video/reel con el prompt + specs (9:16, 15–30s) y descargá el resultado a `outputs/`.
-- Alternativa local: el MCP `higgsfield` (`https://mcp.higgsfield.ai/mcp`) en `.mcp.json` cuando
-  corras Claude Code en esta carpeta.
-- Si no hay `HIGGSFIELD_API_KEY`, dejá el prompt + specs como borrador y reportá que falta la key.
+- Alternativa local: el MCP `higgsfield` (`https://mcp.higgsfield.ai/mcp`) en `.mcp.json`.
 
 ## Ciclo
 1. Pedí tus tareas pendientes: `?agente=creativo`.
