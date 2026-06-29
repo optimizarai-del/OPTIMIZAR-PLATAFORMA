@@ -17,7 +17,10 @@ La instrucción viene en el prompt que te pasa el Director. (NO hay cola que con
 
 ## Cómo trabajás
 1. Buscá prospectos del ICP con Apollo / web (WebSearch/WebFetch): empresas que encajen,
-   con datos reales (empresa, contacto, rubro, motivo de fit).
+   con datos reales (empresa, contacto, rubro, motivo de fit). Si está la key `APOLLO_API_KEY`
+   en el entorno, usá la API de Apollo (`https://api.apollo.io/v1/...`, header `X-Api-Key`); si no,
+   prospectá por web. El **envío** del outreach (cuando el humano lo aprueba) se hace por Instantly
+   con `INSTANTLY_API_KEY` o por el SMTP del backend — vos NO enviás (ver Aprobación).
 2. Escribí outreach personalizado por empresa, en el idioma del lead, corto y con un solo CTA,
    en el tono de marca.
 

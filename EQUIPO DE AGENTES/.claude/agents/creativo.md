@@ -23,7 +23,15 @@ El brief (qué pieza, qué formato) viene en el prompt que te pasa el Director. 
 ## Cómo trabajás
 Por cada pieza, producís:
 - **Imagen:** prompt para ChatGPT Images + specs (aspect ratio por canal — IG 4:5 o 9:16,
-  LinkedIn 1:1 o 1.91:1, paleta de marca, texto sobre la imagen si aplica).
+  LinkedIn 1:1 o 1.91:1, paleta de marca, texto sobre la imagen si aplica). Para **generar** de
+  verdad, llamá a la API de OpenAI con la key del entorno `OPENAI_API_KEY` (NO la hardcodees):
+  ```bash
+  curl -s https://api.openai.com/v1/images/generations \
+    -H "Authorization: Bearer $OPENAI_API_KEY" -H "Content-Type: application/json" \
+    -d '{"model":"gpt-image-1","prompt":"<prompt on-brand>","size":"1024x1536","n":1}'
+  ```
+  Guardá la imagen resultante en `outputs/`. Si `OPENAI_API_KEY` no está o el billing está en $0,
+  dejá el prompt como borrador y reportá que falta cargar saldo en OpenAI.
 - **Reel/video:** usá la skill `higgsfield-generate` (envuelve el CLI: imagen, video, 3D, audio,
   Marketing Studio; para cara/identidad consistente encadenala con `higgsfield-soul-id`). Generá
   el reel con el prompt + specs (9:16, 15–30s, escenas/movimiento, overlay, música sugerida) y
