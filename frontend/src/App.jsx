@@ -19,6 +19,7 @@ import Marketing from './pages/Marketing'
 import Agentes from './pages/Agentes'
 import Equipo from './pages/Equipo'
 import Notificaciones from './pages/Notificaciones'
+import Accesos from './pages/Accesos'
 
 export default function App() {
   return (
@@ -67,6 +68,9 @@ export default function App() {
             } />
             <Route path="/notificaciones" element={
               <ProtectedRoute requireManager><Layout><Notificaciones /></Layout></ProtectedRoute>
+            } />
+            <Route path="/accesos" element={
+              <ProtectedRoute><Layout><Accesos /></Layout></ProtectedRoute>
             } />
 
             <Route path="*" element={<Navigate to="/" replace />} />

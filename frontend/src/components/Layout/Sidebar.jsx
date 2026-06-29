@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom'
 import {
   LayoutGrid, CheckSquare, FileText, Users,
   Zap, Sun, Moon, Briefcase, Code2,
-  ClipboardList, UserCheck, Bell, Keyboard, Kanban, Bot, Megaphone, Package
+  ClipboardList, UserCheck, Bell, Keyboard, Kanban, Bot, Megaphone, Package, Rocket
 } from 'lucide-react'
 import { useAuth } from '../../context/AuthContext'
 import { useTheme } from '../../context/ThemeContext'
@@ -100,6 +100,17 @@ export default function Sidebar() {
       <NavLink to="/tareas" className={link}>
         <CheckSquare size={15} strokeWidth={1.8} />
         Tareas
+      </NavLink>
+
+      {/* ── HERRAMIENTAS ────────────────────────────────── */}
+      <div className="section-label flex items-center gap-1.5">
+        <Rocket size={9} className="text-accent" />
+        Herramientas
+      </div>
+
+      <NavLink to="/accesos" className={link}>
+        <Rocket size={15} strokeWidth={1.8} />
+        Accesos directos
       </NavLink>
 
       {/* ── ADMINISTRACIÓN ──────────────────────────────── */}
