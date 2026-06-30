@@ -118,6 +118,16 @@ Nombre, empresa, rubro y un gancho de dolor por rubro.
 - [2026-06-14] B&R / SMS Latinoamérica (Mar del Plata): perfil corporativo con red regional — posiblemente los socios no son públicos. Investigar vía LinkedIn o SMS Argentina.
 - [2026-06-14] Para Salta en general: La Guía Salta lista 20+ estudios pero la mayoría sin web propia. CPCE de Salta puede tener directorio de matriculados con emails. Fuente valiosa para próximas corridas en el NOA.
 
+## Gotchas descubiertos (continuación — 2026-06-30)
+- [2026-06-30] Pagliano Ciencias Económicas (San Rafael, Mendoza): Diego Hernán Pagliano, CPN + Lic. Adm. Empresas (UNCuyo), CUIT 20-25766335-4 verificado. Estudio unipersonal, mentor en Cámara de Comercio de San Rafael. Email personal Gmail verificado vía CUITonline. Primer candidato ⭐ San Rafael. Ángulo: estudio unipersonal = todo el pico de julio recae sobre él.
+- [2026-06-30] Estudio Contable AG (San Rafael, Mendoza): socios Renzo O. Gili Carrillo (CPN UNCuyo) + María Celeste Andreoni. Barcala 547 Of. 2-3 / Av. Rivadavia 55, San Rafael. Email genérico info@estudiocontableag.com (dominio propio). Segundo lead San Rafael. Buscar email personal de Gili Carrillo vía CPCE Mendoza para corrida futura.
+- [2026-06-30] ECOAG (Olavarría, Buenos Aires): estudio especializado en gestión agropecuaria. Titular Giacomaso (inicial S., nombre no confirmado). Email sgiacomaso@gmail.com visible en ecoag.com.ar. Cartera en 6 ciudades PBA (productores agro). Primer lead Olavarría. Ángulo: cartera agro = DDJJ complejas en julio.
+- [2026-06-30] Estudio Contable Ibarlucía (Olavarría, Buenos Aires): Contadora Vanesa Ibarlucía. Av. Colón 1919, Olavarría. Email estudiocontableibarlucia@gmail.com verificado en sitio propio. Cartera diversa: cooperativas, constructoras, fideicomisos. Segundo lead Olavarría con email verificado.
+- [2026-06-30] Estudio Secondi & Asociados (Olavarría, Buenos Aires): Belgrano 2013. Clientes corporativos: Arcor, Loma Negra, La Serenísima, Papel Misionero, CMPC, Cementos Avellaneda. Sistema propio e-7400. Sin email publicado ni nombre de titular. Candidato ⭐ para corrida futura — investigar vía CPBA Olavarría o LinkedIn. Perfil corporativo diferente al ICP habitual pero potencial alto.
+- [2026-06-30] San Rafael, Mendoza: baja presencia digital en estudios contables. La mayoría solo figura en directorios (Licuo, MisterWhat, PaginasAmarillas) con teléfono y dirección pero sin web propia ni email. Fuente efectiva: búsquedas de nombre en Facebook + Google. CPCEMZA (cpcemza.org.ar) tiene padrón de matriculados accesible y delegación San Rafael — fuente clave para próximas corridas. Capacidad para 10+ corridas en San Rafael (23+ estudios en MisterWhat, 17+ en guia-mendoza, 18+ en infoisinfo pero sin contacto digital).
+- [2026-06-30] Olavarría, Buenos Aires: primera incursión exitosa. Hub agroindustrial (~100k hab, Loma Negra/cemento + agro). Baja exposición tech = diferenciador real. Candidatos adicionales para próximas corridas: Gelso-Destassi (9 de julio 2369, tel 02284 441992), Arias & Asociados (sgto cabral 2811), Dietrich Estudio Contable (Alsina 2521), Álvarez Castarés (Facebook activo, buscar email), Nemcek Juan Pablo (negocio.site caído hoy). Fuente: olavarria.licuo.com.ar (18 resultados), olavarria.infoisinfo-ar.com.
+- [2026-06-30] **HITO: 100 leads en borrador (20 corridas).** San Rafael (Mendoza) inaugurada ✓. Olavarría (Buenos Aires) inaugurada ✓. Mendoza interior abierto (San Rafael). PBA centrosur abierto (Olavarría).
+
 ## Gotchas descubiertos (continuación — 2026-06-29)
 - [2026-06-29] Estudio Bocco (Villa María, Córdoba, 13 años, agropecuario): dominio propio verificado (info@estudiobocco.com). Matrícula 10-17852-6. Especializado en tributación + agro + laboral. Candidato ⭐ para primer envío en Villa María. Ángulo: zona agropecuaria con clientes BP y Ganancias = julio es el mes más intenso del año.
 - [2026-06-29] Estudio Barceló (Villa María): email personal Yahoo publicado en sitio propio (ebarcelogili@yahoo.com.ar). CPN María José Barceló. Contacto fácil, estudio orientado a PyMEs y particulares.
@@ -141,10 +151,27 @@ Nombre, empresa, rubro y un gancho de dolor por rubro.
 - Backend: endpoints externos OK, **migración aplicada**, **chat en vivo sobre el plan funcionando**.
 - **Prospección diaria automática: ACTIVA en MODO BORRADOR** (busca y escribe; NO envía nada).
 - **Envío real de correos: APAGADO** (`OUTREACH_ENABLED=false`). Encender tras validar emails + warm-up.
-- Corridas borrador completadas: 11/06 (Córdoba/Rosario), 12/06 (CABA/GBA), 13/06 (Mendoza/Tucumán), 14/06 (Salta/Mar del Plata), 15/06 (Bahía Blanca/Neuquén), 16/06 (Santa Fe/Paraná), 17/06 (Rosario expansión), 18/06 (San Juan/Resistencia Chaco), 19/06 (Jujuy/Posadas Misiones), 20/06 (La Rioja Capital/Catamarca Capital), 21/06 (La Plata/San Luis Capital), 22/06 (Córdoba 2° lote/Comodoro Rivadavia), 23/06 (Corrientes Capital/Santiago del Estero Capital), 24/06 (Formosa Capital/Bariloche Río Negro), 25/06 (Río Cuarto/Río Gallegos Santa Cruz), 26/06 (Tandil/General Roca Río Negro), 27/06 (Concordia Entre Ríos/Pergamino Buenos Aires), 28/06 (Rafaela Santa Fe/Junín Buenos Aires), 29/06 (**Villa María Córdoba/Gualeguaychú Entre Ríos**) → **95 leads en borrador (19 corridas)**. Cinturón NOA completo (Mendoza, Tucumán, Salta, Jujuy, La Rioja, Catamarca, Santiago del Estero ✓). Cuyo completo (Mendoza, San Juan, San Luis). Patagonia: Neuquén ✓, Comodoro ✓, Bariloche ✓, Río Gallegos ✓, General Roca ✓. NEA completo: Chaco ✓, Misiones ✓, Corrientes ✓, Formosa ✓. Córdoba interior: Río Cuarto ✓, **Villa María ✓**. PBA interior: Tandil ✓, Pergamino ✓, Junín ✓. Entre Ríos: Paraná ✓, Concordia ✓, **Gualeguaychú ✓** (Entre Ríos completa). Santa Fe interior: Rafaela ✓.
+- Corridas borrador completadas: 11/06 (Córdoba/Rosario), 12/06 (CABA/GBA), 13/06 (Mendoza/Tucumán), 14/06 (Salta/Mar del Plata), 15/06 (Bahía Blanca/Neuquén), 16/06 (Santa Fe/Paraná), 17/06 (Rosario expansión), 18/06 (San Juan/Resistencia Chaco), 19/06 (Jujuy/Posadas Misiones), 20/06 (La Rioja Capital/Catamarca Capital), 21/06 (La Plata/San Luis Capital), 22/06 (Córdoba 2° lote/Comodoro Rivadavia), 23/06 (Corrientes Capital/Santiago del Estero Capital), 24/06 (Formosa Capital/Bariloche Río Negro), 25/06 (Río Cuarto/Río Gallegos Santa Cruz), 26/06 (Tandil/General Roca Río Negro), 27/06 (Concordia Entre Ríos/Pergamino Buenos Aires), 28/06 (Rafaela Santa Fe/Junín Buenos Aires), 29/06 (Villa María Córdoba/Gualeguaychú Entre Ríos), 30/06 (**San Rafael Mendoza/Olavarría Buenos Aires**) → **100 leads en borrador (20 corridas) — HITO 100 LEADS**. Cinturón NOA completo (Mendoza, Tucumán, Salta, Jujuy, La Rioja, Catamarca, Santiago del Estero ✓). Cuyo completo (Mendoza, San Juan, San Luis). Mendoza interior: **San Rafael ✓**. Patagonia: Neuquén ✓, Comodoro ✓, Bariloche ✓, Río Gallegos ✓, General Roca ✓. NEA completo: Chaco ✓, Misiones ✓, Corrientes ✓, Formosa ✓. Córdoba interior: Río Cuarto ✓, Villa María ✓. PBA interior: La Plata ✓, Bahía Blanca ✓, Mar del Plata ✓, Tandil ✓, Pergamino ✓, Junín ✓, **Olavarría ✓**. Entre Ríos completo: Paraná ✓, Concordia ✓, Gualeguaychú ✓. Santa Fe interior: Rafaela ✓.
 - Pendiente real: validar calidad de los emails y, cuando se apruebe, encender el envío (flip a push-vivo).
 
 ## Última corrida
+**Fecha:** 2026-06-30 | **Modo:** BORRADOR (sin envíos reales)
+**Segmento:** Estudios contables/impositivos — **San Rafael (Mendoza)** (primera incursión Mendoza interior, hub vitivinícola/agro) + **Olavarría (Buenos Aires)** (primera incursión PBA centrosur agroindustrial)
+**Cupo usado:** 5 leads
+**Leads encontrados:** 5
+**Leads descartados:** 0 (ninguno en La Pampa; ningún duplicado)
+**Emails escritos:** 4 (Pagliano ✅ Gmail verificado CUIT, Estudio AG ✅ dominio propio inferred, ECOAG ✅ Gmail inferred, Ibarlucía ✅ Gmail verificado sitio)
+**Sin email:** 1 (Secondi — not_found; clientes corporativos Arcor/Loma Negra/La Serenísima ⭐)
+**Email status:** 2 verified_personal (Pagliano Gmail CUIT ✓, Ibarlucía Gmail sitio ✓), 1 inferred_domain (Estudio AG info@), 1 inferred_personal (ECOAG Gmail visible en sitio), 1 not_found
+**Disparador:** Prórroga DDJJ Ganancias/Bienes Personales período 2025 hasta 27/07/2026 (RG ARCA 5851/2026) — quedan 27 días
+**Archivos:**
+- `funnel/leads/new/borrador-2026-06-30.jsonl` — 5 leads
+- `funnel/reportes/2026-06-30.md` — reporte completo
+**Total acumulado borrador:** 100 leads (20 corridas) — **HITO: 100 LEADS**
+**Hitos:** San Rafael (Mendoza) inaugurada ✓. Olavarría (Buenos Aires) inaugurada ✓. Mendoza interior abierto ✓. PBA centrosur abierto ✓. **Hito 100 leads (20 corridas).**
+**Próximo bloqueante:** Validar calidad de los emails y activar envío real (`OUTREACH_ENABLED=true` + warm-up). Candidatos prioritarios ⭐: Bocco (Villa María, dominio propio, agro), SAIPE (multi-sucursal, email personal alfiore@), LS S.A. (José Sasia, 70 años), Marturet (Concordia), Carnevale (Pergamino), Fernández Carrera Molejón (ISO 9001, General Roca ⭐⭐), Pagliano (San Rafael, Gmail CUIT verificado). Candidatos sin email para corrida futura: Secondi ⭐ (Olavarría, corporativo, CPBA), Fernandez Tesone ⭐ (Gualeguaychú, +200 empresas, CPCE ER), Alvarez & Asociados ⭐ (Villa María, 40 años, CPCE Córdoba), Massari ⭐ (Junín, CPBA).
+
+## Corrida anterior (2026-06-29)
 **Fecha:** 2026-06-29 | **Modo:** BORRADOR (sin envíos reales)
 **Segmento:** Estudios contables/impositivos — **Villa María (Córdoba)** (primera incursión Córdoba interior 2ª ciudad) + **Gualeguaychú (Entre Ríos)** (primera incursión — completa Entre Ríos)
 **Cupo usado:** 5 leads
@@ -159,7 +186,6 @@ Nombre, empresa, rubro y un gancho de dolor por rubro.
 - `funnel/reportes/2026-06-29.md` — reporte completo
 **Total acumulado borrador:** 95 leads (19 corridas)
 **Hitos:** Villa María (Córdoba) inaugurada ✓. Gualeguaychú (Entre Ríos) inaugurada ✓. Entre Ríos completa: Paraná ✓, Concordia ✓, Gualeguaychú ✓. Córdoba interior: Río Cuarto ✓, Villa María ✓.
-**Próximo bloqueante:** Validar calidad de los emails y activar envío real (`OUTREACH_ENABLED=true` + warm-up). Candidatos prioritarios ⭐: Bocco (Villa María, dominio propio, agro), SAIPE (multi-sucursal, email personal alfiore@), LS S.A. (José Sasia, 70 años), Marturet (Concordia), Carnevale (Pergamino), Fernández Carrera Molejón (ISO 9001, General Roca ⭐⭐). Candidatos sin email para corrida futura: Fernandez Tesone ⭐ (Gualeguaychú, +200 empresas, CPCE ER), Alvarez & Asociados ⭐ (Villa María, 40 años, CPCE Córdoba), Massari ⭐ (Junín, CPBA), Balbi-Bergamini ⭐ (Junín, CPBA).
 
 ## Corrida anterior (2026-06-28)
 **Fecha:** 2026-06-28 | **Modo:** BORRADOR (sin envíos reales)
