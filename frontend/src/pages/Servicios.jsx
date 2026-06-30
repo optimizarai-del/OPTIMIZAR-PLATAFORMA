@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react'
-import { Plus, Package, Pencil, Trash2, X, Save, Check } from 'lucide-react'
+import { useEffect, useMemo, useState } from 'react'
+import { Plus, Package, Pencil, Trash2, X, Save, Check, ChevronRight, ChevronDown, Layers, GitBranch, List } from 'lucide-react'
 import api from '../utils/api'
 import { toast } from '../utils/toast'
 import { SkeletonRow } from '../components/Skeleton'
@@ -13,6 +13,26 @@ export default function Servicios() {
   const [editando, setEditando] = useState(null)   // id en edición, 'nuevo', o null
   const [form, setForm] = useState(VACIO)
   const [saving, setSaving] = useState(false)
+  const [vista, setVista] = useState('arbol')              // 'arbol' | 'lista'
+  const [catCerradas, setCatCerradas] = useState(() => new Set())
+  const [svcAbiertos, setSvcAbiertos] = useState(() => new Set())
+
+  // Capacidades (texto) → items individuales (las hojas del árbol)
+  const splitCaps = (txt) => (txt || '').split(/[\n;,•·]+/).map(t => t.trim()).filter(Boolean)
+  // Agrupado macro→micro: categoría → servicios
+  const porCategoria = useMemo(() => {
+    const g = {}
+    for (const s of items) {
+      const cat = ((s.categoria || '').trim()) || 'Sin categoría'
+      ;(g[cat] = g[cat] || []).push(s)
+    }
+    return Object.entries(g).sort((a, b) => a[0].localeCompare(b[0]))
+  }, [items])
+  const catOpen = (cat) => !catCerradas.has(cat)   // categorías abiertas por defecto
+  const toggleCat = (cat) => setCatCerradas(p => { const n = new Set(p); n.has(cat) ? n.delete(cat) : n.add(cat); return n })
+  const toggleSvc = (id) => setSvcAbiertos(p => { const n = new Set(p); n.has(id) ? n.delete(id) : n.add(id); return n })
+  const expandirTodo = () => { setCatCerradas(new Set()); setSvcAbiertos(new Set(items.map(s => s.id))) }
+  const colapsarTodo = () => { setCatCerradas(new Set(porCategoria.map(([c]) => c))); setSvcAbiertos(new Set()) }
 
   const load = () => {
     api.get('/api/servicios')
@@ -84,9 +104,21 @@ export default function Servicios() {
             <h1 className="hero-title text-5xl md:text-6xl mb-3">Nuestros Servicios.</h1>
             <p className="hero-sub">Catálogo de lo que OPTIMIZAR puede ofrecer hoy. La IA lo usa para evaluar requerimientos nuevos.</p>
           </div>
-          <button onClick={abrirNuevo} className="btn-accent">
-            <Plus size={14} /> Nuevo servicio
-          </button>
+          <div className="flex items-center gap-2">
+            <div className="flex rounded-xl border border-border overflow-hidden text-[12px] font-medium">
+              <button onClick={() => setVista('arbol')}
+                className={`flex items-center gap-1.5 px-3 py-2 transition-colors ${vista === 'arbol' ? 'bg-primary text-neutral-50' : 'text-muted hover:bg-neutral-100 dark:hover:bg-slate-800'}`}>
+                <GitBranch size={13} /> Árbol
+              </button>
+              <button onClick={() => setVista('lista')}
+                className={`flex items-center gap-1.5 px-3 py-2 transition-colors ${vista === 'lista' ? 'bg-primary text-neutral-50' : 'text-muted hover:bg-neutral-100 dark:hover:bg-slate-800'}`}>
+                <List size={13} /> Lista
+              </button>
+            </div>
+            <button onClick={abrirNuevo} className="btn-accent">
+              <Plus size={14} /> Nuevo servicio
+            </button>
+          </div>
         </div>
       </header>
 
@@ -156,7 +188,7 @@ export default function Servicios() {
           action={abrirNuevo}
           actionLabel="+ Cargar primer servicio"
         />
-      ) : (
+      ) : vista === 'lista' ? (
         <div className="space-y-3">
           {items.map(s => (
             <div key={s.id} className={`card p-5 card-hover ${!s.activo ? 'opacity-60' : ''}`}>
@@ -181,6 +213,71 @@ export default function Servicios() {
               </div>
             </div>
           ))}
+        </div>
+      ) : (
+        <div className="card p-5">
+          <div className="flex items-center justify-between mb-4 gap-3 flex-wrap">
+            <div className="text-[12px] text-muted">
+              Mapa de servicios: de lo <span className="font-semibold">macro</span> (categoría) a lo <span className="font-semibold">micro</span> (capacidad). Tocá para desplegar.
+            </div>
+            <div className="flex gap-2 text-[11px] shrink-0">
+              <button onClick={expandirTodo} className="text-accent-600 hover:underline">Expandir todo</button>
+              <span className="text-muted/40">·</span>
+              <button onClick={colapsarTodo} className="text-accent-600 hover:underline">Colapsar todo</button>
+            </div>
+          </div>
+          <div className="space-y-1">
+            {porCategoria.map(([cat, servicios]) => (
+              <div key={cat}>
+                {/* Nivel 1 — Categoría (macro) */}
+                <button onClick={() => toggleCat(cat)}
+                  className="w-full flex items-center gap-2 py-1.5 px-1 text-left rounded-lg hover:bg-neutral-100 dark:hover:bg-slate-800 transition-colors">
+                  {catOpen(cat) ? <ChevronDown size={15} className="text-accent shrink-0" /> : <ChevronRight size={15} className="text-muted shrink-0" />}
+                  <Layers size={15} className="text-accent shrink-0" />
+                  <span className="font-bold text-[14px] tracking-tight">{cat}</span>
+                  <span className="chip-muted ml-1">{servicios.length}</span>
+                </button>
+
+                {catOpen(cat) && (
+                  <div className="ml-[10px] pl-4 border-l-2 border-border space-y-0.5 py-0.5">
+                    {servicios.map(s => {
+                      const caps = splitCaps(s.capacidades)
+                      const tieneHijos = caps.length > 0 || !!s.descripcion
+                      const open = svcAbiertos.has(s.id)
+                      return (
+                        <div key={s.id}>
+                          {/* Nivel 2 — Servicio */}
+                          <button onClick={() => { if (tieneHijos) toggleSvc(s.id) }}
+                            className={`w-full flex items-center gap-2 py-1 px-1 text-left rounded-lg hover:bg-neutral-100 dark:hover:bg-slate-800 transition-colors ${!s.activo ? 'opacity-55' : ''}`}>
+                            {tieneHijos
+                              ? (open ? <ChevronDown size={14} className="text-muted shrink-0" /> : <ChevronRight size={14} className="text-muted shrink-0" />)
+                              : <span className="w-[14px] shrink-0" />}
+                            <Package size={13} className="text-accent/70 shrink-0" />
+                            <span className="font-semibold text-[13px]">{s.nombre}</span>
+                            {!s.activo && <span className="chip-muted !text-[9px]">inactivo</span>}
+                            {s.base_referencia && <span className="text-[10px] text-muted/60">· base: {s.base_referencia}</span>}
+                          </button>
+
+                          {open && tieneHijos && (
+                            <div className="ml-[10px] pl-4 border-l-2 border-border/50 py-0.5 space-y-0.5">
+                              {s.descripcion && <div className="text-[12px] text-muted italic py-0.5">{s.descripcion}</div>}
+                              {/* Nivel 3 — Capacidades (micro) */}
+                              {caps.map((c, i) => (
+                                <div key={i} className="flex items-start gap-2 py-0.5">
+                                  <span className="w-1.5 h-1.5 rounded-full bg-accent/50 mt-[7px] shrink-0" />
+                                  <span className="text-[12px] text-primary dark:text-slate-200">{c}</span>
+                                </div>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                      )
+                    })}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
         </div>
       )}
     </div>
