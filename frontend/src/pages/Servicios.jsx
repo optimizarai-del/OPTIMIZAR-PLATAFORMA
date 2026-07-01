@@ -218,7 +218,7 @@ export default function Servicios() {
         <div className="card p-5">
           <div className="flex items-center justify-between mb-4 gap-3 flex-wrap">
             <div className="text-[12px] text-muted">
-              Mapa de servicios: de lo <span className="font-semibold">macro</span> (categoría) a lo <span className="font-semibold">micro</span> (capacidad). Tocá para desplegar.
+              Mapa de servicios: de lo <span className="font-semibold">macro</span> (categoría) a lo <span className="font-semibold">micro</span> (capacidad). Tocá un nodo para desplegar.
             </div>
             <div className="flex gap-2 text-[11px] shrink-0">
               <button onClick={expandirTodo} className="text-accent-600 hover:underline">Expandir todo</button>
@@ -226,57 +226,65 @@ export default function Servicios() {
               <button onClick={colapsarTodo} className="text-accent-600 hover:underline">Colapsar todo</button>
             </div>
           </div>
-          <div className="space-y-1">
-            {porCategoria.map(([cat, servicios]) => (
-              <div key={cat}>
-                {/* Nivel 1 — Categoría (macro) */}
-                <button onClick={() => toggleCat(cat)}
-                  className="w-full flex items-center gap-2 py-1.5 px-1 text-left rounded-lg hover:bg-neutral-100 dark:hover:bg-slate-800 transition-colors">
-                  {catOpen(cat) ? <ChevronDown size={15} className="text-accent shrink-0" /> : <ChevronRight size={15} className="text-muted shrink-0" />}
-                  <Layers size={15} className="text-accent shrink-0" />
-                  <span className="font-bold text-[14px] tracking-tight">{cat}</span>
-                  <span className="chip-muted ml-1">{servicios.length}</span>
-                </button>
 
-                {catOpen(cat) && (
-                  <div className="ml-[10px] pl-4 border-l-2 border-border space-y-0.5 py-0.5">
-                    {servicios.map(s => {
-                      const caps = splitCaps(s.capacidades)
-                      const tieneHijos = caps.length > 0 || !!s.descripcion
-                      const open = svcAbiertos.has(s.id)
-                      return (
-                        <div key={s.id}>
-                          {/* Nivel 2 — Servicio */}
-                          <button onClick={() => { if (tieneHijos) toggleSvc(s.id) }}
-                            className={`w-full flex items-center gap-2 py-1 px-1 text-left rounded-lg hover:bg-neutral-100 dark:hover:bg-slate-800 transition-colors ${!s.activo ? 'opacity-55' : ''}`}>
-                            {tieneHijos
-                              ? (open ? <ChevronDown size={14} className="text-muted shrink-0" /> : <ChevronRight size={14} className="text-muted shrink-0" />)
-                              : <span className="w-[14px] shrink-0" />}
-                            <Package size={13} className="text-accent/70 shrink-0" />
-                            <span className="font-semibold text-[13px]">{s.nombre}</span>
-                            {!s.activo && <span className="chip-muted !text-[9px]">inactivo</span>}
-                            {s.base_referencia && <span className="text-[10px] text-muted/60">· base: {s.base_referencia}</span>}
-                          </button>
+          {/* Organigrama descendente: raíz → categorías (azul) → servicios (naranja) → capacidades (verde) */}
+          <div className="overflow-x-auto pb-4">
+            <div className="orgchart min-w-full">
+              <ul>
+                <li>
+                  {/* Raíz */}
+                  <span className="oc-node px-4 py-2 rounded-2xl bg-primary text-neutral-50 dark:bg-slate-100 dark:text-slate-900 font-bold text-[13px] shadow-soft">
+                    <Package size={14} /> Nuestros Servicios
+                  </span>
+                  <ul>
+                    {porCategoria.map(([cat, servicios]) => (
+                      <li key={cat}>
+                        {/* Nivel 1 — Categoría (azul) */}
+                        <span onClick={() => toggleCat(cat)}
+                          className="oc-node px-3.5 py-2 rounded-2xl border-2 border-sky-400 bg-sky-50 dark:bg-sky-500/10 text-sky-700 dark:text-sky-300 font-bold text-[13px]">
+                          <Layers size={14} /> {cat}
+                          <span className="text-[10px] font-semibold bg-sky-400/25 rounded-full px-1.5 py-0.5">{servicios.length}</span>
+                          {catOpen(cat) ? <ChevronDown size={13} className="opacity-60" /> : <ChevronRight size={13} className="opacity-60" />}
+                        </span>
 
-                          {open && tieneHijos && (
-                            <div className="ml-[10px] pl-4 border-l-2 border-border/50 py-0.5 space-y-0.5">
-                              {s.descripcion && <div className="text-[12px] text-muted italic py-0.5">{s.descripcion}</div>}
-                              {/* Nivel 3 — Capacidades (micro) */}
-                              {caps.map((c, i) => (
-                                <div key={i} className="flex items-start gap-2 py-0.5">
-                                  <span className="w-1.5 h-1.5 rounded-full bg-accent/50 mt-[7px] shrink-0" />
-                                  <span className="text-[12px] text-primary dark:text-slate-200">{c}</span>
-                                </div>
-                              ))}
-                            </div>
-                          )}
-                        </div>
-                      )
-                    })}
-                  </div>
-                )}
-              </div>
-            ))}
+                        {catOpen(cat) && (
+                          <ul>
+                            {servicios.map(s => {
+                              const caps = splitCaps(s.capacidades)
+                              const open = svcAbiertos.has(s.id)
+                              return (
+                                <li key={s.id}>
+                                  {/* Nivel 2 — Servicio (naranja) */}
+                                  <span onClick={() => { if (caps.length) toggleSvc(s.id) }}
+                                    title={s.descripcion || ''}
+                                    className={`oc-node px-3 py-1.5 rounded-2xl border-2 border-amber-400 bg-amber-50 dark:bg-amber-500/10 text-amber-800 dark:text-amber-300 font-semibold text-[12px] ${!s.activo ? 'opacity-50' : ''} ${!caps.length ? '!cursor-default' : ''}`}>
+                                    <Package size={12} /> {s.nombre}
+                                    {caps.length > 0 && (open ? <ChevronDown size={12} className="opacity-60" /> : <ChevronRight size={12} className="opacity-60" />)}
+                                  </span>
+
+                                  {open && caps.length > 0 && (
+                                    <ul>
+                                      {caps.map((c, i) => (
+                                        <li key={i}>
+                                          {/* Nivel 3 — Capacidad (verde) */}
+                                          <span className="oc-node !cursor-default !whitespace-normal max-w-[190px] px-2.5 py-1 rounded-xl border-2 border-emerald-400 bg-emerald-50 dark:bg-emerald-500/10 text-emerald-800 dark:text-emerald-300 text-[11px] leading-snug text-center">
+                                            {c}
+                                          </span>
+                                        </li>
+                                      ))}
+                                    </ul>
+                                  )}
+                                </li>
+                              )
+                            })}
+                          </ul>
+                        )}
+                      </li>
+                    ))}
+                  </ul>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       )}

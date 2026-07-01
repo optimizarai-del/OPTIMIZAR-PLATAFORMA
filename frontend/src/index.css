@@ -94,3 +94,34 @@ body {
 
 *:focus-visible { outline: 2px solid #6366F1; outline-offset: 2px; border-radius: 6px; }
 html { scroll-behavior: smooth; }
+
+/* ── Organigrama de servicios (árbol descendente con líneas conectoras) ──── */
+.orgchart { --oc-line: #cbd5e1; display: inline-block; text-align: center; }
+.dark .orgchart { --oc-line: #475569; }
+.orgchart ul { position: relative; padding-top: 24px; display: flex; justify-content: center; list-style: none; margin: 0; }
+.orgchart li { position: relative; list-style: none; padding: 24px 12px 0; text-align: center; }
+/* líneas horizontales que salen hacia arriba de cada nodo */
+.orgchart li::before, .orgchart li::after {
+  content: ''; position: absolute; top: 0; right: 50%;
+  width: 50%; height: 24px; border-top: 2px solid var(--oc-line);
+}
+.orgchart li::after { right: auto; left: 50%; border-left: 2px solid var(--oc-line); }
+/* hijo único: sin líneas horizontales */
+.orgchart li:only-child::before, .orgchart li:only-child::after { display: none; }
+.orgchart li:only-child { padding-top: 24px; }
+/* extremos: recortar la línea horizontal sobrante y redondear la esquina */
+.orgchart li:first-child::before, .orgchart li:last-child::after { border: 0 none; }
+.orgchart li:last-child::before { border-right: 2px solid var(--oc-line); border-radius: 0 6px 0 0; }
+.orgchart li:first-child::after { border-radius: 6px 0 0 0; }
+/* línea vertical que baja del nodo padre hacia la fila de hijos */
+.orgchart ul ul::before {
+  content: ''; position: absolute; top: 0; left: 50%;
+  width: 0; height: 24px; border-left: 2px solid var(--oc-line);
+}
+/* la raíz no lleva línea hacia arriba */
+.orgchart > ul { padding-top: 0; }
+.orgchart > ul > li { padding-top: 0; }
+.orgchart > ul > li::before, .orgchart > ul > li::after { display: none; }
+.orgchart .oc-node { display: inline-flex; align-items: center; gap: 6px; cursor: pointer;
+  white-space: nowrap; transition: transform .15s, box-shadow .15s; }
+.orgchart .oc-node:hover { transform: translateY(-1px); }
