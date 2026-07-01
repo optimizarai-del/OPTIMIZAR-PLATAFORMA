@@ -9,20 +9,33 @@ clasifica, les deja notas y ofrece agendar una reunión por **Calendly**.
 > WhatsApp. Es la misma excepción documentada que ya usa `ai_service.py`. No usa API para el
 > resto de las áreas — solo Gero, y solo para conversar.
 
-## Arquitectura
+## Arquitectura (entra por n8n)
 
 ```
-WhatsApp ⇄ YCloud ⇄  POST /api/gero/webhook  ─►  cerebro.responder()
-                                                     │
-                          ┌──────────────────────────┼───────────────────────────┐
-                          ▼                          ▼                            ▼
-                  memoria (DB)              Anthropic (tool-use)            herramientas → CRM
-             gero_conversaciones            claude-haiku-4-5          guardar/clasificar/nota/
-             gero_mensajes                                            calendly/handoff
-                                                     │
-                                                     ▼
-                                     enviar_whatsapp() ─► YCloud ─► cliente
+WhatsApp ─► YCloud ─► n8n (webhook /optimizar-asistente)
+                        │  switch por tipo:
+                        │   • texto  → body.text.body
+                        │   • audio  → descarga + Whisper (OpenAI) → <audio>…</audio>
+                        │   • imagen → descarga + GPT-4o-mini      → <image>…</image>
+                        │  → normaliza a { message } → buffer Redis (debounce 15s)
+                        ▼
+              POST /api/gero/mensaje  (X-API-Key)
+                        │
+       ┌────────────────┼─────────────────────┐
+       ▼                ▼                       ▼
+ memoria (DB)   Anthropic (tool-use)     herramientas → CRM
+ gero_convers.  claude-haiku-4-5    guardar/clasificar/nota/calendly/handoff
+                        │
+                        ▼
+        devuelve { "respuesta": "...", "enviar": true }
+                        │
+                        ▼
+              n8n envía la respuesta por WhatsApp (nodo YCloud send)
 ```
+
+Gero **no** manda el mensaje él mismo en este flujo: **devuelve el texto** y n8n lo envía.
+(El endpoint `/api/gero/webhook`, que sí envía por su cuenta, queda como alternativa por si
+algún día se apunta YCloud directo al backend, salteando n8n.)
 
 ### Archivos (`backend/app/gero/`)
 | Archivo | Rol |
@@ -59,13 +72,40 @@ CALENDLY_URL=https://calendly.com/optimizar-ai/30min
 GERO_MODEL=claude-haiku-4-5-20251001   # opcional
 ```
 
-### Configurar el webhook en YCloud
-Apuntá el webhook de mensajes entrantes a:
+### Conectar n8n con Gero (flujo principal)
+Al final del flujo de n8n (después del debounce de Redis), agregá **dos nodos**:
+
+**1) HTTP Request → Gero** (POST)
 ```
-https://TU-BACKEND/api/gero/webhook?token=<YCLOUD_WEBHOOK_SECRET>
+Method : POST
+URL    : https://TU-BACKEND/api/gero/mensaje
+Headers: X-API-Key: <EXTERNAL_API_KEY del backend>
+Body (JSON):
+{
+  "telefono": "={{ $('Webhook').item.json.body.whatsappInboundMessage.from }}",
+  "nombre":   "={{ $('Webhook').item.json.body.whatsappInboundMessage.customerProfile.name }}",
+  "mensaje":  "={{ $('Code in JavaScript5').item.json.message }}",
+  "wa_message_id": "={{ $('Webhook').item.json.body.whatsappInboundMessage.wamid }}"
+}
 ```
-(o mandá el token en el header `X-Webhook-Token`). El endpoint responde `200` al toque y
-procesa la respuesta en background.
+Devuelve `{ "respuesta": "...", "enviar": true, ... }`.
+
+**2) HTTP Request → YCloud send** (POST) — solo si `enviar` es `true`
+```
+URL    : https://api.ycloud.com/v2/whatsapp/messages
+Headers: X-API-Key: <YCLOUD_API_KEY>
+Body (JSON):
+{
+  "from": "<GERO_PHONE_NUMBER>",
+  "to":   "={{ $('Webhook').item.json.body.whatsappInboundMessage.from }}",
+  "type": "text",
+  "text": { "body": "={{ $json.respuesta }}" }
+}
+```
+
+### Alternativa: YCloud directo al backend (sin n8n)
+Apuntá el webhook de YCloud a `https://TU-BACKEND/api/gero/webhook?token=<YCLOUD_WEBHOOK_SECRET>`
+(o header `X-Webhook-Token`). En ese caso Gero envía la respuesta él mismo por YCloud.
 
 ## Probar sin WhatsApp
 Con un usuario **manager/admin** (JWT), simulá una charla — no manda nada a WhatsApp, pero sí
