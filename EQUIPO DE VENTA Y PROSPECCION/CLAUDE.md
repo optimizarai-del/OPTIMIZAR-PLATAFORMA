@@ -11,8 +11,9 @@ mejora con el tiempo. Trabaja solo, como un equipo de ventas real; el humano sol
 - Usar SIEMPRE el plan de Claude. NUNCA la API de Anthropic.
 - El motor es un *scheduled cloud agent* (`/schedule`) facturado al plan.
 - Patrón de polling invertido: la plataforma OPTIMIZAR encola/guarda config; Claude Code consume
-  y devuelve resultados vía el endpoint externo `POST /api/crm/external/oportunidades`
+  y devuelve resultados vía el endpoint externo `POST /api/crm/external/contactos`
   (API Key `X-API-Key`, upsert idempotente por `external_id`) que YA existe en `../OPTIMIZAR PF/app`.
+  Los leads prospectados van a **Contactos**, NO al pipeline; suben a oportunidad solo si responden.
 
 ## El equipo (.claude/agents/)
 - `funnel-coo` — Director de Operaciones. Estratega diario: lee última corrida + CRM, decide qué buscar con fundamentos.

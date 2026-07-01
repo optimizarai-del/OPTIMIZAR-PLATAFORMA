@@ -34,10 +34,12 @@ así que es autocontenido. Corre sobre el plan de Claude (sesión iniciada), sin
 - Por cada lead con email válido, escribí asunto + cuerpo + follow-ups, **en el idioma del lead**,
   personalizados con el disparador. Texto plano, breve, un solo CTA.
 
-### 5. Carga al CRM
-- Por cada lead: `POST {API_BASE}/api/crm/external/oportunidades` con `X-API-Key`, body:
-  `{ external_id, empresa, contacto_nombre, contacto_email, idioma, disparador,
-     mensaje_asunto, mensaje_cuerpo, outreach_status:"escrito", etapa:"lead" }`.
+### 5. Carga a Contactos (base de prospección, NO al pipeline)
+- Por cada lead: `POST {API_BASE}/api/crm/external/contactos` con `X-API-Key`, body:
+  `{ external_id, empresa, nombre, email, idioma, disparador, info,
+     mensaje_asunto, mensaje_cuerpo, origen:"Agente SDR", estado:"escrito" }`.
+- Los leads quedan en **Contactos**; suben al **pipeline (oportunidad) SOLO cuando responden**
+  el primer contacto (promoción automática del backend). Sin respuesta quedan en Contactos.
 - (El envío real lo hace el backend solo — `outreach_service`. Vos solo dejás los leads en "escrito".)
 
 ### 6. Reporte

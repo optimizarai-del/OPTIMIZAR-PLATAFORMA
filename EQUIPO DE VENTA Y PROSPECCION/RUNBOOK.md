@@ -18,7 +18,7 @@ Base URL de la API: `${API_BASE_URL}` (ej. https://<tu-dominio>/  ó http://loca
 |---|---|---|
 | Leer pedidos de búsqueda pendientes | GET | `/api/crm/lead-jobs/pending` |
 | Marcar un job procesando/completado | PATCH | `/api/crm/lead-jobs/{id}` `{status, resumen}` |
-| Cargar/actualizar un lead (idempotente) | POST | `/api/crm/external/oportunidades` |
+| Cargar/actualizar un lead a Contactos (idempotente) | POST | `/api/crm/external/contactos` |
 | Postear mensaje del agente al chat | POST | `/api/crm/external/chat` `{contenido, requiere_aprobacion}` |
 | Avisar por mail a los 2 correos | POST | `/api/crm/external/notify` `{asunto,titulo,subtitulo,cuerpo,prioridad}` |
 
@@ -31,9 +31,10 @@ El humano usa (con JWT, desde la plataforma): crear lead-jobs, leer/postear en e
    del humano (releer `/api/crm/chat` en la próxima corrida del `/loop`).
 2. **Búsqueda** — invocar `cold-lead-finder` con el segmento aprobado. Trae leads con idioma + contexto.
 3. **Escritura** — invocar `sales-copywriter` por lead (email en el idioma del lead).
-4. **Carga al CRM** — por cada lead: `POST /external/oportunidades` con
-   `external_id` (= lead_id), `empresa`, `contacto_*`, `idioma`, `disparador`,
-   `mensaje_asunto`, `mensaje_cuerpo`, `outreach_status:"escrito"`, `etapa:"lead"`.
+4. **Carga a Contactos** — por cada lead: `POST /external/contactos` con
+   `external_id` (= lead_id), `empresa`, `nombre`, `email`, `idioma`, `disparador`, `info`,
+   `mensaje_asunto`, `mensaje_cuerpo`, `origen:"Agente SDR"`, `estado:"escrito"`.
+   Los leads quedan en Contactos; suben al pipeline solo si responden el primer contacto.
 5. **Reporte** — `POST /external/notify` con el resumen (qué se buscó y por qué, cuántos leads,
    mejoras investigadas, errores/riesgos) y postearlo también en el chat. Marcar el job `completado`.
 6. **Mejora (semanal)** — invocar `agent-improver`: propone cambios → al chat con `requiere_aprobacion`

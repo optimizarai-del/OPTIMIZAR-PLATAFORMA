@@ -35,8 +35,8 @@ Cada día 9hs → Obtener pendientes (GET outbox) → Separar leads → Loop 1x1
 
 ### Cómo probarlo (1 lead de prueba)
 1. Asegurate de que el backend tenga `EXTERNAL_API_KEY` configurada y la migración de columnas aplicada.
-2. Cargá un lead de prueba con email tuyo y mensaje escrito (vía `POST /api/crm/external/oportunidades`
-   con `outreach_status:"escrito"`, `mensaje_asunto`, `mensaje_cuerpo`, `contacto_email`).
+2. Cargá un lead de prueba con email tuyo y mensaje escrito (vía `POST /api/crm/external/contactos`
+   con `estado:"escrito"`, `mensaje_asunto`, `mensaje_cuerpo`, `email`).
 3. En n8n, abrí el workflow y tocá **"Test workflow"**. Debería: traer el lead, mandarte el mail,
    y marcarlo `enviado`. Verificá que llegó y que en el CRM quedó en etapa `contactado`.
 
