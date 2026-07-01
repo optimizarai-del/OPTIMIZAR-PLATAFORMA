@@ -46,7 +46,7 @@ export default function App() {
               <ProtectedRoute><Layout><NuevoRequerimiento /></Layout></ProtectedRoute>
             } />
             <Route path="/servicios" element={
-              <ProtectedRoute><Layout><Servicios /></Layout></ProtectedRoute>
+              <ProtectedRoute><Layout fullWidth><Servicios /></Layout></ProtectedRoute>
             } />
             <Route path="/crm" element={
               <ProtectedRoute><Layout fullWidth><CRM /></Layout></ProtectedRoute>

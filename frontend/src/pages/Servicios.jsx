@@ -14,7 +14,8 @@ export default function Servicios() {
   const [form, setForm] = useState(VACIO)
   const [saving, setSaving] = useState(false)
   const [vista, setVista] = useState('arbol')              // 'arbol' | 'lista'
-  const [catCerradas, setCatCerradas] = useState(() => new Set())
+  const [rootAbierto, setRootAbierto] = useState(false)    // TODO cerrado por defecto
+  const [catAbiertas, setCatAbiertas] = useState(() => new Set())
   const [svcAbiertos, setSvcAbiertos] = useState(() => new Set())
 
   // Capacidades (texto) → items individuales (las hojas del árbol)
@@ -28,11 +29,11 @@ export default function Servicios() {
     }
     return Object.entries(g).sort((a, b) => a[0].localeCompare(b[0]))
   }, [items])
-  const catOpen = (cat) => !catCerradas.has(cat)   // categorías abiertas por defecto
-  const toggleCat = (cat) => setCatCerradas(p => { const n = new Set(p); n.has(cat) ? n.delete(cat) : n.add(cat); return n })
+  const catOpen = (cat) => catAbiertas.has(cat)    // categorías CERRADAS por defecto
+  const toggleCat = (cat) => setCatAbiertas(p => { const n = new Set(p); n.has(cat) ? n.delete(cat) : n.add(cat); return n })
   const toggleSvc = (id) => setSvcAbiertos(p => { const n = new Set(p); n.has(id) ? n.delete(id) : n.add(id); return n })
-  const expandirTodo = () => { setCatCerradas(new Set()); setSvcAbiertos(new Set(items.map(s => s.id))) }
-  const colapsarTodo = () => { setCatCerradas(new Set(porCategoria.map(([c]) => c))); setSvcAbiertos(new Set()) }
+  const expandirTodo = () => { setRootAbierto(true); setCatAbiertas(new Set(porCategoria.map(([c]) => c))); setSvcAbiertos(new Set(items.map(s => s.id))) }
+  const colapsarTodo = () => { setRootAbierto(false); setCatAbiertas(new Set()); setSvcAbiertos(new Set()) }
 
   const load = () => {
     api.get('/api/servicios')
@@ -96,8 +97,8 @@ export default function Servicios() {
   }
 
   return (
-    <div className="max-w-5xl mx-auto animate-fade-in">
-      <header className="mb-10">
+    <div className="w-full animate-fade-in px-5 md:px-8 py-8">
+      <header className="max-w-5xl mx-auto mb-10">
         <div className="hero-eyebrow">Comercial</div>
         <div className="flex items-end justify-between flex-wrap gap-4">
           <div>
@@ -124,7 +125,7 @@ export default function Servicios() {
 
       {/* Form de alta/edición */}
       {editando !== null && (
-        <form onSubmit={guardar} className="card p-7 mb-8 animate-fade-in">
+        <form onSubmit={guardar} className="card p-7 mb-8 animate-fade-in max-w-5xl mx-auto">
           <div className="flex items-center justify-between mb-6">
             <h2 className="font-bold text-lg tracking-tight">
               {editando === 'nuevo' ? 'Nuevo servicio' : 'Editar servicio'}
@@ -179,7 +180,7 @@ export default function Servicios() {
       )}
 
       {loading ? (
-        <div className="space-y-3">{[1,2,3].map(i => <SkeletonRow key={i} />)}</div>
+        <div className="space-y-3 max-w-5xl mx-auto">{[1,2,3].map(i => <SkeletonRow key={i} />)}</div>
       ) : items.length === 0 ? (
         <EmptyState
           icon={Package}
@@ -189,7 +190,7 @@ export default function Servicios() {
           actionLabel="+ Cargar primer servicio"
         />
       ) : vista === 'lista' ? (
-        <div className="space-y-3">
+        <div className="space-y-3 max-w-5xl mx-auto">
           {items.map(s => (
             <div key={s.id} className={`card p-5 card-hover ${!s.activo ? 'opacity-60' : ''}`}>
               <div className="flex items-start justify-between gap-4 flex-wrap">
@@ -215,8 +216,8 @@ export default function Servicios() {
           ))}
         </div>
       ) : (
-        <div className="card p-5">
-          <div className="flex items-center justify-between mb-4 gap-3 flex-wrap">
+        <div className="w-full">
+          <div className="flex items-center justify-between mb-6 gap-3 flex-wrap max-w-5xl mx-auto">
             <div className="text-[12px] text-muted">
               Mapa de servicios: de lo <span className="font-semibold">macro</span> (categoría) a lo <span className="font-semibold">micro</span> (capacidad). Tocá un nodo para desplegar.
             </div>
@@ -227,15 +228,19 @@ export default function Servicios() {
             </div>
           </div>
 
-          {/* Organigrama descendente: raíz → categorías (azul) → servicios (naranja) → capacidades (verde) */}
-          <div className="overflow-x-auto pb-4">
+          {/* Organigrama descendente a pantalla completa: raíz → categorías (azul) → servicios (naranja) → capacidades (verde) */}
+          <div className="overflow-x-auto pb-8">
             <div className="orgchart min-w-full">
               <ul>
                 <li>
-                  {/* Raíz */}
-                  <span className="oc-node px-4 py-2 rounded-2xl bg-primary text-neutral-50 dark:bg-slate-100 dark:text-slate-900 font-bold text-[13px] shadow-soft">
+                  {/* Raíz — tocá para abrir/cerrar el árbol (por defecto todo cerrado) */}
+                  <span onClick={() => setRootAbierto(v => !v)}
+                    className="oc-node px-4 py-2 rounded-2xl bg-primary text-neutral-50 dark:bg-slate-100 dark:text-slate-900 font-bold text-[13px] shadow-soft">
                     <Package size={14} /> Nuestros Servicios
+                    <span className="text-[10px] font-semibold bg-white/20 dark:bg-slate-900/15 rounded-full px-1.5 py-0.5">{porCategoria.length}</span>
+                    {rootAbierto ? <ChevronDown size={13} className="opacity-70" /> : <ChevronRight size={13} className="opacity-70" />}
                   </span>
+                  {rootAbierto && (
                   <ul>
                     {porCategoria.map(([cat, servicios]) => (
                       <li key={cat}>
@@ -282,6 +287,7 @@ export default function Servicios() {
                       </li>
                     ))}
                   </ul>
+                  )}
                 </li>
               </ul>
             </div>
