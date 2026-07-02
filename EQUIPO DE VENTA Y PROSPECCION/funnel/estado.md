@@ -151,10 +151,27 @@ Nombre, empresa, rubro y un gancho de dolor por rubro.
 - Backend: endpoints externos OK, **migración aplicada**, **chat en vivo sobre el plan funcionando**.
 - **Prospección diaria automática: ACTIVA en MODO BORRADOR** (busca y escribe; NO envía nada).
 - **Envío real de correos: APAGADO** (`OUTREACH_ENABLED=false`). Encender tras validar emails + warm-up.
-- Corridas borrador completadas: 11/06 (Córdoba/Rosario), 12/06 (CABA/GBA), 13/06 (Mendoza/Tucumán), 14/06 (Salta/Mar del Plata), 15/06 (Bahía Blanca/Neuquén), 16/06 (Santa Fe/Paraná), 17/06 (Rosario expansión), 18/06 (San Juan/Resistencia Chaco), 19/06 (Jujuy/Posadas Misiones), 20/06 (La Rioja Capital/Catamarca Capital), 21/06 (La Plata/San Luis Capital), 22/06 (Córdoba 2° lote/Comodoro Rivadavia), 23/06 (Corrientes Capital/Santiago del Estero Capital), 24/06 (Formosa Capital/Bariloche Río Negro), 25/06 (Río Cuarto/Río Gallegos Santa Cruz), 26/06 (Tandil/General Roca Río Negro), 27/06 (Concordia Entre Ríos/Pergamino Buenos Aires), 28/06 (Rafaela Santa Fe/Junín Buenos Aires), 29/06 (Villa María Córdoba/Gualeguaychú Entre Ríos), 30/06 (San Rafael Mendoza/Olavarría Buenos Aires), 01/07 (**Ushuaia Tierra del Fuego/Necochea Buenos Aires**) → **105 leads en borrador (21 corridas)**. Cinturón NOA completo (Mendoza, Tucumán, Salta, Jujuy, La Rioja, Catamarca, Santiago del Estero ✓). Cuyo completo (Mendoza, San Juan, San Luis). Mendoza interior: San Rafael ✓. Patagonia: Neuquén ✓, Comodoro ✓, Bariloche ✓, Río Gallegos ✓, General Roca ✓. **Tierra del Fuego: Ushuaia ✓ (primera incursión)**. NEA completo: Chaco ✓, Misiones ✓, Corrientes ✓, Formosa ✓. Córdoba interior: Río Cuarto ✓, Villa María ✓. PBA interior: La Plata ✓, Bahía Blanca ✓, Mar del Plata ✓, Tandil ✓, Pergamino ✓, Junín ✓, Olavarría ✓, **Necochea ✓**. Entre Ríos completo: Paraná ✓, Concordia ✓, Gualeguaychú ✓. Santa Fe interior: Rafaela ✓.
+- Corridas borrador completadas: 11/06 (Córdoba/Rosario), 12/06 (CABA/GBA), 13/06 (Mendoza/Tucumán), 14/06 (Salta/Mar del Plata), 15/06 (Bahía Blanca/Neuquén), 16/06 (Santa Fe/Paraná), 17/06 (Rosario expansión), 18/06 (San Juan/Resistencia Chaco), 19/06 (Jujuy/Posadas Misiones), 20/06 (La Rioja Capital/Catamarca Capital), 21/06 (La Plata/San Luis Capital), 22/06 (Córdoba 2° lote/Comodoro Rivadavia), 23/06 (Corrientes Capital/Santiago del Estero Capital), 24/06 (Formosa Capital/Bariloche Río Negro), 25/06 (Río Cuarto/Río Gallegos Santa Cruz), 26/06 (Tandil/General Roca Río Negro), 27/06 (Concordia Entre Ríos/Pergamino Buenos Aires), 28/06 (Rafaela Santa Fe/Junín Buenos Aires), 29/06 (Villa María Córdoba/Gualeguaychú Entre Ríos), 30/06 (San Rafael Mendoza/Olavarría Buenos Aires), 01/07 (Ushuaia Tierra del Fuego/Necochea Buenos Aires), 02/07 (**San Nicolás de los Arroyos Buenos Aires/Venado Tuerto Santa Fe**) → **110 leads en borrador (22 corridas)**. Cinturón NOA completo (Mendoza, Tucumán, Salta, Jujuy, La Rioja, Catamarca, Santiago del Estero ✓). Cuyo completo (Mendoza, San Juan, San Luis). Mendoza interior: San Rafael ✓. Patagonia: Neuquén ✓, Comodoro ✓, Bariloche ✓, Río Gallegos ✓, General Roca ✓, Ushuaia ✓. NEA completo: Chaco ✓, Misiones ✓, Corrientes ✓, Formosa ✓. Córdoba interior: Río Cuarto ✓, Villa María ✓. PBA interior: La Plata ✓, Bahía Blanca ✓, Mar del Plata ✓, Tandil ✓, Pergamino ✓, Junín ✓, Olavarría ✓, Necochea ✓, **San Nicolás de los Arroyos ✓**. Entre Ríos completo: Paraná ✓, Concordia ✓, Gualeguaychú ✓. Santa Fe interior: Rafaela ✓, **Venado Tuerto ✓**.
 - Pendiente real: validar calidad de los emails y, cuando se apruebe, encender el envío (flip a push-vivo).
 
 ## Última corrida
+**Fecha:** 2026-07-02 | **Modo:** BORRADOR (sin envíos reales)
+**Segmento:** Estudios contables/impositivos — **San Nicolás de los Arroyos (Buenos Aires)** (primera incursión — PBA norte industrial) + **Venado Tuerto (Santa Fe)** (primera incursión — hub sojero SF interior)
+**Cupo usado:** 5 leads
+**Leads encontrados:** 5
+**Leads descartados:** 0 (ninguno en La Pampa; ningún duplicado)
+**Emails escritos:** 2 (Gómez & Faldani ✅ dominio propio, Poszler ✅ Gmail personal ⭐⭐)
+**Sin email:** 3 (Bettiolo-Parodi-Lázaro, Riccardini, Peláez — not_found)
+**Email status:** 1 verified_domain (Gómez & Faldani info@), 1 verified_personal (Poszler Gmail), 3 not_found
+**Disparador:** Prórroga DDJJ Ganancias/Bienes Personales período 2025 hasta 27/07/2026 (RG ARCA 5851/2026) — quedan 25 días.
+**Archivos:**
+- `funnel/leads/new/borrador-2026-07-02.jsonl` — 5 leads
+- `funnel/reportes/2026-07-02.md` — reporte completo
+**Total acumulado borrador:** 110 leads (22 corridas)
+**Hitos:** San Nicolás de los Arroyos (Buenos Aires) inaugurada ✓ (PBA norte industrial). Venado Tuerto (Santa Fe) inaugurada ✓ (hub sojero SF interior). 110 leads acumulados.
+**Próximo bloqueante:** Validar calidad de los emails y activar envío real (`OUTREACH_ENABLED=true` + warm-up). Candidatos prioritarios ⭐: Bocco (Villa María, dominio propio, agro), SAIPE (multi-sucursal, email personal alfiore@), LS S.A. (José Sasia, 70 años), Marturet (Concordia), Carnevale (Pergamino), Fernández Carrera Molejón (ISO 9001, General Roca ⭐⭐), Pagliano (San Rafael), Rivero (Ushuaia, tech-adjacent), Poszler (Venado Tuerto, Gmail personal ⭐⭐). Candidatos sin email para corrida futura: Bettiolo-Parodi-Lázaro ⭐ (San Nicolás, CPBA), Riccardini ⭐ (San Nicolás, telexplorer), Peláez ⭐ (Venado Tuerto, CPCESF), Eliana apellido ⭐ (Ushuaia Contable, CPCE TdF), HAE Dotonianes titular ⭐ (Necochea, CPBA), Secondi ⭐ (Olavarría, CPBA), Melnik ⭐⭐ (Catamarca, CPCE).
+
+## Corrida anterior (2026-07-01)
 **Fecha:** 2026-07-01 | **Modo:** BORRADOR (sin envíos reales)
 **Segmento:** Estudios contables/impositivos — **Ushuaia (Tierra del Fuego)** (primera incursión — provincia entera nunca prospectada) + **Necochea (Buenos Aires)** (primera incursión ciudad costera bonaerense)
 **Cupo usado:** 5 leads
@@ -163,13 +180,20 @@ Nombre, empresa, rubro y un gancho de dolor por rubro.
 **Emails escritos:** 5 (CVM ✅ Gmail personal, Rivero ✅ dominio propio, Ushuaia Contable ✅ dominio propio, HAE Dotonianes ✅ dominio propio, Laboranti ✅ email personal)
 **Sin email:** 0
 **Email status:** 2 verified_personal (CVM Gmail, Laboranti personal), 3 verified_domain (Rivero, Ushuaia Contable, HAE Dotonianes)
-**Disparador:** Prórroga DDJJ Ganancias/Bienes Personales período 2025 hasta 27/07/2026 (RG ARCA 5851/2026) — quedan 26 días. Ángulo diferencial TdF: régimen promocional Ley 19.640 suma complejidad única.
 **Archivos:**
 - `funnel/leads/new/borrador-2026-07-01.jsonl` — 5 leads
 - `funnel/reportes/2026-07-01.md` — reporte completo
 **Total acumulado borrador:** 105 leads (21 corridas)
-**Hitos:** Tierra del Fuego inaugurada ✓ (Ushuaia — primera vez en la provincia). Necochea (Buenos Aires) inaugurada ✓. 105 leads acumulados.
-**Próximo bloqueante:** Validar calidad de los emails y activar envío real (`OUTREACH_ENABLED=true` + warm-up). Candidatos prioritarios ⭐: Bocco (Villa María, dominio propio, agro), SAIPE (multi-sucursal, email personal alfiore@), LS S.A. (José Sasia, 70 años), Marturet (Concordia), Carnevale (Pergamino), Fernández Carrera Molejón (ISO 9001, General Roca ⭐⭐), Pagliano (San Rafael), Rivero (Ushuaia, tech-adjacent). Candidatos sin email para corrida futura: Eliana apellido ⭐ (Ushuaia Contable, CPCE TdF), HAE Dotonianes titular ⭐ (Necochea, CPBA), Estudio Crasso ⭐ (Necochea, 40+ años), Secondi ⭐ (Olavarría, CPBA), Fernandez Tesone ⭐ (Gualeguaychú, +200 empresas), Melnik ⭐⭐ (Catamarca, CPCE).
+
+## Gotchas descubiertos (continuación — 2026-07-02)
+- [2026-07-02] Gómez & Faldani (San Nicolás de los Arroyos): dominio propio verificado (gomezfaldani.com.ar), email info@ institucional. Perfil industrial/agro del norte bonaerense — fit perfecto con el disparador de julio. Nombre de pila de socios no publicado en el sitio (investigar LinkedIn o CPBA). Candidato ⭐ para primer envío en San Nicolás.
+- [2026-07-02] Bettiolo, Parodi y Lázaro CP (San Nicolás): firma multi-socio en Las Heras 93, presencia web activa, email bloqueado por Cloudflare. Alcance alternativo: guiaurbana.com.ar formulario / tel (0336) 442-5345. Candidato ⭐ para corrida futura con email.
+- [2026-07-02] María Cecilia Riccardini (San Nicolás): nombre completo verificado vía TeleXplorer. Don Bosco 361. Tel: (336) 445-4053. Sin email publicado. Candidata corrida futura.
+- [2026-07-02] Susana Poszler / Estudio Contable Del Sur (Venado Tuerto): el mejor lead de la corrida ⭐⭐. Email personal Gmail verificado (susanposzler@gmail.com). Sitio propio (estudiocontabledelsur.com) lista activamente los vencimientos de Ganancias, Bienes Personales y Balances — fit perfecto con el disparador. Candidata prioritaria para primer envío en Venado Tuerto. Ángulo: "tu propio sitio publica los mismos vencimientos que motivan este mensaje".
+- [2026-07-02] Sandra Edit Peláez (Venado Tuerto): nombre completo + matrícula CPCESF 9.385 verificados, listing Yelp actualizado mayo 2026. Sin email publicado. Alcance alternativo: CPCE Santa Fe delegación Venado Tuerto / tel 034 6243-7846. Candidata corrida futura.
+- [2026-07-02] San Nicolás de los Arroyos: primera incursión exitosa. Hub industrial norte bonaerense (~150k hab, Ternium acero + agro). Cloudflare bloquea emails en varios sitios. Fuentes para próximas corridas: guiaurbana.com.ar, telexplorer.com.ar, Páginas Amarillas San Nicolás, CPBA delegación San Nicolás. Capacidad 5+ corridas.
+- [2026-07-02] Venado Tuerto (Santa Fe): primera incursión exitosa. Epicentro sojero del sur santafecino (~75k hab). Baja densidad web de estudios contables. Fuentes para próximas corridas: CPCE Santa Fe delegación Venado Tuerto (CPCESF.org.ar), Yelp local, telexplorer.com.ar, argentina.com/venado-tuerto. Capacidad 5+ corridas.
+- [2026-07-02] **HITO: 110 leads en borrador (22 corridas).** San Nicolás de los Arroyos (Buenos Aires) inaugurada ✓ (PBA norte industrial). Venado Tuerto (Santa Fe) inaugurada ✓ (hub sojero SF interior). Santa Fe interior: Rafaela ✓, Venado Tuerto ✓.
 
 ## Gotchas descubiertos (continuación — 2026-07-01)
 - [2026-07-01] Tierra del Fuego (Ushuaia): primera incursión exitosa — provincia completamente virgen para propuestas tech. Ángulo diferencial único: régimen promocional Ley 19.640 (zona franca industrial) = doble complejidad impositiva para los estudios fueguinos (DDJJ nacionales + exenciones/alícuotas diferenciales TdF + clientes con facturación en divisas). Baja saturación de propuestas digitales = diferenciador real. Capacidad para 10+ corridas (Ushuaia + Río Grande).
