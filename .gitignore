@@ -25,3 +25,10 @@ frontend/vite-err.log
 # OS
 .DS_Store
 Thumbs.db
+
+# Claude Code internal
+.claude/worktrees/
+
+# Python cache
+__pycache__/
+*.pyc
