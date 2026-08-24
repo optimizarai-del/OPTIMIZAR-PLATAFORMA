@@ -14,7 +14,7 @@ import httpx
 from sqlalchemy.orm import Session
 
 from app.models import GeroConversacion, GeroMensaje
-from app.gero import personalidad, herramientas
+from app.gero import personalidad, herramientas, diagnostico
 
 logger = logging.getLogger(__name__)
 
@@ -129,9 +129,20 @@ def responder(db: Session, wa_id: str, texto: str, telefono: str = None,
         return None
 
     # ── Armamos el contexto para el modelo ──
+    # Si la persona viene del embudo del diagnóstico, su mensaje trae el código.
+    # Le cargamos la ficha completa ANTES de que hable: no la buscamos con una
+    # herramienta porque si el modelo se olvidara de llamarla, el primer mensaje
+    # —el que más pesa— saldría genérico. Va después del flush de arriba, así el
+    # mensaje recién llegado ya entra en la búsqueda.
+    codigo = diagnostico.token_de_conversacion(db, conv.id)
+    ficha = diagnostico.contexto(db, codigo) if codigo else None
+    if ficha:
+        logger.info("[gero] conv %s viene del diagnóstico %s", conv.id, codigo)
+
     system = personalidad.system_prompt(
         nombre_contacto=(conv.nombre_perfil or nombre),
         resumen_previo=conv.resumen,
+        diagnostico=ficha,
     )
     messages = _historial_para_modelo(conv, db)
 

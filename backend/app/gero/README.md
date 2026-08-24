@@ -121,6 +121,47 @@ Observabilidad:
 - `GET /api/gero/conversaciones` — lista de charlas con estado e interés.
 - `GET /api/gero/conversaciones/{id}` — el hilo completo + traza de herramientas.
 
+## Cuando el prospecto viene del diagnóstico
+
+El embudo del diagnóstico (`diagnostico.optimizar-ia.com`) termina en un botón que abre
+WhatsApp con el mensaje ya escrito y un código adentro:
+
+    Hola, leí mi diagnóstico y quiero avanzar. Código: zkRo7hvt2Y3R
+
+`gero/diagnostico.py` detecta ese código y le carga a Gero la ficha completa **antes** de
+que hable: qué respondió en el formulario, el informe que le entregamos y la calificación
+interna. No es una tool a propósito — si el modelo se olvidara de llamarla, el primer
+mensaje (el que más pesa) saldría genérico.
+
+El código se busca en **todo el historial** de la conversación, no solo en el último
+mensaje: llega en el primero, pero Gero tiene que seguir sabiendo quién es en el turno
+veinte.
+
+| Calificación | Qué hace Gero |
+|---|---|
+| 🟢 verde | Ofrece la reunión temprano, sin dar vueltas. |
+| 🟡 amarillo | Resuelve dudas primero, ofrece la reunión cuando se entusiasma. |
+| 🔴 rojo | Atiende bien pero no insiste con agendar. |
+
+La calificación es interna y Gero tiene instrucción explícita de no mencionarla nunca, ni
+el código ni que tiene una "ficha". Para la persona, simplemente leyó su caso.
+
+**Variante B del test A/B:** esos prospectos escriben para *recibir* el diagnóstico, no
+para charlar. Gero les pasa el link de entrada, antes que cualquier otra cosa.
+
+**Exclusión territorial:** si el diagnóstico marcó estudio contable en La Pampa (acuerdo
+con Larrañaga y Asociados), Gero no ofrece servicios ni reunión, y escala a un humano si
+la persona insiste.
+
+La tabla `diagnosticos` la escribe otro servicio. Comparten base, así que se lee con SQL
+directo y no con un modelo de SQLAlchemy: declararlo la metería en el `create_all` de la
+plataforma, y dos servicios gestionando el mismo esquema termina mal. Si la tabla no está,
+Gero funciona como siempre.
+
+```
+DIAGNOSTICO_URL=https://diagnostico.optimizar-ia.com   # opcional, ya trae este default
+```
+
 ## Pendiente (próxima tanda)
 - Panel en la plataforma (frontend) para ver las conversaciones de Gero.
 - Resumen rodante automático (`resumen`) para relaciones muy largas.
