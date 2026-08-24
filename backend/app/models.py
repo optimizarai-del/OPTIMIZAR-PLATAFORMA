@@ -456,3 +456,58 @@ class AdRecommendation(Base):
     created_at = Column(DateTime, default=_utcnow, index=True)
 
     campaign = relationship("AdCampaign", back_populates="recomendaciones")
+
+
+# ── Gero — asistente IA de atención al cliente en WhatsApp ────────────────────
+# A diferencia de los agentes que corren sobre routines de Claude Code, Gero usa la
+# API de Anthropic directo (excepción documentada, igual que ai_service.py) porque
+# necesita responder en tiempo real al webhook de WhatsApp. Estas dos tablas le dan
+# MEMORIA: una conversación por número de WhatsApp + el historial completo de mensajes.
+
+class GeroConversacion(Base):
+    """Una conversación de WhatsApp por contacto (identificado por su número wa_id).
+    Guarda el vínculo con el Contacto del CRM y un resumen rodante para memoria larga."""
+    __tablename__ = "gero_conversaciones"
+
+    id = Column(Integer, primary_key=True)
+
+    # ── Identidad del canal ──
+    wa_id = Column(String, nullable=False, unique=True, index=True)  # número E.164 sin '+' (id de WhatsApp)
+    telefono = Column(String, nullable=True)          # número tal como llegó (con '+')
+    nombre_perfil = Column(String, nullable=True)     # nombre del perfil de WhatsApp
+
+    # ── Vínculo con el CRM ──
+    contacto_id = Column(Integer, ForeignKey("contactos.id"), nullable=True, index=True)
+
+    # ── Estado de la charla ──
+    estado = Column(String, default="activa", index=True)  # activa/pausada/handoff_humano/cerrada
+    resumen = Column(Text, nullable=True)             # memoria larga: resumen rodante de la relación
+    nivel_interes = Column(String, nullable=True)     # frio/tibio/caliente (última clasificación de Gero)
+    ultima_actividad = Column(DateTime, default=_utcnow, index=True)
+
+    created_at = Column(DateTime, default=_utcnow)
+    updated_at = Column(DateTime, default=_utcnow, onupdate=_utcnow)
+
+    contacto = relationship("Contacto", foreign_keys=[contacto_id])
+    mensajes = relationship("GeroMensaje", back_populates="conversacion",
+                            order_by="GeroMensaje.created_at",
+                            cascade="all, delete-orphan")
+
+
+class GeroMensaje(Base):
+    """Cada turno de la conversación de WhatsApp. Es la memoria a corto plazo que se
+    recarga en cada respuesta. `rol` sigue el formato de la API de Anthropic."""
+    __tablename__ = "gero_mensajes"
+
+    id = Column(Integer, primary_key=True)
+    conversacion_id = Column(Integer, ForeignKey("gero_conversaciones.id"),
+                             nullable=False, index=True)
+
+    rol = Column(String, nullable=False)              # user / assistant
+    contenido = Column(Text, nullable=False)          # texto del mensaje
+    wa_message_id = Column(String, nullable=True, index=True)  # id de WhatsApp (idempotencia inbound)
+    herramientas = Column(JSON, nullable=True)        # tool_use/tool_result de ese turno (traza)
+
+    created_at = Column(DateTime, default=_utcnow, index=True)
+
+    conversacion = relationship("GeroConversacion", back_populates="mensajes")
