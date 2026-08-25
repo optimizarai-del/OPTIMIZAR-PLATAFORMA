@@ -175,6 +175,11 @@ def responder(db: Session, wa_id: str, texto: str, telefono: str = None,
         texto_final = ("¡Perdón! Se me cruzaron los cables un segundo 🙈 "
                        "¿Me lo repetís así te ayudo?")
 
+    # Red de seguridad de tono: corrige los deslices al espanol neutro que se le
+    # escapan a Haiku aunque el prompt se lo prohiba. Se aplica antes de guardar,
+    # asi lo que queda en la memoria es lo mismo que recibio la persona.
+    texto_final = personalidad.rioplatense(texto_final)
+
     # Persistimos la respuesta de Gero (memoria).
     db.add(GeroMensaje(conversacion_id=conv.id, rol="assistant", contenido=texto_final,
                        herramientas=traza_tools or None))

@@ -4,6 +4,7 @@ El tono está inspirado en "Tomi de Sonner": cercano, rioplatense, resolutivo y 
 nunca robótico ni acartonado. Corto y al pie, como se habla por WhatsApp.
 """
 import os
+import re
 
 CALENDLY_URL = os.getenv("CALENDLY_URL", "https://calendly.com/optimizar-ai/30min")
 
@@ -84,3 +85,42 @@ tener su ficha completa: qué respondió, qué informe le entregamos y cómo cal
 - Ante la duda de si algo se puede hacer: "lo vemos en la reunión con el equipo" + Calendly.{memoria}
 
 Respondé SIEMPRE en el idioma en que te escriben (por defecto, español rioplatense).{ficha}"""
+
+
+# ── Red de seguridad de tono ──────────────────────────────────────────────────
+# El prompt le pide rioplatense con pares de palabras concretos, y aun así a Haiku
+# se le escapa un "te late" o un "prefieres" cada tanto. Pedírselo mejor no
+# alcanzó, así que lo corregimos después: es determinista y cuesta cero.
+# Lista corta y de alta confianza — nada de reescribir lo que no estamos seguros.
+_NEUTRO = [
+    (r"\bcu[eé]ntame\b", "contame"),
+    (r"\bprefieres\b", "preferís"),
+    (r"\bquieres\b", "querés"),
+    (r"\btienes\b", "tenés"),
+    (r"\bpuedes\b", "podés"),
+    (r"\bsabes\b", "sabés"),
+    (r"\bnecesitas\b", "necesitás"),
+    (r"\bte late\b", "te parece"),
+    (r"\b[aá]ndale\b", "dale"),
+    (r"\bahorita\b", "ahora"),
+    (r"\bplaticar\b", "charlar"),
+]
+
+
+def rioplatense(texto: str) -> str:
+    """Corrige los deslices al español neutro antes de que el mensaje salga.
+
+    Respeta la mayúscula inicial: "Prefieres" queda "Preferís", no "preferís".
+    """
+    if not texto:
+        return texto
+
+    def _reemplazo(nuevo):
+        def _f(m):
+            original = m.group(0)
+            return nuevo.capitalize() if original[:1].isupper() else nuevo
+        return _f
+
+    for patron, nuevo in _NEUTRO:
+        texto = re.sub(patron, _reemplazo(nuevo), texto, flags=re.IGNORECASE)
+    return texto
