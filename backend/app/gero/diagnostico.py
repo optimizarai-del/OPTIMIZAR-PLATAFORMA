@@ -102,7 +102,17 @@ def _redactar(fila) -> str:
             f"es pasarle el link, antes de cualquier otra cosa: {link}"
         )
     else:
-        partes.append(f"\nSi te lo pide de nuevo o lo perdio, esta en: {link}")
+        # La variante B tiene una orden imperativa y Haiku la cumple; acá antes
+        # había una sugerencia blanda y la soltaba, abriendo con "¿qué te pareció?".
+        # Mismo tono imperativo, entonces.
+        partes.append(
+            f"\nYA LEYO SU DIAGNOSTICO. Tu PRIMER mensaje tiene que citar algo "
+            f"concreto de ese informe: las horas que pierde, el cuello de botella "
+            f"principal o lo que le recomendamos. Con datos suyos, no en general. "
+            f"Nada de abrir con '¿que te parecio?' ni '¿en que te puedo ayudar?': "
+            f"eso tira abajo todo el trabajo que ya hicimos y te deja igual que "
+            f"cualquier bot." + f"\nSi lo perdio o lo pide de nuevo, esta en: {link}"
+        )
 
     if fila.estado != "listo":
         partes.append(f"\n⚠️ El diagnóstico todavía se está generando (estado: {fila.estado}). "
@@ -128,7 +138,9 @@ def _redactar(fila) -> str:
     tier = (fila.tier or "amarillo").lower()
     guias = {
         "verde": ("CALIENTE. Encaja con lo que hacemos y tiene urgencia. Tu objetivo en esta "
-                  "charla es que agende. Ofrecele la reunión temprano, sin dar mil vueltas."),
+                  "charla es que agende, y no dentro de diez mensajes: ofrecele la reunión "
+                  "de 30 minutos en tu primer o segundo mensaje. Si esperás a que él "
+                  "pregunte el precio, ya perdiste el momento."),
         "amarillo": ("TIBIO. Encaja pero sin urgencia, o no es quien decide. No lo apures: "
                      "resolvele las dudas primero y ofrecé la reunión cuando se entusiasme."),
         "rojo": ("NO CALIFICA. Atendelo igual y con buena onda —el diagnóstico ya es suyo—, "
