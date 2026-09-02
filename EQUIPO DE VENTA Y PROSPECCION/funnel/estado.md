@@ -453,6 +453,25 @@ Nombre, empresa, rubro y un gancho de dolor por rubro.
 - [2026-07-19] **ALERTA TIMING CRÍTICA (8 días):** el vencimiento RG ARCA 5851/2026 (27/07/2026) está a **8 días**. Con 195 leads en Contactos (≥165 con email válido), urgencia máxima para activar `OUTREACH_ENABLED=true`. Warm-up express de 2 días + envío escalonado es la única ventana viable restante.
 
 ## Última corrida
+**Fecha:** 2026-09-02 | **Corrida:** 82 | **Modo:** BORRADOR (sin envíos reales)
+**Segmento:** Estudios contables/impositivos — **Bahía Blanca (3ª wave)**
+**Cupo usado:** 5 leads
+**Leads encontrados:** 5
+**Leads descartados:** 0 por La Pampa. Descartados durante investigación: Figueras Blanes (contratista eléctrico, no contable), GAM Estudio (CABA no BB), Estudio MC (CABA no BB), APF & Asociados (dominio caído), Estudio Giagante (sin email, ya 5 completos), Estudio Gutierrez B & Trape J P (sin email en web).
+**Emails escritos:** 4/5 (80% email rate — pool 3ª wave más escaso que waves 1-2)
+**Sin email:** 1 (Parrotta-Rossetti — site 403, teléfono disponible)
+**Email status:** 3 verified_domain (Rueda & Asociados, JM&A Contadores, ESTUDIO GL) + 1 found_gmail (ZBS — estudiozbs@gmail.com)
+**CRM:** 5/5 × HTTP 200 confirmado (IDs 293–297)
+**Disparador:** Automatización de flujos contables — ciclos mensuales repetitivos + caso real Larrañaga y Asociados. Ángulos específicos: trayectoria ~50 años agro+inmobiliario (Rueda), dual jurídico-contable digital-first (ZBS), 50+ años dos sedes BB+CABA (JM&A), 40+ años tres socios multi-sector agropecuario+construcción (GL).
+**Archivos:**
+- `funnel/leads/new/borrador-2026-09-02.jsonl` — 5 leads
+- `funnel/reportes/2026-09-02.md` — reporte completo
+**Total acumulado borrador:** ~410 leads (82 corridas)
+**Hitos:** JM&A fundada 1968 por Alfredo Irisarri (58 años), dos sedes BB+CABA, dos socios activos; ESTUDIO GL tres socios Lorenzo-Galán 40+ años multi-sector agropecuario+construcción+colegios+sector público; Rueda & Asociados ~50 años Saavedra 39 P11.
+**Gotchas nuevos:** curl al API requiere `--cacert /root/.ccr/ca-bundle.crt` (proxy egress) — sin el flag falla con ws_closed_mid_exchange. ZBS: estudio-zbs.com.ar ENOTFOUND pero email Gmail confirmado en múltiples directorios. Pool BB 3ª wave: email rate 4/5 (80%); 4ª wave puede requerir CPBA Delegación BB físico o LinkedIn.
+**Próximas corridas:** Bahía Blanca 4ª wave (Parrotta-Rossetti pendiente email, Chucair Alsina 184, Giagante Alvarado 234, Gutierrez-Trape Av Alem 1014 — vía CPBA Delegación BB físico) / San Luis Capital 2ª wave / Neuquén Capital 5ª wave (CPCE físico) / Paraná 3ª wave (CPCEER).
+
+## Corrida anterior (2026-08-25)
 **Fecha:** 2026-08-25 | **Corrida:** 74 | **Modo:** BORRADOR (sin envíos reales)
 **Segmento:** Estudios contables/impositivos — **Córdoba Capital (9ª wave)**
 **Cupo usado:** 5 leads
