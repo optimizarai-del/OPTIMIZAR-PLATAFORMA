@@ -459,6 +459,25 @@ Nombre, empresa, rubro y un gancho de dolor por rubro.
 - [2026-07-19] **ALERTA TIMING CRÍTICA (8 días):** el vencimiento RG ARCA 5851/2026 (27/07/2026) está a **8 días**. Con 195 leads en Contactos (≥165 con email válido), urgencia máxima para activar `OUTREACH_ENABLED=true`. Warm-up express de 2 días + envío escalonado es la única ventana viable restante.
 
 ## Última corrida
+**Fecha:** 2026-09-08 | **Corrida:** 88 | **Modo:** BORRADOR (sin envíos reales)
+**Segmento:** Estudios contables/impositivos — **Santa Fe Capital (3ª wave)**
+**Cupo usado:** 5 leads
+**Leads encontrados:** 5
+**Leads descartados:** 0 (ninguno de La Pampa, ningún duplicado)
+**Emails escritos:** 2/5 (40% email rate — 3ª wave: pool alta visibilidad digital agotado en waves 1–2)
+**Sin email:** 3 (Melini — dominio @estudiomelini.com.ar existe, email no publicado; Mohamad — sin web ni email; Cabral — sin web ni email)
+**Email status:** 1 dominio propio (Paillet: estecofi@paillet.com.ar ⭐⭐), 1 Gmail (Sinchi & Gilliard: cpn.syg@gmail.com)
+**CRM:** 5/5 × HTTP 200 confirmado
+**Disparador:** Sprint de cierre de ejercicio fiscal 2026 (empresas con cierre 31/12) + ángulo CACEX SF para Paillet
+**Archivos:**
+- `funnel/leads/new/borrador-2026-09-08.jsonl` — 5 leads
+- `funnel/reportes/2026-09-08.md` — reporte completo
+**Total acumulado estimado en Contactos:** ~440 leads (88 corridas)
+**Hitos:** Paillet y Asociados ⭐⭐ — primer estudio de Santa Fe Capital con membresía confirmada en CACEX SF (comercio exterior); ángulo de apertura único: sistematizar back-office para escalar comex. Sinchi & Gilliard — dos socios CPN con servicio integral, primer contacto directo con esta firma.
+**Gotchas nuevos:** Email rate 3ª wave SF Capital ~40% — esperado (firmas con alta visibilidad digital cubiertas en waves 1–2). Melini con dominio propio activo pero web sin contenido accesible. Mohamad y Cabral sin presencia web. CPCE Santa Fe es la vía para recuperar emails de estas firmas en wave 4.
+**Próximas corridas recomendadas:** Santa Fe Capital 4ª wave (CPCE Santa Fe — recuperar emails de Melini, Mohamad, Cabral, Seffino 50 años; agregar nuevas firmas del directorio colegial) / Mendoza Capital 5ª wave (Herrera & Ontivero, Codina, Rivarola) / Neuquén Capital 5ª wave (CPCE Neuquén — Ferraris, Baum, Dominguez Bacci)
+
+## Corrida anterior (2026-09-03)
 **Fecha:** 2026-09-03 | **Corrida:** 83 | **Modo:** BORRADOR (sin envíos reales)
 **Segmento:** Estudios contables/impositivos — **San Luis Province (2ª wave)** (San Luis Capital + Villa Mercedes)
 **Cupo usado:** 5 leads
