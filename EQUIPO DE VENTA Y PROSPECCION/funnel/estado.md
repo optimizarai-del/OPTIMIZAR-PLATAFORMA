@@ -459,6 +459,26 @@ Nombre, empresa, rubro y un gancho de dolor por rubro.
 - [2026-07-19] **ALERTA TIMING CRÍTICA (8 días):** el vencimiento RG ARCA 5851/2026 (27/07/2026) está a **8 días**. Con 195 leads en Contactos (≥165 con email válido), urgencia máxima para activar `OUTREACH_ENABLED=true`. Warm-up express de 2 días + envío escalonado es la única ventana viable restante.
 
 ## Última corrida
+**Fecha:** 2026-09-09 | **Corrida:** 89 | **Modo:** BORRADOR (sin envíos reales)
+**Segmento:** Estudios contables/impositivos — **Santa Fe Capital (4ª wave)**
+**Cupo usado:** 5 leads
+**Leads encontrados:** 5
+**Leads cargados a Contactos:** 5 (5/5 × HTTP 200 ✅)
+**Emails válidos:** 2/5 (40% email rate — 4ª wave: pool web parcialmente agotado, consistente con otras 4ª waves del programa)
+**Emails escritos:** 2 (Forzani ✅, Seffino ✅)
+**Sin email:** 3 (Fenoglio & Forchetti, Cibils y Asociados, Balderrama)
+**Email status:** 1 dominio propio (Forzani: info@estudioforzani.com ⭐⭐), 1 Gmail (Seffino: estudioseffino@gmail.com ⭐)
+**CRM:** 5/5 × HTTP 200 confirmado (IDs lead-sfc4-20260909-001 a 005)
+**Disparador:** Sprint de cierre de ejercicio fiscal 2026 + coordinación multi-sede (ángulo único Forzani) + base consolidada 50 años (Seffino)
+**Archivos:**
+- `funnel/leads/new/borrador-2026-09-09.jsonl` — 5 leads
+- `funnel/reportes/2026-09-09.md` — reporte completo
+**Total acumulado estimado en Contactos:** ~445 leads (89 corridas)
+**Hitos:** Estudio Forzani ⭐⭐ — primer estudio de Santa Fe Capital del programa con 3 sedes provinciales (SF Capital + Esmeralda + San Carlos Centro) y 12 profesionales; mayor escala de la 4ª wave; ángulo único = coordinación multi-sede. Estudio Seffino ⭐ — 50 años asesorando empresas en Santa Fe (base de clientes consolidada con alto volumen mensual fijo).
+**Gotchas nuevos:** estudioseffino.com.ar ENOTFOUND (dominio intermitente) — usar Gmail estudioseffino@gmail.com como canal principal. Email rate 4ª wave SF Capital ~40% señal de límite del pool web libre; 5ª wave requiere CPCE Santa Fe C1 (cpcesfe1.org.ar, San Lorenzo 1849) para recuperar Fenoglio & Forchetti, Cibils y Asociados, Balderrama, Annichini Consultores (Francia 3225, tel 0342 456-6829).
+**Próximas corridas recomendadas:** Santa Fe Capital 5ª wave (CPCE Santa Fe C1 — recuperar emails de Fenoglio & Forchetti, Cibils, Balderrama, Annichini; agregar nuevas firmas del directorio de matriculados) / Mendoza Capital 5ª wave (Herrera & Ontivero Av. San Martín 1052, Codina 9 de julio 1485, Rivarola & Rivarola) / Neuquén Capital 5ª wave (CPCE Neuquén — Ferraris Bv. España 228, Baum Pte. J.A. Roca 494, Dominguez Bacci Alte. Brown 437)
+
+## Corrida anterior (2026-09-08)
 **Fecha:** 2026-09-08 | **Corrida:** 88 | **Modo:** BORRADOR (sin envíos reales)
 **Segmento:** Estudios contables/impositivos — **Santa Fe Capital (3ª wave)**
 **Cupo usado:** 5 leads
@@ -476,6 +496,7 @@ Nombre, empresa, rubro y un gancho de dolor por rubro.
 **Hitos:** Paillet y Asociados ⭐⭐ — primer estudio de Santa Fe Capital con membresía confirmada en CACEX SF (comercio exterior); ángulo de apertura único: sistematizar back-office para escalar comex. Sinchi & Gilliard — dos socios CPN con servicio integral, primer contacto directo con esta firma.
 **Gotchas nuevos:** Email rate 3ª wave SF Capital ~40% — esperado (firmas con alta visibilidad digital cubiertas en waves 1–2). Melini con dominio propio activo pero web sin contenido accesible. Mohamad y Cabral sin presencia web. CPCE Santa Fe es la vía para recuperar emails de estas firmas en wave 4.
 **Próximas corridas recomendadas:** Santa Fe Capital 4ª wave (CPCE Santa Fe — recuperar emails de Melini, Mohamad, Cabral, Seffino 50 años; agregar nuevas firmas del directorio colegial) / Mendoza Capital 5ª wave (Herrera & Ontivero, Codina, Rivarola) / Neuquén Capital 5ª wave (CPCE Neuquén — Ferraris, Baum, Dominguez Bacci)
+
 
 ## Corrida anterior (2026-09-03)
 **Fecha:** 2026-09-03 | **Corrida:** 83 | **Modo:** BORRADOR (sin envíos reales)
