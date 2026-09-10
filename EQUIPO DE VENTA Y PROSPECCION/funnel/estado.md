@@ -459,6 +459,27 @@ Nombre, empresa, rubro y un gancho de dolor por rubro.
 - [2026-07-19] **ALERTA TIMING CRÍTICA (8 días):** el vencimiento RG ARCA 5851/2026 (27/07/2026) está a **8 días**. Con 195 leads en Contactos (≥165 con email válido), urgencia máxima para activar `OUTREACH_ENABLED=true`. Warm-up express de 2 días + envío escalonado es la única ventana viable restante.
 
 ## Última corrida
+**Fecha:** 2026-09-10 | **Corrida:** 90 | **Modo:** BORRADOR (sin envíos reales)
+**Segmento:** Estudios contables/impositivos — **Paraná Capital, Entre Ríos (1ª wave — mercado VIRGEN)**
+**Cupo usado:** 5 leads
+**Leads encontrados:** 5
+**Leads cargados a Contactos:** 5 (5/5 × HTTP 200 ✅)
+**Emails válidos:** 4/5 (80% email rate — excelente para primera wave en mercado virgen)
+**Emails escritos:** 4 (Cejas ✅, Hundt-Bottazzi ✅, DLC ✅, Cantondebat ✅)
+**Sin email:** 1 (Rudi Rudi — sitio 503; candidato Instagram/@CPCEER)
+**Email status:** 2 dominio propio (Cejas: consultas@estudiocontablecejas.com ⭐, Hundt-Bottazzi: info@estudiohb.com.ar ⭐⭐), 1 ISP email (DLC: estudiodlc@gigared.com ⭐), 1 Gmail (Cantondebat: contable.estudiocantondebat@gmail.com)
+**Descartados:** 1 — Estudio Gamarci (allanado oct 2024 "mesa de dinero" — riesgo reputacional)
+**CRM:** 5/5 × HTTP 200 confirmado (IDs lead-paran-20260910-001 a 005)
+**Disparador:** Ventana estratégica pre-cierre ejercicio fiscal Q4 2026. Sprint de balances, liquidaciones IIBB Q3. Automatizar antes del sprint multiplica impacto.
+**Archivos:**
+- `funnel/leads/new/borrador-2026-09-10.jsonl` — 5 leads
+- `funnel/reportes/2026-09-10.md` — reporte completo
+**Total acumulado estimado en Contactos:** ~450 leads (90 corridas)
+**Hitos:** Paraná inaugurado ✅ — capital de Entre Ríos, primer mercado de la provincia con corrida dedicada (post-Borré de 06/16). 80% email rate en primera wave. Hundt-Bottazzi ⭐⭐ — mejor lead: 40 años, 4 socios multi-generacionales, cartera comercial/agropecuaria/industrial; dominio propio. DLC ⭐ — 3 socios que atienden personalmente, 23+ años; email ISP verificado en múltiples directorios.
+**Gotchas nuevos:** Estudio Gamarci (9 de julio 326) — DESCARTADO PERMANENTEMENTE (allanado oct 2024 por causa "mesa de dinero", Andrés y Julio Gamarci). Rudi Rudi (rudirudiyasociados.com.ar): sitio 503; buscar email vía Instagram @rudirudiyasociados. DLC email gigared.com = ISP Telecom Argentina, válido como contacto de estudio. Paraná tiene capacidad para 10+ corridas: Larrosa-Duarte, Werner & Orue, Álvarez Nassau, Buron, Cuatrín & Barzanti, Gabas & Johnston, Aranguren Sampayo, Frutos Basgall, Giorgio, Escales (503 hoy).
+**Próximas corridas recomendadas:** Paraná 2ª wave (pool residual + CPCEER directorio) / Concordia o Gualeguaychú (otras ciudades de Entre Ríos) / Mendoza Capital 5ª wave / Santa Fe Capital 5ª wave (CPCE Santa Fe C1)
+
+## Corrida anterior (2026-09-09)
 **Fecha:** 2026-09-09 | **Corrida:** 89 | **Modo:** BORRADOR (sin envíos reales)
 **Segmento:** Estudios contables/impositivos — **Santa Fe Capital (4ª wave)**
 **Cupo usado:** 5 leads
