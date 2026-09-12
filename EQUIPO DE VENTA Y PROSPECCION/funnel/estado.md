@@ -459,6 +459,27 @@ Nombre, empresa, rubro y un gancho de dolor por rubro.
 - [2026-07-19] **ALERTA TIMING CRÍTICA (8 días):** el vencimiento RG ARCA 5851/2026 (27/07/2026) está a **8 días**. Con 195 leads en Contactos (≥165 con email válido), urgencia máxima para activar `OUTREACH_ENABLED=true`. Warm-up express de 2 días + envío escalonado es la única ventana viable restante.
 
 ## Última corrida
+**Fecha:** 2026-09-12 | **Corrida:** 92 | **Modo:** BORRADOR (sin envíos reales)
+**Segmento:** Estudios contables/jurídico-contables — **Corrientes Capital (NEA — 1ª wave, mercado VIRGEN)**
+**Cupo usado:** 5 leads
+**Leads encontrados:** 5
+**Leads cargados a Contactos:** 5 (5/5 × HTTP 200 ✅)
+**Emails válidos:** 3/5 (60% email rate — bueno para mercado virgen con baja presencia digital online)
+**Emails escritos:** 3 (Gómez Sierra ✅, VB Estudio ✅, San Martin ✅)
+**Sin email:** 2 (Ingaramo Gómez Vara — juridico-contable, sin email publicado; QL Quintana — Instagram activo, sin email)
+**Email status:** 1 dominio propio (Gómez Sierra: contacto@gomezsierrayasoc.com ⭐⭐ — 40 años NEA), 1 personal hotmail (VB: vpau1988@hotmail.com), 1 Gmail (San Martin: sanmartin2130@gmail.com), 2 not_found
+**Descartados:** 0 (ninguno en La Pampa, ningún duplicado)
+**CRM:** 5/5 × HTTP 200 confirmado (IDs lead-ctes-20260912-001 a 005)
+**Disparador:** Sprint pre-cierre ejercicio fiscal Q4 2026. Corrientes capital inaugurado como nuevo mercado del NEA (post Resistencia/Chaco 06-18 y Posadas/Misiones 06-19).
+**Archivos:**
+- `funnel/leads/new/borrador-2026-09-12.jsonl` — 5 leads
+- `funnel/reportes/2026-09-12.md` — reporte completo
+**Total acumulado estimado en Contactos:** ~460 leads (92 corridas)
+**Hitos:** Gómez Sierra ⭐⭐ — firma contable+notarial 40+ años en NEA, dominio propio, primer estudio de Corrientes capital del programa. Ingaramo Gómez Vara SH ⭐ — juridico-contable fundado 1998, 4 apellidos, candidato para outreach vía Facebook @estudioigvch. QL Quintana ⭐ — CPN con estudio destacado por INFO Mercury Corrientes, nombre titular confirmado.
+**Gotchas nuevos:** Corrientes capital tiene baja presencia digital de estudios contables en fuentes web estándar (ContadoresYa tiene 7 firmas con teléfono, sin emails). CPCEE Corrientes (cpcecorrientes.org.ar + cpcetramitesctes.com.ar) tiene directorio de matriculados pero requiere login — fuente para 2ª wave. VB Estudio: email personal hotmail (vpau1988@hotmail.com) — validar antes de activar envío. San Martin: web sanmartinestudiocontable.com.ar inaccesible (ENOTFOUND) — email Gmail verificado en múltiples directorios.
+**Próximas corridas recomendadas:** Corrientes Capital 2ª wave (CPCE Corrientes directorio — Ingaramo @estudioigvch email, QL Quintana @estudio_contable_quintana, Canteros & Asociados, Custidiano, Vallejos Hnos.) / Paraná 3ª wave (CPCEER — Larrosa-Duarte, Werner & Orue, Diaz Barzola) / Mendoza Capital 5ª wave (Herrera & Ontivero, Codina, Rivarola)
+
+## Corrida anterior (2026-09-11)
 **Fecha:** 2026-09-11 | **Corrida:** 91 | **Modo:** BORRADOR (sin envíos reales)
 **Segmento:** Estudios contables/jurídico-contables — **Paraná Capital, Entre Ríos (2ª wave)**
 **Cupo usado:** 5 leads
@@ -475,9 +496,9 @@ Nombre, empresa, rubro y un gancho de dolor por rubro.
 - `funnel/leads/new/borrador-2026-09-11.jsonl` — 5 leads
 - `funnel/reportes/2026-09-11.md` — reporte completo
 **Total acumulado estimado en Contactos:** ~455 leads (91 corridas)
-**Hitos:** Politi Muani ⭐⭐ — estudio jurídico-contable fundado en 1976 (50 años), 6 profesionales en dos áreas paralelas, Perú 287; único estudio jurídico-contable dual en el programa hasta la fecha. Spessot ⭐ — perito judicial activo CPCEER 2026, email confirmado en documento oficial. Salomón ⭐⭐ — Presidente Delegación Paraná CPCEER; patrón confirmado = adoptador temprano de alta probabilidad.
-**Gotchas nuevos:** CPCEER peritos PDF (mui-parana-2026-peritos.pdf) contiene emails de peritos — fuente de alta confianza para corridas futuras. Herrera (herreraestudio.com.ar): email JS-obfuscado en web propia, canal alternativo Instagram @herreraestudiocontable. Diaz Barzola: dominio @diaz-barzola.com.ar confirmado en ZoomInfo (Mario Díaz Olivos) pero email no accesible sin cuenta premium; website retorna 403. Salomón: sin datos de contacto en ningún directorio — acceder vía Facebook @SalomonEstudioContable o CPCEER Delegación Paraná (@CpceerParana). Pool 2ª wave Paraná: Larrosa-Duarte, Werner & Orue, Álvarez Nassau, Cuatrín & Barzanti, Gabas & Johnston, Aranguren Sampayo, Frutos Basgall, M&S (Militello+Sosa), Molaro & Dreiszigacker, Leonardo J. Tomás — todos sin email en directorios web (requieren CPCEER físico o LinkedIn para 3ª wave).
-**Próximas corridas recomendadas:** Paraná 3ª wave (recuperar emails del pool via CPCEER directorio o LinkedIn) / Mendoza Capital 5ª wave (Herrera & Ontivero, Codina, Rivarola) / Santa Fe Capital 5ª wave (CPCE Santa Fe C1) / Concordia o Gualeguaychú (inaugurar otras ciudades de Entre Ríos)
+**Hitos:** Politi Muani ⭐⭐ — estudio jurídico-contable fundado en 1976 (50 años), 6 profesionales en dos áreas paralelas, Perú 287. Spessot ⭐ — perito judicial activo CPCEER 2026, email confirmado en documento oficial. Salomón ⭐⭐ — Presidente Delegación Paraná CPCEER; patrón confirmado = adoptador temprano de alta probabilidad.
+**Gotchas nuevos:** CPCEER peritos PDF (mui-parana-2026-peritos.pdf) contiene emails de peritos — fuente de alta confianza para corridas futuras. Herrera (herreraestudio.com.ar): email JS-obfuscado en web propia, canal alternativo Instagram @herreraestudiocontable. Diaz Barzola: dominio @diaz-barzola.com.ar confirmado en ZoomInfo pero email no accesible sin cuenta premium. Salomón: sin datos de contacto en ningún directorio — acceder vía Facebook @SalomonEstudioContable o CPCEER Delegación Paraná.
+**Próximas corridas recomendadas:** Paraná 3ª wave (CPCEER directorio o LinkedIn) / Mendoza Capital 5ª wave / Santa Fe Capital 5ª wave / Concordia o Gualeguaychú
 
 ## Corrida anterior (2026-09-10)
 **Fecha:** 2026-09-10 | **Corrida:** 90 | **Modo:** BORRADOR (sin envíos reales)
