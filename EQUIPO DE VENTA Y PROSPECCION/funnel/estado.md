@@ -459,6 +459,27 @@ Nombre, empresa, rubro y un gancho de dolor por rubro.
 - [2026-07-19] **ALERTA TIMING CRÍTICA (8 días):** el vencimiento RG ARCA 5851/2026 (27/07/2026) está a **8 días**. Con 195 leads en Contactos (≥165 con email válido), urgencia máxima para activar `OUTREACH_ENABLED=true`. Warm-up express de 2 días + envío escalonado es la única ventana viable restante.
 
 ## Última corrida
+**Fecha:** 2026-09-13 | **Corrida:** 93 | **Modo:** BORRADOR (sin envíos reales)
+**Segmento:** Estudios contables — **Corrientes Capital (NEA — 2ª wave)**
+**Cupo usado:** 5 leads
+**Leads encontrados:** 5
+**Leads cargados a Contactos:** 5 (5/5 × HTTP 200 ✅)
+**Emails válidos:** 1/5 (20% email rate — confirma baja presencia digital de Corrientes Capital)
+**Emails escritos:** 1 (Martínez ✅)
+**Sin email:** 4 (Canteros & Asociados, Vallejos Hnos, Custidiano, AG Estudio — todos candidatos CPCE Corrientes)
+**Email status:** 1 Gmail personal (Martínez: crazunimartinez@gmail.com — vía Wix site propio)
+**Descartados:** 2 (Pizzichini — dominio ENOTFOUND; MM Estudio — 503 Service Unavailable)
+**CRM:** 5/5 × HTTP 200 confirmado (IDs lead-ctes-20260913-001 a 005)
+**Disparador:** Sprint Q4 2026 — vencimientos, liquidaciones y cierres fiscales se superponen; 3 líneas de servicio paralelas por cliente sin sistematizar.
+**Archivos:**
+- `funnel/leads/new/borrador-2026-09-13.jsonl` — 5 leads
+- `funnel/reportes/2026-09-13.md` — reporte completo
+**Total acumulado estimado en Contactos:** ~465 leads (93 corridas)
+**Hitos:** Martínez ⭐ — CPN Zuni Martínez, 20 años trayectoria, 3 servicios activos (contable+impositivo+laboral), único lead con email encontrado en 2ª wave. ContadoresYa sigue siendo la mejor fuente disponible para Corrientes Capital.
+**Gotchas actualizados:** Corrientes Capital: baja presencia digital de estudios contables confirmada en 2ª wave (1/5 email = 20%). CPCE Corrientes (cpcecorrientes.org.ar) no tiene directorio público consultable — requiere llamada o formulario. ContadoresYa tiene 7 firmas con teléfono pero sin emails. Para aumentar tasa de email: LinkedIn manual o contacto telefónico previo.
+**Próximas corridas recomendadas:** (A) Corrientes Capital 3ª wave enfocada en CPCE Corrientes vía teléfono/formulario para los 4 estudios sin email (Canteros & Asociados, Vallejos Hnos, Custidiano, AG Estudio); (B) Plaza nueva con mayor presencia digital: Resistencia/Chaco 3ª wave, Santiago del Estero, Posadas/Misiones 2ª wave; (C) Estudios jurídicos de Corrientes Capital (rubro distinto, diferente presencia digital)
+
+## Corrida anterior (2026-09-12)
 **Fecha:** 2026-09-12 | **Corrida:** 92 | **Modo:** BORRADOR (sin envíos reales)
 **Segmento:** Estudios contables/jurídico-contables — **Corrientes Capital (NEA — 1ª wave, mercado VIRGEN)**
 **Cupo usado:** 5 leads
