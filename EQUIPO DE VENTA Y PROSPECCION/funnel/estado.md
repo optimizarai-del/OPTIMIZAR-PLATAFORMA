@@ -464,25 +464,35 @@ Nombre, empresa, rubro y un gancho de dolor por rubro.
 - [2026-07-19] **ALERTA TIMING CRÍTICA (8 días):** el vencimiento RG ARCA 5851/2026 (27/07/2026) está a **8 días**. Con 195 leads en Contactos (≥165 con email válido), urgencia máxima para activar `OUTREACH_ENABLED=true`. Warm-up express de 2 días + envío escalonado es la única ventana viable restante.
 
 ## Última corrida
-**Fecha:** 2026-09-14 | **Corrida:** 94 | **Modo:** BORRADOR (sin envíos reales)
-**Segmento:** Estudios contables — **Río Cuarto Capital (Córdoba interior — 1ª wave, mercado VIRGEN)**
+**Fecha:** 2026-09-19 | **Corrida:** 99 | **Modo:** BORRADOR (sin envíos reales)
+**Segmento:** Estudios contables — **Concepción del Uruguay (Entre Ríos — 1ª wave, mercado VIRGEN)**
 **Cupo usado:** 5 leads
 **Leads encontrados:** 5
 **Leads cargados a Contactos:** 5 (5/5 × HTTP 200 ✅)
-**Emails válidos:** 4/5 (80% email rate — excelente para mercado virgen)
-**Emails escritos:** 4 (Scapin ✅, Sibona ✅, Fauda ✅, Gaumet ✅)
-**Sin email:** 1 (Magnago Jurídico-Contable — candidato wave 2 vía CPCE Córdoba Delegación Río Cuarto)
-**Email status:** 3 dominio propio (Scapin, Sibona, Fauda) + 1 Gmail (Gaumet)
-**Descartados:** 2 (Rios Ramirez — Lima Perú; Bruschetti — Mar del Plata, no Río Cuarto)
-**CRM:** 5/5 × HTTP 200 confirmado (IDs lead-rc-20260914-001 a 005)
-**Disparador:** Sprint Q4 2026 — procesos impositivos, liquidaciones y cierres acumulados; automatizar ahora libera horas del pico de mayor carga.
+**Emails válidos:** 5/5 (100% — 3 Gmail con nombre de estudio, 1 Hotmail, 1 Gmail personal)
+**Emails escritos:** 5 (Amoroso ✅, Almeda ✅, Arralde ✅, Alberto/Casandra ✅, Argacha ✅)
+**Sin email:** 0
+**Email status:** 3 Gmail con nombre de estudio (Arralde: estudiocontablearralde@gmail.com, Alberto: estudiocontablecasandra@gmail.com, Argacha) + 1 Hotmail (Amoroso) + 1 Gmail personal (Almeda)
+**Descartados:** 0 (ninguno en La Pampa — exclusión no aplica)
+**CRM:** 5/5 × HTTP 200 confirmado (IDs cdu-20260919-001 a 005)
+**Disparador:** Q4 2026 arranca el 01/10 — cierres de balances Q3, liquidaciones AFIP/ARCA, pico fiscal máximo del año.
 **Archivos:**
-- `funnel/leads/new/borrador-2026-09-14.jsonl` — 5 leads
-- `funnel/reportes/2026-09-14.md` — reporte completo
-**Total acumulado estimado en Contactos:** ~470 leads (94 corridas)
-**Hitos:** Fauda & Asociados ⭐⭐ — 200+ clientes activos con perfiles multi-rubro (agro, cripto, exportadores, USA) y 16+ años; perfil tech-adjacent de alta apertura. Scapin ⭐ — único estudio del programa con software propio de gestión contable-administrativa; ángulo de apertura excepcional. Sibona ⭐⭐ — 35+ años con 5 áreas especializadas incluida defensa fiscal AFIP/ARCA. Magnago ⭐ — 45+ años jurídico-contable, candidato ⭐ para wave 2 vía CPCE Córdoba RC.
-**Gotchas actualizados:** Río Cuarto Capital: 51+ estudios en todoriocuarto.com; pool estimado 4-5 waves adicionales. CPCE Córdoba Delegación Río Cuarto es la fuente para wave 2 (Magnago, Battaglino agro+laboral, Carrera, Mentucci). Battaglino: Facebook activo (@estudiocontablebattaglino) con agro+contable+laboral — sin email web pero candidato ⭐ para wave 2.
-**Próximas corridas recomendadas:** (A) Río Cuarto Capital 2ª wave (CPCE Córdoba Delegación RC + LinkedIn — Magnago, Battaglino, Carrera, Mentucci & Asociados); (B) Córdoba Capital 10ª wave (CPCE Córdoba — Weissbein, Ariccio, MDV); (C) Concordia / Gualeguaychú (Entre Ríos) — mercados vírgenes de interior provincial
+- `funnel/leads/new/borrador-2026-09-19.jsonl` — 5 leads
+- `funnel/reportes/2026-09-19.md` — reporte completo
+**Total acumulado estimado en Contactos:** ~495 leads (99 corridas)
+**Hitos:** Amoroso ⭐ — mat.2097 (~30 años trayectoria), una de las CPNs más antiguas de CdU, cartera muy consolidada. Almeda ⭐ — mat.2564 (~26 años), tuvo dominio propio ivanalmeda.com.ar = adoptador digital confirmado. Arralde ⭐ — mat.3602 (~18 años), email "estudiocontablearralde@gmail.com" = branding propio. Casandra Alberto — mat.4629 (~12 años), estudio propio en fase de crecimiento.
+**Gotchas nuevos:** [2026-09-19] Concepción del Uruguay inaugurada. CPCEER API funcional para CdU. Mayor presencia de emails personales (Hotmail/Yahoo/Gmail sin dominio propio) respecto a Concordia — esperable para ciudad de tamaño medio. ivanalmeda.com.ar ENOTFOUND (dominio caído); email actual ivanalmeda0@gmail.com (confirmado CPCEER). API retorna letras iniciales del alfabeto por sesión — wave 2 usar letras B-Z del padrón.
+**Próximas corridas recomendadas:** (A) Concepción del Uruguay 2ª wave (CPCEER letras B-Z — Bechir mat.?, Cangiani, Canciani, Maskavizan Patriarca y Morales ⭐⭐ firma multiprofesional, Garnier, Moreno-Azcurrain); (B) Colón (ER) 1ª wave — ciudad vecina mercado virgen; (C) Gualeguaychú 3ª wave (pool 319 CPNs, solo 5 leads hechos); (D) Paraná 3ª wave
+
+## Corrida anterior (2026-09-18)
+**Fecha:** 2026-09-18 | **Corrida:** 98 | **Modo:** BORRADOR (sin envíos reales)
+**Segmento:** Estudios contables — **Concordia 3ª wave (Entre Ríos)**
+**Cupo usado:** 5 leads
+**Leads cargados a Contactos:** 5 (5/5 × HTTP 200 ✅)
+**Emails válidos:** 5/5 (100% — todos dominio propio)
+**CRM:** 5/5 × HTTP 200 confirmado (IDs concordia3_*_20260918)
+**Total acumulado estimado:** ~490 leads (98 corridas)
+**Archivos:** `funnel/leads/new/borrador-2026-09-18.jsonl` | `funnel/reportes/2026-09-18.md`
 
 ## Corrida anterior (2026-09-13)
 **Fecha:** 2026-09-13 | **Corrida:** 93 | **Modo:** BORRADOR (sin envíos reales)
