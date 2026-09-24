@@ -469,25 +469,24 @@ Nombre, empresa, rubro y un gancho de dolor por rubro.
 - [2026-07-19] **ALERTA TIMING CRÍTICA (8 días):** el vencimiento RG ARCA 5851/2026 (27/07/2026) está a **8 días**. Con 195 leads en Contactos (≥165 con email válido), urgencia máxima para activar `OUTREACH_ENABLED=true`. Warm-up express de 2 días + envío escalonado es la única ventana viable restante.
 
 ## Última corrida
-**Fecha:** 2026-09-19 | **Corrida:** 99 | **Modo:** BORRADOR (sin envíos reales)
-**Segmento:** Estudios contables — **Concepción del Uruguay (Entre Ríos — 1ª wave, mercado VIRGEN)**
+**Fecha:** 2026-09-24 | **Corrida:** 104 | **Modo:** BORRADOR (sin envíos reales)
+**Segmento:** Estudios contables — **Gualeguaychú 7ª wave (Entre Ríos — CPCEER API)**
 **Cupo usado:** 5 leads
 **Leads encontrados:** 5
 **Leads cargados a Contactos:** 5 (5/5 × HTTP 200 ✅)
-**Emails válidos:** 5/5 (100% — 3 Gmail con nombre de estudio, 1 Hotmail, 1 Gmail personal)
-**Emails escritos:** 5 (Amoroso ✅, Almeda ✅, Arralde ✅, Alberto/Casandra ✅, Argacha ✅)
+**Emails válidos:** 5/5 (100% — 1 Yahoo, 1 entrerios.net ISP, 1 Yahoo, 1 Gmail, 1 Gmail branded)
+**Emails escritos:** 5 (Cafferata ✅, Ferronato ✅, Pirovani ✅, Rivero ✅, Darre ✅)
 **Sin email:** 0
-**Email status:** 3 Gmail con nombre de estudio (Arralde: estudiocontablearralde@gmail.com, Alberto: estudiocontablecasandra@gmail.com, Argacha) + 1 Hotmail (Amoroso) + 1 Gmail personal (Almeda)
 **Descartados:** 0 (ninguno en La Pampa — exclusión no aplica)
-**CRM:** 5/5 × HTTP 200 confirmado (IDs cdu-20260919-001 a 005)
-**Disparador:** Q4 2026 arranca el 01/10 — cierres de balances Q3, liquidaciones AFIP/ARCA, pico fiscal máximo del año.
+**CRM:** 5/5 × HTTP 200 confirmado (IDs guay7-20260924-001 a 005)
+**Disparador:** Q3 cierra el 30/09/2026 (en 6 días) — pico fiscal de cierre de trimestre.
 **Archivos:**
-- `funnel/leads/new/borrador-2026-09-19.jsonl` — 5 leads
-- `funnel/reportes/2026-09-19.md` — reporte completo
-**Total acumulado estimado en Contactos:** ~495 leads (99 corridas)
-**Hitos:** Amoroso ⭐ — mat.2097 (~30 años trayectoria), una de las CPNs más antiguas de CdU, cartera muy consolidada. Almeda ⭐ — mat.2564 (~26 años), tuvo dominio propio ivanalmeda.com.ar = adoptador digital confirmado. Arralde ⭐ — mat.3602 (~18 años), email "estudiocontablearralde@gmail.com" = branding propio. Casandra Alberto — mat.4629 (~12 años), estudio propio en fase de crecimiento.
-**Gotchas nuevos:** [2026-09-19] Concepción del Uruguay inaugurada. CPCEER API funcional para CdU. Mayor presencia de emails personales (Hotmail/Yahoo/Gmail sin dominio propio) respecto a Concordia — esperable para ciudad de tamaño medio. ivanalmeda.com.ar ENOTFOUND (dominio caído); email actual ivanalmeda0@gmail.com (confirmado CPCEER). API retorna letras iniciales del alfabeto por sesión — wave 2 usar letras B-Z del padrón.
-**Próximas corridas recomendadas:** (A) Concepción del Uruguay 2ª wave (CPCEER letras B-Z — Bechir mat.?, Cangiani, Canciani, Maskavizan Patriarca y Morales ⭐⭐ firma multiprofesional, Garnier, Moreno-Azcurrain); (B) Colón (ER) 1ª wave — ciudad vecina mercado virgen; (C) Gualeguaychú 3ª wave (pool 319 CPNs, solo 5 leads hechos); (D) Paraná 3ª wave
+- `funnel/leads/new/borrador-2026-09-24.jsonl` — 5 leads
+- `funnel/reportes/2026-09-24.md` — reporte completo
+**Total acumulado estimado en Contactos:** ~520 leads (104 corridas)
+**Hitos:** Darre ⭐⭐⭐ — firma de 4 CPNs activos (Alfredo mat.1168, Miguel mat.3942, Eduardo mat.4099, Francisco mat.5584) bajo email compartido estudiodarreconsejo@gmail.com; dominio propio anterior estudiodarre.com.ar. Estudio multi-profesional con mayor volumen del pool guay7. Cafferata mat.607 ⭐⭐ — segunda matrícula más baja del programa en Gualeguaychú, ~44 años trayectoria.
+**Gotchas nuevos:** [2026-09-24] Familia Darre: 4 CPNs con mismo apellido y mismo email centralizado en CPCEER. Migración de dominio propio a Gmail = centralización operativa reciente.
+**Próximas corridas recomendadas:** (A) Gualeguaychú 8ª wave (CPCEER — matrículas 900-1100); (B) Córdoba Capital 10ª wave (CPCE — Weissbein, Ariccio, MDV); (C) Santiago del Estero Capital 1ª wave (mercado virgen)
 
 ## Corrida anterior (2026-09-18)
 **Fecha:** 2026-09-18 | **Corrida:** 98 | **Modo:** BORRADOR (sin envíos reales)
