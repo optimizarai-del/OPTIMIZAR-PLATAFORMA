@@ -469,6 +469,26 @@ Nombre, empresa, rubro y un gancho de dolor por rubro.
 - [2026-07-19] **ALERTA TIMING CRÍTICA (8 días):** el vencimiento RG ARCA 5851/2026 (27/07/2026) está a **8 días**. Con 195 leads en Contactos (≥165 con email válido), urgencia máxima para activar `OUTREACH_ENABLED=true`. Warm-up express de 2 días + envío escalonado es la única ventana viable restante.
 
 ## Última corrida
+**Fecha:** 2026-09-25 | **Corrida:** 105 | **Modo:** BORRADOR (sin envíos reales)
+**Segmento:** Estudios contables — **Gualeguaychú 8ª wave (Entre Ríos — CPCEER API)**
+**Cupo usado:** 5 leads
+**Leads encontrados:** 5
+**Leads cargados a Contactos:** 5 (5/5 × HTTP 200 ✅)
+**Emails válidos:** 5/5 (100% — 1 entrerios.net ISP, 4 Gmail)
+**Emails escritos:** 5 (Pinasco ✅, Martinet ✅, Temporetti ✅, Miño ✅, Maradey ✅)
+**Sin email:** 0
+**Descartados:** 0 (ninguno en La Pampa — exclusión no aplica)
+**CRM:** 5/5 × HTTP 200 confirmado (IDs guay8-20260925-001 a 005)
+**Disparador:** Q3 cierra el 30/09/2026 (en 5 días) — timing de cierre de trimestre.
+**Archivos:**
+- `funnel/leads/new/borrador-2026-09-25.jsonl` — 5 leads
+- `funnel/reportes/2026-09-25.md` — reporte completo
+**Total acumulado estimado en Contactos:** ~525 leads (105 corridas)
+**Hitos:** Pivot estratégico: Mendoza Capital descartada (22+ leads ya en base, todos candidatos pre-identificados ya prospectados). CPCEER API guay8 entrega 100% email rate como todas las waves previas. Pinasco mat.984 ⭐ — ISP regional entrerios.net = CPN con arraigo provincial fuerte, ~35 años trayectoria.
+**Gotchas nuevos:** [2026-09-25] Mendoza Capital 5ª wave: estado.md menciona candidatos ya en base (Herrera & Ontivero, Codina, etc). Actualizar: la 5ª wave requiere fuentes nuevas (CPCEMZA directorio, LinkedIn). Pool CPCEER guay rango 900-1300: candidatos con emails compartidos: Fernandez+Tesone (ya prospectados como FT), Espinosa+Sartori (reservados guay9). Q3 trigger vigente hasta 30/09.
+**Próximas corridas recomendadas:** (A) Gualeguaychú 9ª wave (mat 1231 Espinosa, 1250 Benedetti, 1266 Sartori, rango 1300-1600); (B) Córdoba Capital 10ª wave (CPCE — Weissbein, Ariccio, MDV); (C) Santiago del Estero Capital 2ª wave (Bravo y Asociados, Integral del NOA, Simonetti — fuentes telexplorer.com.ar + CPCESE)
+
+## Corrida anterior (2026-09-24)
 **Fecha:** 2026-09-24 | **Corrida:** 104 | **Modo:** BORRADOR (sin envíos reales)
 **Segmento:** Estudios contables — **Gualeguaychú 7ª wave (Entre Ríos — CPCEER API)**
 **Cupo usado:** 5 leads
