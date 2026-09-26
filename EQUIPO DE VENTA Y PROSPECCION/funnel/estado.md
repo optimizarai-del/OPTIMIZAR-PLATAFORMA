@@ -469,6 +469,26 @@ Nombre, empresa, rubro y un gancho de dolor por rubro.
 - [2026-07-19] **ALERTA TIMING CRÍTICA (8 días):** el vencimiento RG ARCA 5851/2026 (27/07/2026) está a **8 días**. Con 195 leads en Contactos (≥165 con email válido), urgencia máxima para activar `OUTREACH_ENABLED=true`. Warm-up express de 2 días + envío escalonado es la única ventana viable restante.
 
 ## Última corrida
+**Fecha:** 2026-09-26 | **Corrida:** 106 | **Modo:** BORRADOR (sin envíos reales)
+**Segmento:** Estudios contables — **Santiago del Estero Capital 2ª wave**
+**Cupo usado:** 5 leads
+**Leads encontrados:** 5
+**Leads cargados a Contactos:** 5 (5/5 × HTTP 200 ✅)
+**Emails válidos:** 2/5 (40% — 1 dominio propio institucional, 1 Gmail personal)
+**Emails escritos:** 2 (Tagliavini ✅, Terrera ✅)
+**Sin email (not_found):** 3 (Simonetti: Cloudflare obfuscation; Facello Palavecino: sin web; Integral del NOA: sin presencia digital)
+**Descartados:** 0 (ninguno en La Pampa — exclusión no aplica; ningún duplicado)
+**CRM:** 5/5 × HTTP 200 confirmado (IDs sde2-20260926-001 a 005)
+**Disparador:** Q3 cierra el 30/09/2026 (en 4 días).
+**Archivos:**
+- `funnel/leads/new/borrador-2026-09-26.jsonl` — 5 leads
+- `funnel/reportes/2026-09-26.md` — reporte completo
+**Total acumulado estimado en Contactos:** ~530 leads (106 corridas)
+**Hitos:** Primera corrida de SDE 2ª wave. Tagliavini ⭐⭐ — único estudio contable+inmobiliaria en SDE con web propia; Terrera ⭐⭐ — CPN independiente con web Wix activa, email Gmail directo al decisor. Simonetti ⭐⭐⭐ — firma más importante del NOA (1976, 3 sucursales, 5 socios) pero email bloqueado por Cloudflare.
+**Gotchas nuevos:** [2026-09-26] Santiago del Estero = BAJA PRESENCIA DIGITAL CONFIRMADA: de ~15+ firmas identificadas en directorios, solo 2 tenían email público recuperable (email rate 40%). No escalar SDE sin acceso al directorio CPCESE privado o LinkedIn. Simonetti email Cloudflare: intentar contacto@estudiosimonetti.com.ar o llamar +54 385 5011194. Trigger Q3 cambia el 01/10 — actualizar copy a ángulo "Q4 empieza".
+**Próximas corridas recomendadas:** (A) Córdoba Capital 10ª wave (CPCE — Weissbein mat.10-09765-8 ⭐⭐⭐, Ariccio, MDV Av. Rafael Núñez 4775); (B) Gualeguaychú 9ª wave (mat 1231 Espinosa+Sartori, 1250 Benedetti, rango 1300-1600); (C) SDE recupero Simonetti email (inferir o llamar)
+
+## Corrida anterior (2026-09-25)
 **Fecha:** 2026-09-25 | **Corrida:** 105 | **Modo:** BORRADOR (sin envíos reales)
 **Segmento:** Estudios contables — **Gualeguaychú 8ª wave (Entre Ríos — CPCEER API)**
 **Cupo usado:** 5 leads
