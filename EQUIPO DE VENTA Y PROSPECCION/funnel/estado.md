@@ -469,6 +469,26 @@ Nombre, empresa, rubro y un gancho de dolor por rubro.
 - [2026-07-19] **ALERTA TIMING CRÍTICA (8 días):** el vencimiento RG ARCA 5851/2026 (27/07/2026) está a **8 días**. Con 195 leads en Contactos (≥165 con email válido), urgencia máxima para activar `OUTREACH_ENABLED=true`. Warm-up express de 2 días + envío escalonado es la única ventana viable restante.
 
 ## Última corrida
+**Fecha:** 2026-09-27 | **Corrida:** 107 | **Modo:** BORRADOR (sin envíos reales)
+**Segmento:** Estudios contables — **Gualeguaychú 9ª wave (Entre Ríos — CPCEER API)**
+**Cupo usado:** 5 leads
+**Leads encontrados:** 5
+**Leads cargados a Contactos:** 5 (5/5 × HTTP 200 ✅, IDs guay9-20260927-001 a 005)
+**Emails válidos:** 5/5 (100% — 2 dominio propio, 1 ISP entrerios.net, 2 Gmail)
+**Emails escritos:** 5 (Dalcol ✅, Gonzalo ✅, Espinosa-Sartori ✅, Ingold ✅, Bozzano ✅)
+**Sin email:** 0
+**Descartados:** 7 (Melchiori mat.2531 empresa duplicada Estudio ML; Levrino mat.1372 empresa duplicada Del Monte; Degui mat.3213 empresa duplicada Del Monte; Rebora mat.3459 DESCARTE OBLIGATORIO fraude judicial; Sahade mat.3803 email de empresa textil; Pombo mat.4475 email institucional CPCEER; Fernandez mat.1211 empresa duplicada Estudio FT)
+**CRM:** 5/5 × HTTP 200 confirmado (nota: también existen orphans guay8-20260927-001 a 005 en CRM con los mismos datos, creados por error de nomenclatura antes de la corrección — datos idénticos, sin impacto operativo)
+**Disparador:** Q3 cierra el 30/09/2026 (en 3 días) — ÚLTIMO LOTE con trigger Q3. Desde 01/10 cambiar a ángulo "Q4 empieza".
+**Archivos:**
+- `funnel/leads/new/borrador-2026-09-27.jsonl` — 5 leads
+- `funnel/reportes/2026-09-27.md` — reporte completo
+**Total acumulado estimado en Contactos:** ~535 leads (107 corridas)
+**Hitos:** Dalcol mat.905 ⭐⭐ — tercer CPN apellido Dalcol en Gualeguaychú (posible firma familiar; Luis mat.598 guay4, Nicolás sin mat.). Bozzano mat.5439 ⭐⭐ — fundadora Clic Soluciones Administrativas (Urdinarrain, 12+ años): firma de soluciones admin para PyMEs = lead único como cliente directo O canal. Espinosa-Sartori mat.1231+1266 = sociedad dual, email compartido, 60+ años trayectoria combinada. Ingold/Zonis y Asociados mat.4029 = estudio contable+jurídico con web y Facebook activos.
+**Gotchas nuevos:** [2026-09-27] Familia Dalcol: 3 CPNs activos en Gualeguaychú (Luis mat.598 guay4, Gladys mat.905 guay9, Nicolás mat.? 25 de Mayo 891). Posible firma multigeneracional Dalcol. [2026-09-27] Clic Soluciones Administrativas (Bozzano) en Urdinarrain = segundo lead rural de ese radio (primero Inchausti mat.1457 guay3). Perfil único: CPN que vende optimización admin a PyMEs. [2026-09-27] Q3 trigger expiró — usar ángulo "Q4 empieza — la carga no para" desde la próxima corrida.
+**Próximas corridas recomendadas:** (A) Gualeguaychú 10ª wave (CPCEER — Rojas mat.1432 martinhernandorojas@gmail.com, Fretin mat.1723 mariofretin@gmail.com, Angerosa mat.1744 maagchu@yahoo.com.ar, Martinolich mat.1804 roberto.martinolich@gmail.com, Ghiglione mat.1983 contableghiglione@gmail.com); (B) Córdoba Capital 10ª wave (CPCE — Weissbein, Ariccio, MDV); (C) Concepción del Uruguay 2ª wave (CPCEER — pool 80+ sin prospectar)
+
+## Corrida anterior (2026-09-26)
 **Fecha:** 2026-09-26 | **Corrida:** 106 | **Modo:** BORRADOR (sin envíos reales)
 **Segmento:** Estudios contables — **Santiago del Estero Capital 2ª wave**
 **Cupo usado:** 5 leads
