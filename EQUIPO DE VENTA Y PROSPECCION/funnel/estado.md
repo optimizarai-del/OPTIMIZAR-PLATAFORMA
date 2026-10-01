@@ -472,24 +472,32 @@ Nombre, empresa, rubro y un gancho de dolor por rubro.
 - [2026-07-19] **ALERTA TIMING CRÍTICA (8 días):** el vencimiento RG ARCA 5851/2026 (27/07/2026) está a **8 días**. Con 195 leads en Contactos (≥165 con email válido), urgencia máxima para activar `OUTREACH_ENABLED=true`. Warm-up express de 2 días + envío escalonado es la única ventana viable restante.
 
 ## Última corrida
-**Fecha:** 2026-09-30 | **Corrida:** 110 | **Modo:** BORRADOR (sin envíos reales)
-**Segmento:** Estudios contables — **Gualeguaychú, Entre Ríos 10ª wave (guay10)**
+**Fecha:** 2026-10-01 | **Corrida:** 111 | **Modo:** BORRADOR (sin envíos reales)
+**Segmento:** Estudios contables — **Gualeguaychú 11ª wave (guay11) + Gualeguay 1ª wave (González)**
 **Cupo usado:** 5 leads
 **Leads encontrados:** 5
-**Leads cargados a Contactos:** 5 (5/5 × HTTP 200 ✅, IDs guay10-20260930-001 a 005)
-**Emails válidos:** 5/5 (100% — todos Gmail/Yahoo de padrón CPCEER)
-**Emails escritos:** 5/5 (Rojas ✅, Fretin ✅, Angerosa ✅, Martinolich ✅, Ghiglione ✅)
+**Leads cargados a Contactos:** 5 (5/5 × HTTP 200 ✅, IDs guay11-20261001-001 a 005)
+**Emails válidos:** 5/5 (100% — 1 dominio ISP urdi.com.ar, 3 hotmail de marca, 1 Gmail de marca)
+**Emails escritos:** 5/5 (Bourlot ✅, De Zan ✅, Castiglioni ✅, Carro ✅, González ✅)
 **Sin email (not_found):** 0
 **Descartados:** 0 (ninguno en La Pampa — exclusión no aplica; ningún duplicado)
 **CRM:** 5/5 × HTTP 200 confirmado
-**Disparador:** Q3 cierra HOY (30/09/2026) — último uso del trigger Q3. Desde 01/10 activar ángulo "Q4 arranca — la carga no para".
+**Disparador:** Q4 arrancó HOY (01/10/2026) — primer día del trimestre más exigente del año.
 **Archivos:**
-- `funnel/leads/new/borrador-2026-09-30.jsonl` — 5 leads
-- `funnel/reportes/2026-09-30.md` — reporte completo
-**Total acumulado estimado en Contactos:** ~550 leads (110 corridas)
-**Hitos:** Martinolich ⭐⭐ — Estudio Martinolich fundado 1992, 250+ clientes, 2 sedes (Gualeguaychú + Ibicuy), 4 áreas de servicio, 34 años trayectoria. Mejor lead del lote por escala operativa. Fretin ⭐⭐ — CPN con práctica dual privado + Municipio (Secretaría Finanzas/Presupuesto), documentado en boletines oficiales municipales. Email rate 100% (5/5) — CPCEER pool pre-identificado en corrida 107.
-**Gotchas nuevos:** [2026-09-30] CPCEER API HTTP 503: padron.cpceer.org.ar no disponible durante esta corrida. Emails y contexto recuperados de pre-identificación corrida 107 + búsqueda web. No impactó calidad. [2026-09-30] TRIGGER Q3 EXPIRÓ HOY — corridas desde 01/10/2026 deben usar: "Q4 arranca el 1° de octubre — el mejor momento para automatizar antes del cierre de año." [2026-09-30] Ghiglione sin primer nombre confirmado: CPCEER API en 503. Email enviado con saludo genérico "Hola,". Recuperar nombre cuando API vuelva. [2026-09-30] Gualeguaychú continúa siendo el mercado más productivo de Entre Ríos por email rate (100% en guay7-guay10).
-**Próximas corridas recomendadas:** (A) Gualeguaychú 11ª wave (CPCEER — matrícula siguiente a 1983; recuperar nombre Ghiglione); (B) Córdoba Capital 10ª wave (CPCE — Weissbein mat.10-09765-8 ⭐⭐⭐, Ariccio, MDV Av. Rafael Núñez 4775); (C) Posadas 3ª wave (Zimmermann San Lorenzo 1752, Adriana Ríos 20 de Junio 4365, Hañiek Padre Serrano 2465); (D) Concepción del Uruguay 2ª wave (CPCEER — pool 80+ sin prospectar)
+- `funnel/leads/new/borrador-2026-10-01.jsonl` — 5 leads
+- `funnel/reportes/2026-10-01.md` — reporte completo
+**Total acumulado estimado en Contactos:** ~555 leads (111 corridas)
+**Hitos:** Carro ⭐⭐ — "Luis Carro - Soluciones Contables", J.B. Alberdi 89, Gualeguaychú, dirección y landline confirmados en licuo.com.ar + TeleXplorer. De Zan ⭐ — cobertura dual Gualeguaychú/Larroque (email anterior: estdezan@lrqnet.com.ar). Bourlot ⭐ — estudio1@urdi.com.ar = dominio ISP Urdinarrain, arraigo territorial.
+**Gotchas nuevos:** [2026-10-01] FILTRO CPCEER CORREGIDO: campo delegacion substring "gualeguay" captura TANTO "Gualeguaychú" COMO "Gualeguay" (ciudad distinta ~100 km al norte). CORRECCIÓN: usar filtro exacto `delegacion == "Gualeguaychú"`. Pool Gualeguay = mercado virgen (~50.000 hab, ciudad universitaria). [2026-10-01] CPCEER API activa: pool Gualeguaychú = 325 leads mat > 1983 sin prospectar. [2026-10-01] TRIGGER Q4 activo: "Q4 arrancó hoy — el trimestre más cargado ya empieza." Válido hasta fin de octubre.
+**Próximas corridas recomendadas:** (A) Gualeguaychú 12ª wave (CPCEER — mat.2240+, filtro exacto delegacion=="Gualeguaychú"); (B) Gualeguay 2ª wave (CPCEER — mercado virgen, filtro delegacion=="Gualeguay"); (C) Córdoba Capital 10ª wave (CPCE — Weissbein ⭐⭐⭐, Ariccio, MDV); (D) Concepción del Uruguay 2ª wave (CPCEER — pool 80+ virgen)
+
+## Corrida anterior (2026-09-30)
+**Fecha:** 2026-09-30 | **Corrida:** 110 | **Modo:** BORRADOR (sin envíos reales)
+**Segmento:** Estudios contables — **Gualeguaychú, Entre Ríos 10ª wave (guay10)**
+**Cupo usado:** 5 leads / **CRM:** 5/5 × HTTP 200 ✅ / **Email rate:** 5/5 (100%)
+**Leads:** Rojas (mat.1432), Fretin (mat.1723), Angerosa (mat.1744), Martinolich (mat.1804), Ghiglione (mat.1983)
+**Disparador:** Q3 cierra HOY (30/09/2026) — último uso del trigger Q3.
+**Archivos:** borrador-2026-09-30.jsonl / reportes/2026-09-30.md
 
 ## Corrida anterior (2026-09-29)
 **Fecha:** 2026-09-29 | **Corrida:** 109 | **Modo:** BORRADOR (sin envíos reales)
