@@ -472,6 +472,26 @@ Nombre, empresa, rubro y un gancho de dolor por rubro.
 - [2026-07-19] **ALERTA TIMING CRÍTICA (8 días):** el vencimiento RG ARCA 5851/2026 (27/07/2026) está a **8 días**. Con 195 leads en Contactos (≥165 con email válido), urgencia máxima para activar `OUTREACH_ENABLED=true`. Warm-up express de 2 días + envío escalonado es la única ventana viable restante.
 
 ## Última corrida
+**Fecha:** 2026-10-02 | **Corrida:** 112 | **Modo:** BORRADOR (sin envíos reales)
+**Segmento:** Estudios contables — **Gualeguay 2ª wave + Colón 1ª wave (ER) + Concordia 2ª wave (ER)**
+**Cupo usado:** 5 leads
+**Leads encontrados:** 5
+**Leads cargados a Contactos:** 5 (5/5 × HTTP 200 ✅, IDs guay2-20261002-001/002, colon1-20261002-001/002, conc2-20261002-001)
+**Emails válidos:** 4/5 (80% — 2 dominio propio, 1 ISP arnet, 1 Gmail; 1 not_found)
+**Emails escritos:** 4/5 (Mendizábal ✅, Solari ✅, Besson ✅, Hoffmann ✅; Guiffre-Delaloye sin email)
+**Sin email (not_found):** 1 (Guiffre-Delaloye — Omar Delaloye = Presidente Delegación Colón CPCEER ⭐⭐)
+**Descartados:** 0 (ninguno en La Pampa; 1 duplicado detectado y evitado: Narbais, ya en 06-27; Germanier descartado por dominio ENOTFOUND)
+**CRM:** 5/5 × HTTP 200 confirmado
+**Disparador:** Q4 en curso (día 2 del 02/10/2026) — timing sigue vigente.
+**Archivos:**
+- `funnel/leads/new/borrador-2026-10-02.jsonl` — 5 leads
+- `funnel/reportes/2026-10-02.md` — reporte completo
+**Total acumulado estimado en Contactos:** ~560 leads (112 corridas)
+**Hitos:** Hoffmann ⭐ — Posgrado Ingeniería Empresarial UTN FRBA + Diploma Comercio Internacional = perfil tech-adjacent en Concordia 2ª wave. Besson ⭐ — Colón primera incursión, dominio propio + CUIT verificado. Guiffre-Delaloye ⭐⭐ — Presidente Delegación Colón CPCEER, sin email pero candidato prioritario corrida futura.
+**Gotchas nuevos:** [2026-10-02] Germanier Colón: email "estudiogermanier@estudiogermanier.com.ar" generado por AI de búsqueda pero dominio ENOTFOUND — descartado. Patrón: verificar SIEMPRE dominios antes de usar. [2026-10-02] Besson tiene dos direcciones en distintas fuentes: Maipú 59 (entreriostotal) y Chacabuco 298 (paginasamarillas/cuitonline) — posible mudanza o dos locales. [2026-10-02] Colón ER tiene directorio limpio de 9 estudios en entreriostotal.com.ar — fuente para corridas futuras.
+**Próximas corridas recomendadas:** (A) Colón 2ª wave (email CPCEER Colón para Lenner-Sigot, Otero-Varaldo, Mista, Poggio, Loker); (B) Guiffre-Delaloye email via delegacion_colon@cpceer.org.ar ⭐⭐; (C) Victoria (ER) 1ª wave (ciudad virgen); (D) Gualeguay 3ª wave (Cherkasky, Bustos — buscar emails); (E) Gualeguaychú 12ª wave (CPCEER mat.2240+)
+
+## Corrida anterior (2026-10-01)
 **Fecha:** 2026-10-01 | **Corrida:** 111 | **Modo:** BORRADOR (sin envíos reales)
 **Segmento:** Estudios contables — **Gualeguaychú 11ª wave (guay11) + Gualeguay 1ª wave (González)**
 **Cupo usado:** 5 leads
