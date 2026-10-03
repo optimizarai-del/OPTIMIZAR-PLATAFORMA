@@ -472,24 +472,32 @@ Nombre, empresa, rubro y un gancho de dolor por rubro.
 - [2026-07-19] **ALERTA TIMING CRÍTICA (8 días):** el vencimiento RG ARCA 5851/2026 (27/07/2026) está a **8 días**. Con 195 leads en Contactos (≥165 con email válido), urgencia máxima para activar `OUTREACH_ENABLED=true`. Warm-up express de 2 días + envío escalonado es la única ventana viable restante.
 
 ## Última corrida
-**Fecha:** 2026-10-02 | **Corrida:** 112 | **Modo:** BORRADOR (sin envíos reales)
-**Segmento:** Estudios contables — **Gualeguay 2ª wave + Colón 1ª wave (ER) + Concordia 2ª wave (ER)**
+**Fecha:** 2026-10-03 | **Corrida:** 113 | **Modo:** BORRADOR (sin envíos reales)
+**Segmento:** Estudios contables — **Gualeguaychú 12ª wave (CPCEER mat.2240+)**
 **Cupo usado:** 5 leads
 **Leads encontrados:** 5
-**Leads cargados a Contactos:** 5 (5/5 × HTTP 200 ✅, IDs guay2-20261002-001/002, colon1-20261002-001/002, conc2-20261002-001)
-**Emails válidos:** 4/5 (80% — 2 dominio propio, 1 ISP arnet, 1 Gmail; 1 not_found)
-**Emails escritos:** 4/5 (Mendizábal ✅, Solari ✅, Besson ✅, Hoffmann ✅; Guiffre-Delaloye sin email)
-**Sin email (not_found):** 1 (Guiffre-Delaloye — Omar Delaloye = Presidente Delegación Colón CPCEER ⭐⭐)
-**Descartados:** 0 (ninguno en La Pampa; 1 duplicado detectado y evitado: Narbais, ya en 06-27; Germanier descartado por dominio ENOTFOUND)
+**Leads cargados a Contactos:** 5 (5/5 × HTTP 200 ✅, IDs guay12-20261003-001 a 005)
+**Emails válidos:** 5/5 (100% — 4 Gmail + 1 Hotmail)
+**Emails escritos:** 5/5 (Powazniak ✅, Coria ✅, Diaz ✅, Pautasio ✅, Esponda ✅)
+**Sin email (not_found):** 0
+**Descartados:** 0 (ninguno en La Pampa; ningún duplicado)
 **CRM:** 5/5 × HTTP 200 confirmado
-**Disparador:** Q4 en curso (día 2 del 02/10/2026) — timing sigue vigente.
+**Disparador:** Q4 en curso (día 3 del 03/10/2026) — timing sigue vigente.
 **Archivos:**
-- `funnel/leads/new/borrador-2026-10-02.jsonl` — 5 leads
-- `funnel/reportes/2026-10-02.md` — reporte completo
-**Total acumulado estimado en Contactos:** ~560 leads (112 corridas)
-**Hitos:** Hoffmann ⭐ — Posgrado Ingeniería Empresarial UTN FRBA + Diploma Comercio Internacional = perfil tech-adjacent en Concordia 2ª wave. Besson ⭐ — Colón primera incursión, dominio propio + CUIT verificado. Guiffre-Delaloye ⭐⭐ — Presidente Delegación Colón CPCEER, sin email pero candidato prioritario corrida futura.
-**Gotchas nuevos:** [2026-10-02] Germanier Colón: email "estudiogermanier@estudiogermanier.com.ar" generado por AI de búsqueda pero dominio ENOTFOUND — descartado. Patrón: verificar SIEMPRE dominios antes de usar. [2026-10-02] Besson tiene dos direcciones en distintas fuentes: Maipú 59 (entreriostotal) y Chacabuco 298 (paginasamarillas/cuitonline) — posible mudanza o dos locales. [2026-10-02] Colón ER tiene directorio limpio de 9 estudios en entreriostotal.com.ar — fuente para corridas futuras.
-**Próximas corridas recomendadas:** (A) Colón 2ª wave (email CPCEER Colón para Lenner-Sigot, Otero-Varaldo, Mista, Poggio, Loker); (B) Guiffre-Delaloye email via delegacion_colon@cpceer.org.ar ⭐⭐; (C) Victoria (ER) 1ª wave (ciudad virgen); (D) Gualeguay 3ª wave (Cherkasky, Bustos — buscar emails); (E) Gualeguaychú 12ª wave (CPCEER mat.2240+)
+- `funnel/leads/new/borrador-2026-10-03.jsonl` — 5 leads
+- `funnel/reportes/2026-10-03.md` — reporte completo
+**Total acumulado estimado en Contactos:** ~565 leads (113 corridas)
+**Hitos:** Díaz ⭐⭐⭐ — Estudio Santa Isabel 33 años + DUAL perito judicial (civil+laboral) + migración email arnet→Gmail reciente. Pautasio ⭐⭐ — ex-Tesorero Municipal Interino Gualeguaychú (Ord.10811/2005), UNER. Esponda ⭐ — perita judicial fuero civil/comercial 2026. Email rate 100%.
+**Gotchas nuevos:** [2026-10-03] PDF peritos MUI-Gualeguaychú-2026 (cpceer.org.ar): parseable con `pdftotext`, fuente útil para identificar CPNs con carga documental doble. [2026-10-03] Pool Gualeguaychú mat.2240+: ~232 frescos disponibles (40+ corridas futuras). [2026-10-03] Díaz: campo `correoanterior`=arnet, `correnuevo`=Gmail — señal de modernización digital reciente.
+**Próximas corridas recomendadas:** (A) Gualeguaychú 13ª wave (CPCEER mat.2456+, pool amplio); (B) Colón 2ª wave (emails pendientes: Lenner-Sigot, Otero-Varaldo, Mista, Poggio, Loker); (C) Guiffre-Delaloye email recovery via delegacion_colon@cpceer.org.ar ⭐⭐; (D) Victoria ER 1ª wave (ciudad virgen); (E) Gualeguay 3ª wave (Cherkasky, Bustos — buscar emails)
+
+## Corrida anterior (2026-10-02)
+**Fecha:** 2026-10-02 | **Corrida:** 112 | **Modo:** BORRADOR (sin envíos reales)
+**Segmento:** Estudios contables — **Gualeguay 2ª wave + Colón 1ª wave (ER) + Concordia 2ª wave (ER)**
+**Cupo usado:** 5 leads / **CRM:** 5/5 × HTTP 200 ✅ / **Email rate:** 4/5 (80%)
+**Leads:** Mendizábal (Gualeguay), Solari (Gualeguay), Besson (Colón), Guiffre-Delaloye (Colón, sin email), Hoffmann (Concordia)
+**Disparador:** Q4 en curso (día 2 del 02/10/2026).
+**Archivos:** borrador-2026-10-02.jsonl / reportes/2026-10-02.md
 
 ## Corrida anterior (2026-10-01)
 **Fecha:** 2026-10-01 | **Corrida:** 111 | **Modo:** BORRADOR (sin envíos reales)
