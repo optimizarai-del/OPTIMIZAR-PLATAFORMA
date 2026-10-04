@@ -472,6 +472,26 @@ Nombre, empresa, rubro y un gancho de dolor por rubro.
 - [2026-07-19] **ALERTA TIMING CRÍTICA (8 días):** el vencimiento RG ARCA 5851/2026 (27/07/2026) está a **8 días**. Con 195 leads en Contactos (≥165 con email válido), urgencia máxima para activar `OUTREACH_ENABLED=true`. Warm-up express de 2 días + envío escalonado es la única ventana viable restante.
 
 ## Última corrida
+**Fecha:** 2026-10-04 | **Corrida:** 114 | **Modo:** BORRADOR (sin envíos reales)
+**Segmento:** Estudios contables — **Gualeguaychú 13ª wave (peritos PDF CPCEER 2026)**
+**Cupo usado:** 5 leads
+**Leads encontrados:** 5
+**Leads cargados a Contactos:** 5 (5/5 × HTTP 200 ✅, IDs guay13-20261004-001 a 005)
+**Emails válidos:** 5/5 (100% — 3 Gmail + 1 @ciudad.com.ar + 1 @casociados.com)
+**Emails escritos:** 5/5 (Abramovich ✅, Alarcon ✅, Barzola ✅, Bentancur ✅, Corona ✅)
+**Sin email (not_found):** 0
+**Descartados:** 0 (ninguno en La Pampa; ningún duplicado)
+**CRM:** 5/5 × HTTP 200 confirmado
+**Disparador:** Q4 en curso (día 4 del 04/10/2026) — todos son peritos judiciales 2026 (doble carga).
+**Archivos:**
+- `funnel/leads/new/borrador-2026-10-04.jsonl` — 5 leads
+- `funnel/reportes/2026-10-04.md` — reporte completo
+**Total acumulado estimado en Contactos:** ~570 leads (114 corridas)
+**Hitos:** Abramovich ⭐⭐ — dominio propio @casociados.com (C&A Asociados) + perito. Alarcon ⭐⭐ — Facebook activo + dominio @ciudad.com.ar. Tasa email_found 100%. 2/5 con dominio propio.
+**Gotchas nuevos:** [2026-10-04] padron.cpceer.org.ar/api/ devuelve 404 (ahora requiere autenticación). Fuente reemplazada: PDF peritos CPCEER 2026 = ~200+ CPNs con email → 40+ corridas futuras. URL: cpceer.org.ar/sites/default/files/documentos/peritos/justicia%20provincial/mui-gualeguaychu-2026-peritos.pdf
+**Próximas corridas recomendadas:** (A) Gualeguaychú 14ª wave (PDF peritos, ~195 candidatos restantes); (B) Farabello Nazer — anibal.estudiofn@gmail.com / ignacio.estudiofn@gmail.com (mat.4477/5150); (C) Colón 2ª wave (emails pendientes); (D) Victoria ER 1ª wave (ciudad virgen)
+
+## Corrida anterior (2026-10-03)
 **Fecha:** 2026-10-03 | **Corrida:** 113 | **Modo:** BORRADOR (sin envíos reales)
 **Segmento:** Estudios contables — **Gualeguaychú 12ª wave (CPCEER mat.2240+)**
 **Cupo usado:** 5 leads
