@@ -472,6 +472,26 @@ Nombre, empresa, rubro y un gancho de dolor por rubro.
 - [2026-07-19] **ALERTA TIMING CRÍTICA (8 días):** el vencimiento RG ARCA 5851/2026 (27/07/2026) está a **8 días**. Con 195 leads en Contactos (≥165 con email válido), urgencia máxima para activar `OUTREACH_ENABLED=true`. Warm-up express de 2 días + envío escalonado es la única ventana viable restante.
 
 ## Última corrida
+**Fecha:** 2026-10-05 | **Corrida:** 115 | **Modo:** BORRADOR (sin envíos reales)
+**Segmento:** Estudios contables — **Gualeguaychú 14ª wave (PDF peritos CPCEER 2026)**
+**Cupo usado:** 5 leads
+**Leads encontrados:** 5
+**Leads cargados a Contactos:** 5 (5/5 × HTTP 200 ✅, IDs guay14-20261005-001 a 005)
+**Emails válidos:** 5/5 (100% — 4 Gmail + 1 Outlook de marca)
+**Emails escritos:** 5/5 (Farabello Nazer ✅, Chichizola Lopez ✅, Aguilar ✅, Aielo ✅, Colombo ✅)
+**Sin email (not_found):** 0
+**Descartados:** 0 (ninguno en La Pampa; ningún duplicado)
+**CRM:** 5/5 × HTTP 200 confirmado
+**Disparador:** Q4 en curso (día 5 del 05/10/2026) — todos son peritos judiciales 2026 (doble carga). Trigger Q4 sigue vigente durante todo octubre.
+**Archivos:**
+- `funnel/leads/new/borrador-2026-10-05.jsonl` — 5 leads
+- `funnel/reportes/2026-10-05.md` — reporte completo
+**Total acumulado estimado en Contactos:** ~575 leads (115 corridas)
+**Hitos:** Farabello Nazer Aníbal ⭐⭐ — Estudio Farabello Nazer S.R.L. (CUIT 30-71611479-8), estructura societaria, servicios contabilidad/auditoría/asesoría fiscal, lead flagged como prioridad en corrida 114. Chichizola Lopez ⭐ — Estudio Contable Chichizola (CUIT 30-71504585-7), 11 años trayectoria, email Outlook de marca. Colombo ⭐ — cdracolombo@gmail.com, identidad profesional con título integrado. Email rate 100%.
+**Gotchas nuevos:** [2026-10-05] PDF peritos MUI-Gualeguaychú-2026 sigue siendo fuente válida (~185 candidatos restantes). Estudio Farabello Nazer S.R.L. confirmado en CUIT Online = firma con estructura societaria formal. Estudio Chichizola constituido 04/10/2015 = 11 años = aniversario de firma.
+**Próximas corridas recomendadas:** (A) Gualeguaychú 15ª wave (PDF peritos — Alcala mat.3333, Alessandrini mat.5159, Ardaiz mat.4515, Arosteguy mat.3542, Bauman mat.5239); (B) Farabello Nazer Ignacio (mat.5150, ignacio.estudiofn@gmail.com) — co-socio, incluir en próxima wave; (C) Colón 2ª wave (emails pendientes); (D) Victoria ER 1ª wave (ciudad virgen)
+
+## Corrida anterior (2026-10-04)
 **Fecha:** 2026-10-04 | **Corrida:** 114 | **Modo:** BORRADOR (sin envíos reales)
 **Segmento:** Estudios contables — **Gualeguaychú 13ª wave (peritos PDF CPCEER 2026)**
 **Cupo usado:** 5 leads
