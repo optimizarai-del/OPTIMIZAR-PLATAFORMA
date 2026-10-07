@@ -472,6 +472,26 @@ Nombre, empresa, rubro y un gancho de dolor por rubro.
 - [2026-07-19] **ALERTA TIMING CRÍTICA (8 días):** el vencimiento RG ARCA 5851/2026 (27/07/2026) está a **8 días**. Con 195 leads en Contactos (≥165 con email válido), urgencia máxima para activar `OUTREACH_ENABLED=true`. Warm-up express de 2 días + envío escalonado es la única ventana viable restante.
 
 ## Última corrida
+**Fecha:** 2026-10-07 | **Corrida:** 117 | **Modo:** BORRADOR (sin envíos reales)
+**Segmento:** Estudios contables — **Gualeguaychú 16ª wave (PDF peritos CPCEER 2026 + CPCEER API)**
+**Cupo usado:** 5 leads
+**Leads encontrados:** 5
+**Leads cargados a Contactos:** 5 (5/5 × HTTP 200 ✅, IDs guay16-20261007-001 a 005)
+**Emails válidos:** 5/5 (100% — 2 Gmail + 2 Hotmail + 1 Gmail formato nombre.estudio)
+**Emails escritos:** 5/5 (Benetti ✅, Bergara ✅, Bernigaud ✅, Bettini ✅, Farabello Nazer Ignacio ✅)
+**Sin email (not_found):** 0
+**Descartados:** 1 (Bentancur Jésica Daiana mat.4933 — ya prospectada corrida 114, guay13-20261004-004)
+**CRM:** 5/5 × HTTP 200 confirmado
+**Disparador:** Q4 en curso (día 7 del 07/10/2026) — peritos judiciales 2026 (doble carga). Trigger Q4 vigente todo octubre.
+**Archivos:**
+- `funnel/leads/new/borrador-2026-10-07.jsonl` — 5 leads
+- `funnel/reportes/2026-10-07.md` — reporte completo
+**Total acumulado estimado en Contactos:** ~585 leads (117 corridas)
+**Hitos:** Bernigaud mat.3857 ⭐ — ~18-21 años trayectoria, email CPCEER API abernigaud@hotmail.com (corrida anterior no tenía email). Bettini mat.5626 ⭐ — email CPCEER API confirmado (corrida anterior sin email). Farabello Nazer Ignacio mat.5150 — segundo socio de Estudio Farabello Nazer S.R.L. prospectado (Aníbal ya en corrida 115); ambos socios ahora en Contactos.
+**Gotchas nuevos:** [2026-10-07] Bernigaud Atilio Ramón mat.3857 — email confirmado CPCEER API: abernigaud@hotmail.com (PDF no lo incluía, API sí). Bettini María Gabriela mat.5626 — email confirmado: maria.gabriela.bettini@gmail.com, tel 0111558559249 (posible nro Buenos Aires, no afecta email). Farabello Nazer Ignacio mat.5150 cerrado — ambos socios de la S.R.L. en Contactos. CPCEER API sigue activa como fuente complementaria al PDF.
+**Próximas corridas recomendadas:** (A) Gualeguaychú 17ª wave (PDF peritos + CPCEER API — continuar lista B: Bire mat.3959, Bozzano mat.5439, Briozzo mat.5606, Britos mat.3722 — buscar emails CPCEER API); (B) Colón ER 2ª wave (emails pendientes: Lenner-Sigot, Otero-Varaldo, Mista, Poggio, Loker — delegacion_colon@cpceer.org.ar); (C) Victoria ER 1ª wave (ciudad virgen)
+
+## Corrida anterior (2026-10-06)
 **Fecha:** 2026-10-06 | **Corrida:** 116 | **Modo:** BORRADOR (sin envíos reales)
 **Segmento:** Estudios contables — **Gualeguaychú 15ª wave (PDF peritos CPCEER 2026)**
 **Cupo usado:** 5 leads
