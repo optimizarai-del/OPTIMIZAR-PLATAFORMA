@@ -472,6 +472,26 @@ Nombre, empresa, rubro y un gancho de dolor por rubro.
 - [2026-07-19] **ALERTA TIMING CRÍTICA (8 días):** el vencimiento RG ARCA 5851/2026 (27/07/2026) está a **8 días**. Con 195 leads en Contactos (≥165 con email válido), urgencia máxima para activar `OUTREACH_ENABLED=true`. Warm-up express de 2 días + envío escalonado es la única ventana viable restante.
 
 ## Última corrida
+**Fecha:** 2026-10-08 | **Corrida:** 118 | **Modo:** BORRADOR (sin envíos reales)
+**Segmento:** Estudios contables — **Gualeguaychú 17ª wave (PDF peritos CPCEER 2026)**
+**Cupo usado:** 5 leads
+**Leads encontrados:** 5
+**Leads cargados a Contactos:** 5 (5/5 × HTTP 200 ✅, IDs guay17-20261008-001 a 005)
+**Emails válidos:** 5/5 (100% — 2 Gmail + 3 Hotmail)
+**Emails escritos:** 5/5 (Borrajo ✅, Bracco ✅, Briozzo ✅, Britos ✅, Bultynch Levrand ✅)
+**Sin email (not_found):** 0
+**Descartados:** 0 (ninguno en La Pampa; ningún duplicado)
+**CRM:** 5/5 × HTTP 200 confirmado
+**Disparador:** Q4 en curso (día 8 del 08/10/2026) — peritos judiciales 2026 (doble carga). Trigger Q4 vigente todo octubre.
+**Archivos:**
+- `funnel/leads/new/borrador-2026-10-08.jsonl` — 5 leads
+- `funnel/reportes/2026-10-08.md` — reporte completo
+**Total acumulado estimado en Contactos:** ~590 leads (118 corridas)
+**Hitos:** Britos Erica Romina mat.3722 ⭐⭐⭐ — ~22-24 años trayectoria (mayor seniority del lote), Andrade 1629, email ericabritos@hotmail.com. Borrajo Ignacio mat.4212 ⭐⭐ — ~18-21 años trayectoria, Ituzaingo 512, email nachoborrajo@hotmail.com. Bultynch Levrand Facundo mat.5719 ⭐ — email "contablesfb" = marca propia "Contables FB" establecida, Rawson 42.
+**Gotchas nuevos:** [2026-10-08] Estado.md corrida 117 mencionaba "Bire mat.3959, Bozzano mat.5439" como próximos — esos matrículas NO están en el PDF CPCEER MUI-Gualeguaychú-2026 (pueden ser de otra delegación o fuente API ya no accesible). Confirmado con pdftotext -layout: los verdaderos próximos en B son Borrajo, Bracco, Briozzo, Britos, Bultynch Levrand. Bracco mat.4681 comparte dirección Bolívar 1676 con Aguilar mat.4658 (corrida 115) — posible edificio de oficinas compartido.
+**Próximas corridas recomendadas:** (A) Gualeguaychú 18ª wave (guay18): Burgos Nicolás Hernán mat.3307 (burgosnicolas@fibertel.com.ar), Campi Florencia mat.5160 (florenciacampi88@gmail.com), Carazzo María Angela mat.4854 (mariancarazzo@gmail.com), Casas Gabriela mat.5309 (gabbycasas@hotmail.com), Casas Yamila mat.4277 (yamilacasas@hotmail.com.ar); (B) Colón ER 2ª wave (emails pendientes); (C) Victoria ER 1ª wave (ciudad virgen)
+
+## Corrida anterior (2026-10-07)
 **Fecha:** 2026-10-07 | **Corrida:** 117 | **Modo:** BORRADOR (sin envíos reales)
 **Segmento:** Estudios contables — **Gualeguaychú 16ª wave (PDF peritos CPCEER 2026 + CPCEER API)**
 **Cupo usado:** 5 leads
