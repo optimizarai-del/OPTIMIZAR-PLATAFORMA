@@ -472,6 +472,26 @@ Nombre, empresa, rubro y un gancho de dolor por rubro.
 - [2026-07-19] **ALERTA TIMING CRÍTICA (8 días):** el vencimiento RG ARCA 5851/2026 (27/07/2026) está a **8 días**. Con 195 leads en Contactos (≥165 con email válido), urgencia máxima para activar `OUTREACH_ENABLED=true`. Warm-up express de 2 días + envío escalonado es la única ventana viable restante.
 
 ## Última corrida
+**Fecha:** 2026-10-09 | **Corrida:** 119 | **Modo:** BORRADOR (sin envíos reales)
+**Segmento:** Estudios contables — **Gualeguaychú 18ª wave (PDF peritos CPCEER 2026)**
+**Cupo usado:** 5 leads
+**Leads encontrados:** 5
+**Leads cargados a Contactos:** 5 (5/5 × HTTP 200 ✅, IDs guay18-20261009-001 a 005)
+**Emails válidos:** 5/5 (100% — 2 Gmail + 2 Hotmail + 1 Fibertel ISP)
+**Emails escritos:** 5/5 (Burgos ✅, Campi ✅, Carazzo ✅, Casas Gabriela ✅, Casas Yamila ✅)
+**Sin email (not_found):** 0
+**Descartados:** 0 (ninguno en La Pampa; ningún duplicado)
+**CRM:** 5/5 × HTTP 200 confirmado
+**Disparador:** Q4 en curso (día 9 del 09/10/2026) — peritos judiciales 2026 (doble carga). Trigger Q4 vigente todo octubre.
+**Archivos:**
+- `funnel/leads/new/borrador-2026-10-09.jsonl` — 5 leads
+- `funnel/reportes/2026-10-09.md` — reporte completo
+**Total acumulado estimado en Contactos:** ~595 leads (119 corridas)
+**Hitos:** Burgos Nicolás Hernán mat.3307 ⭐⭐ — ~19-22 años trayectoria (mayor seniority del lote), email Fibertel ISP = arraigo territorial fuerte. Campi Florencia mat.5160 ⭐ — "88" en email = born ~1988, perfil millennial tech-receptivo. Casas Yamila mat.4277 ⭐ — Hotmail nombre+apellido = profesional establecida, ~14-17 años trayectoria.
+**Gotchas nuevos:** [2026-10-09] Dos leads con apellido Casas (Gabriela mat.5309 y Yamila mat.4277) en la misma wave — posible relación familiar (misma ciudad, mismo apellido). Emails distintos (gabbycasas@hotmail.com vs yamilacasas@hotmail.com.ar) confirman que son personas diferentes. Continuar con inicial Ca/Ce/Ch en próxima wave.
+**Próximas corridas recomendadas:** (A) Gualeguaychú 19ª wave (guay19): continuar PDF peritos MUI-Gualeguaychú-2026 — nombres con inicial Ca/Ce/Ch post-Casas: Castro, Celemin, Cereseto, Chaves, Chichizola (si hay otro distinto al ya prospectado), Colautti — buscar emails CPCEER API/web; (B) Colón ER 2ª wave (emails pendientes: Lenner-Sigot, Otero-Varaldo, Mista, Poggio, Loker — delegacion_colon@cpceer.org.ar); (C) Victoria ER 1ª wave (ciudad virgen)
+
+## Corrida anterior (2026-10-08)
 **Fecha:** 2026-10-08 | **Corrida:** 118 | **Modo:** BORRADOR (sin envíos reales)
 **Segmento:** Estudios contables — **Gualeguaychú 17ª wave (PDF peritos CPCEER 2026)**
 **Cupo usado:** 5 leads
