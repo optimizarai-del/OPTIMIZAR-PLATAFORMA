@@ -472,6 +472,26 @@ Nombre, empresa, rubro y un gancho de dolor por rubro.
 - [2026-07-19] **ALERTA TIMING CRÍTICA (8 días):** el vencimiento RG ARCA 5851/2026 (27/07/2026) está a **8 días**. Con 195 leads en Contactos (≥165 con email válido), urgencia máxima para activar `OUTREACH_ENABLED=true`. Warm-up express de 2 días + envío escalonado es la única ventana viable restante.
 
 ## Última corrida
+**Fecha:** 2026-10-10 | **Corrida:** 120 | **Modo:** BORRADOR (sin envíos reales)
+**Segmento:** Estudios contables — **Gualeguaychú 19ª wave (PDF peritos CPCEER 2026, iniciales Ca/Ce/Ch/Co post-Casas)**
+**Cupo usado:** 5 leads
+**Leads encontrados:** 5
+**Leads cargados a Contactos:** 5 (5/5 × HTTP 200 ✅, IDs guay19-20261010-001 a 005)
+**Emails válidos:** 5/5 (100% — 3 Gmail/Hotmail variantes + 1 Hotmail + 1 Gmail de marca)
+**Emails escritos:** 5/5 (Castelli ✅, Chichizola Calderale ✅, Chichizola Carlos ✅, Collazo ✅, Corona ✅)
+**Sin email (not_found):** 0
+**Descartados:** 4 (Colombo Marisa — ya prospectada corrida 95; Chichizola Facundo — ya prospectado corrida 115; Clivio Nelsón — LARROQUE, fuera de Gualeguaychú; Cortesi Gisela — PUEBLO GENERAL BELGRANO, fuera de ciudad)
+**CRM:** 5/5 × HTTP 200 confirmado
+**Disparador:** Q4 día 10 (10/10/2026) — peritos judiciales 2026 (doble carga juzgado + cierres trimestrales octubre). Trigger Q4 vigente todo octubre.
+**Archivos:**
+- `funnel/leads/new/borrador-2026-10-10.jsonl` — 5 leads
+- `funnel/reportes/2026-10-10.md` — reporte completo
+**Total acumulado estimado en Contactos:** ~555 leads (120 corridas)
+**Hitos:** Corona Gisela mat.4035 ⭐ — email de marca 'estudio.contable.corona@gmail.com' = adoptador digital, ~18-20 años trayectoria, LEAD DESTACADO. Chichizola Carlos Eduardo mat.2407 ⭐ — 35+ años trayectoria, senior notable en galería Magnasco. Castelli Sofia + Chichizola Calderale comparten Alberdi 18 Piso 1 — posible edificio de jóvenes CPNs.
+**Gotchas nuevos:** [2026-10-10] 4 Chichizolas en el PDF MUI-Gualeguaychú-2026: Facundo (mat.4575, prospectado corrida 115), Carlos Eduardo (mat.2407, hoy), María Laura Calderale (mat.6150, hoy), Rosana Noemí (mat.4901, rosanachichi@hotmail.com — pendiente guay20). Castelli (mat.6118) y Chichizola Calderale (mat.6150) comparten Alberdi 18 Piso 1 — mismo edificio pero firmas distintas. Colombo Marisa (cdracolombo@gmail.com, mat.3622) confirmada como la misma "Colombo-Azarola" de corrida 95 — descartada correctamente.
+**Próximas corridas recomendadas:** (A) Gualeguaychú 20ª wave (guay20): Chichizola Rosana Noemí (mat.4901, rosanachichi@hotmail.com, Gervasio Mendez 1676), Dahuc Marcelo Javier (mat.1573, marcelodahuc@gmail.com, Rioja 454), continuar con D en el PDF MUI-2026; (B) Colón ER 2ª wave (emails pendientes: Lenner-Sigot, Otero-Varaldo, Mista, Poggio, Loker); (C) Victoria ER 1ª wave (ciudad virgen)
+
+## Corrida anterior (2026-10-09)
 **Fecha:** 2026-10-09 | **Corrida:** 119 | **Modo:** BORRADOR (sin envíos reales)
 **Segmento:** Estudios contables — **Gualeguaychú 18ª wave (PDF peritos CPCEER 2026)**
 **Cupo usado:** 5 leads
