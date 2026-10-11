@@ -472,6 +472,26 @@ Nombre, empresa, rubro y un gancho de dolor por rubro.
 - [2026-07-19] **ALERTA TIMING CRÍTICA (8 días):** el vencimiento RG ARCA 5851/2026 (27/07/2026) está a **8 días**. Con 195 leads en Contactos (≥165 con email válido), urgencia máxima para activar `OUTREACH_ENABLED=true`. Warm-up express de 2 días + envío escalonado es la única ventana viable restante.
 
 ## Última corrida
+**Fecha:** 2026-10-11 | **Corrida:** 121 | **Modo:** BORRADOR (sin envíos reales)
+**Segmento:** Estudios contables — **Gualeguaychú 20ª wave (PDF peritos CPCEER 2026, guay20: Chichizola Rosana + Dahuc + D post-Dahuc)**
+**Cupo usado:** 5 leads
+**Leads encontrados:** 5
+**Leads cargados a Contactos:** 5 (5/5 × HTTP 200 ✅, IDs guay20-20261011-001 a 005)
+**Emails válidos:** 5/5 (100% — 2 Gmail + 1 Hotmail + 1 Yahoo + 1 Hotmail email-estudio)
+**Emails escritos:** 5/5 (Chichizola Rosana ✅, Dahuc ✅, Dalcol Luis Alberto ✅, Dalcol Nicolás ✅, Delaloye ✅)
+**Sin email (not_found):** 0
+**Descartados:** 1 (De Zan Ivana Andrea mat.3947 — LARROQUE, fuera de ciudad de Gualeguaychú)
+**CRM:** 5/5 × HTTP 200 confirmado
+**Disparador:** Q4 día 11 (11/10/2026) — peritos judiciales 2026 (doble carga juzgado + cierres trimestrales octubre). Trigger Q4 vigente todo octubre.
+**Archivos:**
+- `funnel/leads/new/borrador-2026-10-11.jsonl` — 5 leads
+- `funnel/reportes/2026-10-11.md` — reporte completo
+**Total acumulado estimado en Contactos:** ~560 leads (121 corridas)
+**Hitos:** Dahuc Marcelo Javier mat.1573 ⭐⭐ — ~35-40 años trayectoria, Gmail nombre+apellido = seniority altísima con presencia digital moderna, LEAD DESTACADO. Dalcol Luis Alberto mat.598 ⭐⭐⭐ — entre las matrículas más bajas del programa (~45-50+ años trayectoria), estudio con estructura propia (email secretaria). Estudio familiar Dalcol (mat.598 + mat.4213, 25 de Mayo 891 1er piso) = primer estudio familiar del programa con dos generaciones activas como peritos.
+**Gotchas nuevos:** [2026-10-11] Estudio familiar Dalcol: Luis Alberto (mat.598) + Nicolás (mat.4213) comparten 25 de Mayo 891 1er piso — prospectados ambos (norma.estudio@hotmail.com + ndalcol@yahoo.com). Email 'norma.estudio' posiblemente de secretaria Norma. mat.598 = perfil muy senior (~80+ años, aún activo como perito 2026). De Zan Ivana (mat.3947) descartada por LARROQUE. Próximos en el PDF: 4 Diaz con emails ya identificados = lote listo para guay21.
+**Próximas corridas recomendadas:** (A) Gualeguaychú 21ª wave (guay21): D post-Delaloye en PDF MUI-2026 — Diaz Alejandro Roberto (mat.3313, diazalejandror12@gmail.com, Rodo 1083), Diaz Ricardo Daniel (mat.2149, radpestudio@hotmail.com, República Oriental 221), Diaz Roque Ricardo (mat.2346, crricardodiaz1@gmail.com, Primero de Mayo 145), Diaz Saverio (mat.6019, savediaz2@gmail.com, Av. del Valle 538) — 4 emails ya identificados; (B) Colón ER 2ª wave (emails pendientes: Lenner-Sigot, Otero-Varaldo, Mista, Poggio, Loker); (C) Victoria ER 1ª wave (ciudad virgen)
+
+## Corrida anterior (2026-10-10)
 **Fecha:** 2026-10-10 | **Corrida:** 120 | **Modo:** BORRADOR (sin envíos reales)
 **Segmento:** Estudios contables — **Gualeguaychú 19ª wave (PDF peritos CPCEER 2026, iniciales Ca/Ce/Ch/Co post-Casas)**
 **Cupo usado:** 5 leads
