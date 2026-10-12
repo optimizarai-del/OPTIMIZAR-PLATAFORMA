@@ -472,24 +472,24 @@ Nombre, empresa, rubro y un gancho de dolor por rubro.
 - [2026-07-19] **ALERTA TIMING CRÍTICA (8 días):** el vencimiento RG ARCA 5851/2026 (27/07/2026) está a **8 días**. Con 195 leads en Contactos (≥165 con email válido), urgencia máxima para activar `OUTREACH_ENABLED=true`. Warm-up express de 2 días + envío escalonado es la única ventana viable restante.
 
 ## Última corrida
-**Fecha:** 2026-10-11 | **Corrida:** 121 | **Modo:** BORRADOR (sin envíos reales)
-**Segmento:** Estudios contables — **Gualeguaychú 20ª wave (PDF peritos CPCEER 2026, guay20: Chichizola Rosana + Dahuc + D post-Dahuc)**
+**Fecha:** 2026-10-12 | **Corrida:** 122 | **Modo:** BORRADOR (sin envíos reales)
+**Segmento:** Estudios contables — **Gualeguaychú 21ª wave (PDF peritos CPCEER 2026, guay21: 4 Diazes + Echeverria)**
 **Cupo usado:** 5 leads
 **Leads encontrados:** 5
-**Leads cargados a Contactos:** 5 (5/5 × HTTP 200 ✅, IDs guay20-20261011-001 a 005)
-**Emails válidos:** 5/5 (100% — 2 Gmail + 1 Hotmail + 1 Yahoo + 1 Hotmail email-estudio)
-**Emails escritos:** 5/5 (Chichizola Rosana ✅, Dahuc ✅, Dalcol Luis Alberto ✅, Dalcol Nicolás ✅, Delaloye ✅)
+**Leads cargados a Contactos:** 5 (5/5 × HTTP 200 ✅, IDs guay21-20261012-001 a 005)
+**Emails válidos:** 5/5 (100% — 4 Gmail + 1 Hotmail-estudio)
+**Emails escritos:** 5/5 (Diaz Alejandro ✅, Diaz Ricardo ✅, Diaz Roque ✅, Diaz Saverio ✅, Echeverria Claudia ✅)
 **Sin email (not_found):** 0
-**Descartados:** 1 (De Zan Ivana Andrea mat.3947 — LARROQUE, fuera de ciudad de Gualeguaychú)
+**Descartados:** 0
 **CRM:** 5/5 × HTTP 200 confirmado
-**Disparador:** Q4 día 11 (11/10/2026) — peritos judiciales 2026 (doble carga juzgado + cierres trimestrales octubre). Trigger Q4 vigente todo octubre.
+**Disparador:** Q4 día 12 (12/10/2026) — peritos judiciales 2026 (doble carga juzgado + cierres trimestrales octubre). Trigger Q4 vigente todo octubre.
 **Archivos:**
-- `funnel/leads/new/borrador-2026-10-11.jsonl` — 5 leads
-- `funnel/reportes/2026-10-11.md` — reporte completo
-**Total acumulado estimado en Contactos:** ~560 leads (121 corridas)
-**Hitos:** Dahuc Marcelo Javier mat.1573 ⭐⭐ — ~35-40 años trayectoria, Gmail nombre+apellido = seniority altísima con presencia digital moderna, LEAD DESTACADO. Dalcol Luis Alberto mat.598 ⭐⭐⭐ — entre las matrículas más bajas del programa (~45-50+ años trayectoria), estudio con estructura propia (email secretaria). Estudio familiar Dalcol (mat.598 + mat.4213, 25 de Mayo 891 1er piso) = primer estudio familiar del programa con dos generaciones activas como peritos.
-**Gotchas nuevos:** [2026-10-11] Estudio familiar Dalcol: Luis Alberto (mat.598) + Nicolás (mat.4213) comparten 25 de Mayo 891 1er piso — prospectados ambos (norma.estudio@hotmail.com + ndalcol@yahoo.com). Email 'norma.estudio' posiblemente de secretaria Norma. mat.598 = perfil muy senior (~80+ años, aún activo como perito 2026). De Zan Ivana (mat.3947) descartada por LARROQUE. Próximos en el PDF: 4 Diaz con emails ya identificados = lote listo para guay21.
-**Próximas corridas recomendadas:** (A) Gualeguaychú 21ª wave (guay21): D post-Delaloye en PDF MUI-2026 — Diaz Alejandro Roberto (mat.3313, diazalejandror12@gmail.com, Rodo 1083), Diaz Ricardo Daniel (mat.2149, radpestudio@hotmail.com, República Oriental 221), Diaz Roque Ricardo (mat.2346, crricardodiaz1@gmail.com, Primero de Mayo 145), Diaz Saverio (mat.6019, savediaz2@gmail.com, Av. del Valle 538) — 4 emails ya identificados; (B) Colón ER 2ª wave (emails pendientes: Lenner-Sigot, Otero-Varaldo, Mista, Poggio, Loker); (C) Victoria ER 1ª wave (ciudad virgen)
+- `funnel/leads/new/borrador-2026-10-12.jsonl` — 5 leads
+- `funnel/reportes/2026-10-12.md` — reporte completo
+**Total acumulado estimado en Contactos:** ~565 leads (122 corridas)
+**Hitos:** Diaz Ricardo Daniel mat.2149 ⭐ — ~66-71 años, email del estudio 'radpestudio', estructura formalizada. Diaz Saverio mat.6019 ⭐ — ~24-26 años, el CPN más joven del wave, alto potencial tech. Echeverria Claudia mat.2979 — primera "E" del programa en Gualeguaychú, 27+ años trayectoria. URL PDF CPCEER Gualeguaychú 2026 confirmada: `https://www.cpceer.org.ar/sites/default/files/documentos/peritos/justicia%20provincial/mui-gualeguaychu-2026-peritos.pdf`.
+**Gotchas nuevos:** [2026-10-12] URL PDF CPCEER Gualeguaychú 2026 confirmada (distinta de Gualeguay PDF). Los PDFs son por jurisdicción: gualeguay ≠ gualeguaychu. Algunos CPNs con doble inscripción aparecen en ambos PDFs (ej. Gaitan mat.1248). Diaz Saverio mat.6019 = más joven del programa en guay waves (~24 años). Próximos en PDF Gualeguaychú: Esponda María Silvina (mat.2455, espondams@hotmail.com), Farabello Anibal (mat.4477, anibal.estudiofn@gmail.com), Farabello Ignacio (mat.5150, ignacio.estudiofn@gmail.com) — mismo domicilio Urquiza 901 = posible estudio familiar Farabello.
+**Próximas corridas recomendadas:** (A) Gualeguaychú 22ª wave (guay22): continuar post-Echeverria en PDF — Esponda María Silvina (mat.2455, espondams@hotmail.com, Doello Jurado 638), Farabello Anibal (mat.4477, anibal.estudiofn@gmail.com, Urquiza 901), Farabello Ignacio (mat.5150, ignacio.estudiofn@gmail.com, Urquiza 901 — mismo edificio, posible estudio familiar), Fernandez Pedro Esteban (mat.4769, pedrofernandezestudio@gmail.com, Rivadavia 883); (B) Gualeguay ciudad 1ª wave (PDF propio, 38 leads: Avansatti, Barzola, Bauman…); (C) Victoria ER 1ª wave (ciudad virgen)
 
 ## Corrida anterior (2026-10-10)
 **Fecha:** 2026-10-10 | **Corrida:** 120 | **Modo:** BORRADOR (sin envíos reales)
