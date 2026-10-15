@@ -474,24 +474,29 @@ Nombre, empresa, rubro y un gancho de dolor por rubro.
 - [2026-07-19] **ALERTA TIMING CRÍTICA (8 días):** el vencimiento RG ARCA 5851/2026 (27/07/2026) está a **8 días**. Con 195 leads en Contactos (≥165 con email válido), urgencia máxima para activar `OUTREACH_ENABLED=true`. Warm-up express de 2 días + envío escalonado es la única ventana viable restante.
 
 ## Última corrida
-**Fecha:** 2026-10-14 | **Corrida:** 124 | **Modo:** BORRADOR (sin envíos reales)
-**Segmento:** Estudios contables — **Chajarí, Entre Ríos — 2ª wave (chaj02: Fernandez mat.402, Chaparro mat.815, Coullery mat.991, Groisman mat.1496, Gomez mat.1886)**
+**Fecha:** 2026-10-15 | **Corrida:** 125 | **Modo:** BORRADOR (sin envíos reales)
+**Segmento:** Estudios contables — **Chajarí, Entre Ríos — 3ª wave (chaj03: Confalonieri mat.2044, Doffi mat.2166, Ferrando Diaz mat.2901, Ballesteros mat.1621, Benitti mat.1947)**
 **Cupo usado:** 5 leads
 **Leads encontrados:** 5
-**Leads cargados a Contactos:** 5 (5/5 × HTTP 200 ✅, IDs chaj02-20261014-001 a 005)
-**Emails válidos:** 5/5 (100% — 2 dominio propio + 1 Gmail + 1 Hotmail + 1 dominio propio firma)
-**Emails escritos:** 5/5 (Fernandez Oscar ✅, Chaparro Damasia ✅, Coullery Francisco ✅, Groisman Eduardo ✅, Gomez Hugo ✅)
+**Leads cargados a Contactos:** 5 (5/5 × HTTP 200 ✅, IDs chaj03-20261015-001 a 005)
+**Emails válidos:** 5/5 (100% — 2 Gmail + 1 arnet + 1 federacionnet + 1 Hotmail)
+**Emails escritos:** 5/5 (Confalonieri Adolfo ✅, Doffi Patricia ✅, Ferrando Diaz Cesar ✅, Ballesteros Jose ✅, Benitti Susana ✅)
 **Sin email (not_found):** 0
 **Descartados:** 0 (Chajarí = Entre Ríos, exclusión La Pampa no aplica)
 **CRM:** 5/5 × HTTP 200 confirmado
-**Disparador:** Q4 2026 día 14 (14/10/2026) — cierres trimestrales + vencimientos de octubre en pico.
+**Disparador:** Q4 2026 día 15 (15/10/2026) — pico vencimientos segunda quincena octubre (IVA, Ganancias) + cierres trimestrales.
 **Archivos:**
-- `funnel/leads/new/borrador-2026-10-14.jsonl` — 5 leads
-- `funnel/reportes/2026-10-14.md` — reporte completo
-**Total acumulado estimado en Contactos:** ~575 leads (124 corridas)
-**Hitos:** Fernandez Oscar mat.402 ⭐⭐⭐ LEAD DESTACADO — ~58 años trayectoria, dominio oscarbfernandez.com.ar, email cambió marita@→mariapia@ (nuevo contacto). Gomez Meriano mat.1886 — firma dual con dominio gomezmeriano.com, email corregido typo en CPCEER. Familia Coullery: Francisco mat.991 es el patriarca de 4 CPNs del apellido en Chajarí. Groisman mat.1496 — tel 1144143615 (código BA en delegación Chajarí) = consultor bilocal CABA/Chajarí.
-**Gotchas nuevos:** [2026-10-14] Padrón CPCEER accesible vía WebFetch está truncado en apellidos L (el archivo de 1MB cubre A→L pero el contenido de M→Z no es accesible en la sesión actual). Matrículas 884 y 1495 (recomendadas en corrida 123) están en M→Z y no fueron halladas; se sustituyeron por mat.1496 (Groisman) y mat.1886 (Gomez). Para la próxima corrida de Chajarí, usar directamente mat.2044 (Confalonieri), mat.2166 (Doffi), mat.1621 (Ballesteros) que sí están accesibles.
-**Próximas corridas recomendadas:** (A) Chajarí 3ª wave (CPCEER — Confalonieri Adolfo mat.2044 adolfo.confalonieri@gmail.com, Doffi Patricia mat.2166 patriciadoffi@gmail.com, Ferrando Diaz Cesar mat.2901 cesarferrando@arnet.com.ar, Ballesteros Jose mat.1621 jiballesteros@federacionnet.com.ar, Benitti Susana mat.1947 sbenitti@hotmail.com); (B) Colón Entre Ríos 1ª wave (CPCEER — 169 matriculados, mercado virgen); (C) Villaguay Entre Ríos 1ª wave (CPCEER — 69 matriculados, mercado virgen)
+- `funnel/leads/new/borrador-2026-10-15.jsonl` — 5 leads
+- `funnel/reportes/2026-10-15.md` — reporte completo
+**Total acumulado estimado en Contactos:** ~580 leads (125 corridas)
+**Hitos:** Ballesteros Jose mat.1621 ⭐ — ~27 años trayectoria, federacionnet ISP = máximo arraigo territorial Chajarí/Federación. Confalonieri mat.2044 — Gmail = adoptador digital, primer Confalonieri del programa. Ferrando Diaz mat.2901 — arnet ISP = arraigo territorial establecido.
+**Gotchas nuevos:** [2026-10-15] Todos los leads de chaj03 provienen del rango A→F del padrón CPCEER (accesible A→L). Para chaj04, continuar con G→L: Gauna, Gonzalez, Herrera, Iglesias, etc. federacionnet.com.ar = ISP local región Federación/Chajarí — email @federacionnet = señal de arraigo máximo en la zona. Chajarí 3 waves = 15 leads; ~169 matriculados delegación = potencial para 30+ waves.
+**Próximas corridas recomendadas:** (A) Chajarí 4ª wave (chaj04): continuar padrón CPCEER rango G→L — Gauna, Gonzalez, Herrera, Iglesias; (B) Colón Entre Ríos 1ª wave (CPCEER — 169 matriculados, mercado virgen, delegacion_colon@cpceer.org.ar); (C) Villaguay Entre Ríos 1ª wave (CPCEER — 69 matriculados, mercado virgen)
+
+## Corrida anterior (2026-10-14)
+**Fecha:** 2026-10-14 | **Corrida:** 124 | **Modo:** BORRADOR (sin envíos reales)
+**Segmento:** Estudios contables — **Chajarí, Entre Ríos — 2ª wave (chaj02: Fernandez mat.402, Chaparro mat.815, Coullery mat.991, Groisman mat.1496, Gomez mat.1886)**
+**Ver:** `funnel/leads/new/borrador-2026-10-14.jsonl` y estado.md corrida 124
 
 ## Corrida anterior (2026-10-13)
 **Fecha:** 2026-10-13 | **Corrida:** 123 | **Modo:** BORRADOR (sin envíos reales)
