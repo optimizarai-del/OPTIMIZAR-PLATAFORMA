@@ -475,6 +475,26 @@ Nombre, empresa, rubro y un gancho de dolor por rubro.
 - [2026-07-19] **ALERTA TIMING CRÍTICA (8 días):** el vencimiento RG ARCA 5851/2026 (27/07/2026) está a **8 días**. Con 195 leads en Contactos (≥165 con email válido), urgencia máxima para activar `OUTREACH_ENABLED=true`. Warm-up express de 2 días + envío escalonado es la única ventana viable restante.
 
 ## Última corrida
+**Fecha:** 2026-10-17 | **Corrida:** 127 | **Modo:** BORRADOR (sin envíos reales)
+**Segmento:** Estudios contables — **Concordia, Entre Ríos — 2ª wave (concordia02: Argoitia mat.2199, D'Avis mat.2905, Gil mat.3320, Janin mat.2591, Gerard mat.2506)**
+**Cupo usado:** 5 leads
+**Leads encontrados:** 5
+**Leads cargados a Contactos:** 5 (5/5 × HTTP 200 ✅, IDs conc02-20261017-001 a 005)
+**Emails válidos:** 5/5 (100% — 4 dominio propio + 1 ISP local concordia.com.ar)
+**Emails escritos:** 5/5 (Argoitia ✅, D'Avis ✅, Gil ✅, Janin ✅, Gerard ✅)
+**Sin email (not_found):** 0
+**Descartados:** 2 (Raggio mat.4251 + González mat.5473 — mismas firmas contactadas ayer corrida 126)
+**CRM:** 5/5 × HTTP 200 confirmado
+**Disparador:** Q4 2026 día 17 — inicio sprint cierre anual (octubre-diciembre). Pico vencimientos ARCA + balances.
+**Archivos:**
+- `funnel/leads/new/borrador-2026-10-17.jsonl` — 5 leads
+- `funnel/reportes/2026-10-17.md` — reporte completo
+**Total acumulado estimado en Contactos:** ~590 leads (127 corridas)
+**Hitos:** Estudio Janin (Mónica Janin mat.2591) — Di Domenico (corrida 98) se formó aquí = estudio referente que incuba profesionales. Argoitia — dominio propio argoitia.com ⭐⭐ adoptador digital. Gil — 2 profesionales bajo mismo dominio.
+**Gotchas nuevos:** [2026-10-17] González Agustina mat.5473 tiene email personal maagustinagonzalez@gmail.com en CPCEER (no agustinagonzalez@mgcrasesoramiento.com.ar). La mgcrasesoramiento.com.ar es de Marano (titular). González es socia/empleada junior. Estudio Contable Gil tiene al menos 2 matriculados: Gil mat.3320 + Coradini mat.5727 bajo mismo dominio estudiocontablegil.com.ar.
+**Próximas corridas recomendadas:** (A) Concordia 3ª wave (concordia03): rango M-N — Mendoza Carlos mat.1341 (estudiomendoza@arnet.com.ar, verificar), Penco Andrea mat.2909 (andsil259@hotmail.com, verificar vía CPCEER), Navarro, Nardecchia; (B) Chajarí 4ª wave (chaj04): continuar CPCEER rango G→L; (C) Colón Entre Ríos 1ª wave (CPCEER — mercado virgen); (D) Córdoba Capital 10ª wave (Weissbein ⭐⭐⭐)
+
+## Corrida anterior (2026-10-16)
 **Fecha:** 2026-10-16 | **Corrida:** 126 | **Modo:** BORRADOR (sin envíos reales)
 **Segmento:** Estudios contables — **Concordia, Entre Ríos — 1ª wave (concordia01) — MERCADO VIRGEN**
 **Cupo usado:** 5 leads
