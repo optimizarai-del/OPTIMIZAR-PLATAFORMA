@@ -475,6 +475,26 @@ Nombre, empresa, rubro y un gancho de dolor por rubro.
 - [2026-07-19] **ALERTA TIMING CRÍTICA (8 días):** el vencimiento RG ARCA 5851/2026 (27/07/2026) está a **8 días**. Con 195 leads en Contactos (≥165 con email válido), urgencia máxima para activar `OUTREACH_ENABLED=true`. Warm-up express de 2 días + envío escalonado es la única ventana viable restante.
 
 ## Última corrida
+**Fecha:** 2026-10-18 | **Corrida:** 128 | **Modo:** BORRADOR (sin envíos reales)
+**Segmento:** Estudios contables — **Concordia, Entre Ríos — 3ª wave (concordia03: Marsó mat.1068, Marturet mat.1466, Narbais mat.2737, Sagasti mat.996, Ben mat.2696)**
+**Cupo usado:** 5 leads
+**Leads encontrados:** 5
+**Leads cargados a Contactos:** 5 (5/5 × HTTP 200 ✅, IDs conc03-20261018-001 a 005)
+**Emails válidos:** 5/5 (100% — 5 dominio propio)
+**Emails escritos:** 5/5 (Marsó ✅, Marturet ✅, Narbais ✅, Sagasti ✅, Ben ✅)
+**Sin email (not_found):** 0
+**Descartados:** 2 (Di Domenico mat.1353 — ya contactada corrida 98; Cardozo mat.1489 — dominio ENOTFOUND, alto riesgo bounce)
+**CRM:** 5/5 × HTTP 200 confirmado
+**Disparador:** Q4 2026 día 18 — sprint de cierre anual (octubre-diciembre). Vencimientos ARCA segunda quincena + cierres trimestrales.
+**Archivos:**
+- `funnel/leads/new/borrador-2026-10-18.jsonl` — 5 leads
+- `funnel/reportes/2026-10-18.md` — reporte completo
+**Total acumulado estimado en Contactos:** ~595 leads (128 corridas)
+**Hitos:** Marso & Asociados (Edgardo Marsó mat.1068) ⭐⭐⭐ — 5 áreas de servicio + revisión de sistemas y procesos declarada en web + publicaciones técnicas CPCEER 2026. Consultora Marturet (mat.1466) ⭐⭐⭐ — desde 1982, especialista PyMEs/procesos administrativos/reorganización. Estudio Narbais (mat.2737) — firma multigeneracional potencial: José Raúl mat.596 + Rodrigo mat.2737 + Smitarello mat.2811 mismo dominio.
+**Gotchas nuevos:** [2026-10-18] CPCEER Concordia: 398 activos, 380 con email disponibles (no contactados) = 75+ corridas adicionales posibles solo con esta delegación. Cardozo mat.1489 (carlos@estudiocardozo.com.ar): dominio estudiocardozo.com.ar ENOTFOUND → NO prospectar hasta verificar email alternativo. Marturet mat.1466 + Preuss mat.1545 comparten informacion@consultoramarturet.com.ar → si responden, indagar quién es el decision maker. Narbais mat.596 (josenarbais4@gmail.com) = probable titular histórico / padre fundador del Estudio Narbais — contactar en corrida futura con ángulo "firma fundada por usted, hoy manejada por Rodrigo".
+**Próximas corridas recomendadas:** (A) Concordia 4ª wave (concordia04): LIS RISS mat.622 (lisriss@estudiolisriss.com.ar ⭐⭐ dominio propio único), SAN MIGUEL/Renieri mat.1752 (contadoras@renierisanmiguel.com.ar firma dual ⭐⭐), ZABALETA mat.1532 (administracion@estudiozabaleta.com.ar dominio propio), VELASCO-BENEDETTO mat.2445/2589 (fabian@velascobenedetto.com.ar firma dual ⭐⭐); (B) Colón Entre Ríos 1ª wave (CPCEER — 169 matriculados, mercado VIRGEN); (C) Córdoba Capital 10ª wave (Weissbein ⭐⭐⭐)
+
+## Corrida anterior (2026-10-17)
 **Fecha:** 2026-10-17 | **Corrida:** 127 | **Modo:** BORRADOR (sin envíos reales)
 **Segmento:** Estudios contables — **Concordia, Entre Ríos — 2ª wave (concordia02: Argoitia mat.2199, D'Avis mat.2905, Gil mat.3320, Janin mat.2591, Gerard mat.2506)**
 **Cupo usado:** 5 leads
