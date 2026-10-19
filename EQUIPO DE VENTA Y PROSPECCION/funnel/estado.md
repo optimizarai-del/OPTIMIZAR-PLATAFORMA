@@ -475,6 +475,26 @@ Nombre, empresa, rubro y un gancho de dolor por rubro.
 - [2026-07-19] **ALERTA TIMING CRÍTICA (8 días):** el vencimiento RG ARCA 5851/2026 (27/07/2026) está a **8 días**. Con 195 leads en Contactos (≥165 con email válido), urgencia máxima para activar `OUTREACH_ENABLED=true`. Warm-up express de 2 días + envío escalonado es la única ventana viable restante.
 
 ## Última corrida
+**Fecha:** 2026-10-19 | **Corrida:** 129 | **Modo:** BORRADOR (sin envíos reales)
+**Segmento:** Estudios contables — **Concordia, Entre Ríos — 4ª wave (concordia04: Lis Riss mat.622, Ferrari mat.1044, Ferreyra mat.4409, Gerard mat.2910, Affranchino mat.1576)**
+**Cupo usado:** 5 leads
+**Leads encontrados:** 5
+**Leads cargados a Contactos:** 5 (5/5 × HTTP 200 ✅, IDs conc04-20261019-001 a 005)
+**Emails válidos:** 5/5 (100% — 2 dominio propio + 2 ISP local + 1 Gmail brandado)
+**Emails escritos:** 5/5 (Lis Riss ✅, Ferrari ✅, Ferreyra ✅, Gerard ✅, Affranchino ✅)
+**Sin email (not_found):** 0
+**Descartados:** 5 (Zabaleta mat.1532 — ya hecho corrida 98; Renieri/San Miguel mat.1752 — ya hecho corrida 98; Cocco mat.1826 — ya hecho corrida 98; Velasco Benedetto — firma ya hecha corrida 95; Gutierrez mat.2349 sgcconcordia.com ENOTFOUND = riesgo bounce)
+**CRM:** 5/5 × HTTP 200 confirmado
+**Disparador:** Q4 2026 día 19 — sprint cierre anual. Segunda quincena octubre = pico ARCA IVA/Ganancias + cierres trimestrales.
+**Archivos:**
+- `funnel/leads/new/borrador-2026-10-19.jsonl` — 5 leads
+- `funnel/reportes/2026-10-19.md` — reporte completo
+**Total acumulado estimado en Contactos:** ~600 leads (129 corridas)
+**Hitos:** Lis Riss mat.622 ⭐⭐ — mat.622 = máxima antigüedad visible en Concordia (~50+ años), dominio propio activo. Ferreyra Paola mat.4409 ⭐⭐ — CPN "reinventada en digital", fundó GestiónUp.com.ar (coaching digital), ángulo automatización diferenciador. Affranchino mat.1576 — firma familiar potencial (2 CPNs: Miguel mat.1576 + María A. mat.1852).
+**Gotchas nuevos:** [2026-10-19] Recomendaciones corrida 128 (Zabaleta, Renieri, Cocco) estaban en sistema desde corrida 98 — estado.md no las cruzó con borradores de sept. LECCIÓN: verificar duplicados contra todo el historial, no solo los últimos 5 borradores. Gutierrez Norberto mat.2349 (sgcconcordia.com) ENOTFOUND = NO prospectar hasta verificar. GestiónUp fit ICP menor (coach digital, no estudio contable tradicional): si convierte, adaptar pitch; si no responde en 2 semanas, descartar. Concordia padrón CPCEER M-Z = no leído todavía (offset 850000-1058989 contiene apellidos M→Z) = 15+ corridas adicionales posibles.
+**Próximas corridas recomendadas:** (A) Concordia 5ª wave (concordia05): M-Z del padrón CPCEER — Mendoza Carlos mat.1341 (estudiomendoza@arnet.com.ar), Narbais José Raúl mat.596 (josenarbais4@gmail.com, ángulo "fundador" ⭐), Penco Andrea mat.2909 (andsil259@hotmail.com), + pendientes sector M-Z no leídos; (B) Colón Entre Ríos 1ª wave (CPCEER — 169 matriculados, mercado VIRGEN); (C) Gualeguaychú 22ª wave (Esponda mat.2455, Farabello Aníbal mat.4477, Farabello Ignacio mat.5150); (D) Córdoba Capital 10ª wave (Weissbein ⭐⭐⭐)
+
+## Corrida anterior (2026-10-18)
 **Fecha:** 2026-10-18 | **Corrida:** 128 | **Modo:** BORRADOR (sin envíos reales)
 **Segmento:** Estudios contables — **Concordia, Entre Ríos — 3ª wave (concordia03: Marsó mat.1068, Marturet mat.1466, Narbais mat.2737, Sagasti mat.996, Ben mat.2696)**
 **Cupo usado:** 5 leads
@@ -492,7 +512,7 @@ Nombre, empresa, rubro y un gancho de dolor por rubro.
 **Total acumulado estimado en Contactos:** ~595 leads (128 corridas)
 **Hitos:** Marso & Asociados (Edgardo Marsó mat.1068) ⭐⭐⭐ — 5 áreas de servicio + revisión de sistemas y procesos declarada en web + publicaciones técnicas CPCEER 2026. Consultora Marturet (mat.1466) ⭐⭐⭐ — desde 1982, especialista PyMEs/procesos administrativos/reorganización. Estudio Narbais (mat.2737) — firma multigeneracional potencial: José Raúl mat.596 + Rodrigo mat.2737 + Smitarello mat.2811 mismo dominio.
 **Gotchas nuevos:** [2026-10-18] CPCEER Concordia: 398 activos, 380 con email disponibles (no contactados) = 75+ corridas adicionales posibles solo con esta delegación. Cardozo mat.1489 (carlos@estudiocardozo.com.ar): dominio estudiocardozo.com.ar ENOTFOUND → NO prospectar hasta verificar email alternativo. Marturet mat.1466 + Preuss mat.1545 comparten informacion@consultoramarturet.com.ar → si responden, indagar quién es el decision maker. Narbais mat.596 (josenarbais4@gmail.com) = probable titular histórico / padre fundador del Estudio Narbais — contactar en corrida futura con ángulo "firma fundada por usted, hoy manejada por Rodrigo".
-**Próximas corridas recomendadas:** (A) Concordia 4ª wave (concordia04): LIS RISS mat.622 (lisriss@estudiolisriss.com.ar ⭐⭐ dominio propio único), SAN MIGUEL/Renieri mat.1752 (contadoras@renierisanmiguel.com.ar firma dual ⭐⭐), ZABALETA mat.1532 (administracion@estudiozabaleta.com.ar dominio propio), VELASCO-BENEDETTO mat.2445/2589 (fabian@velascobenedetto.com.ar firma dual ⭐⭐); (B) Colón Entre Ríos 1ª wave (CPCEER — 169 matriculados, mercado VIRGEN); (C) Córdoba Capital 10ª wave (Weissbein ⭐⭐⭐)
+**Próximas corridas recomendadas:** Ver corrida 129 (ejecutada 2026-10-19).
 
 ## Corrida anterior (2026-10-17)
 **Fecha:** 2026-10-17 | **Corrida:** 127 | **Modo:** BORRADOR (sin envíos reales)
