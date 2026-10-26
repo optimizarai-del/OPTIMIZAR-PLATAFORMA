@@ -480,24 +480,31 @@ Nombre, empresa, rubro y un gancho de dolor por rubro.
 - [2026-07-19] **ALERTA TIMING CRÍTICA (8 días):** el vencimiento RG ARCA 5851/2026 (27/07/2026) está a **8 días**. Con 195 leads en Contactos (≥165 con email válido), urgencia máxima para activar `OUTREACH_ENABLED=true`. Warm-up express de 2 días + envío escalonado es la única ventana viable restante.
 
 ## Última corrida
-**Fecha:** 2026-10-25 | **Corrida:** 135 | **Modo:** BORRADOR (sin envíos reales)
-**Segmento:** Estudios contables — **Colón, Entre Ríos — 4ª wave sistemática (col04: Aguilera mat.2488, Carosio mat.2991, Ballay mat.3112, Catelotti mat.3206, Blanc mat.4751)**
+**Fecha:** 2026-10-26 | **Corrida:** 136 | **Modo:** BORRADOR (sin envíos reales)
+**Segmento:** Estudios contables — **Colón, Entre Ríos — 5ª wave (col05: Challiol mat.3587, Delaloye J. mat.2543, Delaloye O. mat.2653, Cot mat.4316, Croizzad Zabalua mat.6106)**
 **Cupo usado:** 5 leads
 **Leads encontrados:** 5
-**Leads cargados a Contactos:** 5 (5/5 × HTTP 200 ✅, IDs col04-20261025-001 a 005)
-**Emails válidos:** 5/5 (100% — 3 Gmail branded + 1 dominio propio + 1 Hotmail nombre completo)
-**Emails escritos:** 5/5 (Carosio ✅, Blanc ✅, Aguilera ✅, Catelotti ✅, Ballay ✅)
+**Leads cargados a Contactos:** 5 (5/5 × HTTP 200 ✅, IDs col05-20261026-001 a 005)
+**Emails válidos:** 5/5 (100% — 5 Gmail)
+**Emails escritos:** 5/5 (Challiol ✅, Delaloye JG ✅, Delaloye OE ✅, Cot ✅, Croizzad ✅)
 **Sin email (not_found):** 0
-**Descartados:** 0 (ninguno en La Pampa; Bravo mat.3284 y Aguilar mat.4153 excluidos por duplicado/precaución historial)
+**Descartados:** 0 (ninguno en La Pampa; Del Real Paulete mat.5702 reservada para col06)
 **CRM:** 5/5 × HTTP 200 confirmado.
-**Disparador:** Q4 2026 domingo 25 octubre — emails llegan a bandeja del lunes (apertura óptima), vencimientos ARCA + conciliaciones Q3.
+**Disparador:** Q4 2026 lunes 26 octubre — emails llegan bandeja primera hora lunes, apertura óptima, vencimientos ARCA + conciliaciones Q3.
 **Archivos:**
-- `funnel/leads/new/borrador-2026-10-25.jsonl` — 5 leads
-- `funnel/reportes/2026-10-25.md` — reporte completo
-**Total acumulado estimado en Contactos:** ~625 leads (135 corridas)
-**Nota col03 vs col04:** corridas 133 (col02) y 134 (col03) ejecutadas entre 2026-10-23 y 2026-10-24 — estado.md no fue actualizado en esas corridas; matrículas procesadas col01-col04: 802, 886, 1055, 1284, 1504, 1506, 1583, 1670, 1963, 2042, 2085, 2168, 2317, 2488, 2528, 2785, 2991, 3112, 3206, 4751.
-**Gotchas nuevos:** [2026-10-25] Padrón CPCEER paginable en WebFetch a 100k chars/offset — offset 500k+ (letras D-Z) sin explorar; Catelotti mat.3206 con email dominio "lascamelias.com.ar" = empresa agroindustrial ER; Challiol Liliana mat.3587 (lmchalliol@gmail.com) encontrada pero no usada hoy — reservada para col05.
-**Próximas corridas recomendadas:** (A) Colón 5ª wave — offsets 500k-1M del padrón (letras D-Z: Delaloye mat.2543/2653, Lara mat.3009, Challiol mat.3587); (B) Villaguay ER 1ª wave (CPCEER — 69 mat., mercado VIRGEN); (C) Resolver padrón M-Z definitivamente para desbloquear Martin, Palazzo, Saffores, etc.
+- `funnel/leads/new/borrador-2026-10-26.jsonl` — 5 leads
+- `funnel/reportes/2026-10-26.md` — reporte completo
+**Total acumulado estimado en Contactos:** ~630 leads (136 corridas)
+**Matrículas acumuladas Colón col01–col05:** 802, 886, 1055, 1284, 1504, 1506, 1583, 1670, 1963, 2042, 2085, 2168, 2317, 2488, 2528, 2543, 2653, 2785, 2991, 3112, 3206, 3587, 4316, 4751, 6106
+**Gotchas nuevos:** [2026-10-26] Delaloye Jorge (mat.2543) y Omar (mat.2653) — mismo apellido poco común, misma delegación = posible estudio familiar o dupla profesional; enviar a ambos (emails distintos) y verificar si hay sociedad si responden. Del Real Paulete Tamara mat.5702 (tamu_paulete@hotmail.com) encontrada en offset 500k; reservada col06. Offset 600k-1M aún sin explorar (letras D-Z: Lara mat.3009 esperado ~700k).
+**Próximas corridas recomendadas:** (A) Colón 6ª wave — offset 600k-700k (Del Real Paulete mat.5702 + letras E-F, Lara mat.3009 en ~700k); (B) Villaguay ER 1ª wave (CPCEER — 69 mat., mercado VIRGEN); (C) Resolver padrón 700k-1M para letras L-Z.
+
+## Corrida anterior (2026-10-25)
+**Fecha:** 2026-10-25 | **Corrida:** 135 | **Modo:** BORRADOR (sin envíos reales)
+**Segmento:** Estudios contables — **Colón, Entre Ríos — 4ª wave sistemática (col04: Aguilera mat.2488, Carosio mat.2991, Ballay mat.3112, Catelotti mat.3206, Blanc mat.4751)**
+**Cupo usado:** 5 leads / **CRM:** 5/5 × HTTP 200 ✅ / **Email rate:** 5/5 (100%)
+**Archivos:** `borrador-2026-10-25.jsonl` / `reportes/2026-10-25.md`
+**Total acumulado:** ~625 leads (135 corridas)
 
 ## Corrida anterior (2026-10-21)
 **Fecha:** 2026-10-21 | **Corrida:** 131 | **Modo:** BORRADOR (sin envíos reales)
