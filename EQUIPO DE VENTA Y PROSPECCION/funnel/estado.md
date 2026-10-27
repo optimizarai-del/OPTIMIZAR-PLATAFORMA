@@ -480,24 +480,31 @@ Nombre, empresa, rubro y un gancho de dolor por rubro.
 - [2026-07-19] **ALERTA TIMING CRÍTICA (8 días):** el vencimiento RG ARCA 5851/2026 (27/07/2026) está a **8 días**. Con 195 leads en Contactos (≥165 con email válido), urgencia máxima para activar `OUTREACH_ENABLED=true`. Warm-up express de 2 días + envío escalonado es la única ventana viable restante.
 
 ## Última corrida
-**Fecha:** 2026-10-26 | **Corrida:** 136 | **Modo:** BORRADOR (sin envíos reales)
-**Segmento:** Estudios contables — **Colón, Entre Ríos — 5ª wave (col05: Challiol mat.3587, Delaloye J. mat.2543, Delaloye O. mat.2653, Cot mat.4316, Croizzad Zabalua mat.6106)**
+**Fecha:** 2026-10-27 | **Corrida:** 137 | **Modo:** BORRADOR (sin envíos reales)
+**Segmento:** Estudios contables — **Colón, Entre Ríos — 6ª wave (col06: Erramuspe mat.5432, Del Real Paulete mat.5702, Durand mat.3044, Diz mat.3418, Esteva mat.3795)**
 **Cupo usado:** 5 leads
 **Leads encontrados:** 5
-**Leads cargados a Contactos:** 5 (5/5 × HTTP 200 ✅, IDs col05-20261026-001 a 005)
-**Emails válidos:** 5/5 (100% — 5 Gmail)
-**Emails escritos:** 5/5 (Challiol ✅, Delaloye JG ✅, Delaloye OE ✅, Cot ✅, Croizzad ✅)
+**Leads cargados a Contactos:** 5 (5/5 × HTTP 200 ✅, IDs col06-20261027-001 a 005)
+**Emails válidos:** 5/5 (100% — 2 Gmail branded + 1 Hotmail + 1 Yahoo + 1 Hotmail apodo)
+**Emails escritos:** 5/5 (Erramuspe ✅, Del Real Paulete ✅, Durand ✅, Diz ✅, Esteva ✅)
 **Sin email (not_found):** 0
-**Descartados:** 0 (ninguno en La Pampa; Del Real Paulete mat.5702 reservada para col06)
+**Descartados:** 0 (ninguno en La Pampa; familia Eggs mat.4802/5231/5717 reservada col07 — mismo apellido, misma delegación, probable estudio familiar)
 **CRM:** 5/5 × HTTP 200 confirmado.
-**Disparador:** Q4 2026 lunes 26 octubre — emails llegan bandeja primera hora lunes, apertura óptima, vencimientos ARCA + conciliaciones Q3.
+**Disparador:** Q4 2026 martes 27 octubre — vencimientos ARCA octubre, conciliaciones Q3, cierres de clientes activos.
 **Archivos:**
-- `funnel/leads/new/borrador-2026-10-26.jsonl` — 5 leads
-- `funnel/reportes/2026-10-26.md` — reporte completo
-**Total acumulado estimado en Contactos:** ~630 leads (136 corridas)
-**Matrículas acumuladas Colón col01–col05:** 802, 886, 1055, 1284, 1504, 1506, 1583, 1670, 1963, 2042, 2085, 2168, 2317, 2488, 2528, 2543, 2653, 2785, 2991, 3112, 3206, 3587, 4316, 4751, 6106
-**Gotchas nuevos:** [2026-10-26] Delaloye Jorge (mat.2543) y Omar (mat.2653) — mismo apellido poco común, misma delegación = posible estudio familiar o dupla profesional; enviar a ambos (emails distintos) y verificar si hay sociedad si responden. Del Real Paulete Tamara mat.5702 (tamu_paulete@hotmail.com) encontrada en offset 500k; reservada col06. Offset 600k-1M aún sin explorar (letras D-Z: Lara mat.3009 esperado ~700k).
-**Próximas corridas recomendadas:** (A) Colón 6ª wave — offset 600k-700k (Del Real Paulete mat.5702 + letras E-F, Lara mat.3009 en ~700k); (B) Villaguay ER 1ª wave (CPCEER — 69 mat., mercado VIRGEN); (C) Resolver padrón 700k-1M para letras L-Z.
+- `funnel/leads/new/borrador-2026-10-27.jsonl` — 5 leads
+- `funnel/reportes/2026-10-27.md` — reporte completo
+**Total acumulado estimado en Contactos:** ~635 leads (137 corridas)
+**Matrículas acumuladas Colón col01–col06:** 802, 886, 1055, 1284, 1504, 1506, 1583, 1670, 1963, 2042, 2085, 2168, 2317, 2488, 2528, 2543, 2653, 2785, 2991, 3044, 3112, 3206, 3418, 3587, 3795, 4316, 4751, 5432, 5702, 6106
+**Gotchas nuevos:** [2026-10-27] Familia Eggs (Silvana mat.4802, Gisela mat.5231, Jennifer mat.5717) — 3 CPNs del mismo apellido en delegación Colón, probable estudio familiar o red de colaboración. Reservar juntas en col07 para análisis de relación antes de contactar. Estrategia: contactar Silvana (mat.4802, más senior) primero. Erramuspe ⭐⭐ "Estudio Petricor Colón" = Gmail más fuertemente branded de las 6 waves de Colón (estudio+nombre+ciudad). Esteva "LEM" = segundo Gmail branded de Colón (patrón positivo: estudios con nombre → mayor adopción digital). Offset 700k-1M (letras F-Z) aún sin explorar — contiene Favre mat.5502, Gomez, Lara mat.3009, Martin y más.
+**Próximas corridas recomendadas:** (A) Colón 7ª wave (col07) — familia Eggs mat.4802/5231/5717 + Favre mat.5502 + offset 700k-800k (letras G-L: Gomez, Lara mat.3009, etc.); (B) Villaguay ER 1ª wave (CPCEER — 69 mat., mercado VIRGEN); (C) Resolver padrón offset 700k-1M (letras F-Z de Colón).
+
+## Corrida anterior (2026-10-26)
+**Fecha:** 2026-10-26 | **Corrida:** 136 | **Modo:** BORRADOR (sin envíos reales)
+**Segmento:** Estudios contables — **Colón, Entre Ríos — 5ª wave (col05: Challiol mat.3587, Delaloye J. mat.2543, Delaloye O. mat.2653, Cot mat.4316, Croizzad Zabalua mat.6106)**
+**Cupo usado:** 5 leads / **CRM:** 5/5 × HTTP 200 ✅ / **Email rate:** 5/5 (100%)
+**Archivos:** `borrador-2026-10-26.jsonl` / `reportes/2026-10-26.md`
+**Total acumulado:** ~630 leads (136 corridas)
 
 ## Corrida anterior (2026-10-25)
 **Fecha:** 2026-10-25 | **Corrida:** 135 | **Modo:** BORRADOR (sin envíos reales)
