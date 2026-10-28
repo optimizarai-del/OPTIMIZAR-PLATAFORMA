@@ -480,24 +480,31 @@ Nombre, empresa, rubro y un gancho de dolor por rubro.
 - [2026-07-19] **ALERTA TIMING CRÍTICA (8 días):** el vencimiento RG ARCA 5851/2026 (27/07/2026) está a **8 días**. Con 195 leads en Contactos (≥165 con email válido), urgencia máxima para activar `OUTREACH_ENABLED=true`. Warm-up express de 2 días + envío escalonado es la única ventana viable restante.
 
 ## Última corrida
-**Fecha:** 2026-10-27 | **Corrida:** 137 | **Modo:** BORRADOR (sin envíos reales)
-**Segmento:** Estudios contables — **Colón, Entre Ríos — 6ª wave (col06: Erramuspe mat.5432, Del Real Paulete mat.5702, Durand mat.3044, Diz mat.3418, Esteva mat.3795)**
+**Fecha:** 2026-10-28 | **Corrida:** 138 | **Modo:** BORRADOR (sin envíos reales)
+**Segmento:** Estudios contables — **Colón, Entre Ríos — 7ª wave (col07: Eggs Silvana mat.4802, Eggs Gisela mat.5231, Eggs Jennifer mat.5717, Favre mat.5502, Germanier mat.2551)**
 **Cupo usado:** 5 leads
 **Leads encontrados:** 5
-**Leads cargados a Contactos:** 5 (5/5 × HTTP 200 ✅, IDs col06-20261027-001 a 005)
-**Emails válidos:** 5/5 (100% — 2 Gmail branded + 1 Hotmail + 1 Yahoo + 1 Hotmail apodo)
-**Emails escritos:** 5/5 (Erramuspe ✅, Del Real Paulete ✅, Durand ✅, Diz ✅, Esteva ✅)
+**Leads cargados a Contactos:** 5 (5/5 × HTTP 200 ✅, IDs col07-20261028-001 a 005)
+**Emails válidos:** 5/5 (100% — 1 Hotmail apodo + 2 Gmail personal + 1 Gmail personal + 1 Gmail branded ⭐)
+**Emails escritos:** 5/5 (Eggs Silvana ✅, Eggs Gisela ✅, Eggs Jennifer ✅, Favre ✅, Germanier ✅)
 **Sin email (not_found):** 0
-**Descartados:** 0 (ninguno en La Pampa; familia Eggs mat.4802/5231/5717 reservada col07 — mismo apellido, misma delegación, probable estudio familiar)
+**Descartados:** 0 (ninguno en La Pampa; González mat.1779 ignorado por exclusión permanente email compartido col02)
 **CRM:** 5/5 × HTTP 200 confirmado.
-**Disparador:** Q4 2026 martes 27 octubre — vencimientos ARCA octubre, conciliaciones Q3, cierres de clientes activos.
+**Disparador:** Q4 2026 miércoles 28 octubre — vencimientos ARCA octubre, conciliaciones Q3, cierres de clientes activos.
 **Archivos:**
-- `funnel/leads/new/borrador-2026-10-27.jsonl` — 5 leads
-- `funnel/reportes/2026-10-27.md` — reporte completo
-**Total acumulado estimado en Contactos:** ~635 leads (137 corridas)
-**Matrículas acumuladas Colón col01–col06:** 802, 886, 1055, 1284, 1504, 1506, 1583, 1670, 1963, 2042, 2085, 2168, 2317, 2488, 2528, 2543, 2653, 2785, 2991, 3044, 3112, 3206, 3418, 3587, 3795, 4316, 4751, 5432, 5702, 6106
-**Gotchas nuevos:** [2026-10-27] Familia Eggs (Silvana mat.4802, Gisela mat.5231, Jennifer mat.5717) — 3 CPNs del mismo apellido en delegación Colón, probable estudio familiar o red de colaboración. Reservar juntas en col07 para análisis de relación antes de contactar. Estrategia: contactar Silvana (mat.4802, más senior) primero. Erramuspe ⭐⭐ "Estudio Petricor Colón" = Gmail más fuertemente branded de las 6 waves de Colón (estudio+nombre+ciudad). Esteva "LEM" = segundo Gmail branded de Colón (patrón positivo: estudios con nombre → mayor adopción digital). Offset 700k-1M (letras F-Z) aún sin explorar — contiene Favre mat.5502, Gomez, Lara mat.3009, Martin y más.
-**Próximas corridas recomendadas:** (A) Colón 7ª wave (col07) — familia Eggs mat.4802/5231/5717 + Favre mat.5502 + offset 700k-800k (letras G-L: Gomez, Lara mat.3009, etc.); (B) Villaguay ER 1ª wave (CPCEER — 69 mat., mercado VIRGEN); (C) Resolver padrón offset 700k-1M (letras F-Z de Colón).
+- `funnel/leads/new/borrador-2026-10-28.jsonl` — 5 leads
+- `funnel/reportes/2026-10-28.md` — reporte completo
+**Total acumulado estimado en Contactos:** ~640 leads (138 corridas)
+**Matrículas acumuladas Colón col01–col07:** 802, 886, 1055, 1284, 1504, 1506, 1583, 1670, 1963, 2042, 2085, 2168, 2317, 2488, 2528, 2543, 2551, 2653, 2785, 2991, 3044, 3112, 3206, 3418, 3587, 3795, 4316, 4751, 4802, 5231, 5432, 5502, 5702, 5717, 6106
+**Gotchas nuevos:** [2026-10-28] Familia Eggs completada (Silvana mat.4802, Gisela mat.5231, Jennifer mat.5717) — todas contactadas en col07 como fue planeado. Si alguna responde, analizar potencial de firma familiar o red. Favre mat.5502 tel 1138041216 (prefijo 011) = posible operación bilocal Colón/BA. Germanier mat.2551 'contadorgermanier@gmail.com' ⭐ = el Gmail branded con perfil profesional más sólido de col07 (profesión+apellido = señal de identidad consolidada). Pool Colón: ~127 activos con email aún sin prospectar (~25 corridas adicionales). Próximos de alto valor: Besson mat.2652 (neris@estudiobesson.com.ar ⭐⭐ dominio propio), Fornay mat.2783 (estudiocontablecrf@outlook.com ⭐ Outlook branded), Vuagniaux mat.2566 (contable@noelma.com.ar ⭐ dominio propio).
+**Próximas corridas recomendadas:** (A) Colón 8ª wave (col08) — Bourlot mat.1531, Besson mat.2652 ⭐⭐, Fornay mat.2783 ⭐, Vuagniaux mat.2566 ⭐, otros del pool CPCEER; (B) Villaguay ER 1ª wave (CPCEER — 69 mat., mercado VIRGEN); (C) Continuar Colón con los de dominio propio prioritarios.
+
+## Corrida anterior (2026-10-27)
+**Fecha:** 2026-10-27 | **Corrida:** 137 | **Modo:** BORRADOR (sin envíos reales)
+**Segmento:** Estudios contables — **Colón, Entre Ríos — 6ª wave (col06: Erramuspe mat.5432, Del Real Paulete mat.5702, Durand mat.3044, Diz mat.3418, Esteva mat.3795)**
+**Cupo usado:** 5 leads / **CRM:** 5/5 × HTTP 200 ✅ / **Email rate:** 5/5 (100%)
+**Archivos:** `borrador-2026-10-27.jsonl` / `reportes/2026-10-27.md`
+**Total acumulado:** ~635 leads (137 corridas)
 
 ## Corrida anterior (2026-10-26)
 **Fecha:** 2026-10-26 | **Corrida:** 136 | **Modo:** BORRADOR (sin envíos reales)
