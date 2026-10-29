@@ -480,6 +480,19 @@ Nombre, empresa, rubro y un gancho de dolor por rubro.
 - [2026-07-19] **ALERTA TIMING CRÍTICA (8 días):** el vencimiento RG ARCA 5851/2026 (27/07/2026) está a **8 días**. Con 195 leads en Contactos (≥165 con email válido), urgencia máxima para activar `OUTREACH_ENABLED=true`. Warm-up express de 2 días + envío escalonado es la única ventana viable restante.
 
 ## Última corrida
+**Fecha:** 2026-10-29 | **Corrida:** 139 | **Modo:** BORRADOR (sin envíos reales)
+**Segmento:** Estudios contables — **Colón, Entre Ríos — 8ª wave (col08: Besson mat.2652, Vuagniaux mat.2566, Fornay mat.2783, Lara mat.3009, Scherpf mat.3034)**
+**Cupo usado:** 5 leads
+**Leads encontrados:** 5
+**Leads cargados a Contactos:** 5 (5/5 × HTTP 200 ✅, IDs col08-20261029-001 a 005)
+**Emails válidos:** 5/5 (100% — 1 dominio propio ⭐⭐⭐ + 1 dominio corporativo ⭐⭐ + 1 Outlook branded migrado ⭐ + 1 Gmail branded migrado ⭐⭐ + 1 Gmail territorial ⭐⭐)
+**Emails escritos:** 5/5 (Besson ✅, Vuagniaux ✅, Fornay ✅, Lara ✅, Scherpf ✅)
+**Sin email (not_found):** 0
+**Descartados:** 0 (La Pampa no aplica — Colón es Entre Ríos; González mat.1779 excluido permanentemente por email compartido col02)
+**Pool Colón restante:** ~121 activos con email sin contactar (~24 corridas adicionales posibles)
+**Archivos:** borrador-2026-10-29.jsonl / reportes/2026-10-29.md
+
+## Corrida anterior (2026-10-28)
 **Fecha:** 2026-10-28 | **Corrida:** 138 | **Modo:** BORRADOR (sin envíos reales)
 **Segmento:** Estudios contables — **Colón, Entre Ríos — 7ª wave (col07: Eggs Silvana mat.4802, Eggs Gisela mat.5231, Eggs Jennifer mat.5717, Favre mat.5502, Germanier mat.2551)**
 **Cupo usado:** 5 leads
