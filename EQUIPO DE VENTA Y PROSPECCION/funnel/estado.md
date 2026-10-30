@@ -480,6 +480,20 @@ Nombre, empresa, rubro y un gancho de dolor por rubro.
 - [2026-07-19] **ALERTA TIMING CRÍTICA (8 días):** el vencimiento RG ARCA 5851/2026 (27/07/2026) está a **8 días**. Con 195 leads en Contactos (≥165 con email válido), urgencia máxima para activar `OUTREACH_ENABLED=true`. Warm-up express de 2 días + envío escalonado es la única ventana viable restante.
 
 ## Última corrida
+**Fecha:** 2026-10-30 | **Corrida:** 140 | **Modo:** BORRADOR (sin envíos reales)
+**Segmento:** Estudios contables — **Colón, Entre Ríos — 9ª wave (col09: Bourlot mat.1531, Piñon mat.2292, Mathey Doret mat.2394, Mista mat.2523, Varona mat.3010)**
+**Cupo usado:** 5 leads
+**Leads encontrados:** 5
+**Leads cargados a Contactos:** 5 (5/5 × HTTP 200 ✅, IDs col09-20261030-001 a 005)
+**Emails válidos:** 5/5 (100% — 1 Gmail personal estable ⭐ + 1 Gmail personal apodo + 1 Hotmail personal año + 1 Yahoo apellido+nombre ⭐ + 1 Gmail branded migrado ⭐⭐)
+**Emails escritos:** 5/5 (Bourlot ✅, Piñon ✅, Mathey Doret ✅, Mista ✅, Varona ✅)
+**Sin email (not_found):** 0
+**Descartados:** 0 (La Pampa no aplica — Colón es Entre Ríos; González mat.1779 excluido permanentemente col02)
+**Pool Colón restante:** ~111 activos con email sin contactar (~22 corridas adicionales posibles)
+**Archivos:** borrador-2026-10-30.jsonl / reportes/2026-10-30.md
+**Gotchas nuevos:** [2026-10-30] Piñon mat.2292 y Mathey Doret mat.2394 eran los dos leads pre-recomendados en col02 que no aparecían porque el padrón estaba truncado A-L (gotcha col03). Hoy confirmados en padrón completo (2MB) — dato resuelto. Varona mat.3010 'estudiovarona@gmail.com' ⭐⭐ = Gmail branded con migración desde Hotmail = adoptador digital activo. CPCEER API retornó 200 OK con 2MB / 3.659 registros. Próximos de alto valor col10: Sotelo mat.2619 (sotelohnos@gmail.com — posible firma familiar ⭐), Guiffre mat.2662 (migración arnet→Gmail ⭐), Zermathen mat.2526 (Hotmail nombre completo), Passadore mat.2822 (Hotmail estable), Sigot mat.3196 (Hotmail).
+
+## Corrida anterior (2026-10-29)
 **Fecha:** 2026-10-29 | **Corrida:** 139 | **Modo:** BORRADOR (sin envíos reales)
 **Segmento:** Estudios contables — **Colón, Entre Ríos — 8ª wave (col08: Besson mat.2652, Vuagniaux mat.2566, Fornay mat.2783, Lara mat.3009, Scherpf mat.3034)**
 **Cupo usado:** 5 leads
