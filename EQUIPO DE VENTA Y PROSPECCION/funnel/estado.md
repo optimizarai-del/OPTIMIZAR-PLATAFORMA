@@ -480,6 +480,20 @@ Nombre, empresa, rubro y un gancho de dolor por rubro.
 - [2026-07-19] **ALERTA TIMING CRÍTICA (8 días):** el vencimiento RG ARCA 5851/2026 (27/07/2026) está a **8 días**. Con 195 leads en Contactos (≥165 con email válido), urgencia máxima para activar `OUTREACH_ENABLED=true`. Warm-up express de 2 días + envío escalonado es la única ventana viable restante.
 
 ## Última corrida
+**Fecha:** 2026-10-31 | **Corrida:** 141 | **Modo:** BORRADOR (sin envíos reales)
+**Segmento:** Estudios contables — **Colón, Entre Ríos — 10ª wave (col10: Sotelo mat.2619, Guiffre mat.2662, Zermathen mat.2526, Passadore mat.2822, Sigot mat.3196)**
+**Cupo usado:** 5 leads
+**Leads encontrados:** 5
+**Leads cargados a Contactos:** 5 (5/5 × HTTP 200 ✅, IDs col10-20261031-001 a 005)
+**Emails válidos:** 5/5 (100% — 1 Gmail Hnos familiar ⭐ + 1 Gmail personal migrado arnet ⭐ + 1 Hotmail nombre completo + 1 Hotmail nombre+apellido estable ⭐ + 1 Hotmail nombre_apellido)
+**Emails escritos:** 5/5 (Sotelo ✅, Guiffre ✅, Zermathen ✅, Passadore ✅, Sigot ✅)
+**Sin email (not_found):** 0
+**Descartados:** 0 (La Pampa no aplica — Colón es Entre Ríos; González mat.1779 excluido permanentemente col02)
+**Pool Colón restante:** ~106 activos con email sin contactar (~21 corridas adicionales posibles)
+**Archivos:** borrador-2026-10-31.jsonl / reportes/2026-10-31.md
+**Gotchas nuevos:** [2026-10-31] Sotelo mat.2619 sotelohnos@gmail.com = "Sotelo Hnos" = posible firma familiar ⭐ (Gmail lleva el nombre de la firma colectiva). Guiffre mat.2662 silviguiffre@gmail.com = migración activa desde estudiogyd@arnet.com.ar ⭐ (posible ex-sociedad GYD, ahora opera como Guiffre individual). Zermathen mat.2526 = entre los más senior de col10 (~13 años). Passadore mat.2822 carinapassadore@hotmail.com idéntico en campo anterior/nuevo = máxima estabilidad ⭐. CPCEER API retornó 200 OK (2MB, 3.659 registros). Trigger col10: 31 octubre = último día de Q4 mes 1, cierre ejercicio 2026 a 2 meses exactos. Próximos de alto valor col11: buscar mats 3200-3600 en CPCEER Colón (post-Sigot mat.3196) o pivotar a Villaguay ER 1ª wave (69 matriculados, virgen, mencionado desde corrida 123).
+
+## Corrida anterior (2026-10-30)
 **Fecha:** 2026-10-30 | **Corrida:** 140 | **Modo:** BORRADOR (sin envíos reales)
 **Segmento:** Estudios contables — **Colón, Entre Ríos — 9ª wave (col09: Bourlot mat.1531, Piñon mat.2292, Mathey Doret mat.2394, Mista mat.2523, Varona mat.3010)**
 **Cupo usado:** 5 leads
