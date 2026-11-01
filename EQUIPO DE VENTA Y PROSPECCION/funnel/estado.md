@@ -480,6 +480,20 @@ Nombre, empresa, rubro y un gancho de dolor por rubro.
 - [2026-07-19] **ALERTA TIMING CRÍTICA (8 días):** el vencimiento RG ARCA 5851/2026 (27/07/2026) está a **8 días**. Con 195 leads en Contactos (≥165 con email válido), urgencia máxima para activar `OUTREACH_ENABLED=true`. Warm-up express de 2 días + envío escalonado es la única ventana viable restante.
 
 ## Última corrida
+**Fecha:** 2026-11-01 | **Corrida:** 142 | **Modo:** BORRADOR (sin envíos reales)
+**Segmento:** Estudios contables — **Colón, Entre Ríos — 11ª wave (col11: Loker mat.3376, Santini mat.3170, Bravo mat.3284, Otero mat.3338, Guglielmino mat.3881)**
+**Cupo usado:** 5 leads
+**Leads encontrados:** 5
+**Leads cargados a Contactos:** 5 (5/5 × HTTP 200 ✅, IDs col11-20261101-001 a 005)
+**Emails válidos:** 5/5 (100% — 3 Gmail MIG Hotmail→Gmail ⭐ + 1 Gmail sociedad dual ⭐⭐ + 1 Gmail branded ⭐)
+**Emails escritos:** 5/5 (Loker ✅, Santini ✅, Bravo ✅, Otero ✅, Guglielmino ✅)
+**Sin email (not_found):** 0
+**Descartados:** 1 (mat=17 Rodriguez Ana Mariela — "Activo Autobloqueado", relación de dependencia, no ICP) + permanente: González mat.1779 (email compartido Oxley) + Varaldo mat.3328 (misma sociedad que Otero mat.3338)
+**Pool Colón restante:** ~111 activos con email sin contactar (~22 corridas adicionales posibles)
+**Archivos:** borrador-2026-11-01.jsonl / reportes/2026-11-01.md
+**Gotchas nuevos:** [2026-11-01] CPCEER API retornó padrón COMPLETO sin truncado A–L (3.659 registros, 2MB) — bug histórico del truncado parece resuelto en versión actual del endpoint. Otero mat.3338 / Varaldo mat.3328 comparten sociedad dual (email estudiocontableoterovaraldo@gmail.com) — Varaldo excluida permanentemente. Laura Loker mat.3376 / Graciela Loker mat.1284 (col01): apellido compartido, posible conexión familiar, emails distintos, ambas contactadas. mat=17 Rodriguez = "Activo Autobloqueado" + obs "relación de dependencia" = perfil a filtrar en futuras corridas. Trigger col11: 1° noviembre = inicio mes más crítico para estudios contables (vencimientos ARCA, balances anuales, cierre ejercicio 2026).
+
+## Corrida anterior (2026-10-31)
 **Fecha:** 2026-10-31 | **Corrida:** 141 | **Modo:** BORRADOR (sin envíos reales)
 **Segmento:** Estudios contables — **Colón, Entre Ríos — 10ª wave (col10: Sotelo mat.2619, Guiffre mat.2662, Zermathen mat.2526, Passadore mat.2822, Sigot mat.3196)**
 **Cupo usado:** 5 leads
