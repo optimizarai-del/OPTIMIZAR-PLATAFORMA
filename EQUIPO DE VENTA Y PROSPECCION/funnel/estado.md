@@ -480,6 +480,20 @@ Nombre, empresa, rubro y un gancho de dolor por rubro.
 - [2026-07-19] **ALERTA TIMING CRÍTICA (8 días):** el vencimiento RG ARCA 5851/2026 (27/07/2026) está a **8 días**. Con 195 leads en Contactos (≥165 con email válido), urgencia máxima para activar `OUTREACH_ENABLED=true`. Warm-up express de 2 días + envío escalonado es la única ventana viable restante.
 
 ## Última corrida
+**Fecha:** 2026-11-02 | **Corrida:** 143 | **Modo:** BORRADOR (sin envíos reales)
+**Segmento:** Estudios contables — **Colón, Entre Ríos — 12ª wave (col12: Perri mat.3286, Aguilar mat.4153, Seoane mat.4219, Martin mat.4314, Bochaton mat.4330)**
+**Cupo usado:** 5 leads
+**Leads encontrados:** 5
+**Leads cargados a Contactos:** 5 (5/5 × HTTP 200 ✅, IDs col12-20261102-001 a 005, CRM IDs 789–793)
+**Emails válidos:** 5/5 (100% — 2 Yahoo branded ⭐⭐ + 1 Hotmail branded ⭐⭐ + 1 Gmail local identity ⭐ + 1 Gmail MIGR Hotmail→Gmail + prefijo "cdora" ⭐⭐)
+**Emails escritos:** 5/5 (Perri ✅, Aguilar ✅, Seoane ✅, Martin ✅, Bochaton ✅)
+**Sin email (not_found):** 0
+**Descartados:** González mat.1779 (permanente — email compartido Oxley) + Varaldo mat.3328 (permanente — socia de Otero col11) + Gallicet Flavia mat.3732 (proactivo — apellido compartido con Gallicet Raúl mat.2317 col03)
+**Pool Colón restante:** ~97 activos con email sin contactar (~19 corridas adicionales posibles)
+**Archivos:** borrador-2026-11-02.jsonl / reportes/2026-11-02.md
+**Gotchas nuevos:** [2026-11-02] Bochaton mat.4330 migración Hotmail→Gmail + prefijo "cdora" = Contadora — señal de fortalecimiento identidad profesional activa ⭐⭐. Seoane mat.4219 "sfestudiocontable" = siglas SF desconocidas (posible socio/sociedad, investigar si convierte). Aguilar mat.4153 "aaguilarcolon" = único lead con ciudad en el email = señal de arraigo local fuerte. Trigger col12: segunda semana noviembre = vencimientos ARCA activos + cierre ejercicio 2026 en marcha.
+
+## Corrida anterior (2026-11-01)
 **Fecha:** 2026-11-01 | **Corrida:** 142 | **Modo:** BORRADOR (sin envíos reales)
 **Segmento:** Estudios contables — **Colón, Entre Ríos — 11ª wave (col11: Loker mat.3376, Santini mat.3170, Bravo mat.3284, Otero mat.3338, Guglielmino mat.3881)**
 **Cupo usado:** 5 leads
