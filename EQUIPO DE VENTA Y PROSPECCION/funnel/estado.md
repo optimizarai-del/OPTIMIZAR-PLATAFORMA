@@ -480,6 +480,21 @@ Nombre, empresa, rubro y un gancho de dolor por rubro.
 - [2026-07-19] **ALERTA TIMING CRÍTICA (8 días):** el vencimiento RG ARCA 5851/2026 (27/07/2026) está a **8 días**. Con 195 leads en Contactos (≥165 con email válido), urgencia máxima para activar `OUTREACH_ENABLED=true`. Warm-up express de 2 días + envío escalonado es la única ventana viable restante.
 
 ## Última corrida
+**Fecha:** 2026-11-03 | **Corrida:** 144 | **Modo:** BORRADOR (sin envíos reales)
+**Segmento:** Estudios contables — **Concordia, Entre Ríos — 1ª wave (con01: Azambuya mat.5553, Hoffmann, Fuser, Del Cerro-Vargas, Loiacono)**
+**Cupo usado:** 5 leads
+**Leads encontrados:** 5
+**Leads cargados a Contactos:** 5 (5/5 × HTTP 200 ✅, IDs con01-20261103-001 a 005)
+**Emails válidos:** 2/5 (40% — 1 Gmail triple apellido ⭐ + 1 Gmail branded completo ⭐)
+**Emails escritos:** 2/5 (Azambuya ✅, Hoffmann ✅)
+**Sin email (not_found):** 3 (Fuser, Del Cerro-Vargas, Loiacono)
+**Descartados:** 0
+**Cambio de delegación:** Colón → Concordia (3 corridas en Colón; Concordia = 2ª ciudad de Entre Ríos ~160k hab., base citrícola/industrial, delegación CPCEER activa)
+**Limitación:** Padrón CPCEER Concordia no público → email coverage 40% vs ~100% en Colón
+**Archivos:** borrador-2026-11-03.jsonl / reportes/2026-11-03.md
+**Gotchas nuevos:** [2026-11-03] Cambio de delegación Colón→Concordia. Email coverage 40% (2/5) sin padrón público. Azambuya-Morera: estudio nuevo con horario amplio (7:30-20:30h) = crecimiento activo ⭐. Hoffmann: Gmail branded completo = marca establecida. Loiacono = Tesorero CPCEER Concordia = referente. Fuser/Del Cerro-Vargas: pendientes enriquecimiento email. Próx: Concordia con webs propias o saltar a Gualeguaychú/Paraná.
+
+## Corrida anterior (2026-11-02)
 **Fecha:** 2026-11-02 | **Corrida:** 143 | **Modo:** BORRADOR (sin envíos reales)
 **Segmento:** Estudios contables — **Colón, Entre Ríos — 12ª wave (col12: Perri mat.3286, Aguilar mat.4153, Seoane mat.4219, Martin mat.4314, Bochaton mat.4330)**
 **Cupo usado:** 5 leads
