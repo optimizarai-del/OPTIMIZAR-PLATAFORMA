@@ -480,6 +480,20 @@ Nombre, empresa, rubro y un gancho de dolor por rubro.
 - [2026-07-19] **ALERTA TIMING CRÍTICA (8 días):** el vencimiento RG ARCA 5851/2026 (27/07/2026) está a **8 días**. Con 195 leads en Contactos (≥165 con email válido), urgencia máxima para activar `OUTREACH_ENABLED=true`. Warm-up express de 2 días + envío escalonado es la única ventana viable restante.
 
 ## Última corrida
+**Fecha:** 2026-11-04 | **Corrida:** 145 | **Modo:** BORRADOR (sin envíos reales)
+**Segmento:** Estudios contables — **Colón, Entre Ríos — 13ª wave (col13: Poggio mat.3156, Martínez mat.3165, Ledesma mat.3254, Joannas mat.3310, Varaldo mat.3328)**
+**Cupo usado:** 5 leads
+**Leads encontrados:** 5
+**Leads cargados a Contactos:** 5 (5/5 × HTTP 200 ✅, IDs col13-20261104-001 a 005)
+**Emails válidos:** 5/5 (100% — 2 Gmail nombre/apellido ⭐ + 1 Gmail apellido ⭐ + 1 Hotmail nombre propio poco frecuente ⭐ + 1 Hotmail nombre+apellido ⭐)
+**Emails escritos:** 5/5 (todos con copy personalizado)
+**Sin email (not_found):** 0
+**Descartados:** 0
+**Pool Colón restante:** ~96 activos con email (confirmado CPCEER API 2026-11-04)
+**Archivos:** borrador-2026-11-04.jsonl / reportes/2026-11-04.md
+**Gotchas nuevos:** [2026-11-04] ⚠️ mat.3328 Varaldo cargada por error — es socia de Otero-Varaldo (mat.3338, contactada en col11). Excluida permanentemente: varaldoandrea@gmail.com NO debe enviarse si OUTREACH_ENABLED=true. Agregar mat.3328 a lista de exclusiones permanentes. Próximas col14: mat.3360 Becker, mat.3371 Lenner, mat.3452 Natalia Joannas (posible familiar de Cristina mat.3310 — verificar antes de enviar), mat.3753 Tournour (migración Hotmail→Gmail ⭐), mat.3948 Orcellet.
+
+## Corrida anterior (2026-11-03)
 **Fecha:** 2026-11-03 | **Corrida:** 144 | **Modo:** BORRADOR (sin envíos reales)
 **Segmento:** Estudios contables — **Concordia, Entre Ríos — 1ª wave (con01: Azambuya mat.5553, Hoffmann, Fuser, Del Cerro-Vargas, Loiacono)**
 **Cupo usado:** 5 leads
