@@ -481,6 +481,21 @@ Nombre, empresa, rubro y un gancho de dolor por rubro.
 - [2026-07-19] **ALERTA TIMING CRÍTICA (8 días):** el vencimiento RG ARCA 5851/2026 (27/07/2026) está a **8 días**. Con 195 leads en Contactos (≥165 con email válido), urgencia máxima para activar `OUTREACH_ENABLED=true`. Warm-up express de 2 días + envío escalonado es la única ventana viable restante.
 
 ## Última corrida
+**Fecha:** 2026-11-06 | **Corrida:** 147 | **Modo:** BORRADOR (sin envíos reales)
+**Segmento:** Estudios contables — **Colón, Entre Ríos — 16ª wave (col16: Becker mat.3360, Joannás mat.3452, Tournour mat.3753, Ríos Zavallo mat.3207, Bouvet mat.4284)**
+**Cupo usado:** 5 leads
+**Leads encontrados:** 5
+**Leads cargados a Contactos:** 5 (5/5 × HTTP 200 ✅, IDs col16-20261106-001 a 005)
+**Emails válidos:** 5/5 (100% — 2 Hotmail ⭐⭐ + 2 Yahoo ⭐⭐ + 1 Gmail ⭐)
+**Emails escritos:** 5/5 (todos con copy personalizado)
+**Sin email (not_found):** 0
+**Descartados:** 0 (La Pampa no aplica — Colón es Entre Ríos)
+**Excluidos proactivos:** mat.1779 González (email compartido Oxley, perm.), mat.3732 Gallicet Flavia (apellido compartido, perm.)
+**Pool Colón restante:** ~81 activos con email (~16 corridas adicionales posibles)
+**Archivos:** borrador-2026-11-06.jsonl / reportes/2026-11-06.md
+**Gotchas nuevos:** [2026-11-06] Joannás Natalia (mat.3452) probable familiar de Cristina Joannás (mat.3310, col13) — apellido infrecuente con tilde. Si OUTREACH_ENABLED=true: NO enviar a ambas simultáneamente, espaciar 2 semanas. [2026-11-06] CPCEER padrón API confirmado: https://padron.cpceer.org.ar/consulta/leerpadron.php devuelve JSON con 3.674 registros (apellido, nombre1, delegacion, matricula, estado, nrotelefono, correoanterior, correnuevo). Usar en corridas futuras para búsquedas directas y eficientes. [2026-11-06] Dos Yahoo en una corrida (Joannás + Ríos Zavallo): plataforma con alta fidelidad de identidad. ~635 leads en Contactos. Próximas col17: mat.4285 Malagrida, mat.4378 Cuccarollo, mat.4382 Micheloud, mat.4428 Bizzotto, mat.4480 Apecetche.
+
+## Corrida anterior (2026-11-05)
 **Fecha:** 2026-11-05 | **Corrida:** 146 | **Modo:** BORRADOR (sin envíos reales)
 **Segmento:** Estudios contables — **Colón, Entre Ríos — 15ª wave (col15: Girard mat.4549, Serra mat.4807, Lemme mat.5104, Lenner mat.3371, Orcellet mat.3948)**
 **Cupo usado:** 5 leads
