@@ -481,6 +481,20 @@ Nombre, empresa, rubro y un gancho de dolor por rubro.
 - [2026-07-19] **ALERTA TIMING CRÍTICA (8 días):** el vencimiento RG ARCA 5851/2026 (27/07/2026) está a **8 días**. Con 195 leads en Contactos (≥165 con email válido), urgencia máxima para activar `OUTREACH_ENABLED=true`. Warm-up express de 2 días + envío escalonado es la única ventana viable restante.
 
 ## Última corrida
+**Fecha:** 2026-11-07 | **Corrida:** 148 | **Modo:** BORRADOR (sin envíos reales)
+**Segmento:** Estudios contables — **Colón, Entre Ríos — 17ª wave (col17: Malagrida mat.4285, Cuccarollo mat.4378, Micheloud mat.4382, Bizzotto mat.4428, Apecetche mat.4480)**
+**Cupo usado:** 5 leads
+**Leads encontrados:** 5
+**Leads cargados a Contactos:** 5 (5/5 × HTTP 200 ✅, IDs col17-20261107-001 a 005, CRM IDs 834-838)
+**Emails válidos:** 5/5 (100% — 4 Hotmail nombre+apellido ⭐⭐ + 1 Hotmail inicial+apellido ⭐)
+**Emails escritos:** 5/5 (todos con copy personalizado)
+**Sin email (not_found):** 0
+**Descartados:** 0 (La Pampa no aplica — Colón es Entre Ríos)
+**Pool Colón restante:** ~81 activos estimados (~16 corridas adicionales posibles)
+**Archivos:** borrador-2026-11-07.jsonl / reportes/2026-11-07.md
+**Gotchas nuevos:** [2026-11-07] 3 de 5 leads con nombre Silvina/Silvia (Malagrida mat.4285, Micheloud mat.4382, Bizzotto mat.4428) — si OUTREACH_ENABLED=true: separar envíos para evitar colisión de asuntos similares. [2026-11-07] Padrón CPCEER JSON (2MB total) procesado eficientemente via curl + python parse por matricula — método óptimo confirmado. ~640 leads en Contactos. Próximas col18: mats 4481+ Colón activos continuación padrón.
+
+## Corrida anterior (2026-11-06)
 **Fecha:** 2026-11-06 | **Corrida:** 147 | **Modo:** BORRADOR (sin envíos reales)
 **Segmento:** Estudios contables — **Colón, Entre Ríos — 16ª wave (col16: Becker mat.3360, Joannás mat.3452, Tournour mat.3753, Ríos Zavallo mat.3207, Bouvet mat.4284)**
 **Cupo usado:** 5 leads
