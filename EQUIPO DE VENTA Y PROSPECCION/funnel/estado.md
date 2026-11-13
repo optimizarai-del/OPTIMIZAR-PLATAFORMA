@@ -488,6 +488,44 @@ Nombre, empresa, rubro y un gancho de dolor por rubro.
 - [2026-07-19] **ALERTA TIMING CRÍTICA (8 días):** el vencimiento RG ARCA 5851/2026 (27/07/2026) está a **8 días**. Con 195 leads en Contactos (≥165 con email válido), urgencia máxima para activar `OUTREACH_ENABLED=true`. Warm-up express de 2 días + envío escalonado es la única ventana viable restante.
 
 ## Última corrida
+**Fecha:** 2026-11-13 | **Corrida:** ~154 | **Modo:** BORRADOR (sin envíos reales)
+**Segmento:** Estudios contables — **Colón, Entre Ríos — 23ª wave (col23: Eggs mat.5231, Gulermone mat.5248, Rey mat.5253, Fusay mat.5257, Sigot mat.5264)**
+**Cupo usado:** 5 leads
+**Leads encontrados:** 5
+**Leads cargados a Contactos:** 5 (5/5 × HTTP 200 ✅, IDs col23-20261113-001 a 005)
+**Emails válidos:** 5/5 (100% — 2 Gmail ⭐⭐ + 1 Gmail ⭐⭐ + 1 Yahoo ⭐⭐⭐ + 1 Hotmail ⭐⭐⭐)
+**Emails escritos:** 5/5 (todos con copy personalizado)
+**Sin email (not_found):** 0
+**Descartados:** 0 (La Pampa no aplica — Colón es Entre Ríos; ningún duplicado)
+**Pool Colón restante:** ~52 activos > mat.5264 (~10 corridas adicionales posibles)
+**Archivos:** borrador-2026-11-13.jsonl / reportes/2026-11-13.md
+**Gotchas nuevos:** [2026-11-13] animor_sig (mat.5264 Sigot Romina): "animor" = "Romina" al revés — identidad más creativa del programa hasta ahora. No revelar el truco en el copy. [2026-11-13] EGGS mat.5231 ≠ EGGS mat.4802 (col19) — mismo apellido, personas distintas ✅. [2026-11-13] FOLLONIER Tania mat.5298 (próxima col24): verificar relación con Hugo Follonier mat.5229 (col22) — espaciar si OUTREACH_ENABLED=true. [2026-11-13] SIGOT mat.5264 y OGARA SIGOT mat.5358 — posibles familiares, espaciar. ~660 leads en Contactos. Próximas col24: mat.5298 Follonier Tania, mat.5308 Bonin Martín, mat.5358 Ogara Sigot Lucila, mat.5359 Jacquet Anahí, mat.5377 Gimenez Luciana.
+
+## Corrida anterior (2026-11-12)
+**Fecha:** 2026-11-12 | **Corrida:** 153 | **Modo:** BORRADOR (sin envíos reales)
+**Segmento:** Estudios contables — **Colón, Entre Ríos — 22ª wave (col22: Hauteville mat.5165, Bourlot Melina mat.5188, Correa Droz mat.5203, Guiot mat.5218, Follonier Hugo mat.5229)**
+**Cupo usado:** 5 leads | **Leads cargados a Contactos:** 5 (5/5 × HTTP 200 ✅)
+**Archivos:** borrador-2026-11-12.jsonl / reportes/2026-11-12.md
+
+## Corrida anterior (2026-11-11)
+**Fecha:** 2026-11-11 | **Corrida:** 152 | **Modo:** BORRADOR (sin envíos reales)
+**Segmento:** Estudios contables — **Colón, Entre Ríos — 21ª wave (col21: Bourlot Marisa mat.4988, Guzzardo mat.5053, Schesi mat.5139, Francou mat.5202, Bianchini mat.5205)**
+**Cupo usado:** 5 leads | **Leads cargados a Contactos:** 5 (5/5 × HTTP 200 ✅)
+**Archivos:** borrador-2026-11-11.jsonl / reportes/2026-11-11.md
+
+## Corrida anterior (2026-11-10)
+**Fecha:** 2026-11-10 | **Corrida:** 151 | **Modo:** BORRADOR (sin envíos reales)
+**Segmento:** Estudios contables — **Colón, Entre Ríos — 20ª wave (col20: Gaillard Mariana mat.4824, Gaillard Jésica mat.4849, Lima mat.4886, Planiscig David mat.4911, Manucci mat.4960)**
+**Cupo usado:** 5 leads | **Leads cargados a Contactos:** 5 (5/5 × HTTP 200 ✅)
+**Archivos:** borrador-2026-11-10.jsonl / reportes/2026-11-10.md
+
+## Corrida anterior (2026-11-09)
+**Fecha:** 2026-11-09 | **Corrida:** 150 | **Modo:** BORRADOR (sin envíos reales)
+**Segmento:** Estudios contables — **Colón, Entre Ríos — 19ª wave (col19: Bouvier mat.4708, Scheffler mat.4759, Beaumont mat.4774, Viollaz mat.4791, Eggs mat.4802)**
+**Cupo usado:** 5 leads | **Leads cargados a Contactos:** 5 (5/5 × HTTP 200 ✅)
+**Archivos:** borrador-2026-11-09.jsonl / reportes/2026-11-09.md
+
+## Corrida anterior (2026-11-08)
 **Fecha:** 2026-11-08 | **Corrida:** 149 | **Modo:** BORRADOR (sin envíos reales)
 **Segmento:** Estudios contables — **Colón, Entre Ríos — 18ª wave (col18: Guy mat.4498, Heinzen mat.4528, Soto mat.4533, Scorians mat.4661, Fornay mat.4677)**
 **Cupo usado:** 5 leads
