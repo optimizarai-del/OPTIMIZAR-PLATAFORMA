@@ -496,14 +496,15 @@ Nombre, empresa, rubro y un gancho de dolor por rubro.
 - [2026-07-19] **ALERTA TIMING CRÍTICA (8 días):** el vencimiento RG ARCA 5851/2026 (27/07/2026) está a **8 días**. Con 195 leads en Contactos (≥165 con email válido), urgencia máxima para activar `OUTREACH_ENABLED=true`. Warm-up express de 2 días + envío escalonado es la única ventana viable restante.
 
 ## Última corrida
-**Fecha:** 2026-11-17 | **Corrida:** 158 | **Modo:** BORRADOR (sin envíos reales)
-**Segmento:** Estudios contables — **Concordia, Entre Ríos — 2ª wave (con02)**
+**Fecha:** 2026-11-21 | **Corrida:** 162 | **Modo:** BORRADOR (sin envíos reales)
+**Segmento:** Estudios contables — **Concordia, Entre Ríos — 6ª wave (con06)**
 **Cupo usado:** 5 leads | **Emails:** 5/5 (100%) | **Sin email:** 0/5
-**Leads cargados a Contactos:** 5 (5/5 × HTTP 200 ✅, IDs con02-20261117-001 a 005)
-**Leads:** Argoitia Sergio (mat.2199, dominio propio ⭐⭐⭐⭐), Affranchino Miguel Angel (mat.1576, Gmail branded ⭐⭐⭐), Arévalo Laura Nelida (mat.1996, Gmail branded ⭐⭐⭐), Antoniutti Gabriel (mat.2204, Yahoo ⭐⭐), Albornoz Jorge (mat.1022, Gmail ⭐⭐)
-**Fuente:** Padrón CPCEER oficial (delegacion=concordia), pool 'A' — letras A únicamente en esta wave.
-**Gotcha:** Affranchino familiar (mat.1576 Miguel + mat.1852 María) — solo contactado Miguel (senior). María excluida por precaución. Pool A Concordia: amplio, +10 registros disponibles. Pool B-Z pendiente.
-**Próximas:** con03 — apellidos B-C del padrón CPCEER Concordia. También: retomar Martínez Adrián (con01-004) si se obtiene email.
+**Leads cargados a Contactos:** 5 (5/5 × HTTP 200 ✅, IDs con06-01 a 05)
+**Leads:** Ben Santiago (mat.2696, dominio propio ⭐⭐⭐⭐), D'Avis Ramón (mat.2905, dominio propio ⭐⭐⭐⭐), Gil Juan Manuel (mat.3320, dominio propio ⭐⭐⭐⭐*), Bonazzola Eliana (mat.3687, web activa ⭐⭐⭐⭐), Ferreyra Paola (mat.4409, CPN+Coach gestionup.com.ar ⭐⭐⭐⭐)
+**Fuente:** CPCEER padrón API — candidatos identificados en corrida con05 (2026-11-20).
+**Trigger:** Q4 2026 segunda quincena noviembre — cierre diciembre a 6 semanas.
+**Gotcha:** Gil (mat.3320) dominio estudiocontablegil.com.ar no resolvió desde cloud env (ENOTFOUND — posible restricción de red, no necesariamente dominio inexistente). Email de padrón CPCEER authoritative.
+**Próximas (con07):** GUTIERREZ Norberto (mat.2349, omar.gutierrez@sgcconcordia.com ⭐⭐⭐), + apellidos G-K del padrón con dominio propio.
 
 ## Corrida anterior (con01 — referencia)
 **Fecha:** 2026-11-13 | **Corrida:** ~154 | **Modo:** BORRADOR (sin envíos reales)
